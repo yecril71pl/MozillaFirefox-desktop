@@ -1,0 +1,16 @@
+toolkit-download-folder.patch
+mozilla-libproxy.patch
+mozilla-pkgconfig.patch
+idldir.patch
+mozilla-nongnome-proxies.patch
+mozilla-helper-app.patch
+mozilla-prefer_plugin_pref.patch
+mozilla-shared-nss-db.patch
+mozilla-startup-notification.patch
+firefox-libxul-sdk.patch
+firefox-credits.patch
+firefox-linkorder.patch
+firefox-browser-css.patch
+firefox-cross-desktop.patch
+firefox-no-gnomevfs.patch
+firefox-appname.patch

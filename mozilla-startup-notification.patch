@@ -1,0 +1,51 @@
+diff --git a/toolkit/xre/nsAppRunner.cpp b/toolkit/xre/nsAppRunner.cpp
+--- a/toolkit/xre/nsAppRunner.cpp
++++ b/toolkit/xre/nsAppRunner.cpp
+@@ -3342,23 +3342,16 @@ XRE_main(int argc, char* argv[], const n
+         }
+         dirProvider.DoStartup();
+ 
+         PRBool shuttingDown = PR_FALSE;
+         appStartup->GetShuttingDown(&shuttingDown);
+ 
+         nsCOMPtr<nsICommandLineRunner> cmdLine;
+ 
+-#if defined(HAVE_DESKTOP_STARTUP_ID) && defined(MOZ_WIDGET_GTK2)
+-        nsRefPtr<nsGTKToolkit> toolkit = GetGTKToolkit();
+-        if (toolkit && !desktopStartupID.IsEmpty()) {
+-          toolkit->SetDesktopStartupID(desktopStartupID);
+-        }
+-#endif
+-
+         nsCOMPtr<nsIFile> workingDir;
+         rv = NS_GetSpecialDirectory(NS_OS_CURRENT_WORKING_DIR, getter_AddRefs(workingDir));
+         NS_ENSURE_SUCCESS(rv, 1);
+ 
+         if (!shuttingDown) {
+           cmdLine = do_CreateInstance("@mozilla.org/toolkit/command-line;1");
+           NS_ENSURE_TRUE(cmdLine, 1);
+ 
+@@ -3376,16 +3369,23 @@ XRE_main(int argc, char* argv[], const n
+ 
+           NS_TIMELINE_ENTER("appStartup->CreateHiddenWindow");
+           rv = appStartup->CreateHiddenWindow();
+           NS_TIMELINE_LEAVE("appStartup->CreateHiddenWindow");
+           NS_ENSURE_SUCCESS(rv, 1);
+ 
+           MOZ_SPLASHSCREEN_UPDATE(50);
+ 
++#if defined(HAVE_DESKTOP_STARTUP_ID) && defined(MOZ_WIDGET_GTK2)
++          nsRefPtr<nsGTKToolkit> toolkit = GetGTKToolkit();
++          if (toolkit && !desktopStartupID.IsEmpty()) {
++            toolkit->SetDesktopStartupID(desktopStartupID);
++          }
++#endif
++
+           // Extension Compatibility Checking and Startup
+           if (gAppData->flags & NS_XRE_ENABLE_EXTENSION_MANAGER) {
+             nsCOMPtr<nsIExtensionManager> em(do_GetService("@mozilla.org/extensions/manager;1"));
+             NS_ENSURE_TRUE(em, 1);
+ 
+             if (upgraded) {
+               rv = em->CheckForMismatches(&needsRestart);
+               if (NS_FAILED(rv)) {

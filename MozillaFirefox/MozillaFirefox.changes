@@ -1,0 +1,48 @@
+-------------------------------------------------------------------
+Thu Nov 26 22:30:17 CET 2009 - wr@rosenauer.org
+
+- update to 3.6b4
+
+-------------------------------------------------------------------
+Thu Nov 19 07:52:15 CET 2009 - wr@rosenauer.org
+
+- update to 3.6b3
+  * removed upstreamed mozilla-abi.patch
+
+-------------------------------------------------------------------
+Tue Nov 10 15:02:30 CET 2009 - wr@rosenauer.org
+
+- update to 3.6b2
+
+-------------------------------------------------------------------
+Sun Nov  8 19:22:03 CET 2009 - wr@rosenauer.org
+
+- merge patches from 3.5.x
+  * mozilla-abi.patch
+  * firefox-browser-css.patch
+
+-------------------------------------------------------------------
+Thu Nov  5 09:19:22 UTC 2009 - wr@rosenauer.org
+
+- use --disable-updater and remove obsolete UI patch
+
+-------------------------------------------------------------------
+Sun Nov  1 10:35:09 CET 2009 - wr@rosenauer.org
+
+- update to 3.6b1
+
+-------------------------------------------------------------------
+Mon Sep 21 16:45:13 CEST 2009 - wr@rosenauer.org
+
+- BuildRequire libiw-devel instead of wireless-tools from 11.2 on
+
+-------------------------------------------------------------------
+Wed Sep 16 23:58:40 CEST 2009 - wr@rosenauer.org
+
+- new snapshot (20090916)
+
+-------------------------------------------------------------------
+Tue Aug 25 00:00:13 CEST 2009 - wr@rosenauer.org
+
+- initial Firefox 3.6alpha package
+

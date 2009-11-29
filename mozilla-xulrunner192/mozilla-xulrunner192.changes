@@ -1,0 +1,49 @@
+-------------------------------------------------------------------
+Thu Nov 26 19:34:22 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b4
+
+-------------------------------------------------------------------
+Thu Nov 19 07:46:41 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b3
+  * removed upstreamed mozilla-abi.patch
+
+-------------------------------------------------------------------
+Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b2
+- merge from xulrunner191 package
+
+-------------------------------------------------------------------
+Sun Nov  1 13:10:23 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b1
+- use newer internal cairo for 11.1 and older
+
+-------------------------------------------------------------------
+Sun Oct 18 13:04:22 CEST 2009 - wr@rosenauer.org
+
+- reworked PreReq list
+
+-------------------------------------------------------------------
+Fri Oct 16 09:14:47 CEST 2009 - wr@rosenauer.org
+
+- update to snapshot 1.9.2b2pre (20091015)
+  (entering beta phase)
+
+-------------------------------------------------------------------
+Mon Sep 21 16:43:18 CEST 2009 - wr@rosenauer.org
+
+- BuildRequire libiw-devel instead of wireless-tools from 11.2 on
+
+-------------------------------------------------------------------
+Wed Sep 16 23:42:58 CEST 2009 - wr@rosenauer.org
+
+- new snapshot (20090916)
+
+-------------------------------------------------------------------
+Mon Aug 24 17:37:06 CEST 2009 - wr@rosenauer.org
+
+- first alpha package of XULRunner 1.9.2
+

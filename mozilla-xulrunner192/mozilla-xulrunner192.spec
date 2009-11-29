@@ -1,0 +1,469 @@
+#
+# spec file for package mozilla-xulrunner192 (Version 1.9.2b4)
+#
+# Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2006-2009 Wolfgang Rosenauer
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+# norootforbuild
+
+
+Name:           mozilla-xulrunner192
+BuildRequires:  autoconf213 gcc-c++ libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip
+# needed for brp-check-bytecode-version (jar, fastjar would do as well)
+BuildRequires:  unzip
+%if %suse_version > 1020
+BuildRequires:  fdupes
+%endif
+%if %suse_version > 1030
+BuildRequires:  hunspell-devel
+%endif
+%if %suse_version > 1100
+BuildRequires:  nss-shared-helper-devel
+%endif
+%if %suse_version > 1110
+BuildRequires:  libiw-devel
+#BuildRequires:  libproxy-devel
+%else
+BuildRequires:  wireless-tools
+%endif
+License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+Version:        1.9.2b4
+Release:        1
+%define         releasedate 2009112600
+%define         version_internal 1.9.2b4
+%define         apiversion 1.9.2
+%define         uaweight 191999
+Summary:        Mozilla Runtime Environment 1.9.2
+Url:            http://www.mozilla.org
+Group:          Productivity/Other
+Provides:       gecko192
+%ifarch %ix86
+Provides:       mozilla-xulrunner192-32bit = %{version}-%{release}
+%endif
+Source:         xulrunner-source-%{version}.tar.bz2
+Source1:        l10n-%{version}.tar.bz2
+Source2:        find-external-requires.sh
+Source3:        %{name}-rpmlintrc
+Source4:        xulrunner-openSUSE-prefs.js
+Source5:        add-plugins.sh.in
+Source6:        create-tar.sh
+Patch1:         toolkit-download-folder.patch
+Patch2:         mozilla-libproxy.patch
+Patch3:         mozilla-pkgconfig.patch
+Patch4:         idldir.patch
+Patch7:         mozilla-nongnome-proxies.patch
+Patch8:         mozilla-helper-app.patch
+Patch12:        mozilla-prefer_plugin_pref.patch
+# PATCH-FEATURE-SLED FATE#302023, FATE#302024 - hfiguiere@novell.com
+# --- disabled for now
+Patch16:        gconf-backend.patch.bz2
+Patch17:        gecko-lockdown.patch
+Patch18:        toolkit-ui-lockdown.patch
+# ---
+Patch22:        mozilla-shared-nss-db.patch
+Patch23:        mozilla-kde.patch
+Patch24:        mozilla-startup-notification.patch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+PreReq:         update-alternatives coreutils
+### build configuration ###
+%define has_system_nspr  0
+%define has_system_nss   0
+%define has_system_cairo 0
+%define localize 1
+%if %suse_version > 1030 || 0%{?opensuse_bs}
+%define has_system_nspr  1
+%define has_system_nss   1
+%endif
+%if %suse_version > 1110
+%define has_system_cairo 1
+%endif
+### configuration end ###
+%define _use_internal_dependency_generator 0
+%define __find_requires sh %{SOURCE2}
+%global provfind sh -c "grep -v 'libsqlite3.so' | %__find_provides"
+%global __find_provides %provfind
+%if %has_system_nspr
+BuildRequires:  mozilla-nspr-devel
+Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
+%endif
+%if %has_system_nss
+BuildRequires:  mozilla-nss-devel >= 3.12.3
+Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
+%endif
+Recommends:     %{name}-gnomevfs
+
+%description
+XULRunner is a single installable package that can be used to bootstrap
+multiple XUL+XPCOM applications that are as rich as Firefox and
+Thunderbird.
+
+
+%package devel
+License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+Summary:        XULRunner/Gecko SDK 1.9.2
+Group:          Development/Libraries/Other
+%if %has_system_nspr
+Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel) 
+%endif
+%if %has_system_nss
+Requires:       mozilla-nss-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss-devel)
+%endif
+PreReq:         %{name} = %{version}
+
+%description devel
+Software Development Kit to embed XUL or Gecko into other applications.
+
+
+%package translations-common
+License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+Summary:        Common translations for XULRunner 1.9.2
+Group:          System/Localization
+PreReq:         %{name} = %{version}
+Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
+Obsoletes:      %{name}-translations < %{version}-%{release}
+
+%description translations-common
+XULRunner is a single installable package that can be used to bootstrap
+multiple XUL+XPCOM applications that are as rich as Firefox and
+Thunderbird.
+
+This package contains the most common languages but en-US which is
+delivered in the main package.
+
+
+%package translations-other
+License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+Summary:        Extra translations for XULRunner 1.9.2
+Group:          System/Localization
+PreReq:         %{name} = %{version}
+Provides:       locale(%{name}:be;bn_BD;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;tr;uk)
+Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;th;tr;uk;vi)
+Obsoletes:      %{name}-translations < %{version}-%{release}
+
+%description translations-other
+XULRunner is a single installable package that can be used to bootstrap
+multiple XUL+XPCOM applications that are as rich as Firefox and
+Thunderbird.
+
+This package contains rarely used languages.
+
+
+%package gnomevfs
+License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+Summary:        XULRunner components depending on gnome-vfs
+Group:          Productivity/Other
+PreReq:         %{name} = %{version}-%{release}
+
+%description gnomevfs
+This subpackage contains the Necko Gnome-VFS and Gnome components which
+rely on the gnome-vfs subsystem to be installed. They are recommended
+for full desktop integration but not mandatory for small disk footprint
+KDE installations for example.
+
+
+%prep
+%setup -n mozilla -q -b 1
+%patch1 -p1
+#%patch2 -p1
+%patch3 -p1
+%patch4
+%patch7
+%patch8 -p1
+%patch12 -p1
+# BEGIN lockdown - currently broken (see bnc#508611)
+#%patch16 -p1
+#%patch17
+#%patch18 -p1
+# END lockdown
+%patch22 -p1
+%patch24 -p1
+
+%build
+MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
+export MOZ_BUILD_DATE=%{releasedate}
+export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+%ifarch ppc64
+export CFLAGS="$CFLAGS -mminimal-toc"
+%endif
+# 10.3-x86_64 build fails probably because gcc bug
+%if %suse_version == 1030
+%ifarch x86_64
+export ac_cv_visibility_hidden="no"
+%endif
+%endif
+export CXXFLAGS="$CFLAGS"
+export LDFLAGS="-Wl,-rpath -Wl,${MOZ_APP_DIR}"
+export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
+export MOZILLA_OFFICIAL=1
+export BUILD_OFFICIAL=1
+export MOZ_MILESTONE_RELEASE=1
+#
+cat << EOF > $MOZCONFIG
+mk_add_options MOZILLA_OFFICIAL=1
+mk_add_options BUILD_OFFICIAL=1
+mk_add_options MOZ_MILESTONE_RELEASE=1
+mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
+. \$topsrcdir/xulrunner/config/mozconfig
+ac_add_options --prefix=%{_prefix}
+ac_add_options --libdir=%{_libdir}
+ac_add_options --sysconfdir=%{_sysconfdir}
+ac_add_options --mandir=%{_mandir}
+ac_add_options --includedir=%{_includedir}
+ac_add_options --enable-optimize
+ac_add_options --enable-extensions=default
+ac_add_options --with-system-jpeg
+#ac_add_options --with-system-png # no APNG support
+ac_add_options --with-system-zlib
+ac_add_options --with-l10n-base=../l10n
+ac_add_options --enable-xft
+ac_add_options --disable-freetype2
+ac_add_options --enable-svg
+ac_add_options --enable-canvas
+ac_add_options --disable-tests
+ac_add_options --disable-mochitest
+ac_add_options --disable-installer
+ac_add_options --disable-updater
+ac_add_options --disable-javaxpcom
+ac_add_options --disable-crashreporter
+ac_add_options --enable-startup-notification
+ac_add_options --enable-url-classifier
+#ac_add_options --enable-debug
+EOF
+%if %has_system_nspr
+cat << EOF >> $MOZCONFIG
+ac_add_options --with-system-nspr
+EOF
+%endif
+%if %has_system_nss
+cat << EOF >> $MOZCONFIG
+ac_add_options --with-system-nss
+EOF
+%endif
+%if %has_system_cairo
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-system-cairo
+EOF
+%endif
+%if %suse_version > 1030
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-system-hunspell
+EOF
+%endif
+#%if %suse_version > 1100
+#cat << EOF >> $MOZCONFIG
+#ac_add_options --enable-system-sqlite
+#EOF
+#%endif
+#%if %suse_version > 1110
+#cat << EOF >> $MOZCONFIG
+#ac_add_options --enable-libproxy
+#EOF
+#%endif
+make -f client.mk build
+
+%install
+%makeinstall STRIP=/bin/true
+# remove some executable permissions
+find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
+     -type f -perm -111 -exec chmod a-x {} \;
+find $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/ \
+     -name "*.js" -o -name "*.xpm" -o -name "*.png" | xargs chmod a-x
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions
+# fixing SDK dynamic libs (symlink instead of copy)
+rm $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/*.so
+ln -sf ../../../xulrunner-%{version_internal}/libmozjs.so \
+       $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
+ln -sf ../../../xulrunner-%{version_internal}/libxpcom.so \
+       $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
+ln -sf ../../../xulrunner-%{version_internal}/libxul.so \
+       $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
+# XPI example
+#cp -rL dist/xpi-stage/simple $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/
+# preferences
+cp %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
+# install add-plugins.sh
+sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
+  %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
+# 64bit classification for GRE config
+%ifarch x86_64 s390x ppc64
+mv $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}.system.conf \
+   $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}-64bit.system.conf
+%endif
+# ghosts
+touch $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/global.reginfo
+# install additional locales
+%if %localize
+rm -f %{_tmppath}/translations.*
+for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
+  case $locale in
+   ja-JP-mac|en-US)
+      ;;
+   *)
+      make -C toolkit/locales libs-$locale
+      cp dist/xpi-stage/locale-$locale/chrome/$locale.jar \
+         $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/chrome
+      cp dist/xpi-stage/locale-$locale/chrome/$locale.manifest \
+         $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/chrome
+      # check against the fixed common list and sort into the right filelist
+      _matched=0
+      for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
+        [ "$_match" = "$locale" ] && _matched=1
+      done
+      [ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other
+      echo %{_libdir}/xulrunner-%{version_internal}/chrome/$locale.jar \
+         >> %{_tmppath}/translations.$_l10ntarget
+      echo %{_libdir}/xulrunner-%{version_internal}/chrome/$locale.manifest \
+         >> %{_tmppath}/translations.$_l10ntarget
+  esac
+done
+%endif
+# API symlink
+ln -sf xulrunner-%{version_internal} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{apiversion}
+# compat links
+%if 0%{?ga_version:1}
+touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{ga_version}
+%endif
+# excludes
+rm -f $RPM_BUILD_ROOT%{_bindir}/xulrunner
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/updater
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/update.locale
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
+# fdupes
+%if %suse_version > 1020
+%fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
+%fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
+%endif
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+%if %localize
+rm -rf %{_tmppath}/translations.*
+%endif
+
+%post
+/usr/sbin/update-alternatives --install %{_bindir}/xulrunner \
+  xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner %{uaweight} || :
+%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+exit 0
+
+%posttrans
+# needed for updates which transition directory to symlink
+%if 0%{?ga_version:1} 
+test -d %{_libdir}/xulrunner-%{ga_version} && rm -rf %{_libdir}/xulrunner-%{ga_version}
+ln -sf xulrunner-%{version_internal} %{_libdir}/xulrunner-%{ga_version}
+%endif
+[ -e %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh ] && \
+  %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+exit 0
+
+%preun
+if [ "$1" = "0" ]; then # deinstallation
+  # that's not quite nice since old versions should be removed on update as well
+  # but that's problematic for updates w/o raising the version number
+  /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner
+fi
+rm -f %{_libdir}/xulrunner-%{version_internal}/dictionaries/*
+exit 0
+
+%triggerin -- myspell-dictionary
+%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+exit 0
+
+%triggerpostun -- myspell-dictionary
+%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+exit 0
+
+%files
+%defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%dir %{_libdir}/xulrunner-%{version_internal}/chrome/
+%dir %{_libdir}/xulrunner-%{version_internal}/dictionaries/
+%dir %{_libdir}/xulrunner-%{version_internal}/extensions/
+%{_libdir}/xulrunner-%{version_internal}/chrome/classic.*
+%{_libdir}/xulrunner-%{version_internal}/chrome/comm.*
+%{_libdir}/xulrunner-%{version_internal}/chrome/en-US.*
+%{_libdir}/xulrunner-%{version_internal}/chrome/pippki.*
+%{_libdir}/xulrunner-%{version_internal}/chrome/toolkit.*
+%{_libdir}/xulrunner-%{version_internal}/chrome/icons/
+%{_libdir}/xulrunner-%{version_internal}/components/
+%exclude %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
+%exclude %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
+%{_libdir}/xulrunner-%{version_internal}/defaults/
+%dir %{_libdir}/xulrunner-%{version_internal}/greprefs/
+%{_libdir}/xulrunner-%{version_internal}/greprefs/all.js
+%{_libdir}/xulrunner-%{version_internal}/greprefs/security-prefs.js
+%{_libdir}/xulrunner-%{version_internal}/greprefs/xpinstall.js
+%{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
+%{_libdir}/xulrunner-%{version_internal}/icons/
+%{_libdir}/xulrunner-%{version_internal}/modules/
+%{_libdir}/xulrunner-%{version_internal}/plugins/
+%{_libdir}/xulrunner-%{version_internal}/res/
+%{_libdir}/xulrunner-%{version_internal}/*.so
+%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
+%{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
+%{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
+%if !%has_system_nss
+%{_libdir}/xulrunner-%{version_internal}/libsoftokn3.chk
+%{_libdir}/xulrunner-%{version_internal}/libfreebl3.chk
+%endif
+%{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
+%{_libdir}/xulrunner-%{version_internal}/xulrunner
+%{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
+%{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
+%{_libdir}/xulrunner-%{version_internal}/platform.ini
+#%{_libdir}/xulrunner-%{version_internal}/javaxpcom.jar
+# ghosts
+%ghost %{_libdir}/xulrunner-%{version_internal}/global.reginfo
+# GRE
+%dir %{_sysconfdir}/gre.d/
+%attr(644,root,root) %{_sysconfdir}/gre.d/*
+# example
+#%{_libdir}/xulrunner-%{version_internal}/simple/
+# API symlink
+%{_libdir}/xulrunner-%{apiversion}
+# compat symlinks
+%if 0%{?ga_version:1} 
+%ghost %{_libdir}/xulrunner-%{ga_version}
+%endif
+
+%files devel
+%defattr(-,root,root)
+#%{_libdir}/xulrunner-%{version_internal}/MozillaInterfaces*
+%{_libdir}/xulrunner-%{version_internal}/xpcshell
+%{_libdir}/xulrunner-%{version_internal}/xpidl
+%{_libdir}/xulrunner-%{version_internal}/xpt_dump
+%{_libdir}/xulrunner-%{version_internal}/xpt_link
+%{_libdir}/xulrunner-devel-%{version_internal}/
+# FIXME symlink dynamic libs below sdk/lib
+%attr(644,root,root) %{_libdir}/pkgconfig/*
+%{_includedir}/xulrunner-%{version_internal}/
+
+%files gnomevfs
+%defattr(-,root,root)
+%{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
+%{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
+
+%if %localize
+%files translations-common -f %{_tmppath}/translations.common
+%defattr(-,root,root)
+
+%files translations-other -f %{_tmppath}/translations.other
+%defattr(-,root,root)
+%endif
+
+%changelog

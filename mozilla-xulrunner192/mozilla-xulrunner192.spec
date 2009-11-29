@@ -178,8 +178,8 @@ KDE installations for example.
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
-%patch4
-%patch7
+%patch4 -p1
+%patch7 -p1
 %patch8 -p1
 %patch12 -p1
 # BEGIN lockdown - currently broken (see bnc#508611)

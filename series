@@ -1,3 +1,4 @@
+# xulrunner/gecko patches
 toolkit-download-folder.patch
 mozilla-libproxy.patch
 mozilla-pkgconfig.patch
@@ -7,6 +8,8 @@ mozilla-helper-app.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
 mozilla-startup-notification.patch
+
+# Firefox patches
 firefox-libxul-sdk.patch
 firefox-credits.patch
 firefox-linkorder.patch

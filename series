@@ -8,6 +8,7 @@ mozilla-helper-app.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
 mozilla-startup-notification.patch
+mozilla-kde.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch
@@ -17,3 +18,4 @@ firefox-browser-css.patch
 firefox-cross-desktop.patch
 firefox-no-gnomevfs.patch
 firefox-appname.patch
+firefox-kde.patch

@@ -31,7 +31,7 @@ BuildRequires:  libiw-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
 Version:        3.6b4
@@ -47,6 +47,7 @@ Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
 # this needs to be shipped when lockdown changes are back
 Source5:        firefox.schemas
+Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
 Source16:       firefox.1
@@ -57,9 +58,9 @@ Patch3:         toolkit-download-folder.patch
 Patch4:         firefox-linkorder.patch
 Patch5:         firefox-browser-css.patch
 Patch6:         firefox-cross-desktop.patch
-#Patch7:         firefox-kde.patch
-Patch8:         firefox-no-gnomevfs.patch
-Patch17:        firefox-appname.patch
+Patch7:         firefox-no-gnomevfs.patch
+Patch8:         firefox-appname.patch
+Patch9:         firefox-kde.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         coreutils /bin/sh shared-mime-info desktop-file-utils
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
@@ -94,7 +95,7 @@ plethora of extensions.
 %if %localize
 %package translations-common
 Summary:        Common translations for MozillaFirefox
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Group:          System/Localization
 PreReq:         %{name} = %{version}
@@ -107,7 +108,7 @@ of MozillaFirefox.
 
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:be;bn_BD;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;tr;uk)
 Group:          System/Localization
 PreReq:         %{name} = %{version}
@@ -121,7 +122,7 @@ of MozillaFirefox.
 %endif
 
 %package branding-upstream
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Upstream branding for MozillaFirefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 3.5
@@ -150,10 +151,15 @@ cd $RPM_BUILD_DIR/mozilla
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1 # FIXME
+%patch5 -p1
 %patch6 -p1
+%patch7 -p1
 %patch8 -p1
-%patch17 -p1
+%if %suse_version >= 1110
+%patch9 -p1
+# install kde.js
+install -m 644 %{SOURCE6} browser/app/profile/kde.js
+%endif
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

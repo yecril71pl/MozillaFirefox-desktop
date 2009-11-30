@@ -1,3 +1,6 @@
+From: Ubuntu
+Subject: introduce a pref to prefer certain plugins for mime-types
+
 diff --git a/modules/plugin/base/src/nsPluginHost.cpp b/modules/plugin/base/src/nsPluginHost.cpp
 --- a/modules/plugin/base/src/nsPluginHost.cpp
 +++ b/modules/plugin/base/src/nsPluginHost.cpp

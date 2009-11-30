@@ -1,3 +1,6 @@
+From: Wolfgang Rosenauer
+Subject: pkgconfig tuning
+
 diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
 --- a/xulrunner/installer/Makefile.in
 +++ b/xulrunner/installer/Makefile.in

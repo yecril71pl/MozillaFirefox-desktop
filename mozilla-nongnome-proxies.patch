@@ -1,7 +1,6 @@
 From: Wolfgang Rosenauer
 Subject: Do not use gconf for proxy settings if not running within Gnome
 
-
 Index: toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 ===================================================================
 RCS file: /cvsroot/mozilla/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp,v

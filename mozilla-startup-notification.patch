@@ -1,3 +1,9 @@
+From: Lubos Lunak <llunak@suse.cz>
+Subject: Firefox 3.5 broken startup notification
+References:
+http://bugzilla.novell.com/show_bug.cgi?id=518603
+https://bugzilla.mozilla.org/show_bug.cgi?id=416053
+
 diff --git a/toolkit/xre/nsAppRunner.cpp b/toolkit/xre/nsAppRunner.cpp
 --- a/toolkit/xre/nsAppRunner.cpp
 +++ b/toolkit/xre/nsAppRunner.cpp

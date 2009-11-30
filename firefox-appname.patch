@@ -1,3 +1,6 @@
+From: Wolfgang Rosenauer <wr@rosenauer.org>
+Subject: Hardcode app starter for default check
+
 diff --git a/browser/components/shell/src/nsGNOMEShellService.cpp b/browser/components/shell/src/nsGNOMEShellService.cpp
 --- a/browser/components/shell/src/nsGNOMEShellService.cpp
 +++ b/browser/components/shell/src/nsGNOMEShellService.cpp

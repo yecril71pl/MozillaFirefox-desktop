@@ -1,6 +1,5 @@
 From: Wolfgang Rosenauer <stark@suse.de>
 Subject: fix IDL installation dir 
-
 This is only needed to get the correct path in xulrunner-config
 
 Index: config/autoconf.mk.in

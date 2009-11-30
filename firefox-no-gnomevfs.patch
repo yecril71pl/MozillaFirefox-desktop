@@ -1,3 +1,8 @@
+From: Wolfgang Rosenauer <wr@rosenauer.org>
+Subject: Do not build nkgnomevfs in xul app builds
+References:
+https://bugzilla.mozilla.org/show_bug.cgi?id=512671
+
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in

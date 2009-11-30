@@ -2,7 +2,6 @@ From: Wolfgang Rosenauer
 Subject: Build fails with --as-needed
 References:
 
-
 diff --git a/browser/components/build/Makefile.in b/browser/components/build/Makefile.in
 --- a/browser/components/build/Makefile.in
 +++ b/browser/components/build/Makefile.in

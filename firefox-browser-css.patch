@@ -1,3 +1,8 @@
+From: Jakub Steiner <jimmac@novell.com>
+Subject: make style compatible with dark themes
+References:
+https://bugzilla.novell.com/show_bug.cgi?id=503351
+
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
 --- a/browser/base/content/browser.css
 +++ b/browser/base/content/browser.css

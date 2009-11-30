@@ -2574,7 +2574,26 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -131,17 +131,17 @@ CMMSRCS = nsNativeAppSupportCocoa.mm
+@@ -42,16 +42,18 @@ srcdir		= @srcdir@
+ VPATH		= @srcdir@
+ 
+ include $(DEPTH)/config/autoconf.mk
+ 
+ MODULE = xulapp
+ LIBRARY_NAME = xulapp_s
+ LIBXUL_LIBRARY = 1
+ 
++EXPORTS = nsKDEUtils.h
++
+ REQUIRES = \
+ 	appcomps \
+ 	toolkitcomps \
+ 	appshell \
+ 	chrome \
+ 	content \
+ 	docshell \
+ 	dom \
+@@ -131,17 +133,17 @@ CMMSRCS = nsNativeAppSupportCocoa.mm
  else
  ifeq ($(MOZ_WIDGET_TOOLKIT),os2)
  CPPSRCS += nsNativeAppSupportOS2.cpp
@@ -2597,7 +2616,7 @@ diff --git a/toolkit/xre/nsKDEUtils.cpp b/toolkit/xre/nsKDEUtils.cpp
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/xre/nsKDEUtils.cpp
-@@ -0,0 +1,335 @@
+@@ -0,0 +1,334 @@
 +/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 +/* ***** BEGIN LICENSE BLOCK *****
 + * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -2638,8 +2657,7 @@ new file mode 100644
 +#include "nsKDEUtils.h"
 +#include "nsIWidget.h"
 +
-+#include <gtk/gtkwindow.h>
-+#include <gtk/gtkmain.h>
++#include <gtk/gtk.h>
 +
 +#include <limits.h>
 +#include <stdio.h>
@@ -3604,7 +3622,25 @@ diff --git a/widget/src/gtk2/Makefile.in b/widget/src/gtk2/Makefile.in
 diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
 --- a/widget/src/gtk2/nsFilePicker.cpp
 +++ b/widget/src/gtk2/nsFilePicker.cpp
-@@ -50,16 +50,17 @@
+@@ -31,16 +31,17 @@
+  * decision by deleting the provisions above and replace them with the notice
+  * and other provisions required by the GPL or the LGPL. If you do not delete
+  * the provisions above, a recipient may use your version of this file under
+  * the terms of any one of the MPL, the GPL or the LGPL.
+  *
+  * ***** END LICENSE BLOCK ***** */
+ 
+ #include <gtk/gtk.h>
++#include <gdk/gdkx.h>
+ 
+ #include "nsIFileURL.h"
+ #include "nsIURI.h"
+ #include "nsIWidget.h"
+ #include "nsILocalFile.h"
+ #include "nsIStringBundle.h"
+ 
+ #include "nsArrayEnumerator.h"
+@@ -50,16 +51,17 @@
  #include "nsReadableUtils.h"
  #include "mozcontainer.h"
  
@@ -3622,7 +3658,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
  #define MAX_PREVIEW_SIZE 180
  
  nsILocalFile *nsFilePicker::mPrevDisplayDirectory = nsnull;
-@@ -270,17 +271,19 @@ nsFilePicker::AppendFilters(PRInt32 aFil
+@@ -270,17 +272,19 @@ nsFilePicker::AppendFilters(PRInt32 aFil
    return nsBaseFilePicker::AppendFilters(aFilterMask);
  }
  
@@ -3643,7 +3679,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
  
    mFilters.AppendElement(filter);
    mFilterNames.AppendElement(name);
-@@ -418,16 +421,19 @@ confirm_overwrite_file(GtkWidget *parent
+@@ -418,16 +422,19 @@ confirm_overwrite_file(GtkWidget *parent
    gtk_widget_destroy(dialog);
  
    return result;
@@ -3663,7 +3699,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
    GtkWindow *parent_widget = get_gtk_window_for_nsiwidget(mParentWidget);
  
    GtkFileChooserAction action = GetGtkFileChooserAction(mMode);
-@@ -568,8 +574,234 @@ nsFilePicker::Show(PRInt16 *aReturn)
+@@ -568,8 +575,234 @@ nsFilePicker::Show(PRInt16 *aReturn)
      *aReturn = nsIFilePicker::returnCancel;
      break;
    }
@@ -3675,16 +3711,16 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
 +
 +nsCString nsFilePicker::kdeMakeFilter( int index )
 +    {
-+    nsCString buf = *mFilters[ index ];
++    nsCString buf = mFilters[ index ];
 +    for( PRUint32 i = 0;
 +         i < buf.Length();
 +         ++i )
 +        if( buf[ i ] == ';' ) // KDE separates just using spaces
 +            buf.SetCharAt( ' ', i );
-+    if (!mFilterNames[index]->IsEmpty())
++    if (!mFilterNames[index].IsEmpty())
 +        {
 +        buf += "|";
-+        buf += mFilterNames[index]->get();
++        buf += mFilterNames[index].get();
 +        }
 +    return buf;
 +    }
@@ -3700,7 +3736,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
 +    {
 +    NS_ENSURE_ARG_POINTER(aReturn);
 +
-+    if( mMode == modeOpen && mFilters.Count() == 1 && mFilters[ 0 ]->EqualsLiteral( "..apps" ))
++    if( mMode == modeOpen && mFilters.Length() == 1 && mFilters[ 0 ].EqualsLiteral( "..apps" ))
 +        return kdeAppsDialog( aReturn );
 +
 +    nsXPIDLCString title;
@@ -3764,7 +3800,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.cpp b/widget/src/gtk2/nsFilePicker.cpp
 +      startdir = ".";
 +
 +    nsCAutoString filters;
-+    PRInt32 count = mFilters.Count();
++    PRInt32 count = mFilters.Length();
 +    if( count == 0 ) //just in case
 +        filters = "*";
 +    else

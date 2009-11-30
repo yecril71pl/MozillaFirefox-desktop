@@ -1,13 +1,9 @@
 -------------------------------------------------------------------
-Thu Nov 26 19:34:22 CET 2009 - wr@rosenauer.org
+Mon Nov 30 17:12:24 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b4
-
--------------------------------------------------------------------
-Thu Nov 19 07:46:41 CET 2009 - wr@rosenauer.org
-
-- update to 1.9.2b3
   * removed upstreamed mozilla-abi.patch
+- integrated mozilla-kde.patch
 
 -------------------------------------------------------------------
 Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org

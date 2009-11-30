@@ -38,7 +38,7 @@ BuildRequires:  libiw-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2b4
 Release:        1
 %define         releasedate 2009112600
@@ -49,6 +49,12 @@ Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
 Provides:       gecko192
+%if %suse_version >= 1110
+# this is needed to match this package with the kde4 helper package without the main package
+# having a hard requirement on the kde4 package
+%define kde_helper_version 6
+Provides:       mozilla-xulrunner191-kde4-version = %{kde_helper_version}
+%endif
 %ifarch %ix86
 Provides:       mozilla-xulrunner192-32bit = %{version}-%{release}
 %endif
@@ -63,18 +69,18 @@ Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
-Patch7:         mozilla-nongnome-proxies.patch
-Patch8:         mozilla-helper-app.patch
-Patch12:        mozilla-prefer_plugin_pref.patch
+Patch5:         mozilla-nongnome-proxies.patch
+Patch6:         mozilla-helper-app.patch
+Patch7:         mozilla-prefer_plugin_pref.patch
+Patch8:         mozilla-shared-nss-db.patch
+Patch9:         mozilla-startup-notification.patch
+Patch10:        mozilla-kde.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024 - hfiguiere@novell.com
 # --- disabled for now
 Patch16:        gconf-backend.patch.bz2
 Patch17:        gecko-lockdown.patch
 Patch18:        toolkit-ui-lockdown.patch
 # ---
-Patch22:        mozilla-shared-nss-db.patch
-Patch23:        mozilla-kde.patch
-Patch24:        mozilla-startup-notification.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         update-alternatives coreutils
 ### build configuration ###
@@ -111,7 +117,7 @@ Thunderbird.
 
 
 %package devel
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner/Gecko SDK 1.9.2
 Group:          Development/Libraries/Other
 %if %has_system_nspr
@@ -127,7 +133,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 
 
 %package translations-common
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Common translations for XULRunner 1.9.2
 Group:          System/Localization
 PreReq:         %{name} = %{version}
@@ -144,7 +150,7 @@ delivered in the main package.
 
 
 %package translations-other
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
 PreReq:         %{name} = %{version}
@@ -161,7 +167,7 @@ This package contains rarely used languages.
 
 
 %package gnomevfs
-License:        GPL v2 or later ; LGPL v2.1 or later ; MPL 1.1 or later
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 PreReq:         %{name} = %{version}-%{release}
@@ -176,21 +182,29 @@ KDE installations for example.
 %prep
 %setup -n mozilla -q -b 1
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch12 -p1
+%patch9 -p1
+%patch10 -p1
 # BEGIN lockdown - currently broken (see bnc#508611)
 #%patch16 -p1
 #%patch17
 #%patch18 -p1
 # END lockdown
-%patch22 -p1
-%patch24 -p1
 
 %build
+%if %suse_version >= 1110
+kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
+if test "$kdehelperversion" != %{kde_helper_version}; then
+  echo fix kde helper version in the .spec file
+  exit 1
+fi
+%endif
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"

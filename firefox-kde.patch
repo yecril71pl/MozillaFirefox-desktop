@@ -1146,3 +1146,24 @@ new file mode 100644
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult);
 +
 +#endif // nsunixshellservice_h____
+diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
+--- a/browser/installer/package-manifest.in
++++ b/browser/installer/package-manifest.in
+@@ -395,16 +395,17 @@
+ @BINPATH@/icons/*.png
+ #endif
+ 
+ ; [Default Preferences]
+ ; All the pref files must be part of base to prevent migration bugs
+ @BINPATH@/@PREF_DIR@/firefox.js
+ @BINPATH@/@PREF_DIR@/firefox-branding.js
+ @BINPATH@/@PREF_DIR@/channel-prefs.js
++@BINPATH@/@PREF_DIR@/kde.js
+ @BINPATH@/greprefs/all.js
+ @BINPATH@/greprefs/security-prefs.js
+ @BINPATH@/greprefs/xpinstall.js
+ @BINPATH@/defaults/autoconfig/platform.js
+ @BINPATH@/defaults/autoconfig/prefcalls.js
+ 
+ ; [Layout Engine Resources]
+ ; Style Sheets, Graphics and other Resources used by the layout engine. 

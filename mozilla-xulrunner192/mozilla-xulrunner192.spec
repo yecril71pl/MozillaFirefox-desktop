@@ -53,7 +53,7 @@ Provides:       gecko192
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
-Provides:       mozilla-xulrunner191-kde4-version = %{kde_helper_version}
+Provides:       mozilla-kde4-version = %{kde_helper_version}
 %endif
 %ifarch %ix86
 Provides:       mozilla-xulrunner192-32bit = %{version}-%{release}

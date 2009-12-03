@@ -74,9 +74,7 @@ Patch6:         mozilla-helper-app.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch9:         mozilla-startup-notification.patch
-%if %suse_version >= 1110
 Patch10:        mozilla-kde.patch
-%endif
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024 - hfiguiere@novell.com
 # --- disabled for now
 Patch16:        gconf-backend.patch.bz2
@@ -192,7 +190,9 @@ KDE installations for example.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%if %suse_version >= 1110
 %patch10 -p1
+%endif
 # BEGIN lockdown - currently broken (see bnc#508611)
 #%patch16 -p1
 #%patch17

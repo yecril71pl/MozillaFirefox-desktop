@@ -359,6 +359,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/update.locale
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
+# autoreg
+touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 # fdupes
 %if %suse_version > 1020
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
@@ -404,6 +406,10 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
+%post gnomevfs
+touch %{_libdir}/xulrunner-%{version_internal}/.autoreg
+exit 0
+
 %files
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -430,6 +436,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/plugins/
 %{_libdir}/xulrunner-%{version_internal}/res/
 %{_libdir}/xulrunner-%{version_internal}/*.so
+%{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client

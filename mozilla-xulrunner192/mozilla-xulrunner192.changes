@@ -1,9 +1,10 @@
 -------------------------------------------------------------------
-Mon Nov 30 17:12:24 CET 2009 - wr@rosenauer.org
+Fri Dec  4 15:39:53 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b4
   * removed upstreamed mozilla-abi.patch
 - integrated mozilla-kde.patch
+- use .autoreg file for autoregistration when needed (bnc#440872) 
 
 -------------------------------------------------------------------
 Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org

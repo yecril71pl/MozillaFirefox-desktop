@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 3.6b4)
+# spec file for package MozillaFirefox (Version 3.6b5)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
 # Copyright (c) 2006-2009 Wolfgang Rosenauer
@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
 BuildRequires:  autoconf213 gcc-c++ libgnomeui-devel libidl-devel libnotify-devel orbit-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2b4
+BuildRequires:  %{xulrunner}-devel = 1.9.2b5
 %if %suse_version > 1020
 BuildRequires:  fdupes
 %endif
@@ -34,9 +34,9 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
-Version:        3.6b4
+Version:        3.6b5
 Release:        1
-%define         releasedate 2009112600
+%define         releasedate 2009120400
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -109,7 +109,7 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       locale(%{name}:be;bn_BD;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;tr;uk)
+Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Group:          System/Localization
 PreReq:         %{name} = %{version}
 Requires:       %{xulrunner}-translations-other

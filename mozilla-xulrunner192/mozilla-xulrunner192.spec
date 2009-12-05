@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2b4)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2b5)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
 # Copyright (c) 2006-2009 Wolfgang Rosenauer
@@ -39,10 +39,10 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2b4
+Version:        1.9.2b5
 Release:        1
-%define         releasedate 2009112600
-%define         version_internal 1.9.2b4
+%define         releasedate 2009120400
+%define         version_internal 1.9.2b5
 %define         apiversion 1.9.2
 %define         uaweight 191999
 Summary:        Mozilla Runtime Environment 1.9.2
@@ -154,8 +154,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
 PreReq:         %{name} = %{version}
-Provides:       locale(%{name}:be;bn_BD;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;tr;uk)
-Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;id;is;kk;kn;lt;lv;mk;ml;mr;nn_NO;or;pa_IN;rm;ro;si;sk;sl;sq;ta;ta_LK;te;th;tr;uk;vi)
+Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other

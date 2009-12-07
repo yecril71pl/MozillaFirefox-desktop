@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
-Sat Dec  5 09:36:31 CET 2009 - wr@rosenauer.org
+Mon Dec  7 08:10:50 CET 2009 - wr@rosenauer.org
 
 - update to 3.6b5
+- fixed firefox-browser-css.patch (bnc#561027)
 
 -------------------------------------------------------------------
 Mon Nov 30 20:42:37 CET 2009 - wr@rosenauer.org

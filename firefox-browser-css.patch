@@ -1,149 +1,42 @@
-From: Jakub Steiner <jimmac@novell.com>
+From: Jakub Steiner <jimmac@novell.com>, Wolfgang Rosenauer <wr@rosenauer.org
 Subject: make style compatible with dark themes
 References:
 https://bugzilla.novell.com/show_bug.cgi?id=503351
+https://bugzilla.mozilla.org/show_bug.cgi?id=478632
+wr: changed because of
+https://bugzilla.novell.com/show_bug.cgi?id=561027
 
-diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
---- a/browser/base/content/browser.css
-+++ b/browser/base/content/browser.css
-@@ -4,16 +4,21 @@
- searchbar {
-   -moz-binding: url("chrome://browser/content/search/search.xml#searchbar");
- }
- 
- tabbrowser {
-   -moz-binding: url("chrome://browser/content/tabbrowser.xml#tabbrowser");
- }
- 
-+    /* Remove focus lines from tabs */
-+    .tabbrowser-tab > .tab-text {
-+        border: 1px dotted transparent !important;
-+    }
-+
- toolbar[printpreview="true"] {
-   -moz-binding: url("chrome://global/content/printPreviewBindings.xml#printpreviewtoolbar");
- }
- 
- toolbarpaletteitem[place="palette"] > toolbaritem > hbox[type="places"] {
+diff --git a/browser/themes/gnomestripe/browser/browser.css b/browser/themes/gnomestripe/browser/browser.css
+--- a/browser/themes/gnomestripe/browser/browser.css
++++ b/browser/themes/gnomestripe/browser/browser.css
+@@ -788,16 +788,30 @@ toolbar[iconsize="small"] #fullscreen-bu
    display: none;
  }
  
-@@ -25,31 +30,69 @@ toolbarpaletteitem[place="palette"] > to
- #browser-bottombox[lwthemefooter="true"] {
-   background-repeat: no-repeat;
-   background-position: bottom left;
- }
- 
- /* ::::: location bar ::::: */
- #urlbar {
-   -moz-binding: url(chrome://browser/content/urlbarBindings.xml#urlbar);
-+  -moz-appearance: textfield !important;
- }
- 
-+  #urlbar .autocomplete-textbox-container {
-+      background-color: -moz-Field !important;
-+      -moz-appearance: none !important;
-+  }
-+
-+  #urlbar > .autocomplete-history-dropmarker {
-+      -moz-appearance: toolbarbutton-dropdown !important;
-+      margin: 0px 3px 0px 5px !important;
-+  }
-+
- #wrapper-urlbar-container > #urlbar-container > #urlbar {
-   -moz-user-input: disabled;
-   cursor: -moz-grab;
- }
- 
- #PopupAutoComplete {
-   -moz-binding: url("chrome://browser/content/urlbarBindings.xml#browser-autocomplete-result-popup");
- }
- 
+ #PopupAutoComplete,
  #PopupAutoCompleteRichResult {
-   -moz-binding: url("chrome://browser/content/urlbarBindings.xml#urlbar-rich-result-popup");
+   direction: ltr !important;
  }
  
-+  #PopupAutoCompleteRichResult .autocomplete-richlistitem
-+  {
-+      background: -moz-Field !important;
-+  }
-+
-+  #PopupAutoCompleteRichResult .autocomplete-richlistitem[selected="true"]
-+  {
-+      background: Highlight !important;
-+  }
-+
-+  #PopupAutoCompleteRichResult .autocomplete-richlistitem[selected="true"],
-+  #PopupAutoCompleteRichResult .autocomplete-richlistitem[selected="true"] *
-+  {
-+      color: HighlightText !important;
-+  }
-+      
-+  .ac-title
-+    {
-+        color: -moz-Fieldtext !important;
-+    }
-+
-+    #PopupAutoComplete .autocomplete-treebody {
-+        background-color: -moz-Field !important;
-+        color: -moz-Fieldtext !important;
-+    }
-+
-+
- #urlbar-throbber:not([busy="true"]),
- #urlbar-throbber[busy="true"] + #page-proxy-favicon {
-   display: none;
- }
- 
- #feed-button > .button-box > .box-inherit > .button-text,
- #feed-button > .button-box > .button-menu-dropmarker {
-   display: none;
-@@ -69,16 +112,30 @@ toolbarpaletteitem[place="palette"] > to
-   max-width: 22em;
-   min-width: 1px;
- }
- 
- #wrapper-search-container > #search-container > #searchbar > .searchbar-textbox > .autocomplete-textbox-container > .textbox-input-box > html|*.textbox-input {
-   visibility: hidden;
- }
- 
-+/* Identity/Bookmark pop-up improvements */
-+
-+    #identity-popup-container {
-+        -moz-appearance: dialog !important;
-+    }
-+
-+    #editBookmarkPanel {
-+        -moz-appearance: dialog !important;
-+    }
-+
-+    #editBMPanel_foldersExpander, #editBMPanel_tagsSelectorExpander {
-+        -moz-appearance: menulist-button !important;
-+    }
-+
- /* ::::: Unified Back-/Forward Button ::::: */
- #back-button > .toolbarbutton-menu-dropmarker,
- #forward-button > .toolbarbutton-menu-dropmarker,
- #back-forward-dropmarker > .toolbarbutton-icon,
- #back-forward-dropmarker > .toolbarbutton-text {
-   display: none;
- }
- .unified-nav-current {
-@@ -191,8 +248,17 @@ window[chromehidden~="toolbar"] toolbar:
- #allTabs-tab-close-button {
-   -moz-binding: url("chrome://global/content/bindings/toolbarbutton.xml#toolbarbutton-image");
-   margin: 0;
- }
- 
- #allTabs-container {
-   display: block;
- }
-+
-+/* Support for Fission add-on */
-+
-+#urlbar[fission="fusion"] > #statusbar-icon > .progress-bar {
-+    background-color: Highlight !important;
-+    -moz-appearance: progresschunk !important;
-+    opacity: 0.4 !important;
-+    margin: 1px !important;
++#PopupAutoCompleteRichResult .autocomplete-richlistitem {
++  background-color: -moz-Field !important;
 +}
++
++#PopupAutoCompleteRichResult .autocomplete-richlistitem[selected="true"],
++#PopupAutoCompleteRichResult .autocomplete-richlistitem[selected="true"] * {
++  color: HighlightText !important;
++  background: Highlight !important;
++}
++
++.ac-title {
++  color: -moz-Fieldtext !important;
++}
++
+ #PopupAutoComplete:-moz-locale-dir(rtl) > tree > treerows {
+   direction: rtl;
+ }
+ 
+ #PopupAutoComplete .autocomplete-treebody {
+   direction: ltr;
+ }
+ 

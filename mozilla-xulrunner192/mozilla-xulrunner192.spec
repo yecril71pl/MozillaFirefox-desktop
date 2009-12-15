@@ -34,7 +34,7 @@ BuildRequires:  nss-shared-helper-devel
 %endif
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
-#BuildRequires:  libproxy-devel
+BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
@@ -281,11 +281,11 @@ EOF
 #ac_add_options --enable-system-sqlite
 #EOF
 #%endif
-#%if %suse_version > 1110
-#cat << EOF >> $MOZCONFIG
-#ac_add_options --enable-libproxy
-#EOF
-#%endif
+%if %suse_version > 1110
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-libproxy
+EOF
+%endif
 make -f client.mk build
 
 %install

@@ -1,10 +1,11 @@
 -------------------------------------------------------------------
-Sat Dec  5 09:31:54 CET 2009 - wr@rosenauer.org
+Mon Dec  7 10:14:35 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b5
 - removed upstreamed mozilla-abi.patch
 - integrated mozilla-kde.patch
-- use .autoreg file for autoregistration when needed (bnc#440872) 
+- use .autoreg file for autoregistration when needed (bnc#440872)
+- enable libproxy support from 11.2 on
 
 -------------------------------------------------------------------
 Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org

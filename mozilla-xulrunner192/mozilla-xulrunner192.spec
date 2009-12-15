@@ -108,7 +108,7 @@ Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr
 BuildRequires:  mozilla-nss-devel >= 3.12.3
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
-Recommends:     %{name}-gnomevfs
+Recommends:     %{name}-gnome
 
 %description
 XULRunner is a single installable package that can be used to bootstrap
@@ -165,13 +165,13 @@ Thunderbird.
 This package contains rarely used languages.
 
 
-%package gnomevfs
+%package gnome
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 PreReq:         %{name} = %{version}-%{release}
 
-%description gnomevfs
+%description gnome
 This subpackage contains the Necko Gnome-VFS and Gnome components which
 rely on the gnome-vfs subsystem to be installed. They are recommended
 for full desktop integration but not mandatory for small disk footprint
@@ -405,7 +405,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
-%post gnomevfs
+%post gnome
 touch %{_libdir}/xulrunner-%{version_internal}/.autoreg
 exit 0
 
@@ -475,7 +475,7 @@ exit 0
 %attr(644,root,root) %{_libdir}/pkgconfig/*
 %{_includedir}/xulrunner-%{version_internal}/
 
-%files gnomevfs
+%files gnome
 %defattr(-,root,root)
 %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so

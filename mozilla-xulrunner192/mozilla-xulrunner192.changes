@@ -1,11 +1,12 @@
 -------------------------------------------------------------------
-Mon Dec  7 10:14:35 CET 2009 - wr@rosenauer.org
+Tue Dec 15 19:24:19 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b5
 - removed upstreamed mozilla-abi.patch
 - integrated mozilla-kde.patch
 - use .autoreg file for autoregistration when needed (bnc#440872)
 - enable libproxy support from 11.2 on
+- renamed -gnomevfs subpackage to -gnome
 
 -------------------------------------------------------------------
 Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org

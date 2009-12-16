@@ -65,6 +65,7 @@ Source3:        %{name}-rpmlintrc
 Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
+Source7:        baselibs.conf
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch

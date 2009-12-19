@@ -1,0 +1,66 @@
+From: Wolfgang Rosenauer <wr@rosenauer.org>
+Subject: missing declaration with newer compilers
+
+diff --git a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exception_handler.cc b/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exception_handler.cc
+--- a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exception_handler.cc
++++ b/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exception_handler.cc
+@@ -28,16 +28,17 @@
+ // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ #include <signal.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
+ #include <unistd.h>
++#include <stdio.h>
+ 
+ #include <cassert>
+ #include <cstdlib>
+ #include <ctime>
+ #include <linux/limits.h>
+ 
+ #include "client/linux/handler/exception_handler.h"
+ #include "common/linux/guid_creator.h"
+diff --git a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/minidump_generator.cc b/toolkit/crashreporter/google-breakpad/src/client/linux/handler/minidump_generator.cc
+--- a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/minidump_generator.cc
++++ b/toolkit/crashreporter/google-breakpad/src/client/linux/handler/minidump_generator.cc
+@@ -36,16 +36,17 @@
+ #include <sys/types.h>
+ #include <unistd.h>
+ #include <sys/utsname.h>
+ #include <sys/wait.h>
+ 
+ #include <cstdlib>
+ #include <ctime>
+ #include <string.h>
++#include <stdio.h>
+ 
+ #include "common/linux/file_id.h"
+ #include "client/linux/handler/linux_thread.h"
+ #include "client/minidump_file_writer.h"
+ #include "client/minidump_file_writer-inl.h"
+ #include "google_breakpad/common/minidump_format.h"
+ #include "client/linux/handler/minidump_generator.h"
+ 
+diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.cc b/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.cc
+--- a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.cc
++++ b/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.cc
+@@ -26,16 +26,17 @@
+ // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ #include <a.out.h>
+ #include <cstdarg>
+ #include <cstdlib>
+ #include <cxxabi.h>
++#include <stdio.h>
+ #include <elf.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <link.h>
+ #include <sys/mman.h>
+ #include <stab.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>

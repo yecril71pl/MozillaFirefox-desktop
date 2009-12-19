@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1020
@@ -81,9 +81,13 @@ Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
+Patch14:        mozilla-breakpad.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         update-alternatives coreutils
 ### build configuration ###
+%ifarch %ix86
+%define crashreporter    1
+%endif
 %define has_system_nspr  0
 %define has_system_nss   0
 %define has_system_cairo 0
@@ -178,6 +182,18 @@ for full desktop integration but not mandatory for small disk footprint
 KDE installations for example.
 
 
+%if 0%{?crashreporter}
+%package buildsymbols
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+Summary:        Breakpad buildsymbols for %{name}
+Group:          Development/Debug
+
+%description buildsymbols
+This subpackage contains the Breakpad created and compatible debugging
+symbols meant for upload to Mozilla's crash collector database.
+%endif
+
+
 %prep
 %setup -n mozilla -q -b 1
 %patch1 -p1
@@ -195,6 +211,7 @@ KDE installations for example.
 #%patch11 -p1
 #%patch12 -p1
 #%patch13 -p1
+%patch14 -p1
 
 %build
 %if %suse_version >= 1110
@@ -207,6 +224,9 @@ fi
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+%if 0%{?crashreporter}
+export CFLAGS="$CFLAGS -gstabs+"
+%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -249,7 +269,6 @@ ac_add_options --disable-mochitest
 ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-javaxpcom
-ac_add_options --disable-crashreporter
 ac_add_options --enable-startup-notification
 ac_add_options --enable-url-classifier
 #ac_add_options --enable-debug
@@ -363,6 +382,14 @@ touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
 %endif
+# create breakpad debugsymbols
+%if 0%{?crashreporter}
+make buildsymbols
+if [ -e dist/*.crashreporter-symbols.zip ]; then
+  mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
+  cp dist/*.crashreporter-symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
+fi
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -437,23 +464,22 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
-%if !%has_system_nss
-%{_libdir}/xulrunner-%{version_internal}/libsoftokn3.chk
-%{_libdir}/xulrunner-%{version_internal}/libfreebl3.chk
-%endif
 %{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
-#%{_libdir}/xulrunner-%{version_internal}/javaxpcom.jar
+# crashreporter files
+%if 0%{?crashreporter}
+%{_libdir}/xulrunner-%{version_internal}/crashreporter
+%{_libdir}/xulrunner-%{version_internal}/crashreporter.ini
+%{_libdir}/xulrunner-%{version_internal}/Throbber-small.gif
+%endif
 # ghosts
 %ghost %{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # GRE
 %dir %{_sysconfdir}/gre.d/
 %attr(644,root,root) %{_sysconfdir}/gre.d/*
-# example
-#%{_libdir}/xulrunner-%{version_internal}/simple/
 # API symlink
 %{_libdir}/xulrunner-%{apiversion}
 # compat symlinks
@@ -463,7 +489,6 @@ exit 0
 
 %files devel
 %defattr(-,root,root)
-#%{_libdir}/xulrunner-%{version_internal}/MozillaInterfaces*
 %{_libdir}/xulrunner-%{version_internal}/xpcshell
 %{_libdir}/xulrunner-%{version_internal}/xpidl
 %{_libdir}/xulrunner-%{version_internal}/xpt_dump
@@ -484,6 +509,12 @@ exit 0
 
 %files translations-other -f %{_tmppath}/translations.other
 %defattr(-,root,root)
+%endif
+
+%if 0%{?crashreporter}
+%files buildsymbols
+%defattr(-,root,root)
+%{_datadir}/mozilla/
 %endif
 
 %changelog

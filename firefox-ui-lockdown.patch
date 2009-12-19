@@ -1,3 +1,6 @@
+From: various contributors
+Subject: Firefox chrome lockdown hooks
+
 diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
 --- a/browser/base/content/browser.js
 +++ b/browser/base/content/browser.js

@@ -76,11 +76,10 @@ Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch9:         mozilla-startup-notification.patch
 Patch10:        mozilla-kde.patch
-# PATCH-FEATURE-SLED FATE#302023, FATE#302024 - hfiguiere@novell.com
-# --- disabled for now
-Patch16:        gconf-backend.patch.bz2
-Patch17:        gecko-lockdown.patch
-Patch18:        toolkit-ui-lockdown.patch
+# PATCH-FEATURE-SLED FATE#302023, FATE#302024
+Patch11:        mozilla-gconf-backend.patch
+Patch12:        gecko-lockdown.patch
+Patch13:        toolkit-ui-lockdown.patch
 # ---
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         update-alternatives coreutils
@@ -193,11 +192,9 @@ KDE installations for example.
 %if %suse_version >= 1110
 %patch10 -p1
 %endif
-# BEGIN lockdown - currently broken (see bnc#508611)
-#%patch16 -p1
-#%patch17
-#%patch18 -p1
-# END lockdown
+#%patch11 -p1
+#%patch12 -p1
+#%patch13 -p1
 
 %build
 %if %suse_version >= 1110

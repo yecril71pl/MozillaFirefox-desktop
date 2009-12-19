@@ -9,6 +9,9 @@ mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
 mozilla-startup-notification.patch
 mozilla-kde.patch
+mozilla-gconf-backend.patch
+gecko-lockdown.patch
+toolkit-ui-lockdown.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

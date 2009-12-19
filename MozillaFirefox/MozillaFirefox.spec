@@ -61,6 +61,7 @@ Patch6:         firefox-cross-desktop.patch
 Patch7:         firefox-no-gnomevfs.patch
 Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
+Patch10:        firefox-ui-lockdown.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         coreutils /bin/sh shared-mime-info desktop-file-utils
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
@@ -160,6 +161,7 @@ cd $RPM_BUILD_DIR/mozilla
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
+#%patch10 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

@@ -161,7 +161,7 @@ cd $RPM_BUILD_DIR/mozilla
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-#%patch10 -p1
+%patch10 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

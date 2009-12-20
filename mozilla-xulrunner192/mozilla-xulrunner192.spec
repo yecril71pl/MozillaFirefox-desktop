@@ -208,9 +208,9 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version >= 1110
 %patch10 -p1
 %endif
-#%patch11 -p1
-#%patch12 -p1
-#%patch13 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 %patch14 -p1
 
 %build

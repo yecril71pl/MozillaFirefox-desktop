@@ -21,7 +21,7 @@
 
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libgnomeui-devel libidl-devel libnotify-devel orbit-devel python unzip update-desktop-files zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel orbit-devel python unzip update-desktop-files zip
 BuildRequires:  %{xulrunner}-devel = 1.9.2b5
 %if %suse_version > 1020
 BuildRequires:  fdupes
@@ -62,6 +62,7 @@ Patch7:         firefox-no-gnomevfs.patch
 Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
+Patch11:        firefox-crashreporter.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         coreutils /bin/sh shared-mime-info desktop-file-utils
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
@@ -162,6 +163,7 @@ cd $RPM_BUILD_DIR/mozilla
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
 %patch10 -p1
+%patch11 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -198,7 +200,6 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
-ac_add_options --disable-crashreporter
 EOF
 %if %branding
 cat << EOF >> $MOZCONFIG
@@ -355,6 +356,9 @@ fi
 %{progdir}/%{progname}
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
+%ifarch %ix86
+%{progdir}/crashreporter-override.ini
+%endif
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*
@@ -363,8 +367,8 @@ fi
 %endif
 %{_bindir}/%{progname}
 %doc %{_mandir}/man1/%{progname}.1.gz
-%if %localize
 
+%if %localize
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 

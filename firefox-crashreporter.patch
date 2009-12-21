@@ -1,0 +1,19 @@
+diff --git a/browser/app/application.ini b/browser/app/application.ini
+--- a/browser/app/application.ini
++++ b/browser/app/application.ini
+@@ -53,13 +53,13 @@ ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384
+ [Gecko]
+ MinVersion=@GRE_MILESTONE@
+ MaxVersion=@GRE_MILESTONE@
+ 
+ [XRE]
+ EnableProfileMigrator=1
+ EnableExtensionManager=1
+ 
++#ifdef MOZ_CRASHREPORTER
+ [Crash Reporter]
+-#if MOZILLA_OFFICIAL
+ Enabled=1
++ServerURL=https://crash-reports.mozilla.com/submit
+ #endif
+-ServerURL=https://crash-reports.mozilla.com/submit

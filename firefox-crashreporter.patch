@@ -1,19 +1,49 @@
-diff --git a/browser/app/application.ini b/browser/app/application.ini
---- a/browser/app/application.ini
-+++ b/browser/app/application.ini
-@@ -53,13 +53,13 @@ ID={ec8030f7-c20a-464f-9b0e-13a3a9e97384
- [Gecko]
- MinVersion=@GRE_MILESTONE@
- MaxVersion=@GRE_MILESTONE@
+diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
+--- a/browser/app/Makefile.in
++++ b/browser/app/Makefile.in
+@@ -223,22 +223,16 @@ endif
+ ifdef DEBUG
+ RCFLAGS += -DDEBUG
+ endif
+ RCFLAGS += -DFIREFOX_ICO=\"$(DIST)/branding/firefox-os2.ico\" -DDOCUMENT_ICO=\"$(DIST)/branding/document-os2.ico\"
+ endif
  
- [XRE]
- EnableProfileMigrator=1
- EnableExtensionManager=1
+ include $(topsrcdir)/config/rules.mk
  
-+#ifdef MOZ_CRASHREPORTER
- [Crash Reporter]
--#if MOZILLA_OFFICIAL
- Enabled=1
-+ServerURL=https://crash-reports.mozilla.com/submit
- #endif
--ServerURL=https://crash-reports.mozilla.com/submit
+-DEFINES += -DFIREFOX_ICO=\"$(DIST)/branding/firefox.ico\" -DDOCUMENT_ICO=\"$(DIST)/branding/document.ico\"
+-
+-ifdef MOZILLA_OFFICIAL
+-DEFINES += -DMOZILLA_OFFICIAL
+-endif
+-
+ ifdef BUILD_STATIC_LIBS
+ include $(topsrcdir)/config/static-rules.mk
+ 
+ DEFINES += -DIMPL_XREAPI
+ endif
+ 
+ ifeq ($(MOZ_WIDGET_TOOLKIT),photon)
+ LIBS += -lphexlib
+@@ -277,16 +271,22 @@ install:: $(MOZ_APP_NAME)
+ 
+ GARBAGE += $(MOZ_APP_NAME)
+ GARBAGE += $(addprefix $(DIST)/bin/defaults/pref/, firefox.js)
+ 
+ endif
+ 
+ endif # LIBXUL_SDK
+ 
++ifdef MOZILLA_OFFICIAL
++DEFINES += -DMOZILLA_OFFICIAL
++endif
++
++DEFINES += -DFIREFOX_ICO=\"$(DIST)/branding/firefox.ico\" -DDOCUMENT_ICO=\"$(DIST)/branding/document.ico\"
++
+ ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
+ libs::
+ 	$(INSTALL) $(IFLAGS1) $(DIST)/branding/mozicon128.png $(DIST)/bin/icons
+ 	$(INSTALL) $(IFLAGS1) $(DIST)/branding/document.png   $(DIST)/bin/icons
+ 	$(INSTALL) $(IFLAGS1) $(DIST)/branding/default16.png  $(DIST)/bin/chrome/icons/default
+ 	$(INSTALL) $(IFLAGS1) $(DIST)/branding/default32.png  $(DIST)/bin/chrome/icons/default
+ 	$(INSTALL) $(IFLAGS1) $(DIST)/branding/default48.png  $(DIST)/bin/chrome/icons/default
+ endif

@@ -45,11 +45,11 @@ Source1:        MozillaFirefox.desktop
 Source2:        %{name}-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
-# this needs to be shipped when lockdown changes are back
 Source5:        firefox.schemas
 Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
+Source9:        firefox-lockdown.js
 Source16:       firefox.1
 Source17:       firefox-suse-default-prefs.js
 Patch1:         firefox-libxul-sdk.patch
@@ -261,6 +261,7 @@ sed -e 's,RPM_VERSION,%{version}-%{release},g' \
    %{SOURCE17} > suse-default-prefs
 cp suse-default-prefs $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox-build.js
 rm suse-default-prefs
+cp %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/lockdown.js
 # use correct locale for useragent
 cat > $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox-l10n.js << EOF
 pref("general.useragent.locale", "chrome://global/locale/intl.properties");

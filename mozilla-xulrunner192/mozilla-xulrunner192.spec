@@ -66,6 +66,7 @@ Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
 Source7:        baselibs.conf
+Source8:        toolkit-lockdown.js
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
@@ -325,6 +326,7 @@ ln -sf ../../../xulrunner-%{version_internal}/libxul.so \
 #cp -rL dist/xpi-stage/simple $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/
 # preferences
 cp %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
+cp %{SOURCE8} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/greprefs/lockdown.js
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
   %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh

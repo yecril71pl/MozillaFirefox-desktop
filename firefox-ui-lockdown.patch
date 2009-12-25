@@ -211,7 +211,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
    PlacesStarButton.uninit();
  
-@@ -3208,16 +3364,22 @@ function FillHistoryMenu(aParent) {
+@@ -3208,16 +3364,23 @@ function FillHistoryMenu(aParent) {
  
    // Remove old entries if any
    var children = aParent.childNodes;
@@ -221,10 +221,11 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
    }
  
 +  // lockdown. Don't display anything if locked down.
-+  var disableHistory = gPrefService.getBoolPref("config.lockdown.history");
-+  if (disableHistory) {
-+    return false;
-+  }
++  try {
++    var disableHistory = gPrefService.getBoolPref("config.lockdown.history");
++    if (disableHistory)
++      return false;
++  } catch (ex) {}
 +
    var webNav = getWebNavigation();
    var sessionHistory = webNav.sessionHistory;
@@ -234,7 +235,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
      return false;
  
    const MAX_HISTORY_MENU_ITEMS = 15;
-@@ -3357,16 +3519,17 @@ function BrowserCustomizeToolbar()
+@@ -3357,16 +3520,17 @@ function BrowserCustomizeToolbar()
  {
    // Disable the toolbar context menu items
    var menubar = document.getElementById("main-menubar");
@@ -252,7 +253,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
    var customizeURL = "chrome://global/content/customizeToolbar.xul";
    gCustomizeSheet = getBoolPref("toolbar.customization.usesheet", false);
  
-@@ -3394,16 +3557,25 @@ function BrowserCustomizeToolbar()
+@@ -3394,16 +3558,31 @@ function BrowserCustomizeToolbar()
    } else {
      return window.openDialog(customizeURL,
                               "CustomizeToolbar",
@@ -264,7 +265,13 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
 +function BrowserRestoreCustomizationDisabledState()
 +{
 +  var cmd = document.getElementById("cmd_CustomizeToolbars");
-+  if (!gPrefService.getBoolPref("config.lockdown.toolbarediting")) {
++  try {
++    var disableToolBarEditing =
++      gPrefService.getBoolPref("config.lockdown.toolbarediting");
++  } catch (ex) {
++    var disableToolBarEditing = false;
++  }
++  if (!disableToolBarEditing) {
 +    cmd.removeAttribute("disabled", "true");
 +  }
 +  cmd.removeAttribute("inCustomization");
@@ -278,7 +285,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
    // Update global UI elements that may have been added or removed
    if (aToolboxChanged) {
-@@ -3411,16 +3583,23 @@ function BrowserToolboxCustomizeDone(aTo
+@@ -3411,16 +3590,27 @@ function BrowserToolboxCustomizeDone(aTo
      if (gURLBar)
        gURLBar.emptyText = gURLBarEmptyText.value;
  
@@ -288,7 +295,11 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
      window.XULBrowserWindow.init();
  
 +    // make sure the search bar is not put back if locked down
-+    var disableSearchBar = gPrefService.getBoolPref("config.lockdown.searchbar");
++    try {
++      var disableSearchBar = gPrefService.getBoolPref("config.lockdown.searchbar");
++    } catch (ex) {
++      var disableSearchBar = false;
++    }
 +    if (disableSearchBar) {
 +      document.getElementById("search-container")
 +        .setAttribute("style", (disableSearchBar) ? "display: none;" : "");
@@ -302,7 +313,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
      // support downgrading to Firefox 2.0
      var navBar = document.getElementById("nav-bar");
-@@ -3445,18 +3624,17 @@ function BrowserToolboxCustomizeDone(aTo
+@@ -3445,18 +3635,17 @@ function BrowserToolboxCustomizeDone(aTo
      XULBrowserWindow.asyncUpdateUI();
      PlacesStarButton.updateState();
    }
@@ -322,7 +333,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  #endif
  
    // XXX Shouldn't have to do this, but I do
-@@ -4544,16 +4722,19 @@ function onViewToolbarsPopupShowing(aEve
+@@ -4544,16 +4733,19 @@ function onViewToolbarsPopupShowing(aEve
      var toolbarName = toolbar.getAttribute("toolbarname");
      if (toolbarName) {
        let menuItem = document.createElement("menuitem");
@@ -342,7 +353,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
      }
      toolbar = toolbar.nextSibling;
    }
-@@ -6421,17 +6602,17 @@ BookmarkAllTabsHandler.prototype = {
+@@ -6421,17 +6613,23 @@ BookmarkAllTabsHandler.prototype = {
  
    _updateCommandState: function BATH__updateCommandState(aTabClose) {
      var numTabs = gBrowser.tabContainer.childNodes.length;
@@ -352,7 +363,13 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
        numTabs--;
  
 -    if (numTabs > 1)
-+    if (numTabs > 1 && !gPrefService.getBoolPref("config.lockdown.bookmark"))
++    try {
++      var disableBookmarks =
++        gPrefService.getBoolPref("config.lockdown.bookmark");
++    } catch (ex) {
++      var disableBookmarks = false;
++    }
++    if (numTabs > 1 && !disableBookmarks)
        this._command.removeAttribute("disabled");
      else
        this._command.setAttribute("disabled", "true");

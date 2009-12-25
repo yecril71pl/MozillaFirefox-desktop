@@ -457,6 +457,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/greprefs/security-prefs.js
 %{_libdir}/xulrunner-%{version_internal}/greprefs/xpinstall.js
 %{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
+%{_libdir}/xulrunner-%{version_internal}/greprefs/lockdown.js
 %{_libdir}/xulrunner-%{version_internal}/icons/
 %{_libdir}/xulrunner-%{version_internal}/modules/
 %{_libdir}/xulrunner-%{version_internal}/plugins/

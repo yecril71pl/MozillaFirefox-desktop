@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Sun Dec 20 13:58:18 CET 2009 - wr@rosenauer.org
+Thu Dec 24 14:21:02 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b5
 - removed upstreamed mozilla-abi.patch
@@ -7,7 +7,7 @@ Sun Dec 20 13:58:18 CET 2009 - wr@rosenauer.org
 - use .autoreg file for autoregistration when needed (bnc#440872)
 - enable libproxy support from 11.2 on
 - renamed -gnomevfs subpackage to -gnome
-- readded lockdown patches
+- readded lockdown patches and preferences
 - enable crashreporter and create breakpad buildsymbols package 
   for mozilla crashreporter (for ix86)
 - fix baselibs.conf

@@ -306,6 +306,11 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
 EOF
 %endif
+%if ! %crashreporter
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-crashreporter
+EOF
+%endif
 make -f client.mk build
 
 %install

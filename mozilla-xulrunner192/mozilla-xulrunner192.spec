@@ -2,7 +2,7 @@
 # spec file for package mozilla-xulrunner192 (Version 1.9.2b5)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
-# Copyright (c) 2006-2009 Wolfgang Rosenauer
+#               2006-2009 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -88,6 +88,8 @@ PreReq:         update-alternatives coreutils
 ### build configuration ###
 %ifarch %ix86
 %define crashreporter    1
+%else
+%define crashreporter    0
 %endif
 %define has_system_nspr  0
 %define has_system_nss   0
@@ -183,7 +185,7 @@ for full desktop integration but not mandatory for small disk footprint
 KDE installations for example.
 
 
-%if 0%{?crashreporter}
+%if %crashreporter
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}
@@ -225,7 +227,7 @@ fi
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
-%if 0%{?crashreporter}
+%if %crashreporter
 export CFLAGS="$CFLAGS -gstabs+"
 %endif
 %ifarch ppc64
@@ -385,7 +387,7 @@ touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
 %endif
 # create breakpad debugsymbols
-%if 0%{?crashreporter}
+%if %crashreporter
 make buildsymbols
 if [ -e dist/*.crashreporter-symbols.zip ]; then
   mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
@@ -473,7 +475,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
 # crashreporter files
-%if 0%{?crashreporter}
+%if %crashreporter
 %{_libdir}/xulrunner-%{version_internal}/crashreporter
 %{_libdir}/xulrunner-%{version_internal}/crashreporter.ini
 %{_libdir}/xulrunner-%{version_internal}/Throbber-small.gif
@@ -514,7 +516,7 @@ exit 0
 %defattr(-,root,root)
 %endif
 
-%if 0%{?crashreporter}
+%if %crashreporter
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

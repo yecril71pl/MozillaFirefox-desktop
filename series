@@ -13,6 +13,7 @@ mozilla-gconf-backend.patch
 gecko-lockdown.patch
 toolkit-ui-lockdown.patch
 mozilla-breakpad.patch
+mozilla-breakpad-update.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

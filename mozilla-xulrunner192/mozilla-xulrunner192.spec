@@ -2,7 +2,7 @@
 # spec file for package mozilla-xulrunner192 (Version 1.9.2b5)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2009 Wolfgang Rosenauer
+#               2006-2010 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -83,6 +83,7 @@ Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-breakpad.patch
+Patch15:        mozilla-breakpad-update.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 PreReq:         update-alternatives coreutils
 ### build configuration ###
@@ -138,7 +139,7 @@ PreReq:         %{name} = %{version}
 %description devel
 Software Development Kit to embed XUL or Gecko into other applications.
 
-
+%if %localize
 %package translations-common
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Common translations for XULRunner 1.9.2
@@ -170,7 +171,7 @@ multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
 This package contains rarely used languages.
-
+%endif
 
 %package gnome
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
@@ -215,6 +216,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+#%patch15 -p1
 
 %build
 %if %suse_version >= 1110

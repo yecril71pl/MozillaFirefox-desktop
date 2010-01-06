@@ -85,7 +85,8 @@ Patch13:        toolkit-ui-lockdown.patch
 Patch14:        mozilla-breakpad.patch
 Patch15:        mozilla-breakpad-update.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-PreReq:         update-alternatives coreutils
+Requires(post):  update-alternatives coreutils
+Requires(preun): update-alternatives coreutils
 ### build configuration ###
 %ifarch %ix86
 %define crashreporter    1
@@ -134,7 +135,7 @@ Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozill
 %if %has_system_nss
 Requires:       mozilla-nss-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss-devel)
 %endif
-PreReq:         %{name} = %{version}
+Requires:       %{name} = %{version}
 
 %description devel
 Software Development Kit to embed XUL or Gecko into other applications.
@@ -144,7 +145,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Common translations for XULRunner 1.9.2
 Group:          System/Localization
-PreReq:         %{name} = %{version}
+Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -161,7 +162,7 @@ delivered in the main package.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
-PreReq:         %{name} = %{version}
+Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -177,7 +178,8 @@ This package contains rarely used languages.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
-PreReq:         %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
+Requires(post): coreutils
 
 %description gnome
 This subpackage contains the Necko Gnome-VFS and Gnome components which
@@ -514,6 +516,7 @@ exit 0
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %dir %{_libdir}/xulrunner-%{version_internal}/components/
+%ghost %{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 

@@ -9215,11 +9215,6 @@ diff --git a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exce
  // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
--#include <signal.h>
--#include <sys/stat.h>
--#include <sys/types.h>
--#include <unistd.h>
--#include <stdio.h>
 +// The ExceptionHandler object installs signal handlers for a number of
 +// signals. We rely on the signal handler running on the thread which crashed
 +// in order to identify it. This is true of the synchronous signals (SEGV etc),
@@ -9248,25 +9243,23 @@ diff --git a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exce
 +//                                            V
 +//                                         sys_exit
 +//
- 
--#include <cassert>
--#include <cstdlib>
--#include <ctime>
--#include <linux/limits.h>
++
 +// This code is a little fragmented. Different functions of the ExceptionHandler
 +// class run in a number of different contexts. Some of them run in a normal
 +// context and are easy to code, others run in a compromised context and the
 +// restrictions at the top of minidump_writer.cc apply: no libc and use the
 +// alternative malloc. Each function should have comment above it detailing the
 +// context which it runs in.
- 
- #include "client/linux/handler/exception_handler.h"
++
++#include "client/linux/handler/exception_handler.h"
 +
 +#include <errno.h>
 +#include <fcntl.h>
 +#include <linux/limits.h>
 +#include <sched.h>
-+#include <signal.h>
+ #include <signal.h>
+-#include <sys/stat.h>
+-#include <sys/types.h>
 +#include <stdio.h>
 +#include <sys/mman.h>
 +#include <sys/signal.h>
@@ -9275,15 +9268,22 @@ diff --git a/toolkit/crashreporter/google-breakpad/src/client/linux/handler/exce
 +#include <sys/user.h>
 +#include <sys/wait.h>
 +#include <ucontext.h>
-+#include <unistd.h>
-+
+ #include <unistd.h>
+ 
+-#include <cassert>
+-#include <cstdlib>
+-#include <cstdio>
+-#include <ctime>
+-#include <linux/limits.h>
 +#include "common/linux/linux_libc_support.h"
 +#include "common/linux/linux_syscall_support.h"
 +#include "common/linux/memory.h"
 +#include "client/linux/minidump_writer/minidump_writer.h"
- #include "common/linux/guid_creator.h"
++#include "common/linux/guid_creator.h"
+ 
+-#include "client/linux/handler/exception_handler.h"
+-#include "common/linux/guid_creator.h"
 -#include "google_breakpad/common/minidump_format.h"
-+
 +// A wrapper for the tgkill syscall: send a signal to a specific thread.
 +static int tgkill(pid_t tgid, pid_t tid, int sig) {
 +  syscall(__NR_tgkill, tgid, tid, sig);
@@ -11274,9 +11274,9 @@ deleted file mode 100644
 -#include <sys/wait.h>
 -
 -#include <cstdlib>
+-#include <cstdio>
 -#include <ctime>
 -#include <string.h>
--#include <stdio.h>
 -
 -#include "common/linux/file_id.h"
 -#include "client/linux/handler/linux_thread.h"
@@ -40953,9 +40953,9 @@ diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols
 -#include <a.out.h>
 -#include <cstdarg>
 -#include <cstdlib>
+-#include <cstdio>
 +#include <assert.h>
  #include <cxxabi.h>
--#include <stdio.h>
  #include <elf.h>
  #include <errno.h>
  #include <fcntl.h>
@@ -41936,16 +41936,9 @@ diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols
 diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.h b/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.h
 --- a/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.h
 +++ b/toolkit/crashreporter/google-breakpad/src/common/linux/dump_symbols.h
-@@ -29,20 +29,21 @@
- //
- // dump_symbols.cc: Implements a linux stab debugging format dumper.
- //
- 
- #ifndef COMMON_LINUX_DUMP_SYMBOLS_H__
- #define COMMON_LINUX_DUMP_SYMBOLS_H__
- 
+@@ -36,14 +36,14 @@
  #include <string>
-+#include <cstdio>
+ #include <cstdio>
  
  namespace google_breakpad {
  
@@ -65745,7 +65738,7 @@ diff --git a/toolkit/toolkit-makefiles.sh b/toolkit/toolkit-makefiles.sh
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -182,16 +182,17 @@ SHARED_LIBRARY_LIBS += \
+@@ -179,16 +179,17 @@ SHARED_LIBRARY_LIBS += \
  	$(DEPTH)/toolkit/crashreporter/google-breakpad/src/client/mac/handler/$(LIB_PREFIX)exception_handler_s.$(LIB_SUFFIX) \
  	$(DEPTH)/toolkit/crashreporter/google-breakpad/src/common/$(LIB_PREFIX)breakpad_common_s.$(LIB_SUFFIX) \
  	$(DEPTH)/toolkit/crashreporter/google-breakpad/src/common/mac/$(LIB_PREFIX)breakpad_mac_common_s.$(LIB_SUFFIX)

@@ -1,0 +1,14 @@
+diff --git a/config/milestone.txt b/config/milestone.txt
+--- a/config/milestone.txt
++++ b/config/milestone.txt
+@@ -5,9 +5,9 @@
+ #    x.x.x.x
+ #    x.x.x+
+ #
+ # Referenced by milestone.pl.
+ # Hopefully I'll be able to automate replacement of *all*
+ # hardcoded milestones in the tree from these two files.
+ #--------------------------------------------------------
+ 
+-1.9.2
++1.9.2.0

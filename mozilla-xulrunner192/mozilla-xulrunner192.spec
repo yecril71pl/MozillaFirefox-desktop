@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2b5)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2rc1)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2b5
+Version:        1.9.2rc1
 Release:        1
-%define         releasedate 2009120400
-%define         version_internal 1.9.2b5
+%define         releasedate 2010010500
+%define         version_internal 1.9.2.0
 %define         apiversion 1.9.2
-%define         uaweight 191999
+%define         uaweight 192000
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -82,8 +82,8 @@ Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-breakpad.patch
-Patch15:        mozilla-breakpad-update.patch
+Patch14:        mozilla-breakpad-update.patch
+Patch15:        mozilla-milestone.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
@@ -163,7 +163,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
+Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -218,7 +218,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-#%patch15 -p1
+%patch15 -p1
 
 %build
 %if %suse_version >= 1110

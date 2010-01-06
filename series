@@ -12,8 +12,8 @@ mozilla-kde.patch
 mozilla-gconf-backend.patch
 gecko-lockdown.patch
 toolkit-ui-lockdown.patch
-mozilla-breakpad.patch
 mozilla-breakpad-update.patch
+mozilla-milestone.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

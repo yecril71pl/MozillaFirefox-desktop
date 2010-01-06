@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jan  6 17:15:40 CET 2010 - wr@rosenauer.org
+
+- update to 3.6rc1
+- replace PreReq with other Requires
+
+-------------------------------------------------------------------
 Thu Dec 24 14:22:38 CET 2009 - wr@rosenauer.org
 
 - added lockdown preferences (bnc#567131)

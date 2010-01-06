@@ -1,8 +1,8 @@
 #
-# spec file for package MozillaFirefox (Version 3.6b5)
+# spec file for package MozillaFirefox (Version 3.6rc1)
 #
 # Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
-# Copyright (c) 2006-2009 Wolfgang Rosenauer
+#               2006-2010 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel orbit-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2b5
+BuildRequires:  %{xulrunner}-devel = 1.9.2rc1
 %if %suse_version > 1020
 BuildRequires:  fdupes
 %endif
@@ -34,9 +34,9 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
-Version:        3.6b5
+Version:        3.6rc1
 Release:        1
-%define         releasedate 2009120400
+%define         releasedate 2010010500
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -64,7 +64,8 @@ Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-crashreporter.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-PreReq:         coreutils /bin/sh shared-mime-info desktop-file-utils
+Requires(post):   coreutils shared-mime-info desktop-file-utils
+Requires(postun): shared-mime-info desktop-file-utils
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 %requires_eq    %{xulrunner}
 %ifarch %ix86
@@ -100,7 +101,7 @@ Summary:        Common translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Group:          System/Localization
-PreReq:         %{name} = %{version}
+Requires:       %{name} = %{version}
 Requires:       %{xulrunner}-translations-common
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -111,9 +112,9 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
+Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Group:          System/Localization
-PreReq:         %{name} = %{version}
+Requires:       %{name} = %{version}
 Requires:       %{xulrunner}-translations-other
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -372,13 +373,19 @@ fi
 %if %localize
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
+%dir %{progdir}
+%dir %{progdir}/chrome/
 
 %files translations-other -f %{_tmppath}/translations.other
 %defattr(-,root,root)
+%dir %{progdir}
+%dir %{progdir}/chrome/
 %endif
 
 %files branding-upstream  
 %defattr(-,root,root)  
+%dir %{progdir}
+%dir %{progdir}/defaults/
 %{progdir}/browserconfig.properties  
 %{progdir}/defaults/profile/bookmarks.html
 

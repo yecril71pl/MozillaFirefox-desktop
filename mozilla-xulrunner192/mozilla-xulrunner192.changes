@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Jan  6 13:24:43 CET 2010 - wr@rosenauer.org
+
+- expand -translations-* and -gnome filelists to clean up the 
+  filesystem for upgrades and removals correctly
+- enable crashreporter and create breakpad buildsymbols package
+  for mozilla crashreporter (for ix86)
+
+-------------------------------------------------------------------
 Thu Dec 24 14:21:02 CET 2009 - wr@rosenauer.org
 
 - update to 1.9.2b5
@@ -8,8 +16,6 @@ Thu Dec 24 14:21:02 CET 2009 - wr@rosenauer.org
 - enable libproxy support from 11.2 on
 - renamed -gnomevfs subpackage to -gnome
 - readded lockdown patches and preferences
-- enable crashreporter and create breakpad buildsymbols package 
-  for mozilla crashreporter (for ix86)
 - fix baselibs.conf
 
 -------------------------------------------------------------------

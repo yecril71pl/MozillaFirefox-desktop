@@ -512,15 +512,21 @@ exit 0
 
 %files gnome
 %defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%dir %{_libdir}/xulrunner-%{version_internal}/components/
 %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 
 %if %localize
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%dir %{_libdir}/xulrunner-%{version_internal}/chrome/
 
 %files translations-other -f %{_tmppath}/translations.other
 %defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%dir %{_libdir}/xulrunner-%{version_internal}/chrome/
 %endif
 
 %if %crashreporter

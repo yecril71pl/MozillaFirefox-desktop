@@ -21,7 +21,7 @@
 
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel orbit-devel python unzip update-desktop-files zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip
 BuildRequires:  %{xulrunner}-devel = 1.9.2rc1
 %if %suse_version > 1020
 BuildRequires:  fdupes

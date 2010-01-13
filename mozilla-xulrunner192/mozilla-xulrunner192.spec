@@ -1,7 +1,7 @@
 #
 # spec file for package mozilla-xulrunner192 (Version 1.9.2rc1)
 #
-# Copyright (c) 2009 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -348,7 +348,7 @@ mv $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}.system.conf \
    $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}-64bit.system.conf
 %endif
 # ghosts
-touch $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/global.reginfo
+touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
@@ -382,7 +382,6 @@ ln -sf xulrunner-%{version_internal} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{apive
 touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{ga_version}
 %endif
 # excludes
-rm -f $RPM_BUILD_ROOT%{_bindir}/xulrunner
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/updater
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/update.locale
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
@@ -491,6 +490,7 @@ exit 0
 %endif
 # ghosts
 %ghost %{_libdir}/xulrunner-%{version_internal}/global.reginfo
+%ghost %{_bindir}/xulrunner
 # GRE
 %dir %{_sysconfdir}/gre.d/
 %attr(644,root,root) %{_sysconfdir}/gre.d/*

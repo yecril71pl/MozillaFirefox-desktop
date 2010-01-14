@@ -382,6 +382,9 @@ ln -sf xulrunner-%{version_internal} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{apive
 touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{ga_version}
 %endif
 # excludes
+%if %suse_version < 1120
+rm -f $RPM_BUILD_ROOT%{_bindir}/xulrunner
+%endif
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/updater
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/update.locale
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
@@ -490,7 +493,9 @@ exit 0
 %endif
 # ghosts
 %ghost %{_libdir}/xulrunner-%{version_internal}/global.reginfo
+%if %suse_version >= 1120
 %ghost %{_bindir}/xulrunner
+%endif
 # GRE
 %dir %{_sysconfdir}/gre.d/
 %attr(644,root,root) %{_sysconfdir}/gre.d/*

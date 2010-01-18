@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2rc1)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.0)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,9 +39,9 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2rc1
+Version:        1.9.2.0
 Release:        1
-%define         releasedate 2010010500
+%define         releasedate 2010011500
 %define         version_internal 1.9.2.0
 %define         apiversion 1.9.2
 %define         uaweight 192000

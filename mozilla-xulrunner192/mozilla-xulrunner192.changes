@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Jan 18 09:28:56 CET 2010 - wr@rosenauer.org
+
+- update to 1.9.2rc2
+- add update-alternatives %ghost file to filelist starting
+  with 11.2 (%ghost files are conflicting in earlier versions)
+
+-------------------------------------------------------------------
 Wed Jan  6 14:10:25 CET 2010 - wr@rosenauer.org
 
 - update to 1.9.2rc1

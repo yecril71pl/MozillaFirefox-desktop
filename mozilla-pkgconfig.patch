@@ -100,3 +100,17 @@ diff --git a/xulrunner/installer/mozilla-js.pc.in b/xulrunner/installer/mozilla-
 -Libs: -L${sdkdir}/lib -lmozjs
 +Libs: -Wl,-rpath,${libdir} -L${sdkdir}/lib -lmozjs
  Cflags: -I${includedir} -DXP_UNIX -DJS_THREADSAFE
+diff --git a/xulrunner/installer/mozilla-plugin.pc.in b/xulrunner/installer/mozilla-plugin.pc.in
+--- a/xulrunner/installer/mozilla-plugin.pc.in
++++ b/xulrunner/installer/mozilla-plugin.pc.in
+@@ -1,9 +1,9 @@
+ prefix=%prefix%
+ sdkdir=%sdkdir%
+ includedir=%includedir%
+ 
+ Name: Mozilla Plug-In API
+ Description: Mozilla Plug-In API
+ Version: %MOZILLA_VERSION%
+-Cflags: -I${includedir}/stable -DXP_UNIX %ojidef%
++Cflags: -I${includedir} -DXP_UNIX %ojidef%
+ 

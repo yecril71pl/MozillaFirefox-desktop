@@ -84,7 +84,6 @@ Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-breakpad-update.patch
 Patch15:        mozilla-milestone.patch
-Patch16:        mozilla-crash-annotation.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
@@ -220,7 +219,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 %if %suse_version >= 1110
@@ -414,10 +412,13 @@ touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 %endif
 # create breakpad debugsymbols
 %if %crashreporter
-make buildsymbols
-if [ -e dist/*.crashreporter-symbols.zip ]; then
+SYMBOLS_NAME="xulrunner-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
+make buildsymbols \
+  SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
+  SYMBOL_ARCHIVE_BASENAME="$SYMBOLS_NAME"
+if [ -e dist/*symbols.zip ]; then
   mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
-  cp dist/*.crashreporter-symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
+  cp dist/*symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
 fi
 %endif
 

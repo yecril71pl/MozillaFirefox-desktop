@@ -84,6 +84,7 @@ Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-breakpad-update.patch
 Patch15:        mozilla-milestone.patch
+Patch16:        mozilla-crash-annotation.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
@@ -219,6 +220,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 %if %suse_version >= 1110
@@ -255,6 +257,7 @@ mk_add_options MOZILLA_OFFICIAL=1
 mk_add_options BUILD_OFFICIAL=1
 mk_add_options MOZ_MILESTONE_RELEASE=1
 mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../obj
 . \$topsrcdir/xulrunner/config/mozconfig
 ac_add_options --prefix=%{_prefix}
 ac_add_options --libdir=%{_libdir}
@@ -318,6 +321,7 @@ EOF
 make -f client.mk build
 
 %install
+cd ../obj
 %makeinstall STRIP=/bin/true
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
@@ -333,6 +337,17 @@ ln -sf ../../../xulrunner-%{version_internal}/libxpcom.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
 ln -sf ../../../xulrunner-%{version_internal}/libxul.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
+# include basic buildenv for xulapps to use
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/xulrunner-%{version_internal}
+pushd ..
+# this list has been compiled by trial and error for prism
+tar --exclude=*.cpp --exclude=*.mm \
+   -cvjf $RPM_BUILD_ROOT%{_datadir}/xulrunner-%{version_internal}/mozilla-src.tar.bz2 \
+    mozilla/configure.in mozilla/Makefile.in mozilla/client.py mozilla/allmakefiles.sh \
+    mozilla/config mozilla/client.mk mozilla/aclocal.m4 mozilla/build mozilla/js/src/* \
+    mozilla/testing mozilla/toolkit/mozapps/installer mozilla/probes mozilla/memory \
+    mozilla/toolkit/xre mozilla/nsprpub/config mozilla/tools mozilla/xpcom/build
+popd
 # XPI example
 #cp -rL dist/xpi-stage/simple $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/
 # preferences
@@ -352,7 +367,7 @@ touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
-for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
+for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
    ja-JP-mac|en-US)
       ;;
@@ -516,6 +531,7 @@ exit 0
 # FIXME symlink dynamic libs below sdk/lib
 %attr(644,root,root) %{_libdir}/pkgconfig/*
 %{_includedir}/xulrunner-%{version_internal}/
+%{_datadir}/xulrunner-%{version_internal}/
 
 %files gnome
 %defattr(-,root,root)

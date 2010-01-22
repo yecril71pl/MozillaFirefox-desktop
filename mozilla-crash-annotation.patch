@@ -1,0 +1,57 @@
+From: Wolfgang Rosenauer <wr@rosenauer.org>
+Subject: add distribution information to crash reports when available
+References:
+
+diff --git a/toolkit/xre/nsAppRunner.cpp b/toolkit/xre/nsAppRunner.cpp
+--- a/toolkit/xre/nsAppRunner.cpp
++++ b/toolkit/xre/nsAppRunner.cpp
+@@ -3299,26 +3299,47 @@ XRE_main(int argc, char* argv[], const n
+       rv |= xpcom.SetWindowCreator(nativeApp);
+       NS_ENSURE_SUCCESS(rv, 1);
+ 
+ #ifdef MOZ_CRASHREPORTER
+       // tell the crash reporter to also send the release channel
+       nsCOMPtr<nsIPrefService> prefs = do_GetService("@mozilla.org/preferences-service;1", &rv);
+       if (NS_SUCCEEDED(rv)) {
+         nsCOMPtr<nsIPrefBranch> defaultPrefBranch;
++        nsCOMPtr<nsIPrefBranch> distPrefBranch;
++        nsXPIDLCString sval;
++
+         rv = prefs->GetDefaultBranch(nsnull, getter_AddRefs(defaultPrefBranch));
+-
+         if (NS_SUCCEEDED(rv)) {
+-          nsXPIDLCString sval;
+           rv = defaultPrefBranch->GetCharPref("app.update.channel", getter_Copies(sval));
+           if (NS_SUCCEEDED(rv)) {
+             CrashReporter::AnnotateCrashReport(NS_LITERAL_CSTRING("ReleaseChannel"),
+                                                sval);
+           }
+         }
++
++        rv = prefs->GetBranch("distribution", getter_AddRefs(distPrefBranch));
++        if (NS_SUCCEEDED(rv)) {
++          rv = distPrefBranch->GetCharPref("id", getter_Copies(sval));
++          if (NS_SUCCEEDED(rv)) {
++            CrashReporter::AnnotateCrashReport(NS_LITERAL_CSTRING("Distributor"),
++                                               sval);
++          } else {
++            printf("GetCharPref('id') failed \n");
++          }
++          rv = distPrefBranch->GetCharPref("version", getter_Copies(sval));
++          if (NS_SUCCEEDED(rv)) {
++            CrashReporter::AnnotateCrashReport(NS_LITERAL_CSTRING("Distributor_version"),
++                                               sval);
++          } else {
++            printf("GetCharPref('version') failed \n");
++          }
++        } else {
++printf("GetBranch('distribution') failed\n");
++        }
+       }
+ #endif
+       {
+         if (startOffline) {
+           nsCOMPtr<nsIIOService2> io (do_GetService("@mozilla.org/network/io-service;1"));
+           NS_ENSURE_TRUE(io, 1);
+           io->SetManageOfflineStatus(PR_FALSE);
+           io->SetOffline(PR_TRUE);

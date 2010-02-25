@@ -84,6 +84,7 @@ Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-breakpad-update.patch
 Patch15:        mozilla-milestone.patch
+Patch16:        mozilla-ua-locale-pref.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
@@ -219,6 +220,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1  # bmo#542999
 
 %build
 %if %suse_version >= 1110

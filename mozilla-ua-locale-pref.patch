@@ -25,6 +25,13 @@ diff --git a/chrome/src/nsChromeRegistry.cpp b/chrome/src/nsChromeRegistry.cpp
    }
    else {
      nsXPIDLCString provider;
+diff --git a/chrome/test/unit/data/test_bug519468.manifest b/chrome/test/unit/data/test_bug519468.manifest
+deleted file mode 100644
+--- a/chrome/test/unit/data/test_bug519468.manifest
++++ /dev/null
+@@ -1,2 +0,0 @@
+-locale testmatchos en-US jar:en-US.jar!/locale/en-US/global/
+-locale testmatchos fr-FR jar:en-US.jar!/locale/en-US/global/
 diff --git a/chrome/test/unit/test_bug519468.js b/chrome/test/unit/test_bug519468.js
 --- a/chrome/test/unit/test_bug519468.js
 +++ b/chrome/test/unit/test_bug519468.js

@@ -1,7 +1,13 @@
 -------------------------------------------------------------------
+Thu Mar 18 06:43:33 CET 2010 - wr@rosenauer.org
+
+- security update to version 3.6.2 (bnc#586567)
+
+-------------------------------------------------------------------
 Mon Jan 18 09:42:50 CET 2010 - wr@rosenauer.org
 
 - update to 3.6rc2 (already named 3.6.0)
+- removed obsolete orbit-devel build requirement
 
 -------------------------------------------------------------------
 Wed Jan  6 17:15:40 CET 2010 - wr@rosenauer.org

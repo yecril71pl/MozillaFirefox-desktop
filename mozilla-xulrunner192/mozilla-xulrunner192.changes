@@ -1,6 +1,8 @@
 -------------------------------------------------------------------
-Thu Feb 25 23:17:08 CET 2010 - wr@rosenauer.org
+Thu Mar 18 06:41:03 CET 2010 - wr@rosenauer.org
 
+- security update to 1.9.2.2 (bnc#586567)
+  * requires NSS 3.12.6
 - general.useragent.locale in profile overrides 
   intl.locale.matchOS (bmo#542999)
 

@@ -3,6 +3,8 @@ Thu Mar 25 20:04:41 CET 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.2 (bnc#586567)
   * requires NSS 3.12.6
+  * MFSA 2010-08/CVE-2010-1028 (bmo#552216)
+    WOFF heap corruption due to integer overflow
 - general.useragent.locale in profile overrides 
   intl.locale.matchOS (bmo#542999)
 - split mozilla-js192 package which contains libmozjs only

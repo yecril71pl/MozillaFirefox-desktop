@@ -1,10 +1,12 @@
 -------------------------------------------------------------------
-Thu Mar 18 06:41:03 CET 2010 - wr@rosenauer.org
+Thu Mar 25 20:04:41 CET 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.2 (bnc#586567)
   * requires NSS 3.12.6
 - general.useragent.locale in profile overrides 
   intl.locale.matchOS (bmo#542999)
+- split mozilla-js192 package which contains libmozjs only
+  to allow its installation w/o all GUI dependencies
 
 -------------------------------------------------------------------
 Mon Jan 18 09:28:56 CET 2010 - wr@rosenauer.org

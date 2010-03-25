@@ -85,6 +85,7 @@ Patch13:        toolkit-ui-lockdown.patch
 Patch14:        mozilla-breakpad-update.patch
 Patch15:        mozilla-ua-locale-pref.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Requires:       mozilla-js192
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
@@ -123,6 +124,18 @@ Recommends:     %{name}-gnome
 XULRunner is a single installable package that can be used to bootstrap
 multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
+
+
+%package -n mozilla-js192
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+Summary:        Mozilla JS 1.8 engine
+Group:          Productivity/Other
+
+%description -n mozilla-js192
+JavaScript is the Netscape-developed object scripting language used in millions
+of web pages and server applications worldwide. Netscape's JavaScript is a
+superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
+with only mild differences from the published standard. 
 
 
 %package devel
@@ -493,6 +506,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/plugins/
 %{_libdir}/xulrunner-%{version_internal}/res/
 %{_libdir}/xulrunner-%{version_internal}/*.so
+%exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
@@ -522,6 +536,12 @@ exit 0
 %if 0%{?ga_version:1} 
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
+
+%files -n mozilla-js192
+%defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%{_libdir}/xulrunner-%{apiversion}
+%{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 
 %files devel
 %defattr(-,root,root)

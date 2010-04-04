@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.2)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.3)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.2
+Version:        1.9.2.3
 Release:        1
-%define         releasedate 2010031700
-%define         version_internal 1.9.2.2
+%define         releasedate 2010040100
+%define         version_internal 1.9.2.3
 %define         apiversion 1.9.2
-%define         uaweight 192020
+%define         uaweight 192030
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -154,6 +154,7 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
+
 %package translations-common
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Common translations for XULRunner 1.9.2
@@ -202,6 +203,7 @@ KDE installations for example.
 
 
 %if %crashreporter
+
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}
@@ -211,7 +213,6 @@ Group:          Development/Debug
 This subpackage contains the Breakpad created and compatible debugging
 symbols meant for upload to Mozilla's crash collector database.
 %endif
-
 
 %prep
 %setup -n mozilla -q -b 1
@@ -564,6 +565,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -576,6 +578,7 @@ exit 0
 %endif
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

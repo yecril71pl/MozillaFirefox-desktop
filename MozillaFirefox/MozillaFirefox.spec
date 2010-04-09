@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 3.6.3)
+# spec file for package MozillaFirefox (Version 3.6.4)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2.3
+BuildRequires:  %{xulrunner}-devel = 1.9.2.4
 %if %suse_version > 1020
 BuildRequires:  fdupes
 %endif
@@ -34,9 +34,9 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
-Version:        3.6.3
+Version:        3.6.4
 Release:        1
-%define         releasedate 2010040100
+%define         releasedate 2010040900
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -63,6 +63,7 @@ Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-crashreporter.patch
+Patch12:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -166,6 +167,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -359,9 +361,7 @@ fi
 %{progdir}/%{progname}
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
-%ifarch %ix86
 %{progdir}/crashreporter-override.ini
-%endif
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*

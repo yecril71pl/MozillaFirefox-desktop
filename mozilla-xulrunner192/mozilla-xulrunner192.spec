@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.3)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.4)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.3
+Version:        1.9.2.4
 Release:        1
-%define         releasedate 2010040100
-%define         version_internal 1.9.2.3
+%define         releasedate 2010040900
+%define         version_internal 1.9.2.4pre
 %define         apiversion 1.9.2
-%define         uaweight 192030
+%define         uaweight 192040
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -82,18 +82,15 @@ Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-breakpad-update.patch
+Patch14:        mozilla-system-nspr.patch
 Patch15:        mozilla-ua-locale-pref.patch
+Patch16:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
-%ifarch %ix86
 %define crashreporter    1
-%else
-%define crashreporter    0
-%endif
 %define has_system_nspr  0
 %define has_system_nss   0
 %define has_system_cairo 0
@@ -203,7 +200,6 @@ KDE installations for example.
 
 
 %if %crashreporter
-
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}
@@ -234,6 +230,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 # bmo#542999
 %patch15 -p1
+%patch16 -p1
 
 %build
 %if %suse_version >= 1110
@@ -246,9 +243,6 @@ fi
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
-%if %crashreporter
-export CFLAGS="$CFLAGS -gstabs+"
-%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -512,6 +506,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
+%{_libdir}/xulrunner-%{version_internal}/mozilla-runtime
 %{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin

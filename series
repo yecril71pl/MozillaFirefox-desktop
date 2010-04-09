@@ -1,4 +1,6 @@
 # xulrunner/gecko patches
+mozilla-system-nspr.patch
+mozilla-crashreporter-x86_64.patch
 toolkit-download-folder.patch
 mozilla-libproxy.patch
 mozilla-pkgconfig.patch
@@ -12,7 +14,6 @@ mozilla-kde.patch
 mozilla-gconf-backend.patch
 gecko-lockdown.patch
 toolkit-ui-lockdown.patch
-mozilla-breakpad-update.patch
 mozilla-ua-locale-pref.patch
 
 # Firefox patches

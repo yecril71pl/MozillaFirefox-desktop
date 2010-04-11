@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.4
 Release:        1
-%define         releasedate 2010040900
+%define         releasedate 2010041000
 %define         version_internal 1.9.2.4pre
 %define         apiversion 1.9.2
 %define         uaweight 192040
@@ -75,7 +75,6 @@ Patch5:         mozilla-nongnome-proxies.patch
 Patch6:         mozilla-helper-app.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
-Patch9:         mozilla-startup-notification.patch
 Patch10:        mozilla-kde.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024
 Patch11:        mozilla-gconf-backend.patch
@@ -220,7 +219,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %if %suse_version >= 1110
 %patch10 -p1
 %endif

@@ -9,7 +9,6 @@ mozilla-nongnome-proxies.patch
 mozilla-helper-app.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
-mozilla-startup-notification.patch
 mozilla-kde.patch
 mozilla-gconf-backend.patch
 gecko-lockdown.patch

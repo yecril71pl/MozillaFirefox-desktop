@@ -1,0 +1,23 @@
+diff --git a/browser/base/content/credits.xhtml b/browser/base/content/credits.xhtml
+--- a/browser/base/content/credits.xhtml
++++ b/browser/base/content/credits.xhtml
+@@ -579,16 +579,19 @@
+             <li>Satoko Takita Yamaguchi (Chibi)</li>
+             <li>Christine Yen</li>
+             <li>Kohei Yoshino</li>
+             <li>Shigeru Yoshitake</li>
+             <li>Boris Zbarsky</li>
+             <li>Marco Zehe</li>
+             <li>Matthew Zeier</li>
+           </ul>
++	  
++          <h3>openSUSE RPM packaging</h3>
++	  <ul><li>Wolfgang Rosenauer</li></ul>
+ 
+           <div dir="&locale.dir;">
+             &credit.translation;
+           </div>
+         </div>
+ 
+         <!-- organizational supporters -->
+         <div class="creditsGroup">

@@ -1,0 +1,121 @@
+-------------------------------------------------------------------
+Fri Apr  9 14:38:20 CEST 2010 - wr@rosenauer.org
+
+- update to 1.9.2.4pre (Lorentz)
+  * enable crashreporter also for x86-64
+
+-------------------------------------------------------------------
+Thu Apr  1 11:15:38 UTC 2010 - wr@rosenauer.org
+
+- security update to 1.9.2.3
+  * MFSA 2010-25/CVE-2010-1121 (bmo#555109)
+    Re-use of freed object due to scope confusion
+
+-------------------------------------------------------------------
+Thu Mar 25 20:04:41 CET 2010 - wr@rosenauer.org
+
+- security update to 1.9.2.2 (bnc#586567)
+  * MFSA 2010-08/CVE-2010-1028
+    WOFF heap corruption due to integer overflow
+  * MFSA 2010-09/CVE-2010-0164 (bmo#547143)
+    Deleted frame reuse in multipart/x-mixed-replace image
+  * MFSA 2010-10/CVE-2010-0170 (bmo#541530)
+    XSS via plugins and unprotected Location object
+  * MFSA 2010-11/CVE-2010-0165/CVE-2010-0166/CVE-2010-0167
+    Crashes with evidence of memory corruption
+  * MFSA 2010-12/CVE-2010-0171 (bmo#531364)
+    XSS using addEventListener and setTimeout on a wrapped object
+  * MFSA 2010-13/CVE-2010-0168 (bmo#540642)
+    Content policy bypass with image preloading
+  * MFSA 2010-14/CVE-2010-0169 (bmo#535806)
+    Browser chrome defacement via cached XUL stylesheets
+  * MFSA 2010-15/CVE-2010-0172 (bmo#537862)
+    Asynchronous Auth Prompt attaches to wrong window
+  * MFSA 2010-16/CVE-2010-0173/CVE-2010-0174
+    Crashes with evidence of memory corruption
+  * MFSA 2010-18/CVE-2010-0176 (bmo#538308)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-19/CVE-2010-0177 (bmo#538310)
+    Dangling pointer vulnerability in nsPluginArray
+  * MFSA 2010-20/CVE-2010-0178 (bmo#546909)
+    Chrome privilege escalation via forced URL drag and drop
+  * MFSA 2010-22/CVE-2009-3555 (bmo#545755)
+    Update NSS to support TLS renegotiation indication
+  * MFSA 2010-23/CVE-2010-0181 (bmo#452093)
+    Image src redirect to mailto: URL opens email editor
+  * MFSA 2010-24/CVE-2010-0182 (bmo#490790)
+    XMLDocument::load() doesn't check nsIContentPolicy
+- general.useragent.locale in profile overrides 
+  intl.locale.matchOS (bmo#542999)
+- split mozilla-js192 package which contains libmozjs only
+  to allow its installation w/o all GUI dependencies
+
+-------------------------------------------------------------------
+Mon Jan 18 09:28:56 CET 2010 - wr@rosenauer.org
+
+- update to 1.9.2rc2
+- add update-alternatives %ghost file to filelist starting
+  with 11.2 (%ghost files are conflicting in earlier versions)
+- fixed mozilla-plugin.pc (remove obsolete stable reference)
+
+-------------------------------------------------------------------
+Wed Jan  6 14:10:25 CET 2010 - wr@rosenauer.org
+
+- update to 1.9.2rc1
+  * removed obsolete mozilla-breakpad.patch
+- expand -translations-* and -gnome filelists to clean up the 
+  filesystem for upgrades and removals correctly
+- enable crashreporter and create breakpad buildsymbols package
+  for mozilla crashreporter (for ix86)
+- drop PreReq usage by cleaning up the different Requires tags
+
+-------------------------------------------------------------------
+Thu Dec 24 14:21:02 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b5
+- removed upstreamed mozilla-abi.patch
+- integrated mozilla-kde.patch
+- use .autoreg file for autoregistration when needed (bnc#440872)
+- enable libproxy support from 11.2 on
+- renamed -gnomevfs subpackage to -gnome
+- readded lockdown patches and preferences
+- fix baselibs.conf
+
+-------------------------------------------------------------------
+Tue Nov 10 14:48:39 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b2
+- merge from xulrunner191 package
+
+-------------------------------------------------------------------
+Sun Nov  1 13:10:23 CET 2009 - wr@rosenauer.org
+
+- update to 1.9.2b1
+- use newer internal cairo for 11.1 and older
+
+-------------------------------------------------------------------
+Sun Oct 18 13:04:22 CEST 2009 - wr@rosenauer.org
+
+- reworked PreReq list
+
+-------------------------------------------------------------------
+Fri Oct 16 09:14:47 CEST 2009 - wr@rosenauer.org
+
+- update to snapshot 1.9.2b2pre (20091015)
+  (entering beta phase)
+
+-------------------------------------------------------------------
+Mon Sep 21 16:43:18 CEST 2009 - wr@rosenauer.org
+
+- BuildRequire libiw-devel instead of wireless-tools from 11.2 on
+
+-------------------------------------------------------------------
+Wed Sep 16 23:42:58 CEST 2009 - wr@rosenauer.org
+
+- new snapshot (20090916)
+
+-------------------------------------------------------------------
+Mon Aug 24 17:37:06 CEST 2009 - wr@rosenauer.org
+
+- first alpha package of XULRunner 1.9.2
+

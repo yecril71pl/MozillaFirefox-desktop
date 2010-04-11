@@ -4,7 +4,7 @@ Subject: Firefox chrome lockdown hooks
 diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
 --- a/browser/base/content/browser.js
 +++ b/browser/base/content/browser.js
-@@ -1174,32 +1174,186 @@ function prepareForStartup() {
+@@ -1180,32 +1180,186 @@ function prepareForStartup() {
    // setup our MozApplicationManifest listener
    gBrowser.addEventListener("MozApplicationManifest",
                              OfflineApps, false);
@@ -192,14 +192,14 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
    PlacesStarButton.init();
  
    // called when we go into full screen, even if it is
-@@ -1399,16 +1553,18 @@ function BrowserShutdown()
-     Components.utils.reportError(ex);
+@@ -1406,16 +1560,18 @@ function BrowserShutdown()
    }
  
    var os = Components.classes["@mozilla.org/observer-service;1"]
      .getService(Components.interfaces.nsIObserverService);
    os.removeObserver(gSessionHistoryObserver, "browser:purge-session-history");
    os.removeObserver(gXPInstallObserver, "xpinstall-install-blocked");
+   os.removeObserver(gMissingPluginInstaller, "plugin-crashed");
  
 +  gPrefService.removeObserver("config.lockdown.", lockdownObserver);
 +
@@ -211,7 +211,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
    PlacesStarButton.uninit();
  
-@@ -3208,16 +3364,23 @@ function FillHistoryMenu(aParent) {
+@@ -3216,16 +3372,23 @@ function FillHistoryMenu(aParent) {
  
    // Remove old entries if any
    var children = aParent.childNodes;
@@ -235,7 +235,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
      return false;
  
    const MAX_HISTORY_MENU_ITEMS = 15;
-@@ -3357,16 +3520,17 @@ function BrowserCustomizeToolbar()
+@@ -3365,16 +3528,17 @@ function BrowserCustomizeToolbar()
  {
    // Disable the toolbar context menu items
    var menubar = document.getElementById("main-menubar");
@@ -253,7 +253,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
    var customizeURL = "chrome://global/content/customizeToolbar.xul";
    gCustomizeSheet = getBoolPref("toolbar.customization.usesheet", false);
  
-@@ -3394,16 +3558,31 @@ function BrowserCustomizeToolbar()
+@@ -3402,16 +3566,31 @@ function BrowserCustomizeToolbar()
    } else {
      return window.openDialog(customizeURL,
                               "CustomizeToolbar",
@@ -285,7 +285,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
    // Update global UI elements that may have been added or removed
    if (aToolboxChanged) {
-@@ -3411,16 +3590,27 @@ function BrowserToolboxCustomizeDone(aTo
+@@ -3419,16 +3598,27 @@ function BrowserToolboxCustomizeDone(aTo
      if (gURLBar)
        gURLBar.emptyText = gURLBarEmptyText.value;
  
@@ -313,7 +313,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  
      // support downgrading to Firefox 2.0
      var navBar = document.getElementById("nav-bar");
-@@ -3445,18 +3635,17 @@ function BrowserToolboxCustomizeDone(aTo
+@@ -3453,18 +3643,17 @@ function BrowserToolboxCustomizeDone(aTo
      XULBrowserWindow.asyncUpdateUI();
      PlacesStarButton.updateState();
    }
@@ -333,7 +333,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
  #endif
  
    // XXX Shouldn't have to do this, but I do
-@@ -4544,16 +4733,19 @@ function onViewToolbarsPopupShowing(aEve
+@@ -4552,16 +4741,19 @@ function onViewToolbarsPopupShowing(aEve
      var toolbarName = toolbar.getAttribute("toolbarname");
      if (toolbarName) {
        let menuItem = document.createElement("menuitem");
@@ -353,7 +353,7 @@ diff --git a/browser/base/content/browser.js b/browser/base/content/browser.js
      }
      toolbar = toolbar.nextSibling;
    }
-@@ -6421,17 +6613,23 @@ BookmarkAllTabsHandler.prototype = {
+@@ -6737,17 +6929,23 @@ BookmarkAllTabsHandler.prototype = {
  
    _updateCommandState: function BATH__updateCommandState(aTabClose) {
      var numTabs = gBrowser.tabContainer.childNodes.length;

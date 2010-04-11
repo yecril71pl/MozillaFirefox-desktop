@@ -1,0 +1,38 @@
+# HG changeset patch
+# User Ted Mielczarek <ted.mielczarek@gmail.com>
+# Date 1269522979 14400
+# Node ID a00284a2b2f0063b0f053938c1775cf207fe25bb
+# Parent  33d05f60932bac3d66231a54840cbdd173297fff
+bug 554021 - enable compiling Breakpad on Linux/x86-64 by default
+
+diff --git a/configure.in b/configure.in
+--- a/configure.in
++++ b/configure.in
+@@ -5858,13 +5858,20 @@
+ dnl = Breakpad crash reporting (on by default on supported platforms)
+ dnl ========================================================
+ 
+-if (test "$OS_ARCH" = "WINNT" -a -z "$GNU_CC" \
+-    || test "$OS_ARCH" = "Darwin" \
+-    || test "$OS_ARCH" = "Linux" -a "$CPU_ARCH" = "x86" \
+-    || test "$OS_ARCH" = "SunOS") \
+-   && test -z "$HAVE_64BIT_OS"; then
+-   MOZ_CRASHREPORTER=1
+-fi
++case $target in
++i?86-*-mingw*)
++  MOZ_CRASHREPORTER=1
++  ;;
++i?86-apple-darwin*|powerpc-apple-darwin*)
++  MOZ_CRASHREPORTER=1
++  ;;
++i?86-*-linux*|x86_64-*-linux*)
++  MOZ_CRASHREPORTER=1
++  ;;
++*solaris*)
++  MOZ_CRASHREPORTER=1
++  ;;
++esac
+ 
+ MOZ_ARG_DISABLE_BOOL(crashreporter,
+ [  --disable-crashreporter          Disable breakpad crash reporting],

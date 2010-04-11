@@ -3466,9 +3466,9 @@ diff --git a/extensions/pref/system-pref/src/nsSystemPrefFactory.cpp b/extension
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -229,16 +229,20 @@ endif
- ifdef NS_OSSO
- EXTRA_DSO_LDOPTS += $(LIBOSSO_LIBS)
+@@ -225,16 +225,20 @@ endif
+ ifdef MOZ_ENABLE_LIBCONIC
+ EXTRA_DSO_LDOPTS += $(LIBCONIC_LIBS)
  endif
  
  ifdef MOZ_ENABLE_DBUS
@@ -3490,7 +3490,7 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
 --- a/toolkit/toolkit-tiers.mk
 +++ b/toolkit/toolkit-tiers.mk
-@@ -253,16 +253,23 @@ endif
+@@ -254,16 +254,23 @@ endif
  ifdef MOZ_ENABLE_LIBXUL
  tier_toolkit_dirs += xpcom/stub
  endif

@@ -30,30 +30,22 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/config/system-headers b/config/system-headers
 --- a/config/system-headers
 +++ b/config/system-headers
-@@ -1007,15 +1007,19 @@ libsn/sn-monitor.h
- libsn/sn-util.h
- #endif
- #if MOZ_NATIVE_HUNSPELL==1
- hunspell.hxx
- #endif
+@@ -1012,8 +1012,11 @@ hunspell.hxx
  #if MOZ_NATIVE_BZ2==1
  bzlib.h
+ #endif
+ #if MOZ_PLATFORM_MAEMO==5
+ hildon-uri.h
+ hildon-mime.h
+ libosso.h
  #endif
 +#ifdef MOZ_ENABLE_LIBPROXY
 +proxy.h
 +#endif
-+
- #ifdef MOZ_PLATFORM_HILDON
- hildon-uri.h
- hildon-mime.h
- #endif
- #ifdef NS_OSSO
- libosso.h
- #endif
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5280,16 +5280,39 @@ then
+@@ -5289,16 +5289,39 @@ then
          AC_DEFINE(MOZ_ENABLE_DBUS)
      fi
  fi
@@ -96,7 +88,7 @@ diff --git a/configure.in b/configure.in
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -247,16 +247,20 @@ endif
+@@ -243,16 +243,20 @@ endif
  ifdef MOZ_TREE_FREETYPE
  EXTRA_DSO_LDOPTS += $(FT2_LIBS)
  endif

@@ -333,7 +333,7 @@ diff --git a/extensions/permissions/nsContentBlocker.h b/extensions/permissions/
 diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
 --- a/modules/libpref/src/init/all.js
 +++ b/modules/libpref/src/init/all.js
-@@ -842,16 +842,17 @@ pref("network.automatic-ntlm-auth.truste
+@@ -853,16 +853,17 @@ pref("network.automatic-ntlm-auth.truste
  // response to a NTLM challenge.  By default, this is disabled since servers
  // should almost never need the LM hash, and the LM hash is what makes NTLM
  // authentication less secure.  See bug 250691 for further details.
@@ -344,14 +344,14 @@ diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
  pref("permissions.default.image",           1); // 1-Accept, 2-Deny, 3-dontAcceptForeign
 +pref("permissions.honorExceptions.image",   true);
  
- #ifndef XP_MACOSX
- #ifdef XP_UNIX
  pref("network.proxy.type",                  5);
- #else
- pref("network.proxy.type",                  0);
- #endif
- #else
-@@ -869,16 +870,17 @@ pref("network.proxy.ssl_port",          
+ 
+ pref("network.proxy.ftp",                   "");
+ pref("network.proxy.ftp_port",              0);
+ pref("network.proxy.gopher",                "");
+ pref("network.proxy.gopher_port",           0);
+ pref("network.proxy.http",                  "");
+@@ -872,16 +873,17 @@ pref("network.proxy.ssl_port",          
  pref("network.proxy.socks",                 "");
  pref("network.proxy.socks_port",            0);
  pref("network.proxy.socks_version",         5);

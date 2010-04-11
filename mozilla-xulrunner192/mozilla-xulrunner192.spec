@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.0)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.4)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.0
+Version:        1.9.2.4
 Release:        1
-%define         releasedate 2010011500
-%define         version_internal 1.9.2.0
+%define         releasedate 2010041000
+%define         version_internal 1.9.2.4pre
 %define         apiversion 1.9.2
-%define         uaweight 192000
+%define         uaweight 192040
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -75,24 +75,21 @@ Patch5:         mozilla-nongnome-proxies.patch
 Patch6:         mozilla-helper-app.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
-Patch9:         mozilla-startup-notification.patch
 Patch10:        mozilla-kde.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024
 Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-breakpad-update.patch
-Patch15:        mozilla-milestone.patch
+Patch14:        mozilla-system-nspr.patch
+Patch15:        mozilla-ua-locale-pref.patch
+Patch16:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Requires:       mozilla-js192
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
-%ifarch %ix86
 %define crashreporter    1
-%else
-%define crashreporter    0
-%endif
 %define has_system_nspr  0
 %define has_system_nss   0
 %define has_system_cairo 0
@@ -114,7 +111,7 @@ BuildRequires:  mozilla-nspr-devel
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 %endif
 %if %has_system_nss
-BuildRequires:  mozilla-nss-devel >= 3.12.3
+BuildRequires:  mozilla-nss-devel >= 3.12.6
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
 Recommends:     %{name}-gnome
@@ -123,6 +120,18 @@ Recommends:     %{name}-gnome
 XULRunner is a single installable package that can be used to bootstrap
 multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
+
+
+%package -n mozilla-js192
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+Summary:        Mozilla JS 1.8 engine
+Group:          Productivity/Other
+
+%description -n mozilla-js192
+JavaScript is the Netscape-developed object scripting language used in millions
+of web pages and server applications worldwide. Netscape's JavaScript is a
+superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
+with only mild differences from the published standard. 
 
 
 %package devel
@@ -141,6 +150,7 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
+
 %package translations-common
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Common translations for XULRunner 1.9.2
@@ -199,7 +209,6 @@ This subpackage contains the Breakpad created and compatible debugging
 symbols meant for upload to Mozilla's crash collector database.
 %endif
 
-
 %prep
 %setup -n mozilla -q -b 1
 %patch1 -p1
@@ -210,7 +219,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %if %suse_version >= 1110
 %patch10 -p1
 %endif
@@ -218,7 +226,9 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+# bmo#542999
 %patch15 -p1
+%patch16 -p1
 
 %build
 %if %suse_version >= 1110
@@ -231,9 +241,6 @@ fi
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
-%if %crashreporter
-export CFLAGS="$CFLAGS -gstabs+"
-%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -492,10 +499,12 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/plugins/
 %{_libdir}/xulrunner-%{version_internal}/res/
 %{_libdir}/xulrunner-%{version_internal}/*.so
+%exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
+%{_libdir}/xulrunner-%{version_internal}/mozilla-runtime
 %{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
@@ -522,6 +531,12 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
+%files -n mozilla-js192
+%defattr(-,root,root)
+%dir %{_libdir}/xulrunner-%{version_internal}/
+%{_libdir}/xulrunner-%{apiversion}
+%{_libdir}/xulrunner-%{version_internal}/libmozjs.so
+
 %files devel
 %defattr(-,root,root)
 %{_libdir}/xulrunner-%{version_internal}/xpcshell
@@ -543,6 +558,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -555,6 +571,7 @@ exit 0
 %endif
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

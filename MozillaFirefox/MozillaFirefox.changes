@@ -1,7 +1,55 @@
 -------------------------------------------------------------------
+Fri Apr  9 16:53:57 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.4pre (Lorentz)
+
+-------------------------------------------------------------------
+Thu Apr  1 11:15:38 UTC 2010 - wr@rosenauer.org
+
+- security update to 3.6.3
+  * MFSA 2010-25/CVE-2010-1121 (bmo#555109)
+    Re-use of freed object due to scope confusion
+
+-------------------------------------------------------------------
+Thu Mar 18 06:43:33 CET 2010 - wr@rosenauer.org
+
+- security update to version 3.6.2 (bnc#586567)
+  * MFSA 2010-08/CVE-2010-1028
+    WOFF heap corruption due to integer overflow
+  * MFSA 2010-09/CVE-2010-0164 (bmo#547143)
+    Deleted frame reuse in multipart/x-mixed-replace image
+  * MFSA 2010-10/CVE-2010-0170 (bmo#541530)
+    XSS via plugins and unprotected Location object
+  * MFSA 2010-11/CVE-2010-0165/CVE-2010-0166/CVE-2010-0167
+    Crashes with evidence of memory corruption
+  * MFSA 2010-12/CVE-2010-0171 (bmo#531364)
+    XSS using addEventListener and setTimeout on a wrapped object
+  * MFSA 2010-13/CVE-2010-0168 (bmo#540642)
+    Content policy bypass with image preloading
+  * MFSA 2010-14/CVE-2010-0169 (bmo#535806)
+    Browser chrome defacement via cached XUL stylesheets
+  * MFSA 2010-15/CVE-2010-0172 (bmo#537862)
+    Asynchronous Auth Prompt attaches to wrong window
+  * MFSA 2010-16/CVE-2010-0173/CVE-2010-0174
+    Crashes with evidence of memory corruption
+  * MFSA 2010-18/CVE-2010-0176 (bmo#538308)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-19/CVE-2010-0177 (bmo#538310)
+    Dangling pointer vulnerability in nsPluginArray
+  * MFSA 2010-20/CVE-2010-0178 (bmo#546909)
+    Chrome privilege escalation via forced URL drag and drop
+  * MFSA 2010-22/CVE-2009-3555 (bmo#545755)
+    Update NSS to support TLS renegotiation indication
+  * MFSA 2010-23/CVE-2010-0181 (bmo#452093)
+    Image src redirect to mailto: URL opens email editor
+  * MFSA 2010-24/CVE-2010-0182 (bmo#490790)
+    XMLDocument::load() doesn't check nsIContentPolicy
+
+-------------------------------------------------------------------
 Mon Jan 18 09:42:50 CET 2010 - wr@rosenauer.org
 
 - update to 3.6rc2 (already named 3.6.0)
+- removed obsolete orbit-devel build requirement
 
 -------------------------------------------------------------------
 Wed Jan  6 17:15:40 CET 2010 - wr@rosenauer.org

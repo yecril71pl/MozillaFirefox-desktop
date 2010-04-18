@@ -36,7 +36,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        3.6.4
 Release:        1
-%define         releasedate 2010041000
+%define         releasedate 2010041700
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

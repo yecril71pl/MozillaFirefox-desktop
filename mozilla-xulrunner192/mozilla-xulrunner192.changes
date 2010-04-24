@@ -1,9 +1,14 @@
 -------------------------------------------------------------------
-Sun Apr 18 09:38:42 CEST 2010 - wr@rosenauer.org
+Sat Apr 24 14:11:26 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.4 (Lorentz)
   * enable crashreporter also for x86-64
   * provide mozilla-runtime to host NPAPI out of process plugins
+
+-------------------------------------------------------------------
+Sat Apr 24 11:38:24 UTC 2010 - coolo@novell.com
+
+- buildrequire pkg-config to fix provides
 
 -------------------------------------------------------------------
 Thu Apr  1 11:15:38 UTC 2010 - wr@rosenauer.org

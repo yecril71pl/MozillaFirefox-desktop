@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1020

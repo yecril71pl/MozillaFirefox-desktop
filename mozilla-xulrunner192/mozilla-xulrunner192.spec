@@ -438,7 +438,7 @@ rm -rf %{_tmppath}/translations.*
 %post
 /usr/sbin/update-alternatives --install %{_bindir}/xulrunner \
   xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner %{uaweight} || :
-%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+%{_libdir}/xulrunner-%{apiversion}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %posttrans
@@ -455,7 +455,7 @@ exit 0
 if [ "$1" = "0" ]; then # deinstallation
   # that's not quite nice since old versions should be removed on update as well
   # but that's problematic for updates w/o raising the version number
-  /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner
+  /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner
 fi
 rm -f %{_libdir}/xulrunner-%{version_internal}/dictionaries/*
 exit 0

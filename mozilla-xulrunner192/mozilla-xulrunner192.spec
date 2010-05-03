@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.4
 Release:        1
-%define         releasedate 2010041700
+%define         releasedate 2010050300
 %define         version_internal 1.9.2.4
 %define         apiversion 1.9.2
 %define         uaweight 192040
@@ -437,7 +437,7 @@ rm -rf %{_tmppath}/translations.*
 
 %post
 /usr/sbin/update-alternatives --install %{_bindir}/xulrunner \
-  xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner %{uaweight} || :
+  xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner %{uaweight} || :
 %{_libdir}/xulrunner-%{apiversion}/add-plugins.sh > /dev/null 2>&1
 exit 0
 

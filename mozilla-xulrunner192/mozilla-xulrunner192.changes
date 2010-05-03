@@ -6,6 +6,12 @@ Sat Apr 24 14:11:26 CEST 2010 - wr@rosenauer.org
   * provide mozilla-runtime to host NPAPI out of process plugins
 
 -------------------------------------------------------------------
+Mon Apr 26 07:18:09 CEST 2010 - wr@rosenauer.org
+
+- point alternatives link to the stable version to improve
+  robustness (bnc#589037)
+
+-------------------------------------------------------------------
 Sat Apr 24 11:38:24 UTC 2010 - coolo@novell.com
 
 - buildrequire pkg-config to fix provides

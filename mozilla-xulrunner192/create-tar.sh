@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RELEASE_TAG="default"
+RELEASE_TAG="FIREFOX_3_6_4_RELEASE"
 VERSION="1.9.2.4"
 
 # mozilla

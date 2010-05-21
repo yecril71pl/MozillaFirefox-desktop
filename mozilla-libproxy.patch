@@ -6,7 +6,7 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=517655
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -537,16 +537,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
+@@ -539,16 +539,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
  FT2_LIBS               = @FT2_LIBS@
  
  MOZ_PANGO_CFLAGS        = @MOZ_PANGO_CFLAGS@
@@ -30,7 +30,7 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/config/system-headers b/config/system-headers
 --- a/config/system-headers
 +++ b/config/system-headers
-@@ -1012,8 +1012,11 @@ hunspell.hxx
+@@ -1013,8 +1013,11 @@ hunspell.hxx
  #if MOZ_NATIVE_BZ2==1
  bzlib.h
  #endif
@@ -309,7 +309,7 @@ new file mode 100644
 +    c++;
 +  }
 +
-+printf("returned PAC proxy string: %s\n", PromiseFlatCString(aResult).get());
++//printf("returned PAC proxy string: %s\n", PromiseFlatCString(aResult).get());
 +
 +  PR_Free(proxyArray);
 +  return NS_OK;

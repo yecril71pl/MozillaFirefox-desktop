@@ -1,6 +1,5 @@
 # xulrunner/gecko patches
 mozilla-system-nspr.patch
-mozilla-crashreporter-x86_64.patch
 toolkit-download-folder.patch
 mozilla-libproxy.patch
 mozilla-pkgconfig.patch
@@ -21,8 +20,6 @@ firefox-credits.patch
 firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
-firefox-no-gnomevfs.patch
 firefox-appname.patch
 firefox-kde.patch
 firefox-ui-lockdown.patch
-firefox-crashreporter.patch

@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1020
@@ -41,8 +41,8 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.4
 Release:        1
-%define         releasedate 2010041000
-%define         version_internal 1.9.2.4pre
+%define         releasedate 2010050300
+%define         version_internal 1.9.2.4
 %define         apiversion 1.9.2
 %define         uaweight 192040
 Summary:        Mozilla Runtime Environment 1.9.2
@@ -437,8 +437,8 @@ rm -rf %{_tmppath}/translations.*
 
 %post
 /usr/sbin/update-alternatives --install %{_bindir}/xulrunner \
-  xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner %{uaweight} || :
-%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
+  xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner %{uaweight} || :
+%{_libdir}/xulrunner-%{apiversion}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %posttrans
@@ -455,7 +455,7 @@ exit 0
 if [ "$1" = "0" ]; then # deinstallation
   # that's not quite nice since old versions should be removed on update as well
   # but that's problematic for updates w/o raising the version number
-  /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{version_internal}/xulrunner
+  /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner
 fi
 rm -f %{_libdir}/xulrunner-%{version_internal}/dictionaries/*
 exit 0
@@ -504,7 +504,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
-%{_libdir}/xulrunner-%{version_internal}/mozilla-runtime
+%{_libdir}/xulrunner-%{version_internal}/plugin-container
 %{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin

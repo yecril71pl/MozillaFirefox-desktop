@@ -9,8 +9,8 @@ https://bugzilla.novell.com/show_bug.cgi?id=561027
 diff --git a/browser/themes/gnomestripe/browser/browser.css b/browser/themes/gnomestripe/browser/browser.css
 --- a/browser/themes/gnomestripe/browser/browser.css
 +++ b/browser/themes/gnomestripe/browser/browser.css
-@@ -788,16 +788,30 @@ toolbar[iconsize="small"] #fullscreen-bu
-   display: none;
+@@ -811,16 +811,30 @@ toolbar[iconsize="small"] #fullscreen-bu
+   -moz-margin-end: 3px;
  }
  
  #PopupAutoComplete,

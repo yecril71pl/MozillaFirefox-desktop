@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner193 (Version 1.9.3a4)
+# spec file for package mozilla-xulrunner193 (Version 1.9.3a)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -33,9 +33,9 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.3a4
+Version:        1.9.3a
 Release:        1
-%define         releasedate 2010060800
+%define         releasedate 2010060900
 %define         version_internal 1.9.3a5pre
 %define         apiversion 1.9.3
 %define         uaweight 192900
@@ -66,7 +66,6 @@ Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
 Patch5:         mozilla-nongnome-proxies.patch
-Patch6:         mozilla-disable-javaxpcom.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch10:        mozilla-kde.patch
@@ -205,7 +204,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
 #%patch8 -p1
 #%if %suse_version >= 1110

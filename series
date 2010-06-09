@@ -21,5 +21,5 @@ firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
 firefox-appname.patch
-firefox-kde.patch
-firefox-ui-lockdown.patch
+#firefox-kde.patch
+#firefox-ui-lockdown.patch

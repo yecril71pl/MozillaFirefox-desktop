@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 3.6.4)
+# spec file for package MozillaFirefox (Version 3.7a)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -20,12 +20,9 @@
 
 
 Name:           MozillaFirefox
-%define xulrunner mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2.4
-%if %suse_version > 1020
-BuildRequires:  fdupes
-%endif
+%define xulrunner mozilla-xulrunner193
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
+BuildRequires:  %{xulrunner}-devel = 1.9.3a4
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else
@@ -34,9 +31,9 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
-Version:        3.6.4
+Version:        3.7a
 Release:        1
-%define         releasedate 2010050300
+%define         releasedate 2010060800
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -58,12 +55,9 @@ Patch3:         toolkit-download-folder.patch
 Patch4:         firefox-linkorder.patch
 Patch5:         firefox-browser-css.patch
 Patch6:         firefox-cross-desktop.patch
-Patch7:         firefox-no-gnomevfs.patch
 Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
-Patch11:        firefox-crashreporter.patch
-Patch12:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -158,16 +152,13 @@ cd $RPM_BUILD_DIR/mozilla
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %if %suse_version >= 1110
-%patch9 -p1
+#%patch9 -p1
 # install kde.js
-install -m 644 %{SOURCE6} browser/app/profile/kde.js
+#install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+#%patch10 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -175,12 +166,6 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"  
 export CXXFLAGS="$CFLAGS"
-# 10.3-x86_64 build fails probably because gcc bug
-%if %suse_version == 1030
-%ifarch x86_64
-export ac_cv_visibility_hidden="no"
-%endif
-%endif
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
 SDKDIR=$(pkg-config --variable=sdkdir libxul)
 cat << EOF > $MOZCONFIG
@@ -193,7 +178,7 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-ac_add_options --with-system-nspr
+#ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-libxul-sdk=$SDKDIR
 ac_add_options --with-l10n-base=../l10n

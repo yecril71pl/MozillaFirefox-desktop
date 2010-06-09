@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.4)
+# spec file for package mozilla-xulrunner193 (Version 1.9.3a4)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -19,16 +19,10 @@
 # norootforbuild
 
 
-Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config
+Name:           mozilla-xulrunner193
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
-%if %suse_version > 1020
-BuildRequires:  fdupes
-%endif
-%if %suse_version > 1030
-BuildRequires:  hunspell-devel
-%endif
 %if %suse_version > 1100
 BuildRequires:  nss-shared-helper-devel
 %endif
@@ -39,16 +33,16 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.4
+Version:        1.9.3a4
 Release:        1
-%define         releasedate 2010050300
-%define         version_internal 1.9.2.4
-%define         apiversion 1.9.2
-%define         uaweight 192040
-Summary:        Mozilla Runtime Environment 1.9.2
+%define         releasedate 2010060800
+%define         version_internal 1.9.3a5pre
+%define         apiversion 1.9.3
+%define         uaweight 192900
+Summary:        Mozilla Runtime Environment 1.9.3
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
-Provides:       gecko192
+Provides:       gecko193
 %if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
@@ -56,7 +50,7 @@ Provides:       gecko192
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 %endif
 %ifarch %ix86
-Provides:       mozilla-xulrunner192-32bit = %{version}-%{release}
+Provides:       mozilla-xulrunner193-32bit = %{version}-%{release}
 %endif
 Source:         xulrunner-source-%{version}.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
@@ -72,7 +66,6 @@ Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
 Patch5:         mozilla-nongnome-proxies.patch
-Patch6:         mozilla-helper-app.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch10:        mozilla-kde.patch
@@ -81,23 +74,16 @@ Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-system-nspr.patch
-Patch15:        mozilla-ua-locale-pref.patch
-Patch16:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js192
+Requires:       mozilla-js193
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
 %define crashreporter    1
-%define has_system_nspr  0
-%define has_system_nss   0
-%define has_system_cairo 0
-%define localize 1
-%if %suse_version > 1030 || 0%{?opensuse_bs}
 %define has_system_nspr  1
 %define has_system_nss   1
-%endif
+%define has_system_cairo 0
+%define localize 1
 %if %suse_version > 1110
 %define has_system_cairo 1
 %endif
@@ -122,12 +108,12 @@ multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
 
-%package -n mozilla-js192
+%package -n mozilla-js193
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Mozilla JS 1.8 engine
 Group:          Productivity/Other
 
-%description -n mozilla-js192
+%description -n mozilla-js193
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
@@ -136,7 +122,7 @@ with only mild differences from the published standard.
 
 %package devel
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        XULRunner/Gecko SDK 1.9.2
+Summary:        XULRunner/Gecko SDK 1.9.3
 Group:          Development/Libraries/Other
 %if %has_system_nspr
 Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel) 
@@ -153,7 +139,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 
 %package translations-common
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        Common translations for XULRunner 1.9.2
+Summary:        Common translations for XULRunner 1.9.3
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
@@ -170,7 +156,7 @@ delivered in the main package.
 
 %package translations-other
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        Extra translations for XULRunner 1.9.2
+Summary:        Extra translations for XULRunner 1.9.3
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
@@ -216,19 +202,14 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%if %suse_version >= 1110
-%patch10 -p1
-%endif
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-# bmo#542999
-%patch15 -p1
-%patch16 -p1
+#%patch8 -p1
+#%if %suse_version >= 1110
+#%patch10 -p1
+#%endif
+#%patch11 -p1
+#%patch12 -p1
+#%patch13 -p1
 
 %build
 %if %suse_version >= 1110
@@ -531,7 +512,7 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
-%files -n mozilla-js192
+%files -n mozilla-js193
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %{_libdir}/xulrunner-%{apiversion}

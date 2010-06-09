@@ -67,18 +67,14 @@ Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %
 Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %endif
-Requires:       %{name}-branding >= 3.5
+Requires:       %{name}-branding >= 3.7
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
 %define progname firefox
 %define progdir %{_prefix}/%_lib/%{progname}
-%if %suse_version > 1020
 %define gnome_dir     %{_prefix}
-%else
-%define gnome_dir     /opt/gnome
-%endif
 ### build options
 %define branding 1
 %define localize 1 
@@ -178,7 +174,7 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-#ac_add_options --with-system-nspr
+ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-libxul-sdk=$SDKDIR
 ac_add_options --with-l10n-base=../l10n
@@ -205,6 +201,7 @@ cp -rf $RPM_BUILD_DIR/mozilla/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
+touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
   case $locale in
    ja-JP-mac|en-US)
@@ -331,9 +328,8 @@ fi
 %dir %{progdir}
 %dir %{progdir}/chrome/
 %{progdir}/chrome/browser.*
-%{progdir}/chrome/classic.*
 %{progdir}/chrome/en-US.*
-%{progdir}/chrome/reporter.*
+%{progdir}/chrome/toolkit.*
 %{progdir}/chrome/icons
 %{progdir}/components/
 %exclude %{progdir}/defaults/profile/bookmarks.html
@@ -373,7 +369,6 @@ fi
 %defattr(-,root,root)  
 %dir %{progdir}
 %dir %{progdir}/defaults/
-%{progdir}/browserconfig.properties  
 %{progdir}/defaults/profile/bookmarks.html
 
 %changelog

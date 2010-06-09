@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner193
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
-BuildRequires:  %{xulrunner}-devel = 1.9.3a4
+BuildRequires:  %{xulrunner}-devel = 1.9.3a
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else
@@ -67,7 +67,7 @@ Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %
 Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %endif
-Requires:       %{name}-branding >= 3.7
+Requires:       %{name}-branding > 3.6
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
@@ -120,7 +120,7 @@ of MozillaFirefox.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Upstream branding for MozillaFirefox
 Group:          Productivity/Networking/Web/Browsers
-Provides:       %{name}-branding = 3.5
+Provides:       %{name}-branding = 3.7
 Conflicts:      otherproviders(%{name}-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -

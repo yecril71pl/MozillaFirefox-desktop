@@ -83,8 +83,7 @@ Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
 %define crashreporter    1
-# FIXME after NSPR 4.8.5
-%define has_system_nspr  0
+%define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
 %define localize 1
@@ -94,7 +93,7 @@ Requires(preun): update-alternatives coreutils
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}
-%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|nspr4|plc4|plds4|unixprint' | %__find_provides"
+%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint' | %__find_provides"
 %global __find_provides %provfind
 %if %has_system_nspr
 BuildRequires:  mozilla-nspr-devel

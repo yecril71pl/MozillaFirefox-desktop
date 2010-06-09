@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner193
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1100
@@ -46,8 +46,8 @@ Provides:       gecko193
 %if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
-%define kde_helper_version 6
-Provides:       mozilla-kde4-version = %{kde_helper_version}
+#%define kde_helper_version 6
+#Provides:       mozilla-kde4-version = %{kde_helper_version}
 %endif
 %ifarch %ix86
 Provides:       mozilla-xulrunner193-32bit = %{version}-%{release}
@@ -66,6 +66,7 @@ Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
 Patch5:         mozilla-nongnome-proxies.patch
+Patch6:         mozilla-disable-javaxpcom.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch10:        mozilla-kde.patch
@@ -80,7 +81,8 @@ Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
 %define crashreporter    1
-%define has_system_nspr  1
+# FIXME after NSPR 4.8.5
+%define has_system_nspr  0
 %define has_system_nss   1
 %define has_system_cairo 0
 %define localize 1
@@ -202,6 +204,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 #%patch8 -p1
 #%if %suse_version >= 1110
@@ -212,24 +215,18 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch13 -p1
 
 %build
-%if %suse_version >= 1110
-kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
-if test "$kdehelperversion" != %{kde_helper_version}; then
-  echo fix kde helper version in the .spec file
-  exit 1
-fi
-%endif
+#%if %suse_version >= 1110
+#kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
+#if test "$kdehelperversion" != %{kde_helper_version}; then
+#  echo fix kde helper version in the .spec file
+#  exit 1
+#fi
+#%endif
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
-%endif
-# 10.3-x86_64 build fails probably because gcc bug
-%if %suse_version == 1030
-%ifarch x86_64
-export ac_cv_visibility_hidden="no"
-%endif
 %endif
 export CXXFLAGS="$CFLAGS"
 export LDFLAGS="-Wl,-rpath -Wl,${MOZ_APP_DIR}"
@@ -267,6 +264,7 @@ ac_add_options --disable-updater
 ac_add_options --disable-javaxpcom
 ac_add_options --enable-startup-notification
 ac_add_options --enable-url-classifier
+ac_add_options --enable-system-hunspell
 #ac_add_options --enable-debug
 EOF
 %if %has_system_nspr
@@ -284,16 +282,6 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --enable-system-cairo
 EOF
 %endif
-%if %suse_version > 1030
-cat << EOF >> $MOZCONFIG
-ac_add_options --enable-system-hunspell
-EOF
-%endif
-#%if %suse_version > 1100
-#cat << EOF >> $MOZCONFIG
-#ac_add_options --enable-system-sqlite
-#EOF
-#%endif
 %if %suse_version > 1110
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
@@ -337,8 +325,8 @@ popd
 # XPI example
 #cp -rL dist/xpi-stage/simple $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/
 # preferences
-cp %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
-cp %{SOURCE8} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/greprefs/lockdown.js
+cp %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/defaults/pref/all-openSUSE.js
+cp %{SOURCE8} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/defaults/pref/lockdown.js
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
   %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
@@ -353,6 +341,7 @@ touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
+touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
    ja-JP-mac|en-US)
@@ -391,13 +380,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/update.locale
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/nspr-config
 # autoreg
 touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 # fdupes
-%if %suse_version > 1020
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
-%endif
 # create breakpad debugsymbols
 %if %crashreporter
 SYMBOLS_NAME="xulrunner-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
@@ -459,8 +447,6 @@ exit 0
 %dir %{_libdir}/xulrunner-%{version_internal}/chrome/
 %dir %{_libdir}/xulrunner-%{version_internal}/dictionaries/
 %dir %{_libdir}/xulrunner-%{version_internal}/extensions/
-%{_libdir}/xulrunner-%{version_internal}/chrome/classic.*
-%{_libdir}/xulrunner-%{version_internal}/chrome/comm.*
 %{_libdir}/xulrunner-%{version_internal}/chrome/en-US.*
 %{_libdir}/xulrunner-%{version_internal}/chrome/pippki.*
 %{_libdir}/xulrunner-%{version_internal}/chrome/toolkit.*
@@ -469,12 +455,7 @@ exit 0
 %exclude %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 %{_libdir}/xulrunner-%{version_internal}/defaults/
-%dir %{_libdir}/xulrunner-%{version_internal}/greprefs/
-%{_libdir}/xulrunner-%{version_internal}/greprefs/all.js
-%{_libdir}/xulrunner-%{version_internal}/greprefs/security-prefs.js
-%{_libdir}/xulrunner-%{version_internal}/greprefs/xpinstall.js
-%{_libdir}/xulrunner-%{version_internal}/greprefs/all-openSUSE.js
-%{_libdir}/xulrunner-%{version_internal}/greprefs/lockdown.js
+%{_libdir}/xulrunner-%{version_internal}/greprefs.js
 %{_libdir}/xulrunner-%{version_internal}/icons/
 %{_libdir}/xulrunner-%{version_internal}/modules/
 %{_libdir}/xulrunner-%{version_internal}/plugins/

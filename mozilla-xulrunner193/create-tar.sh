@@ -1,12 +1,13 @@
 #!/bin/bash
 
-RELEASE_TAG="FIREFOX_3_6_4_RELEASE"
-VERSION="1.9.2.4"
+BRANCH="mozilla-central"
+RELEASE_TAG="default"
+VERSION="1.9.3a4"
 
 # mozilla
-hg clone http://hg.mozilla.org/releases/mozilla-1.9.2 mozilla
+hg clone http://hg.mozilla.org/$BRANCH mozilla
 pushd mozilla
-hg update -r $RELEASE_TAG
+[ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
 popd
 tar cjf xulrunner-source-$VERSION.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
 
@@ -17,8 +18,8 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
     ja-JP-mac|en-US)
       ;;
     *)
-      hg clone http://hg.mozilla.org/releases/l10n-mozilla-1.9.2/$locale l10n/$locale
-      hg -R l10n/$locale up -C -r $RELEASE_TAG
+      hg clone http://hg.mozilla.org/l10n-central/$locale l10n/$locale
+      [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
       ;;
   esac
 done

@@ -4,6 +4,7 @@ mozilla-libproxy.patch
 mozilla-pkgconfig.patch
 idldir.patch
 mozilla-nongnome-proxies.patch
+mozilla-disable-javaxpcom.patch
 mozilla-prefer_plugin_pref.patch
 #mozilla-shared-nss-db.patch
 #mozilla-kde.patch

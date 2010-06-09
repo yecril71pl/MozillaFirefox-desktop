@@ -76,6 +76,7 @@ Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-cpuid.patch
+Patch15:        mozilla-libvpx-buildfix.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js193
 Requires(post):  update-alternatives coreutils
@@ -93,7 +94,7 @@ Requires(preun): update-alternatives coreutils
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}
-%global provfind sh -c "grep -v 'libsqlite3.so' | %__find_provides"
+%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|nspr4|plc4|plds4|unixprint' | %__find_provides"
 %global __find_provides %provfind
 %if %has_system_nspr
 BuildRequires:  mozilla-nspr-devel
@@ -216,6 +217,11 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch13 -p1
 %if %suse_version < 1120
 %patch14 -p1
+%endif
+%if %suse_version <= 1120
+%ifarch %ix86
+%patch15 -p1
+%endif
 %endif
 
 %build

@@ -2,7 +2,7 @@
 
 BRANCH="mozilla-central"
 RELEASE_TAG="default"
-VERSION="1.9.3a4"
+VERSION="1.9.3a"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

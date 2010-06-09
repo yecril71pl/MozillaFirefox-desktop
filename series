@@ -1,18 +1,15 @@
 # xulrunner/gecko patches
-mozilla-system-nspr.patch
 toolkit-download-folder.patch
 mozilla-libproxy.patch
 mozilla-pkgconfig.patch
 idldir.patch
 mozilla-nongnome-proxies.patch
-mozilla-helper-app.patch
 mozilla-prefer_plugin_pref.patch
-mozilla-shared-nss-db.patch
-mozilla-kde.patch
-mozilla-gconf-backend.patch
-gecko-lockdown.patch
-toolkit-ui-lockdown.patch
-mozilla-ua-locale-pref.patch
+#mozilla-shared-nss-db.patch
+#mozilla-kde.patch
+#mozilla-gconf-backend.patch
+#gecko-lockdown.patch
+#toolkit-ui-lockdown.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

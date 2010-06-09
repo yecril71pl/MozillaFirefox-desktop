@@ -6,7 +6,7 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=517655
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -539,16 +539,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
+@@ -538,16 +538,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
  FT2_LIBS               = @FT2_LIBS@
  
  MOZ_PANGO_CFLAGS        = @MOZ_PANGO_CFLAGS@
@@ -23,35 +23,36 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
  MOZ_LIBNOTIFY_LIBS	= @MOZ_LIBNOTIFY_LIBS@
  MOZ_ENABLE_LIBNOTIFY	= @MOZ_ENABLE_LIBNOTIFY@
  
+ MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS@
+ 
  GLIB_CFLAGS	= @GLIB_CFLAGS@
  GLIB_LIBS	= @GLIB_LIBS@
- GLIB_GMODULE_LIBS	= @GLIB_GMODULE_LIBS@
- LIBIDL_CFLAGS = @LIBIDL_CFLAGS@
 diff --git a/config/system-headers b/config/system-headers
 --- a/config/system-headers
 +++ b/config/system-headers
-@@ -1013,8 +1013,11 @@ hunspell.hxx
- #if MOZ_NATIVE_BZ2==1
- bzlib.h
+@@ -1028,8 +1028,12 @@ gio/gio.h
+ #ifdef MOZ_ENABLE_LIBCONIC
+ conic/conicconnection.h
+ conic/conicconnectionevent.h
+ conic/conicstatisticsevent.h
  #endif
- #if MOZ_PLATFORM_MAEMO==5
- hildon-uri.h
- hildon-mime.h
- libosso.h
+ #if MOZ_NATIVE_LIBEVENT==1
+ event.h
  #endif
 +#ifdef MOZ_ENABLE_LIBPROXY
 +proxy.h
 +#endif
++
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5289,16 +5289,39 @@ then
-         AC_DEFINE(MOZ_ENABLE_DBUS)
+@@ -5564,16 +5564,39 @@ then
      fi
+ 
+     AC_SUBST(MOZ_ENABLE_GCONF)
+     AC_SUBST(MOZ_GCONF_CFLAGS)
+     AC_SUBST(MOZ_GCONF_LIBS)
  fi
- AC_SUBST(MOZ_ENABLE_DBUS)
- AC_SUBST(MOZ_DBUS_GLIB_CFLAGS)
- AC_SUBST(MOZ_DBUS_GLIB_LIBS)
  
  dnl ========================================================
 +dnl = libproxy support
@@ -88,7 +89,7 @@ diff --git a/configure.in b/configure.in
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -243,16 +243,20 @@ endif
+@@ -222,16 +222,20 @@ endif
  ifdef MOZ_TREE_FREETYPE
  EXTRA_DSO_LDOPTS += $(FT2_LIBS)
  endif
@@ -106,7 +107,7 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
  endif
  
  ifeq ($(OS_ARCH),SunOS)
- EXTRA_DSO_LDOPTS += -lelf -ldemangle -lCstd
+ EXTRA_DSO_LDOPTS += -lelf -ldemangle
  endif
  
 diff --git a/toolkit/system/unixproxy/Makefile.in b/toolkit/system/unixproxy/Makefile.in
@@ -130,21 +131,21 @@ diff --git a/toolkit/system/unixproxy/Makefile.in b/toolkit/system/unixproxy/Mak
  # of those above. If you wish to allow use of your version of this file only
  # under the terms of either the GPL or the LGPL, and not to allow others to
  # use your version of this file under the terms of the MPL, indicate your
-@@ -53,15 +54,30 @@ LIBXUL_LIBRARY  = 1
+@@ -46,16 +47,30 @@ MODULE          = unixproxy
+ LIBRARY_NAME    = unixproxy
  
- REQUIRES = \
-         xpcom \
-         string \
-         necko \
-         mozgnome \
-         $(NULL)
+ EXPORT_LIBRARY  = 1
+ IS_COMPONENT    = 1
+ MODULE_NAME     = nsUnixProxyModule
+ GRE_MODULE      = 1
+ LIBXUL_LIBRARY  = 1
+ 
++EXTRA_DSO_LDOPTS += \
++  $(MOZ_LIBPROXY_LIBS) \
++  $(MOZ_COMPONENT_LIBS) \
++  $(NULL)
  
 -EXTRA_DSO_LDOPTS += $(MOZ_COMPONENT_LIBS)
-+EXTRA_DSO_LDOPTS += \
-+               $(MOZ_LIBPROXY_LIBS) \
-+               $(MOZ_COMPONENT_LIBS) \
-+               $(NULL)
-+
 +ifdef MOZ_ENABLE_LIBPROXY
 +
 +CPPSRCS = \

@@ -19,7 +19,7 @@
 # norootforbuild
 
 
-Name:           MozillaFirefox
+Name:           MozillaFirefox4
 %define xulrunner mozilla-xulrunner193
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
 BuildRequires:  %{xulrunner}-devel = 1.9.3a
@@ -39,7 +39,7 @@ Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
 Source:         firefox-%{version}-source.tar.bz2
 Source1:        MozillaFirefox.desktop
-Source2:        %{name}-rpmlintrc
+Source2:        MozillaFirefox-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
 Source5:        firefox.schemas
@@ -72,12 +72,12 @@ Requires:       %{name}-branding > 3.6
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
-%define progname firefox
+%define progname firefox4
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
 ### build options
-%define branding 1
-%define localize 1 
+%define branding 0
+%define localize 0 
 ### build options end
 
 %description
@@ -87,7 +87,6 @@ plethora of extensions.
 
 
 %if %localize
-
 %package translations-common
 Summary:        Common translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
@@ -227,7 +226,7 @@ done
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g
 s:%%PROGDIR:%{progdir}:g
-s:%%APPNAME:%{progname}:g
+s:%%APPNAME:firefox:g
 s:%%PROFILE:.mozilla/firefox:g" \
   %{SOURCE3} > $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
 chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
@@ -274,10 +273,8 @@ rm -f $RPM_BUILD_ROOT%{progdir}/old-homepage-default.properties
 rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
 rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
 # fdupes
-%if %suse_version > 1020
 %fdupes $RPM_BUILD_ROOT%{progdir}
 %fdupes $RPM_BUILD_ROOT%{_datadir}
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -339,7 +336,7 @@ fi
 %{progdir}/searchplugins/
 %{progdir}/modules/
 %attr(755,root,root) %{progdir}/%{progname}.sh
-%{progdir}/%{progname}
+%{progdir}/firefox
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
 %{progdir}/crashreporter-override.ini

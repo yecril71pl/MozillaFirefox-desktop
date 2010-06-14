@@ -85,14 +85,14 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 1
+%define localize 0
 %if %suse_version > 1110
 %define has_system_cairo 1
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}
-%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint' | %__find_provides"
+%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint|mozalloc' | %__find_provides"
 %global __find_provides %provfind
 %if %has_system_nspr
 BuildRequires:  mozilla-nspr-devel

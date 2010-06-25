@@ -1,4 +1,30 @@
 -------------------------------------------------------------------
+Wed Jun 23 14:40:35 CEST 2010 - wr@rosenauer.org
+
+- update to final 3.6.4 release (bnc#603356)
+  * MFSA 2010-26/CVE-2010-1200/CVE-2010-1201/CVE-2010-1202/
+    CVE-2010-1203
+    Crashes with evidence of memory corruption (rv:1.9.2.4)
+  * MFSA 2010-28/CVE-2010-1198 (bmo#532246)
+    Freed object reuse across plugin instances
+  * MFSA 2010-29/CVE-2010-1196 (bmo#534666)
+    Heap buffer overflow in nsGenericDOMDataNode::SetTextInternal
+  * MFSA 2010-30/CVE-2010-1199 (bmo#554255)
+    Integer Overflow in XSLT Node Sorting
+  * MFSA 2010-31/CVE-2010-1125 (bmo#552255)
+    focus() behavior can be used to inject or steal keystrokes
+  * MFSA 2010-32/CVE-2010-1197 (bmo#537120)
+    Content-Disposition: attachment ignored if
+    Content-Type: multipart also present
+  * MFSA 2010-33/CVE-2008-5913 (bmo#475585)
+    User tracking across sites using Math.random()
+
+-------------------------------------------------------------------
+Mon Jun  7 07:07:33 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.4(build6)
+
+-------------------------------------------------------------------
 Sun Apr 18 09:42:40 CEST 2010 - wr@rosenauer.org
 
 - security update to 3.6.4 (Lorentz)

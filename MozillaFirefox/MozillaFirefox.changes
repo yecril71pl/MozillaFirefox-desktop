@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sun Jun 27 20:24:31 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.6 release
+  * modifies the crash protection feature to increase the amount 
+    of time that plugins are allowed to be non-responsive before 
+    being terminated.
+
+-------------------------------------------------------------------
 Wed Jun 23 14:40:35 CEST 2010 - wr@rosenauer.org
 
 - update to final 3.6.4 release (bnc#603356)

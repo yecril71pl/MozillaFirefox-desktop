@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.4)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.6)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.4
+Version:        1.9.2.6
 Release:        1
-%define         releasedate 2010061100
-%define         version_internal 1.9.2.4
+%define         releasedate 2010062600
+%define         version_internal 1.9.2.6
 %define         apiversion 1.9.2
-%define         uaweight 192040
+%define         uaweight 192060
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other

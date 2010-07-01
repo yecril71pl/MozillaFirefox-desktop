@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner193 (Version 1.9.3a)
+# spec file for package mozilla-xulrunner193 (Version 2.0b)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -33,16 +33,16 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.3a
+Version:        2.0b
 Release:        1
-%define         releasedate 2010060900
-%define         version_internal 1.9.3a5pre
-%define         apiversion 1.9.3
-%define         uaweight 192900
-Summary:        Mozilla Runtime Environment 1.9.3
+%define         releasedate 2010063000
+%define         version_internal 2.0b2pre
+%define         apiversion 2.0.0
+%define         uaweight 199900
+Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
-Provides:       gecko193
+Provides:       gecko20
 %if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
@@ -77,7 +77,7 @@ Patch13:        toolkit-ui-lockdown.patch
 Patch14:        mozilla-cpuid.patch
 Patch15:        mozilla-libvpx-buildfix.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js193
+Requires:       mozilla-js193 = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
@@ -92,7 +92,7 @@ Requires(preun): update-alternatives coreutils
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}
-%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint|mozalloc' | %__find_provides"
+%global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint' | %__find_provides"
 %global __find_provides %provfind
 %if %has_system_nspr
 BuildRequires:  mozilla-nspr-devel
@@ -124,7 +124,7 @@ with only mild differences from the published standard.
 
 %package devel
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        XULRunner/Gecko SDK 1.9.3
+Summary:        XULRunner/Gecko SDK 2.0
 Group:          Development/Libraries/Other
 %if %has_system_nspr
 Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel) 
@@ -141,7 +141,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 
 %package translations-common
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        Common translations for XULRunner 1.9.3
+Summary:        Common translations for XULRunner 2.0
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
@@ -158,7 +158,7 @@ delivered in the main package.
 
 %package translations-other
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        Extra translations for XULRunner 1.9.3
+Summary:        Extra translations for XULRunner 2.0
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)

@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 3.7a)
+# spec file for package MozillaFirefox (Version 4.0b)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -22,7 +22,7 @@
 Name:           MozillaFirefox4
 %define xulrunner mozilla-xulrunner193
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
-BuildRequires:  %{xulrunner}-devel = 1.9.3a
+BuildRequires:  %{xulrunner}-devel = 2.0b
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else
@@ -31,9 +31,9 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
-Version:        3.7a
+Version:        4.0b
 Release:        1
-%define         releasedate 2010060800
+%define         releasedate 2010063000
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -119,7 +119,7 @@ of MozillaFirefox.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Upstream branding for MozillaFirefox
 Group:          Productivity/Networking/Web/Browsers
-Provides:       %{name}-branding = 3.7
+Provides:       %{name}-branding = 4.0
 Conflicts:      otherproviders(%{name}-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -

@@ -75,7 +75,6 @@ Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-cpuid.patch
-Patch15:        mozilla-libvpx-buildfix.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js193 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -214,11 +213,6 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch13 -p1
 %if %suse_version < 1120
 %patch14 -p1
-%endif
-%if %suse_version <= 1120
-%ifarch %ix86
-%patch15 -p1
-%endif
 %endif
 
 %build

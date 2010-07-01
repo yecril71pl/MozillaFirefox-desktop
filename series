@@ -11,7 +11,6 @@ mozilla-prefer_plugin_pref.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
 mozilla-cpuid.patch
-mozilla-libvpx-buildfix.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

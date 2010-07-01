@@ -85,7 +85,7 @@ Patch14:        mozilla-system-nspr.patch
 Patch15:        mozilla-ua-locale-pref.patch
 Patch16:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js192
+Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###

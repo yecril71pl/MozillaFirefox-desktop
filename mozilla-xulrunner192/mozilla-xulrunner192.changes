@@ -5,6 +5,7 @@ Sun Jun 27 21:02:29 CEST 2010 - wr@rosenauer.org
   * modifies the crash protection feature to increase the amount
     of time that plugins are allowed to be non-responsive before
     being terminated.
+- require exact matching version of mozilla-js192
 
 -------------------------------------------------------------------
 Wed Jun 23 14:23:43 CEST 2010 - wr@rosenauer.org

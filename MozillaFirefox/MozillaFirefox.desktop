@@ -1,11 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Firefox
+Name=Firefox 4
 GenericName=Web Browser
 Comment=Web Browser
-TryExec=firefox
-Exec=firefox %u
-Icon=firefox
+TryExec=firefox4
+Exec=firefox4 %u
+Icon=firefox4
 Terminal=false
 StartupNotify=true
 MimeType=text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;text/mml;application/x-xpinstall;

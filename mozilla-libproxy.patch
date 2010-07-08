@@ -6,7 +6,7 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=517655
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -538,16 +538,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
+@@ -541,16 +541,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
  FT2_LIBS               = @FT2_LIBS@
  
  MOZ_PANGO_CFLAGS        = @MOZ_PANGO_CFLAGS@
@@ -46,7 +46,7 @@ diff --git a/config/system-headers b/config/system-headers
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5564,16 +5564,39 @@ then
+@@ -5536,16 +5536,39 @@ then
      fi
  
      AC_SUBST(MOZ_ENABLE_GCONF)
@@ -167,7 +167,7 @@ diff --git a/toolkit/system/unixproxy/nsLibProxySettings.cpp b/toolkit/system/un
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/system/unixproxy/nsLibProxySettings.cpp
-@@ -0,0 +1,162 @@
+@@ -0,0 +1,173 @@
 +/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/* ***** BEGIN LICENSE BLOCK *****
 + * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -206,7 +206,7 @@ new file mode 100644
 + * ***** END LICENSE BLOCK ***** */
 +
 +#include "nsISystemProxySettings.h"
-+#include "nsIGenericFactory.h"
++#include "mozilla/ModuleUtils.h"
 +#include "nsIServiceManager.h"
 +#include "nsIIOService.h"
 +#include "nsIURI.h"
@@ -321,12 +321,23 @@ new file mode 100644
 +       {0x91, 0x81, 0xa2, 0x85, 0xe7, 0x4c, 0xf1, 0xd4 } }
 +
 +NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsUnixSystemProxySettings, Init)
++NS_DEFINE_NAMED_CID(NS_UNIXSYSTEMPROXYSERVICE_CID);
 +
-+static const nsModuleComponentInfo components[] = {
-+  { "Unix System Proxy Settings Service",
-+    NS_UNIXSYSTEMPROXYSERVICE_CID,
-+    NS_SYSTEMPROXYSETTINGS_CONTRACTID,
-+    nsUnixSystemProxySettingsConstructor }
++static const mozilla::Module::CIDEntry kUnixProxyCIDs[] = {
++  { &kNS_UNIXSYSTEMPROXYSERVICE_CID, false, NULL, nsUnixSystemProxySettingsConstructor },
++  { NULL }
 +};
 +
-+NS_IMPL_NSGETMODULE(nsUnixProxyModule, components)
++static const mozilla::Module::ContractIDEntry kUnixProxyContracts[] = {
++  { NS_SYSTEMPROXYSETTINGS_CONTRACTID, &kNS_UNIXSYSTEMPROXYSERVICE_CID },
++  { NULL }
++};
++
++static const mozilla::Module kUnixProxyModule = {
++  mozilla::Module::kVersion,
++  kUnixProxyCIDs,
++  kUnixProxyContracts
++};
++        
++NSMODULE_DEFN(nsUnixProxyModule) = &kUnixProxyModule;
++

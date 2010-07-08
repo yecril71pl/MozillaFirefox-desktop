@@ -15,7 +15,7 @@ diff --git a/browser/components/shell/src/nsGNOMEShellService.cpp b/browser/comp
  
 -  return appPath->GetNativePath(mAppPath);
 +  /* This path to firefox is hardcoded for the default path setting */
-+  mAppPath.Assign ("/usr/bin/firefox");
++  mAppPath.Assign ("/usr/bin/firefox4");
 +  
 +  //return appPath->GetNativePath(mAppPath);
 +  return NS_OK;

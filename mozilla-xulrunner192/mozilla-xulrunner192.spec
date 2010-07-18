@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.6)
+# spec file for package mozilla-xulrunner192 (Version 1.9.2.7)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.6
+Version:        1.9.2.7
 Release:        1
-%define         releasedate 2010062600
-%define         version_internal 1.9.2.6
+%define         releasedate 2010071400
+%define         version_internal 1.9.2.7
 %define         apiversion 1.9.2
-%define         uaweight 192060
+%define         uaweight 192070
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -81,9 +81,7 @@ Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-system-nspr.patch
 Patch15:        mozilla-ua-locale-pref.patch
-Patch16:        mozilla-crashreporter-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -225,10 +223,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 # bmo#542999
 %patch15 -p1
-%patch16 -p1
 
 %build
 %if %suse_version >= 1110

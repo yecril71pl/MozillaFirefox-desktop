@@ -6,7 +6,7 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=517655
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -539,16 +539,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
+@@ -542,16 +542,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
  FT2_LIBS               = @FT2_LIBS@
  
  MOZ_PANGO_CFLAGS        = @MOZ_PANGO_CFLAGS@
@@ -30,7 +30,7 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/config/system-headers b/config/system-headers
 --- a/config/system-headers
 +++ b/config/system-headers
-@@ -1013,8 +1013,11 @@ hunspell.hxx
+@@ -1013,11 +1013,14 @@ hunspell.hxx
  #if MOZ_NATIVE_BZ2==1
  bzlib.h
  #endif
@@ -42,10 +42,13 @@ diff --git a/config/system-headers b/config/system-headers
 +#ifdef MOZ_ENABLE_LIBPROXY
 +proxy.h
 +#endif
+ #if MOZ_NATIVE_LIBEVENT==1
+ event.h
+ #endif
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5289,16 +5289,39 @@ then
+@@ -5325,16 +5325,39 @@ then
          AC_DEFINE(MOZ_ENABLE_DBUS)
      fi
  fi
@@ -226,8 +229,8 @@ new file mode 100644
 +
 +private:
 +  ~nsUnixSystemProxySettings() {
-+    if (mProxyFactory) 
-+      px_proxy_factory_free(mProxyFactory); 
++    if (mProxyFactory)
++      px_proxy_factory_free(mProxyFactory);
 +  }
 +
 +  pxProxyFactory *mProxyFactory;
@@ -288,9 +291,9 @@ new file mode 100644
 +    nsXPIDLCString hostPortString;
 +    nsCOMPtr<nsIURI> proxyURI;
 +
-+    rv = mIOService->NewURI(nsDependentCString(proxyArray[c]), 
-+                                               nsnull, 
-+                                               nsnull, 
++    rv = mIOService->NewURI(nsDependentCString(proxyArray[c]),
++                                               nsnull,
++                                               nsnull,
 +                                               getter_AddRefs(proxyURI));
 +    NS_ENSURE_SUCCESS(rv, rv);
 +

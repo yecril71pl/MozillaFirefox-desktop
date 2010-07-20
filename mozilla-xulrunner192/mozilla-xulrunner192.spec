@@ -96,9 +96,6 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nspr  1
 %define has_system_nss   1
 %endif
-%if %suse_version > 1110
-%define has_system_cairo 1
-%endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}

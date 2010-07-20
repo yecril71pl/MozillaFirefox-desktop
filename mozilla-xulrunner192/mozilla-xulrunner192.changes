@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jul 20 09:08:26 CEST 2010 - wr@rosenauer.org
+
+- never use system cairo for now
+
+-------------------------------------------------------------------
 Thu Jul 15 21:45:13 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.7 (bnc#622506)

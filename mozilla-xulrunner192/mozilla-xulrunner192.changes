@@ -1,12 +1,39 @@
 -------------------------------------------------------------------
-Tue Jul 20 09:08:26 CEST 2010 - wr@rosenauer.org
-
-- never use system cairo for now
-
--------------------------------------------------------------------
 Thu Jul 15 21:45:13 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.7 (bnc#622506)
+  * MFSA 2010-34/CVE-2010-1211/CVE-2010-1212
+    Miscellaneous memory safety hazards
+  * MFSA 2010-35/CVE-2010-1208 (bmo#572986)
+    DOM attribute cloning remote code execution vulnerability
+  * MFSA 2010-36/CVE-2010-1209 (bmo#552110)
+    Use-after-free error in NodeIterator
+  * MFSA 2010-37/CVE-2010-1214 (bmo#572985)
+    Plugin parameter EnsureCachedAttrParamArrays remote code 
+    execution vulnerability
+  * MFSA 2010-38/CVE-2010-1215 (bmo#567069)
+    Arbitrary code execution using SJOW and fast native function
+  * MFSA 2010-39/CVE-2010-2752 (bmo#574059)
+    nsCSSValue::Array index integer overflow
+  * MFSA 2010-40/CVE-2010-2753 (bmo#571106)
+    nsTreeSelection dangling pointer remote code execution 
+    vulnerability
+  * MFSA 2010-41/CVE-2010-1205 (bmo#570451)
+    Remote code execution using malformed PNG image
+  * MFSA 2010-42/CVE-2010-1213 (bmo#568148)
+    Cross-origin data disclosure via Web Workers and importScripts
+  * MFSA 2010-43/CVE-2010-1207 (bmo#571287)
+    Same-origin bypass using canvas context
+  * MFSA 2010-44/CVE-2010-1210 (bmo#564679)
+    Characters mapped to U+FFFD in 8 bit encodings cause subsequent 
+    character to vanish
+  * MFSA 2010-45/CVE-2010-1206/CVE-2010-2751 (bmo#536466,556957)
+    Multiple location bar spoofing vulnerabilities
+  * MFSA 2010-46/CVE-2010-0654 (bmo#524223)
+    Cross-domain data theft using CSS
+  * MFSA 2010-47/CVE-2010-2754 (bmo#568564)
+    Cross-origin data leakage from script filename in error messages
+- never use system cairo for now
 
 -------------------------------------------------------------------
 Sun Jun 27 21:02:29 CEST 2010 - wr@rosenauer.org

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH="mozilla-central"
-RELEASE_TAG="default"
+RELEASE_TAG="FIREFOX_4_0b2_RELEASE"
 VERSION="2.0b"
 
 # mozilla

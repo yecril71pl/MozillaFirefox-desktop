@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner193 (Version 2.0b)
+# spec file for package mozilla-xulrunner20 (Version 2.0b)
 #
 # Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2010 Wolfgang Rosenauer
@@ -19,7 +19,7 @@
 # norootforbuild
 
 
-Name:           mozilla-xulrunner193
+Name:           mozilla-xulrunner20
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
@@ -43,6 +43,7 @@ Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
 Provides:       gecko20
+Obsoletes:      mozilla-xulrunner193
 %if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
@@ -50,7 +51,7 @@ Provides:       gecko20
 #Provides:       mozilla-kde4-version = %{kde_helper_version}
 %endif
 %ifarch %ix86
-Provides:       mozilla-xulrunner193-32bit = %{version}-%{release}
+Provides:       mozilla-xulrunner20-32bit = %{version}-%{release}
 %endif
 Source:         xulrunner-source-%{version}.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
@@ -76,7 +77,7 @@ Patch13:        toolkit-ui-lockdown.patch
 # ---
 Patch14:        mozilla-cpuid.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js193 = %{version}
+Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
@@ -106,12 +107,13 @@ multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
 
-%package -n mozilla-js193
+%package -n mozilla-js20
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Mozilla JS 1.8 engine
 Group:          Productivity/Other
+Obsoletes:      mozilla-js193
 
-%description -n mozilla-js193
+%description -n mozilla-js20
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
@@ -142,6 +144,7 @@ Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Obsoletes:      %{name}-translations < %{version}-%{release}
+Obsoletes:      mozilla-xulrunner193-translations-common
 
 %description translations-common
 XULRunner is a single installable package that can be used to bootstrap
@@ -159,6 +162,7 @@ Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Obsoletes:      %{name}-translations < %{version}-%{release}
+Obsoletes:      mozilla-xulrunner193-translations-other
 
 %description translations-other
 XULRunner is a single installable package that can be used to bootstrap
@@ -174,6 +178,7 @@ Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 Requires:       %{name} = %{version}-%{release}
 Requires(post): coreutils
+Obsoletes:      mozilla-xulrunner193-gnome
 
 %description gnome
 This subpackage contains the Necko Gnome-VFS and Gnome components which
@@ -491,7 +496,7 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
-%files -n mozilla-js193
+%files -n mozilla-js20
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %{_libdir}/xulrunner-%{apiversion}

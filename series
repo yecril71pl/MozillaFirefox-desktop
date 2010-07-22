@@ -21,3 +21,4 @@ firefox-cross-desktop.patch
 firefox-appname.patch
 #firefox-kde.patch
 #firefox-ui-lockdown.patch
+firefox-no-sync-l10n.patch

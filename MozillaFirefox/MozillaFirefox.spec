@@ -20,20 +20,23 @@
 
 
 Name:           MozillaFirefox4
+%define use_xulrunner 1
 %define xulrunner mozilla-xulrunner20
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
-BuildRequires:  %{xulrunner}-devel = 2.0b
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else
 BuildRequires:  wireless-tools
+%endif
+%if 0%{?use_xulrunner}
+BuildRequires:  %{xulrunner}-devel = 2.0b
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010070700
+%define         releasedate 2010072000
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -58,14 +61,17 @@ Patch6:         firefox-cross-desktop.patch
 Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
+Patch11:        firefox-no-sync-l10n.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
+%if 0%{?use_xulrunner}
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 %requires_eq    %{xulrunner}
 %ifarch %ix86
 Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
+%endif
 %endif
 Requires:       %{name}-branding > 3.6
 %define _use_internal_dependency_generator 0
@@ -76,8 +82,8 @@ Requires:       %{name}-branding > 3.6
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
 ### build options
-%define branding 0
-%define localize 0 
+%define branding 1
+%define localize 1
 ### build options end
 
 %description
@@ -93,7 +99,9 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Group:          System/Localization
 Requires:       %{name} = %{version}
+%if 0%{?use_xulrunner}
 Requires:       %{xulrunner}-translations-common
+%endif
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-common
@@ -106,7 +114,9 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Group:          System/Localization
 Requires:       %{name} = %{version}
+%if 0%{?use_xulrunner}
 Requires:       %{xulrunner}-translations-other
+%endif
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -154,6 +164,7 @@ cd $RPM_BUILD_DIR/mozilla
 #install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
 #%patch10 -p1
+%patch11 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -175,7 +186,6 @@ ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
-ac_add_options --with-libxul-sdk=$SDKDIR
 ac_add_options --with-l10n-base=../l10n
 ac_add_options --with-system-jpeg
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
@@ -185,6 +195,11 @@ ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
 EOF
+%if 0%{?use_xulrunner}
+cat << EOF >> $MOZCONFIG
+ac_add_options --with-libxul-sdk=$SDKDIR
+EOF
+%endif
 %if %branding
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
@@ -203,7 +218,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US)
+   ja-JP-mac|en-US|pt-PT)
 	;;
    *)
   	make -C browser/locales libs-$locale

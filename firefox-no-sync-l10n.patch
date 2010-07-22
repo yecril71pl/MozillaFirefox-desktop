@@ -1,0 +1,25 @@
+# HG changeset patch
+# Parent 96eedd7737acfc529a441ca0cedd4c06fa737219
+diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
+--- a/browser/locales/Makefile.in
++++ b/browser/locales/Makefile.in
+@@ -182,17 +182,19 @@ install:: $(addsuffix .xml,$(SEARCH_PLUG
+ 
+ 
+ libs-%:
+ 	$(NSINSTALL) -D $(DIST)/install
+ ifndef LIBXUL_SDK
+ 	@$(MAKE) -C ../../toolkit/locales libs-$* BOTH_MANIFESTS=1
+ 	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+ endif
++ifdef MOZ_SERVICES_SYNC
+ 	@$(MAKE) -C ../../services/sync/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
++endif
+ 	@$(MAKE) -C ../../extensions/reporter/locales libs AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+ 	@$(MAKE) libs AB_CD=$* XPI_NAME=locale-$* PREF_DIR=defaults/pref BOTH_MANIFESTS=1
+ 	@$(MAKE) -C $(DEPTH)/$(MOZ_BRANDING_DIRECTORY)/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+ 
+ 
+ repackage-win32-installer: WIN32_INSTALLER_OUT="$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_INST_BASENAME).exe"
+ repackage-win32-installer: $(WIN32_INSTALLER_IN) $(SUBMAKEFILES)
+ 	@echo "Repackaging $(WIN32_INSTALLER_IN) into $(WIN32_INSTALLER_OUT)."

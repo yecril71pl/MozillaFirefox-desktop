@@ -37,7 +37,7 @@ Version:        2.0b
 Release:        1
 %define         releasedate 2010072000
 %define         version_internal 2.0b2
-%define         apiversion 2.0.0
+%define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
@@ -85,7 +85,7 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 0
+%define localize 1
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}

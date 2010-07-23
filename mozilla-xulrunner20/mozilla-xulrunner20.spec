@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1100

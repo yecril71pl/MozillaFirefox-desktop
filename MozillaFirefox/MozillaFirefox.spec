@@ -22,7 +22,7 @@
 Name:           MozillaFirefox4
 %define use_xulrunner 1
 %define xulrunner mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else

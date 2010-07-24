@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sat Jul 24 12:42:58 CEST 2010 - wr@rosenauer.org
+
+- security update to 1.9.2.8 (bnc#622506)
+  * MFSA 2010-48/CVE-2010-2755 (bmo#575836)
+    Dangling pointer crash regression from plugin parameter array 
+    fix
+
+-------------------------------------------------------------------
 Thu Jul 15 21:45:13 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.7 (bnc#622506)

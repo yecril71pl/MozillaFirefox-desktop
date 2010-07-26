@@ -41,7 +41,6 @@ Thu Jul 15 21:45:13 CEST 2010 - wr@rosenauer.org
     Cross-domain data theft using CSS
   * MFSA 2010-47/CVE-2010-2754 (bmo#568564)
     Cross-origin data leakage from script filename in error messages
-- never use system cairo for now
 
 -------------------------------------------------------------------
 Sun Jun 27 21:02:29 CEST 2010 - wr@rosenauer.org

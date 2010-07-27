@@ -271,7 +271,6 @@ ac_add_options --with-system-jpeg
 #ac_add_options --with-system-png # no APNG support
 ac_add_options --with-system-zlib
 ac_add_options --with-l10n-base=../l10n
-ac_add_options --enable-canvas
 ac_add_options --disable-tests
 ac_add_options --disable-mochitest
 ac_add_options --disable-installer

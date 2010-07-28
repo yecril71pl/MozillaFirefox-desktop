@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Jul 28 08:33:14 CEST 2010 - meissner@suse.de
+
+- disable crash reporter for non x86/x86_64 to make it build.
+
+-------------------------------------------------------------------
 Sat Jul 24 12:42:58 CEST 2010 - wr@rosenauer.org
 
 - security update to 3.6.8 (bnc#622506)

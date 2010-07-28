@@ -87,6 +87,11 @@ Requires:       %{name}-branding >= 3.5
 ### build options
 %define branding 1
 %define localize 1 
+%ifarch ppc ppc64 s390 s390x ia64
+%define crashreporter    0
+%else
+%define crashreporter    1
+%endif
 ### build options end
 
 %description
@@ -359,7 +364,9 @@ fi
 %{progdir}/%{progname}
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
+%if %crashreporter
 %{progdir}/crashreporter-override.ini
+%endif
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*

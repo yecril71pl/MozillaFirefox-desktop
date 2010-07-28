@@ -46,7 +46,7 @@ diff --git a/config/system-headers b/config/system-headers
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5536,16 +5536,39 @@ then
+@@ -5535,16 +5535,39 @@ then
      fi
  
      AC_SUBST(MOZ_ENABLE_GCONF)
@@ -167,7 +167,7 @@ diff --git a/toolkit/system/unixproxy/nsLibProxySettings.cpp b/toolkit/system/un
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/system/unixproxy/nsLibProxySettings.cpp
-@@ -0,0 +1,173 @@
+@@ -0,0 +1,170 @@
 +/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/* ***** BEGIN LICENSE BLOCK *****
 + * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -186,7 +186,7 @@ new file mode 100644
 + *
 + * The Initial Developer of the Original Code is
 + * Wolfgang Rosenauer <wr@rosenauer.org>.
-+ * Portions created by the Initial Developer are Copyright (C) 2009
++ * Portions created by the Initial Developer are Copyright (C) 2010
 + * the Initial Developer. All Rights Reserved.
 + *
 + * Contributor(s):
@@ -232,7 +232,6 @@ new file mode 100644
 +  }
 +
 +  pxProxyFactory *mProxyFactory;
-+  nsCOMPtr<nsIIOService> mIOService;
 +};
 +
 +NS_IMPL_ISUPPORTS1(nsUnixSystemProxySettings, nsISystemProxySettings)
@@ -260,12 +259,10 @@ new file mode 100644
 +  if (!mProxyFactory) {
 +    mProxyFactory = px_proxy_factory_new();
 +  }
-+  NS_ENSURE_TRUE(mProxyFactory, NS_ERROR_OUT_OF_MEMORY);
++  NS_ENSURE_TRUE(mProxyFactory, NS_ERROR_NOT_AVAILABLE);
 +
-+  if (!mIOService) {
-+    mIOService = do_GetIOService();
-+  }
-+  NS_ENSURE_TRUE(mIOService, NS_ERROR_FAILURE);
++  nsCOMPtr<nsIIOService> ios = do_GetIOService(&rv);
++  NS_ENSURE_SUCCESS(rv, rv);
 +
 +  nsCAutoString spec;
 +  rv = aURI->GetSpec(spec);
@@ -273,11 +270,11 @@ new file mode 100644
 +
 +  char **proxyArray = nsnull;
 +  proxyArray = px_proxy_factory_get_proxies(mProxyFactory, (char*)(spec.get()));
-+  NS_ENSURE_TRUE(proxyArray, NS_ERROR_FAILURE);
++  NS_ENSURE_TRUE(proxyArray, NS_ERROR_NOT_AVAILABLE);
 +
-+  // PAC string accepts
-+  // http, proxy, socks, socks4, socks5, direct, unknown
-+  // example: "PROXY proxy1.foo.com:8080; PROXY proxy2.foo.com:8080; DIRECT"
++  // Translate libproxy's output to PAC string as expected
++  // libproxy's prefixes: http, proxy, socks, socks4, socks5, direct, unknown
++  // PAC format: "PROXY proxy1.foo.com:8080; PROXY proxy2.foo.com:8080; // DIRECT"
 +  int c = 0;
 +  while (proxyArray[c] != NULL) {
 +    if (c != 0) {
@@ -289,10 +286,10 @@ new file mode 100644
 +    nsXPIDLCString hostPortString;
 +    nsCOMPtr<nsIURI> proxyURI;
 +
-+    rv = mIOService->NewURI(nsDependentCString(proxyArray[c]), 
-+                                               nsnull, 
-+                                               nsnull, 
-+                                               getter_AddRefs(proxyURI));
++    rv = ios->NewURI(nsDependentCString(proxyArray[c]), 
++                                        nsnull, 
++                                        nsnull, 
++                                        getter_AddRefs(proxyURI));
 +    NS_ENSURE_SUCCESS(rv, rv);
 +
 +    proxyURI->GetScheme(schemeString);

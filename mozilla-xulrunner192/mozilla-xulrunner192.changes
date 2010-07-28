@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jul 27 17:04:41 CEST 2010 - meissner@suse.de
+
+- disable ipc and crashreport for ia64,ppc,ppc64,s390,s390x.
+
+-------------------------------------------------------------------
 Sat Jul 24 12:42:58 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.8 (bnc#622506)

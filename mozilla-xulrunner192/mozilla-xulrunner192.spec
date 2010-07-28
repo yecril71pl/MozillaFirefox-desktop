@@ -87,7 +87,6 @@ Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
-%define crashreporter    1
 %define has_system_nspr  0
 %define has_system_nss   0
 %define has_system_cairo 0
@@ -98,6 +97,13 @@ Requires(preun): update-alternatives coreutils
 %endif
 %if %suse_version > 1110
 %define has_system_cairo 1
+%endif
+%ifarch ppc ppc64 s390 s390x ia64
+%define crashreporter    0
+%define plugincontainer  0
+%else
+%define crashreporter    1
+%define plugincontainer  1
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
@@ -315,6 +321,12 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
 EOF
 %endif
+%if ! %plugincontainer
+cat << EOF >> $MOZCONFIG
+# Chromium IPC is not ported to Power,S/390 and Itanium (currently just x86,x86_64 and arm)
+ac_add_options --disable-ipc
+EOF
+%endif
 make -f client.mk build
 
 %install
@@ -496,7 +508,9 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
+%if %plugincontainer
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
+%endif
 %{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin

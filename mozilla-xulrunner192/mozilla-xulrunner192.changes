@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jul 28 07:32:50 CEST 2010 - wr@rosenauer.org
+
+- fixed sound notifications through libesd (bmo#579877)
+- updated libproxy implementation after upstream review (bmo#517655)
+
+-------------------------------------------------------------------
 Tue Jul 27 17:04:41 CEST 2010 - meissner@suse.de
 
 - disable ipc and crashreport for ia64,ppc,ppc64,s390,s390x.

@@ -81,6 +81,7 @@ Patch10:        mozilla-kde.patch
 Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
+Patch14:        mozilla-cairo-lcd.patch
 # ---
 Patch15:        mozilla-ua-locale-pref.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -95,9 +96,6 @@ Requires(preun): update-alternatives coreutils
 %if %suse_version > 1030 || 0%{?opensuse_bs}
 %define has_system_nspr  1
 %define has_system_nss   1
-%endif
-%if %suse_version > 1110
-%define has_system_cairo 1
 %endif
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
@@ -231,6 +229,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 # bmo#542999
 %patch15 -p1
 

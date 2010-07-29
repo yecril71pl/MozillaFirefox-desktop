@@ -13,6 +13,7 @@ gecko-lockdown.patch
 toolkit-ui-lockdown.patch
 mozilla-ua-locale-pref.patch
 mozilla-esd.patch
+mozilla-cairo-lcd.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

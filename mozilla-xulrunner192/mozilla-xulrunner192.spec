@@ -81,9 +81,10 @@ Patch10:        mozilla-kde.patch
 Patch11:        mozilla-gconf-backend.patch
 Patch12:        gecko-lockdown.patch
 Patch13:        toolkit-ui-lockdown.patch
-Patch14:        mozilla-cairo-lcd.patch
 # ---
+Patch14:        mozilla-cairo-lcd.patch
 Patch15:        mozilla-ua-locale-pref.patch
+Patch16:        mozilla-locale.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -232,6 +233,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 # bmo#542999
 %patch15 -p1
+%patch16 -p1
 
 %build
 %if %suse_version >= 1110

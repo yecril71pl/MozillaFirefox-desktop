@@ -35,8 +35,8 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b
 Release:        1
-%define         releasedate 2010072000
-%define         version_internal 2.0b2
+%define         releasedate 2010080300
+%define         version_internal 2.0b3
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0

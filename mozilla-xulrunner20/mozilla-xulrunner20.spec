@@ -210,7 +210,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
-#%patch8 -p1
+%patch8 -p1
 #%if %suse_version >= 1110
 #%patch10 -p1
 #%endif

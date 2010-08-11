@@ -1,11 +1,10 @@
 # xulrunner/gecko patches
 toolkit-download-folder.patch
-mozilla-libproxy.patch
 mozilla-pkgconfig.patch
 idldir.patch
 mozilla-nongnome-proxies.patch
 mozilla-prefer_plugin_pref.patch
-#mozilla-shared-nss-db.patch
+mozilla-shared-nss-db.patch
 #mozilla-kde.patch
 #mozilla-gconf-backend.patch
 #gecko-lockdown.patch

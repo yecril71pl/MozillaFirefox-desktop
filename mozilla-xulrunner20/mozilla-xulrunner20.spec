@@ -63,7 +63,6 @@ Source6:        create-tar.sh
 Source7:        baselibs.conf
 Source8:        toolkit-lockdown.js
 Patch1:         toolkit-download-folder.patch
-Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
 Patch5:         mozilla-nongnome-proxies.patch
@@ -207,7 +206,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %prep
 %setup -n mozilla -q -b 1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1

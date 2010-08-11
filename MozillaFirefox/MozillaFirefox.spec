@@ -19,7 +19,7 @@
 # norootforbuild
 
 
-Name:           MozillaFirefox4
+Name:           MozillaFirefox
 %define use_xulrunner 1
 %define xulrunner mozilla-xulrunner20
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel
@@ -78,7 +78,7 @@ Requires:       %{name}-branding > 3.6
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
-%define progname firefox4
+%define progname firefox
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
 ### build options

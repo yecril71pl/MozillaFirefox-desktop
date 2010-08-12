@@ -466,6 +466,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
+%{_libdir}/xulrunner-%{version_internal}/chrome.manifest
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
 %if %plugincontainer

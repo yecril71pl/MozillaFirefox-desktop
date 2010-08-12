@@ -199,6 +199,7 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
+ac_add_options --enable-update-channel=beta
 EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG

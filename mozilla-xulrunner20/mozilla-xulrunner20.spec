@@ -390,8 +390,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/nspr-config
-# autoreg
-touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/.autoreg
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
@@ -446,10 +444,6 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
-%post gnome
-touch %{_libdir}/xulrunner-%{version_internal}/.autoreg
-exit 0
-
 %files
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -471,7 +465,6 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/res/
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
-%{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
@@ -526,7 +519,6 @@ exit 0
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %dir %{_libdir}/xulrunner-%{version_internal}/components/
-%ghost %{_libdir}/xulrunner-%{version_internal}/.autoreg
 %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
 

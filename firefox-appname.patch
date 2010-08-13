@@ -4,26 +4,33 @@ Subject: Hardcode app starter for default check
 diff --git a/browser/components/shell/src/nsGNOMEShellService.cpp b/browser/components/shell/src/nsGNOMEShellService.cpp
 --- a/browser/components/shell/src/nsGNOMEShellService.cpp
 +++ b/browser/components/shell/src/nsGNOMEShellService.cpp
-@@ -127,17 +127,21 @@ nsGNOMEShellService::Init()
-   nsCOMPtr<nsILocalFile> appPath;
-   rv = dirSvc->Get(NS_XPCOM_CURRENT_PROCESS_DIR, NS_GET_IID(nsILocalFile),
-                    getter_AddRefs(appPath));
-   NS_ENSURE_SUCCESS(rv, rv);
- 
-   rv = appPath->AppendNative(NS_LITERAL_CSTRING(MOZ_APP_NAME));
-   NS_ENSURE_SUCCESS(rv, rv);
- 
--  return appPath->GetNativePath(mAppPath);
-+  /* This path to firefox is hardcoded for the default path setting */
-+  mAppPath.Assign ("/usr/bin/firefox");
-+  
-+  //return appPath->GetNativePath(mAppPath);
-+  return NS_OK;
- }
- 
- NS_IMPL_ISUPPORTS1(nsGNOMEShellService, nsIShellService)
- 
- PRBool
- nsGNOMEShellService::KeyMatchesAppName(const char *aKeyValue) const
+@@ -105,22 +105,26 @@ nsresult
+ nsGNOMEShellService::Init()
  {
+   nsresult rv;
+ 
+   // GConf _must_ be available, or we do not allow
+   // CreateInstance to succeed.
+ 
+   nsCOMPtr<nsIGConfService> gconf = do_GetService(NS_GCONFSERVICE_CONTRACTID);
++  if (!gconf)
++    return NS_ERROR_NOT_AVAILABLE;
++
++  /* This path to firefox is hardcoded for the default path setting */
++  mAppPath.Assign("/usr/bin/firefox");
++  return NS_OK;
++
+   nsCOMPtr<nsIGIOService> giovfs =
+     do_GetService(NS_GIOSERVICE_CONTRACTID);
+ 
+-  if (!gconf)
+-    return NS_ERROR_NOT_AVAILABLE;
+-
+   // Check G_BROKEN_FILENAMES.  If it's set, then filenames in glib use
+   // the locale encoding.  If it's not set, they use UTF-8.
+   mUseLocaleFilenames = PR_GetEnv("G_BROKEN_FILENAMES") != nsnull;
+ 
+   nsCOMPtr<nsIProperties> dirSvc
+     (do_GetService("@mozilla.org/file/directory_service;1"));
+   NS_ENSURE_TRUE(dirSvc, NS_ERROR_NOT_AVAILABLE);
  

@@ -1162,7 +1162,8 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
  #if !defined(XP_BEOS)
  #include "nsDogbertProfileMigrator.h"
  #endif
-@@ -85,17 +85,17 @@ using namespace mozilla::browser;
+@@ -84,18 +84,16 @@ using namespace mozilla::browser;
+ 
  /////////////////////////////////////////////////////////////////////////////
  
  NS_GENERIC_FACTORY_CONSTRUCTOR(DirectoryProvider)
@@ -1170,9 +1171,8 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
  NS_GENERIC_FACTORY_CONSTRUCTOR(nsWindowsShellService)
  #elif defined(XP_MACOSX)
  NS_GENERIC_FACTORY_CONSTRUCTOR(nsMacShellService)
- #elif defined(MOZ_WIDGET_GTK2)
+-#elif defined(MOZ_WIDGET_GTK2)
 -NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsGNOMEShellService, Init)
-+NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsUnixShellService, Init)
  #endif
  
  #ifndef WINCE
@@ -1181,7 +1181,7 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
  NS_GENERIC_FACTORY_CONSTRUCTOR(nsDogbertProfileMigrator)
  #endif
  #if !defined(XP_OS2)
-@@ -151,17 +151,17 @@ NS_DEFINE_NAMED_CID(NS_SEAMONKEYPROFILEM
+@@ -151,17 +149,17 @@ NS_DEFINE_NAMED_CID(NS_SEAMONKEYPROFILEM
  #endif /* WINCE */
  NS_DEFINE_NAMED_CID(NS_PRIVATE_BROWSING_SERVICE_WRAPPER_CID);
  
@@ -1530,10 +1530,10 @@ new file mode 100644
 +#include "nsGNOMEShellService.h"
 +#include "nsKDEShellService.h"
 +#include "nsKDEUtils.h"
-+#include "nsIGenericFactory.h"
++#include "mozilla/ModuleUtils.h"
 +
-+NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsGNOMEShellService, Init)
-+NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsKDEShellService, Init)
++NS_GENERIC_FACTORY_CONSTRUCTOR(nsGNOMEShellService)
++NS_GENERIC_FACTORY_CONSTRUCTOR(nsKDEShellService)
 +
 +NS_METHOD
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult)

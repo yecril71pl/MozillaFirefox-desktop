@@ -1532,8 +1532,8 @@ new file mode 100644
 +#include "nsKDEUtils.h"
 +#include "mozilla/ModuleUtils.h"
 +
-+NS_GENERIC_FACTORY_CONSTRUCTOR(nsGNOMEShellService)
-+NS_GENERIC_FACTORY_CONSTRUCTOR(nsKDEShellService)
++NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsGNOMEShellService, Init)
++NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsKDEShellService, Init)
 +
 +NS_METHOD
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult)

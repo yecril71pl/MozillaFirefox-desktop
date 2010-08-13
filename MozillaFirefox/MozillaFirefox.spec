@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define use_xulrunner 1
 %define xulrunner mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel yasm
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 %else
@@ -226,7 +226,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|pt-PT)
+   ja-JP-mac|en-US|pt-PT|tr)
 	;;
    *)
   	make -C browser/locales libs-$locale
@@ -348,6 +348,8 @@ fi
 %dir %{progdir}
 %dir %{progdir}/chrome/
 %{progdir}/chrome/browser.*
+%{progdir}/chrome/localized.manifest
+%{progdir}/chrome/nonlocalized.manifest
 %{progdir}/chrome/en-US.*
 %{progdir}/chrome/toolkit.*
 %{progdir}/chrome/icons
@@ -365,6 +367,7 @@ fi
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %endif
+%{progdir}/chrome.manifest
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*

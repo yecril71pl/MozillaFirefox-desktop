@@ -75,7 +75,7 @@ Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEA
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %endif
 %endif
-Requires:       %{name}-branding > 3.6
+Requires:       %{name}-branding >= 4.0
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"

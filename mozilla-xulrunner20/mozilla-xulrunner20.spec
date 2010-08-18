@@ -35,8 +35,8 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b
 Release:        1
-%define         releasedate 2010081000
-%define         version_internal 2.0b4pre
+%define         releasedate 2010081700
+%define         version_internal 2.0b4
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -268,6 +268,7 @@ ac_add_options --disable-javaxpcom
 ac_add_options --enable-startup-notification
 ac_add_options --enable-url-classifier
 ac_add_options --enable-system-hunspell
+ac_add_options --enable-shared-js
 #ac_add_options --enable-debug
 EOF
 %if %has_system_nspr

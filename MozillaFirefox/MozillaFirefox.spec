@@ -36,7 +36,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010081000
+%define         releasedate 2010081700
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -226,7 +226,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|pt-PT|tr)
+   ja-JP-mac|en-US|pt-PT|tr|lt|zh-CN)
 	;;
    *)
   	make -C browser/locales libs-$locale

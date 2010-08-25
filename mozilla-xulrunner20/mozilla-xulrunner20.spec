@@ -20,12 +20,9 @@
 
 
 Name:           mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel nss-shared-helper-devel
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
-%if %suse_version > 1100
-BuildRequires:  nss-shared-helper-devel
-%endif
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -44,12 +41,10 @@ Url:            http://www.mozilla.org
 Group:          Productivity/Other
 Provides:       gecko20
 Obsoletes:      mozilla-xulrunner193
-%if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
-%endif
 %ifarch %ix86
 Provides:       mozilla-xulrunner20-32bit = %{version}-%{release}
 %endif
@@ -211,9 +206,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
-%if %suse_version >= 1110
 %patch10 -p1
-%endif
 #%patch11 -p1
 #%patch12 -p1
 #%patch13 -p1
@@ -222,13 +215,11 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 
 %build
-%if %suse_version >= 1110
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
 if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file
   exit 1
 fi
-%endif
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"

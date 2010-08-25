@@ -63,6 +63,7 @@ Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-no-sync-l10n.patch
 Patch12:        firefox-sync-system-nss.patch
+Patch13:        firefox-sync-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -174,6 +175,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 #%patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

@@ -390,6 +390,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/nspr-config
 SYMBOLS_NAME="xulrunner-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
 make buildsymbols \
   SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
+  SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
   SYMBOL_ARCHIVE_BASENAME="$SYMBOLS_NAME"
 if [ -e dist/*symbols.zip ]; then
   mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/

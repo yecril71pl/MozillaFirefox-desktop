@@ -40,7 +40,7 @@ diff --git a/services/sync/Weave.js b/services/sync/Weave.js
        return;
  
 -    let uri = ioService.newURI("resource://gre/modules/services-sync/",
-+    let uri = ioService.newURI("resource://modules/services-sync/",
++    let uri = ioService.newURI("resource:///modules/services-sync/",
                                 null, null);
      resProt.setSubstitution("services-sync", uri);
    }

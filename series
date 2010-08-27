@@ -10,6 +10,7 @@ mozilla-kde.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
 mozilla-cpuid.patch
+mozilla-buildsymbols.patch
 #mozilla-cairo-lcd.patch
 
 # Firefox patches

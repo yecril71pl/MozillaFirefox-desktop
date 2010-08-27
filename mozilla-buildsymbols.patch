@@ -16,7 +16,7 @@ diff --git a/Makefile.in b/Makefile.in
  	cd $(DIST)/crashreporter-symbols && \
 -          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.sym"
 +          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.sym" \
-+	  zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.txt"
++          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.txt"
  else
  ifdef WINCE
  ifdef SYMBOLSTORE_PATH

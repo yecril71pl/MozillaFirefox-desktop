@@ -1,4 +1,5 @@
 # HG changeset patch
+# User Wolfgang Rosenauer <wr@rosenauer.org>
 # Parent 6637fa42939971816b5b0163e44cbdc0f7290066
 Bug 588129 - symbols.txt file missing from *.crashreporter-symbols.zip
 

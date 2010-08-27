@@ -58,19 +58,19 @@ Source6:        create-tar.sh
 Source7:        baselibs.conf
 Source8:        toolkit-lockdown.js
 Patch1:         toolkit-download-folder.patch
-Patch3:         mozilla-pkgconfig.patch
-Patch4:         idldir.patch
-Patch5:         mozilla-nongnome-proxies.patch
-Patch7:         mozilla-prefer_plugin_pref.patch
-Patch8:         mozilla-shared-nss-db.patch
-Patch10:        mozilla-kde.patch
+Patch2:         mozilla-pkgconfig.patch
+Patch3:         idldir.patch
+Patch4:         mozilla-nongnome-proxies.patch
+Patch5:         mozilla-prefer_plugin_pref.patch
+Patch6:         mozilla-shared-nss-db.patch
+Patch7:         mozilla-kde.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024
-Patch11:        mozilla-gconf-backend.patch
-Patch12:        gecko-lockdown.patch
-Patch13:        toolkit-ui-lockdown.patch
+Patch8:         mozilla-gconf-backend.patch
+Patch9:         gecko-lockdown.patch
+Patch10:        toolkit-ui-lockdown.patch
 # ---
-Patch14:        mozilla-cpuid.patch
-Patch15:        mozilla-buildsymbols.patch
+Patch11:        mozilla-cpuid.patch
+Patch12:        mozilla-buildsymbols.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -202,19 +202,19 @@ symbols meant for upload to Mozilla's crash collector database.
 %prep
 %setup -n mozilla -q -b 1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch10 -p1
-#%patch11 -p1
-#%patch12 -p1
-#%patch13 -p1
+#%patch8 -p1
+#%patch9 -p1
+#%patch10 -p1
 %if %suse_version < 1120
-%patch14 -p1
+%patch11 -p1
 %endif
-%patch15 -p1
+%patch12 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

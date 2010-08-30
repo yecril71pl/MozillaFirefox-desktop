@@ -15,6 +15,7 @@ mozilla-ua-locale-pref.patch
 mozilla-esd.patch
 mozilla-cairo-lcd.patch
 mozilla-locale.patch
+mozilla-gdk-pixbuf.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

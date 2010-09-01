@@ -25,3 +25,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
 done
 tar cjf l10n-$VERSION.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg l10n
 
+# compare-locales
+hg clone http://hg.mozilla.org/build/compare-locales
+tar cjf compare-locales.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg compare-locales
+

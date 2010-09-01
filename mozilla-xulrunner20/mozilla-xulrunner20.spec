@@ -56,6 +56,7 @@ Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
 Source7:        baselibs.conf
 Source8:        toolkit-lockdown.js
+Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
@@ -195,7 +196,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 
 %prep
-%setup -n mozilla -q -b 1
+%setup -n mozilla -q -b 1 -b 9
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -345,6 +346,12 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
    ja-JP-mac|en-US)
       ;;
    *)
+      pushd $RPM_BUILD_DIR/compare-locales
+      PYTHONPATH=lib \
+        scripts/compare-locales -m ../l10n-merged/$locale \
+	../mozilla/toolkit/locales/l10n.ini ../l10n $locale
+      popd
+      LOCALE_MERGEDIR=../l10n-merged \
       make -C toolkit/locales libs-$locale
       cp dist/xpi-stage/locale-$locale/chrome/$locale.jar \
          $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/chrome

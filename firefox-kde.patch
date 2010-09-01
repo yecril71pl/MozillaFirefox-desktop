@@ -1121,8 +1121,8 @@ new file mode 100644
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -19,16 +19,18 @@ browser.jar:
- *       content/browser/aboutRobots.xhtml             (content/aboutRobots.xhtml)
+@@ -22,16 +22,18 @@ browser.jar:
+ *       content/browser/aboutHome.css                 (content/aboutHome.css)
          content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
          content/browser/aboutRobots-icon-rtl.png      (content/aboutRobots-icon-rtl.png)
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)

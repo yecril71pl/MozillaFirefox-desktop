@@ -36,7 +36,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010081700
+%define         releasedate 2010083100
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -68,8 +68,6 @@ Patch14:        firefox-tabview.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
-# Temporary obsolete
-Obsoletes:      MozillaFirefox4
 %if 0%{?use_xulrunner}
 Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 %requires_eq    %{xulrunner}

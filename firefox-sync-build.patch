@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 0603e401d941cbfaa6dea050149bb5309ff4b5a0
+# Parent d7f423a91ae943643510a03fd2cb0360423e014f
 Bug 590411 - Sync/Weave is not included if FF is built against libxul sdk
 
 diff --git a/browser/build.mk b/browser/build.mk
@@ -52,7 +52,7 @@ diff --git a/services/sync/Weave.js b/services/sync/Weave.js
 diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
 --- a/toolkit/toolkit-tiers.mk
 +++ b/toolkit/toolkit-tiers.mk
-@@ -266,19 +266,14 @@ endif
+@@ -270,20 +270,15 @@ endif
  ifdef MOZ_LEAKY
  tier_platform_dirs        += tools/leaky
  endif
@@ -70,5 +70,6 @@ diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
  tier_platform_dirs += testing/mochitest
  tier_platform_dirs += testing/xpcshell 
  tier_platform_dirs += testing/mozmill
+ tier_platform_dirs += testing/tools/screenshot
  endif
  

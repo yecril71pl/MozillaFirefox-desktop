@@ -32,15 +32,14 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b
 Release:        1
-%define         releasedate 2010081700
-%define         version_internal 2.0b4
+%define         releasedate 2010083100
+%define         version_internal 2.0b5
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
 Provides:       gecko20
-Obsoletes:      mozilla-xulrunner193
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
@@ -112,7 +111,6 @@ Thunderbird.
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Mozilla JS 1.8 engine
 Group:          Productivity/Other
-Obsoletes:      mozilla-js193
 
 %description -n mozilla-js20
 JavaScript is the Netscape-developed object scripting language used in millions
@@ -145,7 +143,6 @@ Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Obsoletes:      %{name}-translations < %{version}-%{release}
-Obsoletes:      mozilla-xulrunner193-translations-common
 
 %description translations-common
 XULRunner is a single installable package that can be used to bootstrap
@@ -163,7 +160,6 @@ Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Obsoletes:      %{name}-translations < %{version}-%{release}
-Obsoletes:      mozilla-xulrunner193-translations-other
 
 %description translations-other
 XULRunner is a single installable package that can be used to bootstrap
@@ -179,7 +175,6 @@ Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 Requires:       %{name} = %{version}-%{release}
 Requires(post): coreutils
-Obsoletes:      mozilla-xulrunner193-gnome
 
 %description gnome
 This subpackage contains the Necko Gnome-VFS and Gnome components which

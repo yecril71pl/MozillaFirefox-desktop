@@ -1,7 +1,7 @@
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -178,20 +178,22 @@ libs:: $(addsuffix .xml,$(SEARCH_PLUGINS
+@@ -180,19 +180,21 @@ libs:: $(addsuffix .xml,$(SEARCH_PLUGINS
  	$(SYSINSTALL) $(IFLAGS1) $^ $(FINAL_TARGET)/searchplugins
  
  install:: $(addsuffix .xml,$(SEARCH_PLUGINS))
@@ -15,7 +15,6 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
 +endif
  	@$(MAKE) -C ../../services/sync/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
- 	@$(MAKE) -C ../../extensions/reporter/locales libs AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
 -	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
  	@$(MAKE) libs AB_CD=$* XPI_NAME=locale-$* PREF_DIR=defaults/pref BOTH_MANIFESTS=1
  	@$(MAKE) -C $(DEPTH)/$(MOZ_BRANDING_DIRECTORY)/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1

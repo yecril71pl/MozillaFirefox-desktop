@@ -50,8 +50,8 @@ Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
+Source10:       compare-locales.tar.bz2
 Source16:       firefox.1
-Source17:       firefox-suse-default-prefs.js
 Patch1:         firefox-libxul-sdk.patch
 Patch2:         firefox-credits.patch
 Patch3:         toolkit-download-folder.patch
@@ -157,7 +157,7 @@ This package provides upstream look and feel for MozillaFirefox.
 
 
 %prep
-%setup -q -n mozilla -b 7
+%setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
@@ -189,6 +189,7 @@ cat << EOF > $MOZCONFIG
 mk_add_options MOZILLA_OFFICIAL=1
 mk_add_options BUILD_OFFICIAL=1
 mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../obj
 . \$topsrcdir/browser/config/mozconfig
 ac_add_options --prefix=%{_prefix}
 ac_add_options --libdir=%{_libdir}
@@ -197,7 +198,7 @@ ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
-ac_add_options --with-l10n-base=../l10n
+ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 ac_add_options --with-system-jpeg
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
 ac_add_options --with-system-zlib
@@ -220,19 +221,29 @@ EOF
 make -f client.mk build
 
 %install
+cd $RPM_BUILD_DIR/obj
+# FIXME (will be needed once lockdown is integrated; needs omni.jar adoption)
+#cp %{SOURCE9} dist/bin/defaults/preferences/lockdown.js
+rm dist/bin/defaults/preferences/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
-cp -rf $RPM_BUILD_DIR/mozilla/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
+cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|pt-PT|tr|lt|zh-CN)
+   ja-JP-mac|en-US)
 	;;
    *)
+   	pushd $RPM_BUILD_DIR/compare-locales
+	PYTHONPATH=lib \
+	  scripts/compare-locales -m ../l10n-merged/$locale \
+	  ../mozilla/browser/locales/l10n.ini ../l10n $locale
+	popd
+	LOCALE_MERGEDIR=../l10n-merged \
   	make -C browser/locales libs-$locale
   	cp dist/xpi-stage/locale-$locale/chrome/$locale.jar \
     	  $RPM_BUILD_ROOT%{progdir}/chrome
@@ -268,16 +279,6 @@ cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
 # install man-page
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
 cp %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
-# apply SUSE defaults
-sed -e 's,RPM_VERSION,%{version}-%{release},g' \
-   %{SOURCE17} > suse-default-prefs
-cp suse-default-prefs $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox-build.js
-rm suse-default-prefs
-cp %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/lockdown.js
-# use correct locale for useragent
-cat > $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox-l10n.js << EOF
-pref("general.useragent.locale", "chrome://global/locale/intl.properties");
-EOF
 ##########
 # ADDONS
 #
@@ -351,23 +352,17 @@ fi
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
-%{progdir}/chrome/browser.*
-%{progdir}/chrome/localized.manifest
-%{progdir}/chrome/nonlocalized.manifest
-%{progdir}/chrome/en-US.*
-%{progdir}/chrome/toolkit.*
 %{progdir}/chrome/icons
 %{progdir}/components/
-%exclude %{progdir}/defaults/profile/bookmarks.html
-%{progdir}/defaults/
+#%exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/extensions/
 %{progdir}/icons/
 %{progdir}/searchplugins/
-%{progdir}/modules/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
+%{progdir}/omni.jar
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %endif
@@ -397,7 +392,7 @@ fi
 %files branding-upstream  
 %defattr(-,root,root)  
 %dir %{progdir}
-%dir %{progdir}/defaults/
-%{progdir}/defaults/profile/bookmarks.html
+#%dir %{progdir}/defaults/
+#%{progdir}/defaults/profile/bookmarks.html
 
 %changelog

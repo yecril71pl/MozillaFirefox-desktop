@@ -211,6 +211,7 @@ EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG
 ac_add_options --with-libxul-sdk=$SDKDIR
+ac_add_options --enable-chrome-format=jar
 EOF
 %endif
 %if %branding
@@ -233,7 +234,7 @@ cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
 %if %localize
 rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
-for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
+for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
    ja-JP-mac|en-US)
 	;;
@@ -352,17 +353,22 @@ fi
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
+%{progdir}/chrome/browser.*
+%{progdir}/chrome/localized.manifest
+%{progdir}/chrome/nonlocalized.manifest
+%{progdir}/chrome/en-US.*
 %{progdir}/chrome/icons
 %{progdir}/components/
-#%exclude %{progdir}/defaults/profile/bookmarks.html
+%exclude %{progdir}/defaults/profile/bookmarks.html
+%{progdir}/defaults/
 %{progdir}/extensions/
 %{progdir}/icons/
+%{progdir}/modules/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
-%{progdir}/omni.jar
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %endif
@@ -392,7 +398,7 @@ fi
 %files branding-upstream  
 %defattr(-,root,root)  
 %dir %{progdir}
-#%dir %{progdir}/defaults/
-#%{progdir}/defaults/profile/bookmarks.html
+%dir %{progdir}/defaults/
+%{progdir}/defaults/profile/bookmarks.html
 
 %changelog

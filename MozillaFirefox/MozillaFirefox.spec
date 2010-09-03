@@ -268,6 +268,7 @@ EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG
 ac_add_options --with-libxul-sdk=$SDKDIR
+ac_add_options --enable-chrome-format=jar
 EOF
 %endif
 %if %branding
@@ -306,7 +307,7 @@ cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
 %if %localize
 rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
-for locale in $(awk '{ print $1; }' browser/locales/shipped-locales); do
+for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
    ja-JP-mac|en-US)
 	;;

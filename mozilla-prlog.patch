@@ -1,0 +1,20 @@
+# Patch originally from mozilla-1.9.1 branch
+# HG changeset patch
+# User Jonas Sicking <jonas@sicking.cc>
+# Date 1281670510 25200
+# Node ID d5ad248a92152333b5d6b22b802a3ac32a11b4b8
+# Parent  184125a9b1f8b98eddd8f3da39d4415e928b1d80
+Compatibility with NSPR < 4.8.6 (bmo#567620)
+
+diff --git a/content/html/content/src/nsHTMLFrameSetElement.cpp b/content/html/content/src/nsHTMLFrameSetElement.cpp
+--- a/content/html/content/src/nsHTMLFrameSetElement.cpp
++++ b/content/html/content/src/nsHTMLFrameSetElement.cpp
+@@ -43,6 +43,7 @@
+ #include "nsIFrameSetElement.h"
+ #include "nsIHTMLDocument.h"
+ #include "nsIDocument.h"
++#include "prlog.h"
+ 
+ class nsHTMLFrameSetElement : public nsGenericHTMLElement,
+                               public nsIDOMHTMLFrameSetElement,
+

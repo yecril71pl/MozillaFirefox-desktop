@@ -86,6 +86,7 @@ Patch14:        mozilla-cairo-lcd.patch
 Patch15:        mozilla-ua-locale-pref.patch
 Patch16:        mozilla-locale.patch
 Patch17:        mozilla-gdk-pixbuf.patch
+Patch18:        mozilla-prlog.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -236,6 +237,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 %build
 %if %suse_version >= 1110

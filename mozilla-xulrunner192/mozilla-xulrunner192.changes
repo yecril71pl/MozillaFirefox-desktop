@@ -1,7 +1,33 @@
 -------------------------------------------------------------------
 Mon Aug 30 17:34:28 CEST 2010 - wr@rosenauer.org
 
-- security update to 1.9.2.9
+- security update to 1.9.2.9 (bnc#637303)
+  * MFSA 2010-49/CVE-2010-3169
+    Miscellaneous memory safety hazards
+  * MFSA 2010-50/CVE-2010-2765 (bmo#576447)
+    Frameset integer overflow vulnerability
+  * MFSA 2010-51/CVE-2010-2767 (bmo#584512)
+    Dangling pointer vulnerability using DOM plugin array
+  * MFSA 2010-53/CVE-2010-3166 (bmo#579655)
+    Heap buffer overflow in nsTextFrameUtils::TransformText
+  * MFSA 2010-54/CVE-2010-2760 (bmo#585815)
+    Dangling pointer vulnerability in nsTreeSelection
+  * MFSA 2010-55/CVE-2010-3168 (bmo#576075)
+    XUL tree removal crash and remote code execution
+  * MFSA 2010-56/CVE-2010-3167 (bmo#576070)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-57/CVE-2010-2766 (bmo#580445)
+    Crash and remote code execution in normalizeDocument
+  * MFSA 2010-59/CVE-2010-2762 (bmo#584180)
+    SJOW creates scope chains ending in outer object
+  * MFSA 2010-61/CVE-2010-2768 (bmo#579744)
+    UTF-7 XSS by overriding document charset using <object> type 
+    attribute
+  * MFSA 2010-62/CVE-2010-2769 (bmo#520189)
+    Copy-and-paste or drag-and-drop into designMode document allows 
+    XSS
+  * MFSA 2010-63/CVE-2010-2764 (bmo#552090)
+    Information leak via XMLHttpRequest statusText
 - honor LANGUAGE environment variable for UI locale (bmo#583793)
 
 -------------------------------------------------------------------

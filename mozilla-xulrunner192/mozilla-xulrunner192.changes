@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org
+
+- update to 1.9.2.10
+  * fixing startup topcrash (bmo#594699)
+
+-------------------------------------------------------------------
 Mon Aug 30 17:34:28 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.9 (bnc#637303)
@@ -29,6 +35,8 @@ Mon Aug 30 17:34:28 CEST 2010 - wr@rosenauer.org
   * MFSA 2010-63/CVE-2010-2764 (bmo#552090)
     Information leak via XMLHttpRequest statusText
 - honor LANGUAGE environment variable for UI locale (bmo#583793)
+- fixed compilation against NSPR < 4.8.6 (mozilla-prlog.patch)
+  (bmo#567620)
 
 -------------------------------------------------------------------
 Mon Aug 30 17:32:20 CEST 2010 - wr@rosenauer.org

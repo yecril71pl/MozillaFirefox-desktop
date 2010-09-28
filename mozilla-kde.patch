@@ -3453,14 +3453,14 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
 -    mimeInfo = nsGNOMERegistry::GetFromExtension(ext);
 +    mimeInfo = nsCommonRegistry::GetFromExtension(ext);
    }
- 
    if (mimeInfo)
      *_retval = PR_TRUE;
  
    if (*_retval)
      return NS_OK;
  
-@@ -107,25 +110,42 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
+ #if (MOZ_PLATFORM_MAEMO == 5) && defined (MOZ_ENABLE_GNOMEVFS)
+@@ -106,26 +109,43 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
    nsCAutoString nativePath;
    aFile->GetNativePath(nativePath);
  
@@ -3491,19 +3491,20 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
      nsCOMPtr<nsIGnomeVFSMimeApp> app;
      if (NS_SUCCEEDED(vfs->GetAppForMimeType(mType, getter_AddRefs(app))) && app)
        return app->Launch(nativePath);
+   }
  
-     // If we haven't got an app we try to get a valid one by searching for the
-     // extension mapped type
--    nsRefPtr<nsMIMEInfoBase> mimeInfo = nsGNOMERegistry::GetFromExtension(nativePath);
-+    nsRefPtr<nsMIMEInfoBase> mimeInfo = nsCommonRegistry::GetFromExtension(nativePath);
-     if (mimeInfo) {
-       nsCAutoString type;
-       mimeInfo->GetType(type);
+   // If we haven't got an app we try to get a valid one by searching for the
+   // extension mapped type
+-  nsRefPtr<nsMIMEInfoBase> mimeInfo = nsGNOMERegistry::GetFromExtension(nativePath);
++  nsRefPtr<nsMIMEInfoBase> mimeInfo = nsCommonRegistry::GetFromExtension(nativePath);
+   if (mimeInfo) {
+     nsCAutoString type;
+     mimeInfo->GetType(type);
+     if (vfs) {
+       nsCOMPtr<nsIGnomeVFSMimeApp> app;
        if (NS_SUCCEEDED(vfs->GetAppForMimeType(type, getter_AddRefs(app))) && app)
          return app->Launch(nativePath);
      }
-   }
- 
 diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exthandler/unix/nsOSHelperAppService.cpp
 --- a/uriloader/exthandler/unix/nsOSHelperAppService.cpp
 +++ b/uriloader/exthandler/unix/nsOSHelperAppService.cpp
@@ -3962,8 +3963,8 @@ diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
 +LOCAL_INCLUDES += -I$(topsrcdir)/toolkit/xre
  
  ifeq ($(MOZ_PLATFORM_MAEMO), 5)
- CFLAGS          += $(MOZ_DBUS_GLIB_CFLAGS) $(MOZ_PLATFORM_MAEMO_CFLAGS)
- CXXFLAGS        += $(MOZ_DBUS_GLIB_CFLAGS) $(MOZ_PLATFORM_MAEMO_CFLAGS)
+ CFLAGS          += $(MOZ_DBUS_CFLAGS) $(MOZ_PLATFORM_MAEMO_CFLAGS)
+ CXXFLAGS        += $(MOZ_DBUS_CFLAGS) $(MOZ_PLATFORM_MAEMO_CFLAGS)
  endif
  
 diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp

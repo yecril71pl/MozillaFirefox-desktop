@@ -3472,7 +3472,7 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
  endif
  
  ifdef MOZ_ENABLE_DBUS
- EXTRA_DSO_LDOPTS += $(MOZ_DBUS_GLIB_LIBS)
+ EXTRA_DSO_LDOPTS += $(MOZ_DBUS_LIBS)
  endif
  
 +ifdef MOZ_ENABLE_GCONF
@@ -3490,7 +3490,7 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
 --- a/toolkit/toolkit-tiers.mk
 +++ b/toolkit/toolkit-tiers.mk
-@@ -254,16 +254,23 @@ endif
+@@ -258,16 +258,23 @@ endif
  ifdef MOZ_ENABLE_LIBXUL
  tier_toolkit_dirs += xpcom/stub
  endif

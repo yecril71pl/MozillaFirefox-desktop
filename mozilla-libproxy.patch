@@ -6,7 +6,7 @@ https://bugzilla.mozilla.org/show_bug.cgi?id=517655
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -542,16 +542,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
+@@ -545,16 +545,20 @@ FT2_CFLAGS             = @FT2_CFLAGS@
  FT2_LIBS               = @FT2_LIBS@
  
  MOZ_PANGO_CFLAGS        = @MOZ_PANGO_CFLAGS@
@@ -48,15 +48,15 @@ diff --git a/config/system-headers b/config/system-headers
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5325,16 +5325,39 @@ then
-         AC_DEFINE(MOZ_ENABLE_DBUS)
+@@ -5327,16 +5327,38 @@ then
      fi
  fi
  AC_SUBST(MOZ_ENABLE_DBUS)
+ AC_SUBST(MOZ_DBUS_CFLAGS)
+ AC_SUBST(MOZ_DBUS_LIBS)
  AC_SUBST(MOZ_DBUS_GLIB_CFLAGS)
  AC_SUBST(MOZ_DBUS_GLIB_LIBS)
  
- dnl ========================================================
 +dnl = libproxy support
 +dnl ========================================================
 +
@@ -79,7 +79,7 @@ diff --git a/configure.in b/configure.in
 +AC_SUBST(MOZ_LIBPROXY_CFLAGS)
 +AC_SUBST(MOZ_LIBPROXY_LIBS)
 +
-+dnl ========================================================
+ dnl ========================================================
  dnl = libnotify support
  dnl ========================================================
  
@@ -87,7 +87,6 @@ diff --git a/configure.in b/configure.in
  then
      MOZ_ENABLE_LIBNOTIFY=1
  
-     MOZ_ARG_DISABLE_BOOL(libnotify,
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in

@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Tue Sep 28 13:16:20 CEST 2010 - wr@rosenauer.org
+
+- security update to 1.9.2.11
+- removed upstreamed patches:
+  * mozilla-esd.patch
+  * mozilla-helper-app.patch
+
+-------------------------------------------------------------------
 Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org
 
 - update to 1.9.2.10

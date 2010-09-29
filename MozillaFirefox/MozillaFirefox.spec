@@ -20,16 +20,19 @@
 
 
 Name:           MozillaFirefox
-%define use_xulrunner 1
+%define use_xulrunner 0
 %define xulrunner mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel yasm
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config update-desktop-files zip fdupes Mesa-devel yasm hunspell-devel
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
+BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
 BuildRequires:  %{xulrunner}-devel = 2.0b
+%else
+BuildRequires:  nss-shared-helper-devel
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
@@ -40,6 +43,10 @@ Release:        1
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
+# this is needed to match this package with the kde4 helper package without the main package
+# having a hard requirement on the kde4 package
+%define kde_helper_version 6
+Provides:       mozilla-kde4-version = %{kde_helper_version}
 Source:         firefox-%{version}-source.tar.bz2
 Source1:        MozillaFirefox.desktop
 Source2:        MozillaFirefox-rpmlintrc
@@ -51,18 +58,34 @@ Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
+Source11:       add-plugins.sh.in
+Source12:       create-tar.sh
+Source13:       toolkit-lockdown.js
 Source16:       firefox.1
-Patch1:         firefox-libxul-sdk.patch
-Patch3:         toolkit-download-folder.patch
-Patch4:         firefox-linkorder.patch
-Patch5:         firefox-browser-css.patch
-Patch6:         firefox-cross-desktop.patch
-Patch8:         firefox-appname.patch
-Patch9:         firefox-kde.patch
-Patch10:        firefox-ui-lockdown.patch
-Patch11:        firefox-no-sync-l10n.patch
-Patch12:        firefox-sync-system-nss.patch
-Patch13:        firefox-sync-build.patch
+# Gecko/Toolkit
+Patch1:         toolkit-download-folder.patch
+Patch2:         mozilla-nongnome-proxies.patch
+Patch3:         mozilla-prefer_plugin_pref.patch
+Patch4:         mozilla-shared-nss-db.patch
+Patch5:         mozilla-kde.patch
+Patch6:         mozilla-gconf-backend.patch
+Patch7:         gecko-lockdown.patch
+Patch8:         toolkit-ui-lockdown.patch
+Patch9:         mozilla-cpuid.patch
+Patch10:        mozilla-buildsymbols.patch
+Patch11:        mozilla-cairo-lcd.patch
+Patch12:        mozilla-language.patch
+# Firefox/browser
+Patch30:        firefox-libxul-sdk.patch
+Patch32:        firefox-linkorder.patch
+Patch33:        firefox-browser-css.patch
+Patch34:        firefox-cross-desktop.patch
+Patch35:        firefox-appname.patch
+Patch36:        firefox-kde.patch
+Patch37:        firefox-ui-lockdown.patch
+Patch38:        firefox-no-sync-l10n.patch
+Patch39:        firefox-sync-system-nss.patch
+Patch40:        firefox-sync-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -87,8 +110,10 @@ Requires:       %{name}-branding >= 4.0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
+%define plugincontainer  0
 %else
 %define crashreporter    1
+%define plugincontainer  1
 %endif
 ### build options end
 
@@ -153,37 +178,71 @@ Supplements:    packageand(%{name}:branding-upstream)
 %description branding-upstream
 This package provides upstream look and feel for MozillaFirefox.
 
+%if %crashreporter && !0%{?use_xulrunner}
+%package buildsymbols
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+Summary:        Breakpad buildsymbols for %{name}
+Group:          Development/Debug
+
+%description buildsymbols
+This subpackage contains the Breakpad created and compatible debugging
+symbols meant for upload to Mozilla's crash collector database.
+%endif
 
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
+# Gecko/Toolkit
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch8 -p1
-%if %suse_version >= 1110
+#%patch6 -p1
+#%patch7 -p1
+#%patch8 -p1
 %patch9 -p1
+%patch10 -p1
+#%patch11 -p1
+%patch12 -p1
+# Firefox/browser
+%patch30 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%if %suse_version >= 1110
+%patch36 -p1
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-#%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+#%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
 
 %build
+kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
+if test "$kdehelperversion" != %{kde_helper_version}; then
+  echo fix kde helper version in the .spec file
+  exit 1
+fi
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"  
+%ifarch ppc64
+export CFLAGS="$CFLAGS -mminimal-toc"
+%endif
 export CXXFLAGS="$CFLAGS"
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
+%if 0%{?use_xulrunner}
 SDKDIR=$(pkg-config --variable=sdkdir libxul)
+%endif
 cat << EOF > $MOZCONFIG
 mk_add_options MOZILLA_OFFICIAL=1
 mk_add_options BUILD_OFFICIAL=1
+mk_add_options MOZ_MILESTONE_RELEASE=1
 mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../obj
 . \$topsrcdir/browser/config/mozconfig
@@ -198,11 +257,13 @@ ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 ac_add_options --with-system-jpeg
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
 ac_add_options --with-system-zlib
+ac_add_options --enable-startup-notification
+ac_add_options --enable-system-hunspell
 ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
-ac_add_options --disable-debug
 ac_add_options --enable-update-channel=beta
+#ac_add_options --enable-debug
 EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG
@@ -213,6 +274,22 @@ EOF
 %if %branding
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
+EOF
+%endif
+%if %suse_version > 1110
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-libproxy
+EOF
+%endif
+%if ! %crashreporter
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-crashreporter
+EOF
+%endif
+%if ! %plugincontainer
+cat << EOF >> $MOZCONFIG
+# Chromium IPC is not ported to Power,S/390 and Itanium (currently just x86,x86_64 and arm)
+ac_add_options --disable-ipc
 EOF
 %endif
 make -f client.mk build
@@ -300,6 +377,18 @@ rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{progdir}
 %fdupes $RPM_BUILD_ROOT%{_datadir}
+# create breakpad debugsymbols
+%if %crashreporter && !0%{?use_xulrunner}
+SYMBOLS_NAME="firefox-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
+make buildsymbols \
+  SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
+  SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
+  SYMBOL_ARCHIVE_BASENAME="$SYMBOLS_NAME"
+if [ -e dist/*symbols.zip ]; then
+  mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
+  cp dist/*symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
+fi
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -321,14 +410,6 @@ if [ -f opt/gnome/bin/update-mime-database ] ; then
   opt/gnome/bin/update-mime-database > /dev/null || :
 fi
 %endif
-# move plugins to new location
-if [ "$1" = "2" ]; then
-  if [ -d /opt/MozillaFirefox/%{_lib}/plugins ]; then
-    rm -rf /opt/MozillaFirefox/%{_lib}/plugins/libnullplugin.so
-    cp -fud /opt/MozillaFirefox/%{_lib}/plugins/* %{progdir}/plugins
-    rm -rf /opt/MozillaFirefox/%{_lib}/plugins
-  fi
-fi
 exit 0
 
 %postun
@@ -345,26 +426,28 @@ if [ -f opt/gnome/bin/update-mime-database ] ; then
 fi
 %endif
 
+%if !0%{?use_xulrunner}
+%posttrans
+[ -e %{_libdir}/firefox/add-plugins.sh ] && \
+  %{_libdir}/firefox/add-plugins.sh > /dev/null 2>&1
+exit 0
+%endif
+
 %files
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
-%{progdir}/chrome/browser.*
-%{progdir}/chrome/localized.manifest
-%{progdir}/chrome/nonlocalized.manifest
-%{progdir}/chrome/en-US.*
 %{progdir}/chrome/icons
 %{progdir}/components/
-%exclude %{progdir}/defaults/profile/bookmarks.html
-%{progdir}/defaults/
+#%exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/extensions/
 %{progdir}/icons/
-%{progdir}/modules/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
+%{progdir}/omni.jar
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %endif
@@ -394,7 +477,13 @@ fi
 %files branding-upstream  
 %defattr(-,root,root)  
 %dir %{progdir}
-%dir %{progdir}/defaults/
-%{progdir}/defaults/profile/bookmarks.html
+#%dir %{progdir}/defaults/
+#%{progdir}/defaults/profile/bookmarks.html
+
+%if %crashreporter && !0%{?use_xulrunner}
+%files buildsymbols
+%defattr(-,root,root)
+%{_datadir}/mozilla/
+%endif
 
 %changelog

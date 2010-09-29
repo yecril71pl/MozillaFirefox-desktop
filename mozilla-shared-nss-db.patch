@@ -7,7 +7,7 @@ References:
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -560,16 +560,20 @@ MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS
+@@ -564,16 +564,20 @@ MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS
  
  GLIB_CFLAGS	= @GLIB_CFLAGS@
  GLIB_LIBS	= @GLIB_LIBS@
@@ -22,16 +22,16 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 +
  MOZ_NATIVE_MAKEDEPEND	= @SYSTEM_MAKEDEPEND@
  
+ export CL_INCLUDES_PREFIX = @CL_INCLUDES_PREFIX@
+ 
  MOZ_AUTO_DEPS	= @MOZ_AUTO_DEPS@
  COMPILER_DEPEND = @COMPILER_DEPEND@
  MDDEPDIR        := @MDDEPDIR@
  CC_WRAPPER = @CC_WRAPPER@
- CXX_WRAPPER = @CXX_WRAPPER@
- 
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8452,16 +8452,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8550,16 +8550,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz

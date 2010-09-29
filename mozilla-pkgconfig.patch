@@ -24,7 +24,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  # to register xulrunner per-user, override this with $HOME/.gre.d
  regdir = /etc/gre.d
  
-@@ -109,16 +112,17 @@ pkg_config_files += mozilla-nss.pc
+@@ -116,16 +119,17 @@ pkg_config_files += mozilla-nss.pc
  endif
  
  %.pc: $(srcdir)/%.pc.in $(GLOBAL_DEPS)
@@ -40,8 +40,8 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  	-e "s|%FULL_NSPR_LIBS%|$(FULL_NSPR_LIBS)|" \
  	-e "s|%FULL_NSPR_CFLAGS%|$(FULL_NSPR_CFLAGS)|" \
  	-e "s|%NSPR_NAME%|$(NSPR_NAME)|" \
- 	-e "s|%NSPR_VERSION%|$(NSPR_VERSION)|" > $@
- 	chmod 644 $@
+ 	-e "s|%NSPR_VERSION%|$(NSPR_VERSION)|" \
+ 	-e "s|%MOZ_XUL_LINK%|$(MOZ_XUL_LINK)|" \
 diff --git a/xulrunner/installer/libxul-embedding.pc.in b/xulrunner/installer/libxul-embedding.pc.in
 --- a/xulrunner/installer/libxul-embedding.pc.in
 +++ b/xulrunner/installer/libxul-embedding.pc.in
@@ -72,7 +72,7 @@ diff --git a/xulrunner/installer/libxul.pc.in b/xulrunner/installer/libxul.pc.in
  Description: The Mozilla Runtime and Embedding Engine
  Version: %MOZILLA_VERSION%
  Requires: %NSPR_NAME% >= %NSPR_VERSION%
- Libs: -L${sdkdir}/lib -lxpcomglue_s -lxul -lxpcom
+ Libs: -L${sdkdir}/lib %MOZ_XUL_LINK%
 diff --git a/xulrunner/installer/mozilla-gtkmozembed-embedding.pc.in b/xulrunner/installer/mozilla-gtkmozembed-embedding.pc.in
 --- a/xulrunner/installer/mozilla-gtkmozembed-embedding.pc.in
 +++ b/xulrunner/installer/mozilla-gtkmozembed-embedding.pc.in
@@ -112,6 +112,6 @@ diff --git a/xulrunner/installer/mozilla-js.pc.in b/xulrunner/installer/mozilla-
  Description: The Mozilla JavaScript Library
  Version: %MOZILLA_VERSION%
  Requires: %NSPR_NAME% >= %NSPR_VERSION%
--Libs: -L${sdkdir}/lib -lmozjs
-+Libs: -Wl,-rpath,${libdir} -L${sdkdir}/lib -lmozjs
+-Libs: -L${sdkdir}/lib %MOZ_JS_LINK%
++Libs: -Wl,-rpath,${libdir} -L${sdkdir}/lib %MOZ_JS_LINK%
  Cflags: -I${includedir} -DXP_UNIX -DJS_THREADSAFE

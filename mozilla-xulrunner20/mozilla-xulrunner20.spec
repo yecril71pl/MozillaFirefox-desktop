@@ -71,6 +71,7 @@ Patch10:        toolkit-ui-lockdown.patch
 # ---
 Patch11:        mozilla-cpuid.patch
 Patch12:        mozilla-buildsymbols.patch
+Patch13:        mozilla-language.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -211,6 +212,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %endif
 %patch12 -p1
+%patch13 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

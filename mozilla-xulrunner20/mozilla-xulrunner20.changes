@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Sep 29 14:10:28 CEST 2010 - wr@rosenauer.org
+
+- honour LANGUAGE environment variable (bmo#583793)
+
+-------------------------------------------------------------------
 Wed Jul 28 07:06:08 CEST 2010 - wr@rosenauer.org
 
 - first package of XULRunner 2.0

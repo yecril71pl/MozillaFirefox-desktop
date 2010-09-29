@@ -12,6 +12,7 @@ mozilla-kde.patch
 mozilla-cpuid.patch
 mozilla-buildsymbols.patch
 #mozilla-cairo-lcd.patch
+mozilla-language.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

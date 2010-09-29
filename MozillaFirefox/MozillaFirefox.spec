@@ -22,7 +22,7 @@
 Name:           MozillaFirefox
 %define use_xulrunner 0
 %define xulrunner mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config update-desktop-files zip fdupes Mesa-devel yasm hunspell-devel nss-shared-helper-devel
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config update-desktop-files zip fdupes Mesa-devel yasm hunspell-devel
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -31,6 +31,8 @@ BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
 BuildRequires:  %{xulrunner}-devel = 2.0b
+%else
+BuildRequires:  nss-shared-helper-devel
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       web_browser
@@ -72,6 +74,7 @@ Patch8:         toolkit-ui-lockdown.patch
 Patch9:         mozilla-cpuid.patch
 Patch10:        mozilla-buildsymbols.patch
 Patch11:        mozilla-cairo-lcd.patch
+Patch12:        mozilla-language.patch
 # Firefox/browser
 Patch30:        firefox-libxul-sdk.patch
 Patch31:        firefox-credits.patch
@@ -203,6 +206,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch9 -p1
 %patch10 -p1
 #%patch11 -p1
+%patch12 -p1
 # Firefox/browser
 %patch30 -p1
 %patch31 -p1

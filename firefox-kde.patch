@@ -1121,20 +1121,20 @@ new file mode 100644
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -22,16 +22,18 @@ browser.jar:
+@@ -20,16 +20,18 @@ browser.jar:
+ *       content/browser/aboutHome.xhtml               (content/aboutHome.xhtml)
+ *       content/browser/aboutHome.js                  (content/aboutHome.js)
  *       content/browser/aboutHome.css                 (content/aboutHome.css)
          content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
-         content/browser/aboutRobots-icon-rtl.png      (content/aboutRobots-icon-rtl.png)
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)
-         content/browser/aboutRobots-widget-right.png  (content/aboutRobots-widget-right.png)
  *       content/browser/browser.css                   (content/browser.css)
  *       content/browser/browser.js                    (content/browser.js)
  *       content/browser/browser.xul                   (content/browser.xul)
 +*       content/browser/browser-kde.xul               (content/browser-kde.xul)
 +%       override chrome://browser/content/browser.xul chrome://browser/content/browser-kde.xul desktop=kde
  *       content/browser/browser-tabPreviews.xml       (content/browser-tabPreviews.xml)
- *       content/browser/credits.xhtml                 (content/credits.xhtml)
  *       content/browser/fullscreen-video.xhtml        (content/fullscreen-video.xhtml)
+ *       content/browser/inspector.html                (content/inspector.html)
  *       content/browser/pageinfo/pageInfo.xul         (content/pageinfo/pageInfo.xul)
  *       content/browser/pageinfo/pageInfo.js          (content/pageinfo/pageInfo.js)
  *       content/browser/pageinfo/pageInfo.css         (content/pageinfo/pageInfo.css)
@@ -1595,7 +1595,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -429,16 +429,17 @@
+@@ -431,16 +431,17 @@
  #endif
  #endif
  

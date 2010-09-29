@@ -53,7 +53,6 @@ Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
 Source16:       firefox.1
 Patch1:         firefox-libxul-sdk.patch
-Patch2:         firefox-credits.patch
 Patch3:         toolkit-download-folder.patch
 Patch4:         firefox-linkorder.patch
 Patch5:         firefox-browser-css.patch
@@ -64,7 +63,6 @@ Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-no-sync-l10n.patch
 Patch12:        firefox-sync-system-nss.patch
 Patch13:        firefox-sync-build.patch
-Patch14:        firefox-tabview.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -160,7 +158,6 @@ This package provides upstream look and feel for MozillaFirefox.
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -175,7 +172,6 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

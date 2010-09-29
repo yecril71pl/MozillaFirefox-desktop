@@ -21,9 +21,9 @@ diff --git a/modules/libpref/src/Makefile.in b/modules/libpref/src/Makefile.in
 diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefService.cpp
 --- a/modules/libpref/src/nsPrefService.cpp
 +++ b/modules/libpref/src/nsPrefService.cpp
-@@ -51,16 +51,17 @@
- #include "nsILocalFile.h"
- #include "nsIObserverService.h"
+@@ -55,16 +55,17 @@
+ #include "nsIStringEnumerator.h"
+ #include "nsIZipReader.h"
  #include "nsPrefBranch.h"
  #include "nsXPIDLString.h"
  #include "nsCRT.h"
@@ -39,7 +39,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -718,28 +719,40 @@ static nsresult pref_InitDefaults()
+@@ -837,28 +838,40 @@ static nsresult pref_InitDefaults()
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MAC) || defined(XP_MACOSX)
@@ -2088,7 +2088,7 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -95,17 +95,18 @@ CMMSRCS = nsNativeAppSupportCocoa.mm
+@@ -97,17 +97,18 @@ CMMSRCS = nsNativeAppSupportCocoa.mm
  else
  ifeq ($(MOZ_WIDGET_TOOLKIT),os2)
  CPPSRCS += nsNativeAppSupportOS2.cpp
@@ -3104,7 +3104,7 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
 diff --git a/widget/src/gtk2/Makefile.in b/widget/src/gtk2/Makefile.in
 --- a/widget/src/gtk2/Makefile.in
 +++ b/widget/src/gtk2/Makefile.in
-@@ -155,11 +155,14 @@ endif
+@@ -157,11 +157,14 @@ endif
  
  DEFINES		+= -DCAIRO_GFX
  
@@ -3458,7 +3458,7 @@ diff --git a/widget/src/gtk2/nsFilePicker.h b/widget/src/gtk2/nsFilePicker.h
 diff --git a/xpcom/components/Makefile.in b/xpcom/components/Makefile.in
 --- a/xpcom/components/Makefile.in
 +++ b/xpcom/components/Makefile.in
-@@ -98,10 +98,11 @@ FORCE_STATIC_LIB = 1
+@@ -94,10 +94,11 @@ FORCE_STATIC_LIB = 1
  
  # Force use of PIC
  FORCE_USE_PIC	= 1

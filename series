@@ -16,7 +16,6 @@ mozilla-language.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch
-firefox-credits.patch
 firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
@@ -26,4 +25,3 @@ firefox-kde.patch
 firefox-no-sync-l10n.patch
 firefox-sync-system-nss.patch
 firefox-sync-build.patch
-firefox-tabview.patch

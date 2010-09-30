@@ -102,7 +102,7 @@ Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulru
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
-Requires:       %{name}-branding >= 4.0
+#Requires:       %{name}-branding >= 4.0
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
@@ -447,7 +447,6 @@ exit 0
 %dir %{progdir}/defaults/pref*/
 %{progdir}/chrome/icons
 %{progdir}/components/
-#%exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/extensions/
 %{progdir}/icons/
 %{progdir}/searchplugins/
@@ -503,10 +502,13 @@ exit 0
 %dir %{progdir}/chrome/
 %endif
 
+# TODO no branding yet
+%if 0
 %files branding-upstream  
 %defattr(-,root,root)  
 %dir %{progdir}
 #%{progdir}/defaults/profile/bookmarks.html
+%endif
 
 %if %crashreporter && !0%{?use_xulrunner}
 %files buildsymbols

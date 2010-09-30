@@ -32,6 +32,8 @@ BuildRequires:  wireless-tools
 %if 0%{?use_xulrunner}
 BuildRequires:  %{xulrunner}-devel = 2.0b
 %else
+BuildRequires:  mozilla-nspr-devel >= 4.8.6
+BuildRequires:  mozilla-nss-devel >= 3.12.8
 BuildRequires:  nss-shared-helper-devel
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
@@ -39,7 +41,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010083100
+%define         releasedate 2010092900
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -96,6 +98,9 @@ Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %
 Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %endif
+%else
+Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
+Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
 Requires:       %{name}-branding >= 4.0
 %define _use_internal_dependency_generator 0
@@ -107,7 +112,7 @@ Requires:       %{name}-branding >= 4.0
 %define gnome_dir     %{_prefix}
 ### build options
 %define branding 1
-%define localize 1
+%define localize 0
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
 %define plugincontainer  0
@@ -298,7 +303,7 @@ make -f client.mk build
 cd $RPM_BUILD_DIR/obj
 # FIXME (will be needed once lockdown is integrated; needs omni.jar adoption)
 #cp %{SOURCE9} dist/bin/defaults/preferences/lockdown.js
-rm dist/bin/defaults/preferences/firefox-l10n.js
+rm dist/bin/defaults/pref*/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
@@ -437,6 +442,8 @@ exit 0
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
+%dir %{progdir}/defaults/
+%dir %{progdir}/defaults/pref*/
 %{progdir}/chrome/icons
 %{progdir}/components/
 #%exclude %{progdir}/defaults/profile/bookmarks.html
@@ -444,25 +451,46 @@ exit 0
 %{progdir}/icons/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
-%{progdir}/firefox
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
 %{progdir}/omni.jar
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
+%if !0%{?use_xulrunner}
+%{progdir}/Throbber-small.gif
+%{progdir}/crashreporter
+%{progdir}/crashreporter.ini
+%endif
 %endif
 %{progdir}/chrome.manifest
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/mime/packages/%{progname}.xml
-%{_datadir}/pixmaps/firefox*
+%if !0%{?use_xulrunner}
+%{progdir}/defaults/pref*/channel-prefs.js
+%{progdir}/dependentlibs.list
+%{progdir}/firefox-bin
+%exclude %{progdir}/firefox
+%{progdir}/libmozalloc.so
+%{progdir}/libmozsqlite3.so
+%{progdir}/libxpcom.so
+%{progdir}/libxul.so
+%{progdir}/mozilla-xremote-client
+%{progdir}/platform.ini
+%{progdir}/dictionaries
+%if %plugincontainer
+%{progdir}/plugin-container
+%endif
+%else
+%{progdir}/firefox
+%endif
 %if %branding
 %{gnome_dir}/share/icons/hicolor/
 %endif
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/mime/packages/%{progname}.xml
+%{_datadir}/pixmaps/firefox*
 %{_bindir}/%{progname}
 %doc %{_mandir}/man1/%{progname}.1.gz
 
 %if %localize
-
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{progdir}
@@ -477,7 +505,6 @@ exit 0
 %files branding-upstream  
 %defattr(-,root,root)  
 %dir %{progdir}
-#%dir %{progdir}/defaults/
 #%{progdir}/defaults/profile/bookmarks.html
 
 %if %crashreporter && !0%{?use_xulrunner}

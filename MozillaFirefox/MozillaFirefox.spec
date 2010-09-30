@@ -379,6 +379,7 @@ rm -f $RPM_BUILD_ROOT%{progdir}/README.txt
 rm -f $RPM_BUILD_ROOT%{progdir}/old-homepage-default.properties
 rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
 rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
+rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{progdir}
 %fdupes $RPM_BUILD_ROOT%{_datadir}

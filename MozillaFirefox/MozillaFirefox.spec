@@ -238,7 +238,7 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	  ../mozilla/browser/locales/l10n.ini ../l10n $locale
 	popd
 	LOCALE_MERGEDIR=../l10n-merged \
-  	make -C browser/locales libs-$locale
+  	make -C browser/locales langpack-$locale
 	cp -r dist/xpi-stage/locale-$locale \
 	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# check against the fixed common list and sort into the right filelist
@@ -380,12 +380,12 @@ fi
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{progdir}
-%dir %{progdir}/chrome/
+%dir %{progdir}/extensions/
 
 %files translations-other -f %{_tmppath}/translations.other
 %defattr(-,root,root)
 %dir %{progdir}
-%dir %{progdir}/chrome/
+%dir %{progdir}/extensions/
 %endif
 
 %files branding-upstream  

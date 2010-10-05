@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent d7f423a91ae943643510a03fd2cb0360423e014f
+# Parent 686f29d9e7e6ef165400bec2eea04aa861b83ec5
 Bug 590411 - Sync/Weave is not included if FF is built against libxul sdk
 
 diff --git a/browser/build.mk b/browser/build.mk
@@ -27,32 +27,10 @@ diff --git a/browser/build.mk b/browser/build.mk
  	@$(MAKE) -C browser/installer installer
  
  package:
-diff --git a/services/sync/Weave.js b/services/sync/Weave.js
---- a/services/sync/Weave.js
-+++ b/services/sync/Weave.js
-@@ -76,17 +76,17 @@ WeaveService.prototype = {
-                     .getService(Ci.nsIIOService);
-     let resProt = ioService.getProtocolHandler("resource")
-                   .QueryInterface(Ci.nsIResProtocolHandler);
- 
-     // Only create alias if resource://services-sync doesn't already exist.
-     if (resProt.hasSubstitution("services-sync"))
-       return;
- 
--    let uri = ioService.newURI("resource://gre/modules/services-sync/",
-+    let uri = ioService.newURI("resource:///modules/services-sync/",
-                                null, null);
-     resProt.setSubstitution("services-sync", uri);
-   }
- };
- 
- function AboutWeaveLog() {}
- AboutWeaveLog.prototype = {
-   classID: Components.ID("{d28f8a0b-95da-48f4-b712-caf37097be41}"),
 diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
 --- a/toolkit/toolkit-tiers.mk
 +++ b/toolkit/toolkit-tiers.mk
-@@ -270,20 +270,15 @@ endif
+@@ -281,20 +281,15 @@ endif
  ifdef MOZ_LEAKY
  tier_platform_dirs        += tools/leaky
  endif

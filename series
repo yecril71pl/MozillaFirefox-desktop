@@ -22,6 +22,5 @@ firefox-appname.patch
 firefox-kde.patch
 #firefox-ui-lockdown.patch
 firefox-no-sync-l10n.patch
-firefox-sync-system-nss.patch
 firefox-sync-build.patch
 firefox-libxulsdk-locales.patch

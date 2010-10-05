@@ -1,0 +1,52 @@
+# HG changeset patch
+# Parent 6e05daaf579aa134cadb3e42451c1918409d18c3
+
+diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
+--- a/browser/locales/Makefile.in
++++ b/browser/locales/Makefile.in
+@@ -180,20 +180,18 @@ libs:: $(addsuffix .xml,$(SEARCH_PLUGINS
+ 	$(SYSINSTALL) $(IFLAGS1) $^ $(FINAL_TARGET)/searchplugins
+ 
+ install:: $(addsuffix .xml,$(SEARCH_PLUGINS))
+ 	$(SYSINSTALL) $(IFLAGS1) $^ $(DESTDIR)$(mozappdir)/searchplugins
+ 
+ 
+ libs-%:
+ 	$(NSINSTALL) -D $(DIST)/install
+-ifndef LIBXUL_SDK
+ 	@$(MAKE) -C ../../toolkit/locales libs-$* BOTH_MANIFESTS=1
+ 	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+-endif
+ ifdef MOZ_SERVICES_SYNC
+ 	@$(MAKE) -C ../../services/sync/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+ endif
+ 	@$(MAKE) libs AB_CD=$* XPI_NAME=locale-$* PREF_DIR=defaults/pref BOTH_MANIFESTS=1
+ 	@$(MAKE) -C $(DEPTH)/$(MOZ_BRANDING_DIRECTORY)/locales AB_CD=$* XPI_NAME=locale-$* BOTH_MANIFESTS=1
+ 
+ 
+ repackage-win32-installer: WIN32_INSTALLER_OUT="$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_INST_BASENAME).exe"
+diff --git a/browser/makefiles.sh b/browser/makefiles.sh
+--- a/browser/makefiles.sh
++++ b/browser/makefiles.sh
+@@ -74,16 +74,21 @@ browser/installer/windows/Makefile
+ browser/locales/Makefile
+ browser/themes/Makefile
+ browser/themes/pinstripe/browser/Makefile
+ browser/themes/pinstripe/communicator/Makefile
+ browser/themes/pinstripe/Makefile
+ browser/themes/winstripe/browser/Makefile
+ browser/themes/winstripe/communicator/Makefile
+ browser/themes/winstripe/Makefile
++netwerk/locales/Makefile
++dom/locales/Makefile
++security/manager/locales/Makefile
++extensions/spellcheck/locales/Makefile
++toolkit/locales/Makefile
+ $MOZ_BRANDING_DIRECTORY/Makefile
+ $MOZ_BRANDING_DIRECTORY/content/Makefile
+ $MOZ_BRANDING_DIRECTORY/locales/Makefile
+ "
+ 
+ if [ "$ENABLE_TESTS" ]; then
+   add_makefiles "
+     browser/base/content/test/Makefile

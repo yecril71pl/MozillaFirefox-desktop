@@ -36,7 +36,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010083100
+%define         releasedate 2010100300
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -63,6 +63,7 @@ Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-no-sync-l10n.patch
 Patch12:        firefox-sync-system-nss.patch
 Patch13:        firefox-sync-build.patch
+Patch14:        firefox-libxulsdk-locales.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -172,6 +173,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -238,22 +240,23 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
    	pushd $RPM_BUILD_DIR/compare-locales
 	PYTHONPATH=lib \
 	  scripts/compare-locales -m ../l10n-merged/$locale \
+	  ../mozilla/toolkit/locales/l10n.ini ../l10n $locale
+	PYTHONPATH=lib \
+	  scripts/compare-locales -m ../l10n-merged/$locale \
 	  ../mozilla/browser/locales/l10n.ini ../l10n $locale
 	popd
 	LOCALE_MERGEDIR=../l10n-merged \
   	make -C browser/locales libs-$locale
-  	cp dist/xpi-stage/locale-$locale/chrome/$locale.jar \
-    	  $RPM_BUILD_ROOT%{progdir}/chrome
-  	cp dist/xpi-stage/locale-$locale/chrome/$locale.manifest \
-     	  $RPM_BUILD_ROOT%{progdir}/chrome
+	cp -r dist/xpi-stage/locale-$locale \
+	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
 	  [ "$_match" = "$locale" ] && _matched=1
 	done
 	[ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other
-  	echo %{progdir}/chrome/$locale.jar      >> %{_tmppath}/translations.$_l10ntarget
-  	echo %{progdir}/chrome/$locale.manifest >> %{_tmppath}/translations.$_l10ntarget
+  	echo %{progdir}/extensions/langpack-$locale@firefox.mozilla.org \
+	  >> %{_tmppath}/translations.$_l10ntarget
   esac
 done
 %endif
@@ -357,7 +360,9 @@ fi
 %{progdir}/components/
 %exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
-%{progdir}/extensions/
+%dir %{progdir}/extensions/
+%{progdir}/extensions/testpilot@labs.mozilla.com
+%{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
 %{progdir}/modules/
 %{progdir}/searchplugins/

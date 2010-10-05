@@ -232,12 +232,9 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
    	pushd $RPM_BUILD_DIR/compare-locales
 	PYTHONPATH=lib \
 	  scripts/compare-locales -m ../l10n-merged/$locale \
-	  ../mozilla/toolkit/locales/l10n.ini ../l10n $locale
-	PYTHONPATH=lib \
-	  scripts/compare-locales -m ../l10n-merged/$locale \
 	  ../mozilla/browser/locales/l10n.ini ../l10n $locale
 	popd
-	LOCALE_MERGEDIR=../l10n-merged \
+	LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
   	make -C browser/locales langpack-$locale
 	cp -r dist/xpi-stage/locale-$locale \
 	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org

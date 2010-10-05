@@ -2550,9 +2550,9 @@ diff --git a/uriloader/exthandler/Makefile.in b/uriloader/exthandler/Makefile.in
  ifeq ($(MOZ_WIDGET_TOOLKIT),android)
  OSHELPER += nsMIMEInfoAndroid.cpp
  OSHELPER += nsAndroidHandlerApp.cpp
+ OSHELPER += nsExternalSharingAppService.cpp
+ EXPORTS += nsExternalSharingAppService.h
  endif
- 
- ifeq ($(MOZ_WIDGET_TOOLKIT),qt)
 diff --git a/uriloader/exthandler/unix/nsCommonRegistry.cpp b/uriloader/exthandler/unix/nsCommonRegistry.cpp
 new file mode 100644
 --- /dev/null

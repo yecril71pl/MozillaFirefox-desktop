@@ -15,7 +15,6 @@ mozilla-buildsymbols.patch
 mozilla-language.patch
 
 # Firefox patches
-firefox-libxul-sdk.patch
 firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch

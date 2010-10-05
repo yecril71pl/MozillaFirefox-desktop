@@ -52,7 +52,6 @@ Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
 Source16:       firefox.1
-Patch1:         firefox-libxul-sdk.patch
 Patch3:         toolkit-download-folder.patch
 Patch4:         firefox-linkorder.patch
 Patch5:         firefox-browser-css.patch
@@ -106,9 +105,6 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Group:          System/Localization
 Requires:       %{name} = %{version}
-%if 0%{?use_xulrunner}
-Requires:       %{xulrunner}-translations-common
-%endif
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-common
@@ -121,9 +117,6 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
 Group:          System/Localization
 Requires:       %{name} = %{version}
-%if 0%{?use_xulrunner}
-Requires:       %{xulrunner}-translations-other
-%endif
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -158,7 +151,6 @@ This package provides upstream look and feel for MozillaFirefox.
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
-%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1

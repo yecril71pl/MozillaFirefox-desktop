@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.11
 Release:        1
-%define         releasedate 2010092700
+%define         releasedate 2010100500
 %define         version_internal 1.9.2.11
 %define         apiversion 1.9.2
 %define         uaweight 192110
@@ -115,7 +115,7 @@ BuildRequires:  mozilla-nspr-devel
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 %endif
 %if %has_system_nss
-BuildRequires:  mozilla-nss-devel >= 3.12.6
+BuildRequires:  mozilla-nss-devel >= 3.12.8
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
 Recommends:     %{name}-gnome

@@ -1,10 +1,11 @@
 -------------------------------------------------------------------
-Tue Sep 28 13:16:20 CEST 2010 - wr@rosenauer.org
+Wed Oct  6 07:13:34 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.11
 - removed upstreamed patches:
   * mozilla-esd.patch
   * mozilla-helper-app.patch
+- build and runtime requirement is NSS 3.12.8
 
 -------------------------------------------------------------------
 Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org

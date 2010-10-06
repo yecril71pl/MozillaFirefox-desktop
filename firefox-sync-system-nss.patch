@@ -1,0 +1,57 @@
+# HG changeset patch
+# Parent 1e4f0a7028202f758195452878b0299a587a4b4e
+Bug 583209 - Weave fails to load if system libnss3.so is in use (OpenSolaris, Linux dists)
+https://bugzilla.mozilla.org/show_bug.cgi?id=583209
+
+diff --git a/services/crypto/WeaveCrypto.js b/services/crypto/WeaveCrypto.js
+--- a/services/crypto/WeaveCrypto.js
++++ b/services/crypto/WeaveCrypto.js
+@@ -102,44 +102,23 @@ WeaveCrypto.prototype = {
+     initNSS : function() {
+         // We use NSS for the crypto ops, which needs to be initialized before
+         // use. By convention, PSM is required to be the module that
+         // initializes NSS. So, make sure PSM is initialized in order to
+         // implicitly initialize NSS.
+         Cc["@mozilla.org/psm;1"].getService(Ci.nsISupports);
+ 
+         // Open the NSS library.
+-        let nssfile = Services.dirsvc.get("GreD", Ci.nsILocalFile);
+         let os = Services.appinfo.OS;
+-        switch (os) {
+-          case "WINNT":
+-          case "WINMO":
+-          case "WINCE":
+-            nssfile.append("nss3.dll");
+-            break;
+-          case "Darwin":
+-            nssfile.append("libnss3.dylib");
+-            break;
+-          case "Linux":
+-          case "SunOS":
+-          case "WebOS": // Palm Pre
+-            nssfile.append("libnss3.so");
+-            break;
+-          case "Android":
+-            // Android uses a $GREDIR/lib/ subdir.
+-            nssfile.append("lib");
+-            nssfile.append("libnss3.so");
+-            break;
+-          default:
+-            throw Components.Exception("unsupported platform: " + os, Cr.NS_ERROR_UNEXPECTED);
+-        }
+-        this.log("Using NSS library " + nssfile.path);
++        let path = ctypes.libraryName("nss3");
++
++        this.log("Using NSS library " + path);
+ 
+         // XXX really want to be able to pass specific dlopen flags here.
+-        let nsslib = ctypes.open(nssfile.path);
++        let nsslib = ctypes.open(path);
+ 
+         this.log("Initializing NSS types and function declarations...");
+ 
+         this.nss = {};
+         this.nss_t = {};
+ 
+         // nsprpub/pr/include/prtypes.h#435
+         // typedef PRIntn PRBool; --> int

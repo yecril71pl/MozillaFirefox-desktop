@@ -60,6 +60,7 @@ Patch8:         firefox-appname.patch
 Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-no-sync-l10n.patch
+Patch12:        firefox-sync-system-nss.patch
 Patch13:        firefox-sync-build.patch
 Patch14:        firefox-libxulsdk-locales.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -162,6 +163,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
 #%patch10 -p1
 %patch11 -p1
+%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 

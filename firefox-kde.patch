@@ -227,7 +227,7 @@ new file mode 100644
 +      </row>
 +      <vbox id="editBookmarkPanelContent" flex="1" hidden="true"/>
 +      <hbox id="editBookmarkPanelBottomButtons" pack="end">
-+#ifdef XP_UNIX // XP_UNIX != KDE
++#ifdef XP_UNIX
 +        <button id="editBookmarkPanelDoneButton"
 +                class="editBookmarkPanelBottomButton"
 +                label="&editBookmark.done.label;"

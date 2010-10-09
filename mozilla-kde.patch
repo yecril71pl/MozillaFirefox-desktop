@@ -39,7 +39,57 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -837,28 +838,40 @@ static nsresult pref_InitDefaults()
+@@ -783,30 +784,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+ }
+ 
+ static nsresult pref_LoadPrefsInDirList(const char *listId)
+ {
+   nsresult rv;
+   nsCOMPtr<nsIProperties> dirSvc(do_GetService(NS_DIRECTORY_SERVICE_CONTRACTID, &rv));
+   if (NS_FAILED(rv)) return rv;
+ 
++  // make sure we load these special files after all the others
++  static const char* specialFiles[] = {
++#if defined(XP_UNIX)
++    ""
++#endif
++  };
++
++  if (nsKDEUtils::kdeSession()) {
++    for(int i = 0;
++        i < NS_ARRAY_LENGTH(specialFiles);
++        ++i ) {
++      if (*specialFiles[ i ] == '\0') {
++        specialFiles[ i ] = "kde.js";
++        break;
++      }
++    }
++  }
++
+   nsCOMPtr<nsISimpleEnumerator> dirList;
+   dirSvc->Get(listId,
+               NS_GET_IID(nsISimpleEnumerator),
+               getter_AddRefs(dirList));
+   if (dirList) {
+     PRBool hasMore;
+     while (NS_SUCCEEDED(dirList->HasMoreElements(&hasMore)) && hasMore) {
+       nsCOMPtr<nsISupports> elem;
+       dirList->GetNext(getter_AddRefs(elem));
+       if (elem) {
+         nsCOMPtr<nsIFile> dir = do_QueryInterface(elem);
+         if (dir) {
+           // Do we care if a file provided by this process fails to load?
+-          pref_LoadPrefsInDir(dir, nsnull, 0); 
++          pref_LoadPrefsInDir(dir, specialFiles, NS_ARRAY_LENGTH(specialFiles));
+         }
+       }
+     }
+   }
+   return NS_OK;
+ }
+ 
+ //----------------------------------------------------------------------------------------
+@@ -837,28 +856,40 @@ static nsresult pref_InitDefaults()
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MAC) || defined(XP_MACOSX)

@@ -1,12 +1,12 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 6637fa42939971816b5b0163e44cbdc0f7290066
+# Parent 7351fc8754c200b787fd701e7efa5fd2fc5864ff
 Bug 588129 - symbols.txt file missing from *.crashreporter-symbols.zip
 
 diff --git a/Makefile.in b/Makefile.in
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -186,17 +186,18 @@ ifdef MOZ_CRASHREPORTER
+@@ -183,17 +183,20 @@ ifdef MOZ_CRASHREPORTER
  	  $(DIST)/crashreporter-symbols                                   \
  	  $(MAKE_SYM_STORE_PATH) >                                        \
  	  $(DIST)/crashreporter-symbols/$(SYMBOL_INDEX_NAME)
@@ -16,8 +16,10 @@ diff --git a/Makefile.in b/Makefile.in
            zip -r9D "../$(PKG_PATH)$(SYMBOL_FULL_ARCHIVE_BASENAME).zip" .
  	cd $(DIST)/crashreporter-symbols && \
 -          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.sym"
-+          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.sym" \
-+          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.txt"
++	grep "sym" $(SYMBOL_INDEX_NAME) > $(SYMBOL_INDEX_NAME).tmp && \
++	  mv $(SYMBOL_INDEX_NAME).tmp $(SYMBOL_INDEX_NAME)
++	cd $(DIST)/crashreporter-symbols && \
++          zip -r9D "../$(PKG_PATH)$(SYMBOL_ARCHIVE_BASENAME).zip" . -i "*.sym" -i "*.txt"
  else
  ifdef WINCE
  ifdef SYMBOLSTORE_PATH

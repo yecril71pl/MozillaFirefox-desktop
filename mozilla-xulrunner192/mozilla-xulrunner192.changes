@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Oct 25 10:09:54 CEST 2010 - wr@rosenauer.org
+
+- ignore empty LANGUAGE environment variable (bnc#648854)
+
+-------------------------------------------------------------------
 Wed Oct  6 07:13:34 CEST 2010 - wr@rosenauer.org
 
 - security update to 1.9.2.11 (bnc#645315)

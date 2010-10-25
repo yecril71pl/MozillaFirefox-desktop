@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel pkg-config python startup-notification-devel zip
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1020
@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.11
 Release:        1
-%define         releasedate 2010100500
+%define         releasedate 2010101300
 %define         version_internal 1.9.2.11
 %define         apiversion 1.9.2
 %define         uaweight 192110
@@ -203,6 +203,7 @@ KDE installations for example.
 
 
 %if %crashreporter
+
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}

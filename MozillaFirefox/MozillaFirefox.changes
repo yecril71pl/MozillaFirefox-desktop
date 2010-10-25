@@ -1,7 +1,25 @@
 -------------------------------------------------------------------
 Wed Oct  6 07:13:52 CEST 2010 - wr@rosenauer.org
 
-- security update to 3.6.11
+- security update to 3.6.11 (bnc#645315)
+  * MFSA 2010-64/CVE-2010-3174/CVE-2010-3175/CVE-2010-3176
+    Miscellaneous memory safety hazards
+  * MFSA 2010-65/CVE-2010-3179 (bmo#583077)
+    Buffer overflow and memory corruption using document.write
+  * MFSA 2010-66/CVE-2010-3180 (bmo#588929)
+    Use-after-free error in nsBarProp
+  * MFSA 2010-67/CVE-2010-3183 (bmo#598669)
+    Dangling pointer vulnerability in LookupGetterOrSetter
+  * MFSA 2010-68/CVE-2010-3177 (bmo#556734)
+    XSS in gopher parser when parsing hrefs
+  * MFSA 2010-69/CVE-2010-3178 (bmo#576616)
+    Cross-site information disclosure via modal calls
+  * MFSA 2010-70/CVE-2010-3170 (bmo#578697)
+    SSL wildcard certificate matching IP addresses
+  * MFSA 2010-71/CVE-2010-3182 (bmo#590753)
+    Unsafe library loading vulnerabilities
+  * MFSA 2010-72/CVE-2010-3173
+    Insecure Diffie-Hellman key exchange
 
 -------------------------------------------------------------------
 Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org

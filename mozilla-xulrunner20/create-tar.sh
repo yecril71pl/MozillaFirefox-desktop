@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH="mozilla-central"
-RELEASE_TAG="default"
+RELEASE_TAG="GECKO20b7pre_20101006_RELBRANCH"
 VERSION="2.0b"
 
 # mozilla

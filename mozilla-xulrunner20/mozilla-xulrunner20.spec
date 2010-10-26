@@ -262,6 +262,12 @@ ac_add_options --enable-system-hunspell
 ac_add_options --enable-shared-js
 #ac_add_options --enable-debug
 EOF
+%if %suse_version > 1130
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-gnomevfs
+ac_add_options --enable-gio
+EOF
+%endif
 %if %has_system_nspr
 cat << EOF >> $MOZCONFIG
 ac_add_options --with-system-nspr
@@ -455,7 +461,9 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
 %exclude %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
+%if %suse_version <= 1130
 %exclude %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
+%endif
 %{_libdir}/xulrunner-%{version_internal}/defaults/
 %{_libdir}/xulrunner-%{version_internal}/greprefs.js
 %{_libdir}/xulrunner-%{version_internal}/icons/
@@ -493,7 +501,7 @@ exit 0
 # API symlink
 %{_libdir}/xulrunner-%{apiversion}
 # compat symlinks
-%if 0%{?ga_version:1} 
+%if 0%{?ga_version:1}
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
@@ -520,10 +528,11 @@ exit 0
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %dir %{_libdir}/xulrunner-%{version_internal}/components/
 %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
+%if %suse_version <= 1130
 %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
+%endif
 
 %if %localize
-
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -536,7 +545,6 @@ exit 0
 %endif
 
 %if %crashreporter
-
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

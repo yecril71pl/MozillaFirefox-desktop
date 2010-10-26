@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 686f29d9e7e6ef165400bec2eea04aa861b83ec5
+# Parent 20a161dabb40729976748bf5b13d14f27b76b130
 Bug 590411 - Sync/Weave is not included if FF is built against libxul sdk
 
 diff --git a/browser/build.mk b/browser/build.mk
@@ -21,12 +21,12 @@ diff --git a/browser/build.mk b/browser/build.mk
 +
  tier_app_dirs += $(MOZ_BRANDING_DIRECTORY)
  
+ tier_app_dirs += toolkit/components/console/hudservice
+ 
  tier_app_dirs += browser
  
  installer:
  	@$(MAKE) -C browser/installer installer
- 
- package:
 diff --git a/toolkit/toolkit-tiers.mk b/toolkit/toolkit-tiers.mk
 --- a/toolkit/toolkit-tiers.mk
 +++ b/toolkit/toolkit-tiers.mk

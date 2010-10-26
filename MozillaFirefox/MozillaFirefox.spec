@@ -36,7 +36,7 @@ Provides:       web_browser
 Provides:       firefox
 Version:        4.0b
 Release:        1
-%define         releasedate 2010100400
+%define         releasedate 2010101200
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -385,8 +385,8 @@ fi
 %dir %{progdir}/extensions/
 %endif
 
-%files branding-upstream  
-%defattr(-,root,root)  
+%files branding-upstream
+%defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/defaults/
 %{progdir}/defaults/profile/bookmarks.html

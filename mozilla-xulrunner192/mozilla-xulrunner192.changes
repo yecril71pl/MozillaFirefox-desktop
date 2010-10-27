@@ -1,6 +1,8 @@
 -------------------------------------------------------------------
-Mon Oct 25 10:09:54 CEST 2010 - wr@rosenauer.org
+Wed Oct 27 07:12:14 CEST 2010 - wr@rosenauer.org
 
+- security update to 1.9.2.12 (bnc#)
+  * CVE-2010-3765
 - ignore empty LANGUAGE environment variable (bnc#648854)
 
 -------------------------------------------------------------------

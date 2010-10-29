@@ -14,7 +14,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  include $(topsrcdir)/toolkit/mozapps/installer/packager.mk
  
 +# the apilibdir always ends with 1.9 as every patch update will provide a link
-+apilibdir = $(dir $(installdir))xulrunner-1.9.2
++apilibdir = $(dir $(installdir))xulrunner-2.0
 +
  $(MOZILLA_VERSION).system.conf: $(topsrcdir)/config/milestone.txt Makefile
  	printf "[%s]\nGRE_PATH=%s\nxulrunner=true\nabi=%s" \

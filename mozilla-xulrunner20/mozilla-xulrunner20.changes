@@ -1,7 +1,12 @@
 -------------------------------------------------------------------
-Wed Sep 29 14:10:28 CEST 2010 - wr@rosenauer.org
+Fri Oct 29 05:13:07 UTC 2010 - wr@rosenauer.org
 
+- update to 2.0b7pre (20101028)
 - honour LANGUAGE environment variable (bmo#583793)
+- fixed wrong reference in pkgconfig files
+- use gio instead of gnome-vfs after 11.3
+- fix buildsymbols zip command and exclude dbg.gz from symbols.txt
+- fixed "KDE mode"
 
 -------------------------------------------------------------------
 Wed Jul 28 07:06:08 CEST 2010 - wr@rosenauer.org

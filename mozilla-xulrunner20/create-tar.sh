@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH="mozilla-central"
-RELEASE_TAG="GECKO20b7pre_20101006_RELBRANCH"
+RELEASE_TAG="FIREFOX_4_0b7_RELEASE"
 VERSION="2.0b"
 
 # mozilla

@@ -61,6 +61,7 @@ Patch9:         firefox-kde.patch
 Patch10:        firefox-ui-lockdown.patch
 Patch11:        firefox-no-sync-l10n.patch
 Patch12:        firefox-libxulsdk-locales.patch
+Patch13:        firefox-no-default-ualocale.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -162,6 +163,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 #%patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -234,6 +236,8 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   	make -C browser/locales langpack-$locale
 	cp -r dist/xpi-stage/locale-$locale \
 	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
+	# remove prefs and profile defaults from langpack
+	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do

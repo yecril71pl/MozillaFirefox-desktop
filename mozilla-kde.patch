@@ -39,7 +39,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -783,30 +784,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+@@ -760,30 +761,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
  }
  
  static nsresult pref_LoadPrefsInDirList(const char *listId)
@@ -89,7 +89,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  }
  
  //----------------------------------------------------------------------------------------
-@@ -837,28 +856,40 @@ static nsresult pref_InitDefaults()
+@@ -814,28 +833,40 @@ static nsresult pref_InitDefaults()
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MAC) || defined(XP_MACOSX)
@@ -167,7 +167,7 @@ diff --git a/toolkit/components/downloads/src/nsDownloadManager.cpp b/toolkit/co
  #define DOWNLOAD_MANAGER_ALERT_ICON "chrome://mozapps/skin/downloads/downloadIcon.png"
  #define PREF_BDM_SHOWALERTONCOMPLETE "browser.download.manager.showAlertOnComplete"
  #define PREF_BDM_SHOWALERTINTERVAL "browser.download.manager.showAlertInterval"
-@@ -2188,16 +2192,25 @@ nsDownload::SetState(DownloadState aStat
+@@ -2192,16 +2196,25 @@ nsDownload::SetState(DownloadState aStat
        nsCOMPtr<nsIPrefBranch> pref(do_GetService(NS_PREFSERVICE_CONTRACTID));
  
        // Master pref to control this function.
@@ -193,7 +193,7 @@ diff --git a/toolkit/components/downloads/src/nsDownloadManager.cpp b/toolkit/co
          PRInt64 goat = PR_Now() - mStartTime;
          showTaskbarAlert = goat > alertIntervalUSec;
  
-@@ -2223,16 +2236,17 @@ nsDownload::SetState(DownloadState aStat
+@@ -2227,16 +2240,17 @@ nsDownload::SetState(DownloadState aStat
                // because if it is, they'll click open the download manager and
                // the items they downloaded will have been removed.
                alerts->ShowAlertNotification(
@@ -3647,7 +3647,7 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
 diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
 --- a/xpcom/io/Makefile.in
 +++ b/xpcom/io/Makefile.in
-@@ -191,17 +191,17 @@ include $(topsrcdir)/config/rules.mk
+@@ -192,17 +192,17 @@ include $(topsrcdir)/ipc/chromium/chromi
  DEFINES		+= -D_IMPL_NS_COM
  
  ifeq ($(OS_ARCH),Linux)
@@ -3656,8 +3656,8 @@ diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
  endif
  endif
  
--LOCAL_INCLUDES	= -I..
-+LOCAL_INCLUDES	= -I.. -I$(topsrcdir)/toolkit/xre
+-LOCAL_INCLUDES	+= -I..
++LOCAL_INCLUDES	+= -I.. -I$(topsrcdir)/toolkit/xre
  
  ifeq ($(MOZ_PLATFORM_MAEMO),5)
  CFLAGS          += $(MOZ_DBUS_CFLAGS)

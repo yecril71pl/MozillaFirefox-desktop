@@ -169,7 +169,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
-export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"  
+export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 export CXXFLAGS="$CFLAGS"
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
 SDKDIR=$(pkg-config --variable=sdkdir libxul)
@@ -238,6 +238,8 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs and profile defaults from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
+	# remove langpack searchplugins for now (bmo#601899)
+	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/searchplugins
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do

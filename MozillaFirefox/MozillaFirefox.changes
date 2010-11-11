@@ -1,4 +1,154 @@
 -------------------------------------------------------------------
+Wed Oct 27 07:12:14 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.12 (bnc#649492)
+  * MFSA 2010-73/CVE-2010-3765 (bmo#607222)
+    Heap buffer overflow mixing document.write and DOM insertion
+
+-------------------------------------------------------------------
+Wed Oct  6 07:13:52 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.11 (bnc#645315)
+  * MFSA 2010-64/CVE-2010-3174/CVE-2010-3175/CVE-2010-3176
+    Miscellaneous memory safety hazards
+  * MFSA 2010-65/CVE-2010-3179 (bmo#583077)
+    Buffer overflow and memory corruption using document.write
+  * MFSA 2010-66/CVE-2010-3180 (bmo#588929)
+    Use-after-free error in nsBarProp
+  * MFSA 2010-67/CVE-2010-3183 (bmo#598669)
+    Dangling pointer vulnerability in LookupGetterOrSetter
+  * MFSA 2010-68/CVE-2010-3177 (bmo#556734)
+    XSS in gopher parser when parsing hrefs
+  * MFSA 2010-69/CVE-2010-3178 (bmo#576616)
+    Cross-site information disclosure via modal calls
+  * MFSA 2010-70/CVE-2010-3170 (bmo#578697)
+    SSL wildcard certificate matching IP addresses
+  * MFSA 2010-71/CVE-2010-3182 (bmo#590753)
+    Unsafe library loading vulnerabilities
+  * MFSA 2010-72/CVE-2010-3173
+    Insecure Diffie-Hellman key exchange
+
+-------------------------------------------------------------------
+Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.10
+  * fixing startup topcrash (bmo#594699)
+
+-------------------------------------------------------------------
+Thu Aug 26 07:40:28 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.9 (bnc#637303)
+  * MFSA 2010-49/CVE-2010-3169
+    Miscellaneous memory safety hazards
+  * MFSA 2010-50/CVE-2010-2765 (bmo#576447)
+    Frameset integer overflow vulnerability
+  * MFSA 2010-51/CVE-2010-2767 (bmo#584512)
+    Dangling pointer vulnerability using DOM plugin array
+  * MFSA 2010-53/CVE-2010-3166 (bmo#579655)
+    Heap buffer overflow in nsTextFrameUtils::TransformText
+  * MFSA 2010-54/CVE-2010-2760 (bmo#585815)
+    Dangling pointer vulnerability in nsTreeSelection
+  * MFSA 2010-55/CVE-2010-3168 (bmo#576075)
+    XUL tree removal crash and remote code execution
+  * MFSA 2010-56/CVE-2010-3167 (bmo#576070)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-57/CVE-2010-2766 (bmo#580445)
+    Crash and remote code execution in normalizeDocument
+  * MFSA 2010-59/CVE-2010-2762 (bmo#584180)
+    SJOW creates scope chains ending in outer object
+  * MFSA 2010-61/CVE-2010-2768 (bmo#579744)
+    UTF-7 XSS by overriding document charset using <object> type
+    attribute
+  * MFSA 2010-62/CVE-2010-2769 (bmo#520189)
+    Copy-and-paste or drag-and-drop into designMode document allows
+    XSS
+  * MFSA 2010-63/CVE-2010-2764 (bmo#552090)
+    Information leak via XMLHttpRequest statusText
+
+-------------------------------------------------------------------
+Wed Jul 28 08:33:14 CEST 2010 - meissner@suse.de
+
+- disable crash reporter for non x86/x86_64 to make it build.
+
+-------------------------------------------------------------------
+Sat Jul 24 12:42:58 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.8 (bnc#622506)
+  * MFSA 2010-48/CVE-2010-2755 (bmo#575836)
+    Dangling pointer crash regression from plugin parameter array
+    fix
+
+-------------------------------------------------------------------
+Fri Jul 16 06:48:44 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.7 (bnc#622506)
+  * MFSA 2010-34/CVE-2010-1211/CVE-2010-1212
+    Miscellaneous memory safety hazards
+  * MFSA 2010-35/CVE-2010-1208 (bmo#572986)
+    DOM attribute cloning remote code execution vulnerability
+  * MFSA 2010-36/CVE-2010-1209 (bmo#552110)
+    Use-after-free error in NodeIterator
+  * MFSA 2010-37/CVE-2010-1214 (bmo#572985)
+    Plugin parameter EnsureCachedAttrParamArrays remote code
+    execution vulnerability
+  * MFSA 2010-38/CVE-2010-1215 (bmo#567069)
+    Arbitrary code execution using SJOW and fast native function
+  * MFSA 2010-39/CVE-2010-2752 (bmo#574059)
+    nsCSSValue::Array index integer overflow
+  * MFSA 2010-40/CVE-2010-2753 (bmo#571106)
+    nsTreeSelection dangling pointer remote code execution
+    vulnerability
+  * MFSA 2010-41/CVE-2010-1205 (bmo#570451)
+    Remote code execution using malformed PNG image
+  * MFSA 2010-42/CVE-2010-1213 (bmo#568148)
+    Cross-origin data disclosure via Web Workers and importScripts
+  * MFSA 2010-43/CVE-2010-1207 (bmo#571287)
+    Same-origin bypass using canvas context
+  * MFSA 2010-44/CVE-2010-1210 (bmo#564679)
+    Characters mapped to U+FFFD in 8 bit encodings cause subsequent
+    character to vanish
+  * MFSA 2010-45/CVE-2010-1206/CVE-2010-2751 (bmo#536466,556957)
+    Multiple location bar spoofing vulnerabilities
+  * MFSA 2010-46/CVE-2010-0654 (bmo#524223)
+    Cross-domain data theft using CSS
+  * MFSA 2010-47/CVE-2010-2754 (bmo#568564)
+    Cross-origin data leakage from script filename in error messages
+
+-------------------------------------------------------------------
+Sun Jun 27 20:24:31 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.6 release
+  * modifies the crash protection feature to increase the amount 
+    of time that plugins are allowed to be non-responsive before 
+    being terminated.
+
+-------------------------------------------------------------------
+Wed Jun 23 14:40:35 CEST 2010 - wr@rosenauer.org
+
+- update to final 3.6.4 release (bnc#603356)
+  * MFSA 2010-26/CVE-2010-1200/CVE-2010-1201/CVE-2010-1202/
+    CVE-2010-1203
+    Crashes with evidence of memory corruption (rv:1.9.2.4)
+  * MFSA 2010-28/CVE-2010-1198 (bmo#532246)
+    Freed object reuse across plugin instances
+  * MFSA 2010-29/CVE-2010-1196 (bmo#534666)
+    Heap buffer overflow in nsGenericDOMDataNode::SetTextInternal
+  * MFSA 2010-30/CVE-2010-1199 (bmo#554255)
+    Integer Overflow in XSLT Node Sorting
+  * MFSA 2010-31/CVE-2010-1125 (bmo#552255)
+    focus() behavior can be used to inject or steal keystrokes
+  * MFSA 2010-32/CVE-2010-1197 (bmo#537120)
+    Content-Disposition: attachment ignored if
+    Content-Type: multipart also present
+  * MFSA 2010-33/CVE-2008-5913 (bmo#475585)
+    User tracking across sites using Math.random()
+
+-------------------------------------------------------------------
+Mon Jun  7 07:07:33 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.4(build6)
+
+-------------------------------------------------------------------
 Sun Apr 18 09:42:40 CEST 2010 - wr@rosenauer.org
 
 - security update to 3.6.4 (Lorentz)

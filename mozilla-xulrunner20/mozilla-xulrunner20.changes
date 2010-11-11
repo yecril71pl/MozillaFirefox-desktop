@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Fri Oct 29 05:13:07 UTC 2010 - wr@rosenauer.org
+Sat Nov  6 12:50:18 UTC 2010 - wr@rosenauer.org
 
-- update to 2.0b7pre (20101028)
+- update to 2.0b7 (20101105)
 - honour LANGUAGE environment variable (bmo#583793)
 - fixed wrong reference in pkgconfig files
 - use gio instead of gnome-vfs after 11.3

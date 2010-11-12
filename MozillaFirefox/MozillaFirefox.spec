@@ -51,17 +51,18 @@ Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
-Source16:       firefox.1
-Patch3:         toolkit-download-folder.patch
-Patch4:         firefox-linkorder.patch
-Patch5:         firefox-browser-css.patch
-Patch6:         firefox-cross-desktop.patch
-Patch8:         firefox-appname.patch
-Patch9:         firefox-kde.patch
-Patch10:        firefox-ui-lockdown.patch
-Patch11:        firefox-no-sync-l10n.patch
-Patch12:        firefox-libxulsdk-locales.patch
-Patch13:        firefox-no-default-ualocale.patch
+Source11:       firefox.1
+Patch1:         toolkit-download-folder.patch
+Patch2:         firefox-linkorder.patch
+Patch3:         firefox-browser-css.patch
+Patch4:         firefox-cross-desktop.patch
+Patch5:         firefox-appname.patch
+Patch6:         firefox-kde.patch
+Patch7:        firefox-ui-lockdown.patch
+Patch8:        firefox-no-sync-l10n.patch
+Patch9:        firefox-libxulsdk-locales.patch
+Patch10:        firefox-no-default-ualocale.patch
+Patch11:        firefox-multilocale-chrome.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -150,20 +151,21 @@ This package provides upstream look and feel for MozillaFirefox.
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch8 -p1
 %if %suse_version >= 1110
-%patch9 -p1
+%patch6 -p1
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-#%patch10 -p1
+#%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -218,6 +220,7 @@ make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
+mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
@@ -238,8 +241,6 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs and profile defaults from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
-	# remove langpack searchplugins for now (bmo#601899)
-	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/searchplugins
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
@@ -269,7 +270,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
 # install man-page
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
-cp %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
+cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
 ##########
 # ADDONS
 #

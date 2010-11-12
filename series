@@ -24,3 +24,4 @@ firefox-kde.patch
 firefox-no-sync-l10n.patch
 firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch
+firefox-multilocale-chrome.patch

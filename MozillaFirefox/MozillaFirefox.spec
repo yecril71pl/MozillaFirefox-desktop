@@ -32,9 +32,9 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       web_browser
-Provides:       firefox
 Version:        3.6.12
+Provides:       web_browser
+Provides:       firefox = %{version}
 Release:        1
 %define         releasedate 2010102600
 Summary:        Mozilla Firefox Web Browser

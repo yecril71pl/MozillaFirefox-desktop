@@ -13,6 +13,7 @@ mozilla-cpuid.patch
 mozilla-buildsymbols.patch
 #mozilla-cairo-lcd.patch
 mozilla-language.patch
+mozilla-jemalloc-symbols.patch
 
 # Firefox patches
 firefox-linkorder.patch

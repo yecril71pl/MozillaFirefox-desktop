@@ -1,0 +1,166 @@
+# HG changeset patch
+# User Mike Hommey
+# Parent 4510a9c913731464c0bc3636cd03d3f7fdb27186
+Bug 611405 - Export jemalloc symbols when linking with the xpcom standalone glue and avoid crash if symbols are not available for any reason
+
+diff --git a/build/unix/gnu-ld-scripts/jemalloc-standalone-linkage-version-script b/build/unix/gnu-ld-scripts/jemalloc-standalone-linkage-version-script
+new file mode 100644
+--- /dev/null
++++ b/build/unix/gnu-ld-scripts/jemalloc-standalone-linkage-version-script
+@@ -0,0 +1,19 @@
++{
++   global:
++		_malloc_postfork;
++		_malloc_prefork;
++		jemalloc_stats;
++		malloc_usable_size;
++		posix_memalign;
++		free;
++		realloc;
++		calloc;
++		malloc;
++		memalign;
++		valloc;
++		__free_hook;
++		__malloc_hook;
++		__realloc_hook;
++		__memalign_hook;
++   local: *;
++};
+diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
+--- a/config/autoconf.mk.in
++++ b/config/autoconf.mk.in
+@@ -187,16 +187,17 @@ MAKENSISU=@MAKENSISU@
+ RM = rm -f
+ 
+ # The MOZ_UI_LOCALE var is used to build a particular locale. Do *not*
+ # use the var to change any binary files. Do *not* use this var unless you
+ # write rules for the "clean-locale" and "locale" targets.
+ MOZ_UI_LOCALE = @MOZ_UI_LOCALE@
+ 
+ MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS = @MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS@
++MOZ_JEMALLOC_STANDALONE_GLUE_LDOPTS = @MOZ_JEMALLOC_STANDALONE_GLUE_LDOPTS@
+ MOZ_COMPONENT_NSPR_LIBS=@MOZ_COMPONENT_NSPR_LIBS@
+ 
+ MOZ_FIX_LINK_PATHS=@MOZ_FIX_LINK_PATHS@
+ 
+ XPCOM_FROZEN_LDOPTS=@XPCOM_FROZEN_LDOPTS@
+ XPCOM_LIBS=@XPCOM_LIBS@
+ LIBXUL_LIBS=@LIBXUL_LIBS@
+ MOZ_TIMELINE=@MOZ_TIMELINE@
+diff --git a/config/config.mk b/config/config.mk
+--- a/config/config.mk
++++ b/config/config.mk
+@@ -157,16 +157,21 @@ FINAL_LINK_COMPS = $(DEPTH)/config/final
+ FINAL_LINK_COMP_NAMES = $(DEPTH)/config/final-link-comp-names
+ 
+ MOZ_UNICHARUTIL_LIBS = $(LIBXUL_DIST)/lib/$(LIB_PREFIX)unicharutil_s.$(LIB_SUFFIX)
+ MOZ_WIDGET_SUPPORT_LIBS    = $(DIST)/lib/$(LIB_PREFIX)widgetsupport_s.$(LIB_SUFFIX)
+ 
+ ifdef MOZ_MEMORY
+ ifneq (,$(filter-out WINNT WINCE,$(OS_ARCH)))
+ JEMALLOC_LIBS = $(MKSHLIB_FORCE_ALL) $(call EXPAND_MOZLIBNAME,jemalloc) $(MKSHLIB_UNFORCE_ALL)
++# If we are linking jemalloc into a program, we want the jemalloc symbols
++# to be exported
++ifneq (,$(SIMPLE_PROGRAMS)$(PROGRAM))
++JEMALLOC_LIBS += $(MOZ_JEMALLOC_STANDALONE_GLUE_LDOPTS)
++endif
+ endif
+ endif
+ 
+ CC := $(CC_WRAPPER) $(CC)
+ CXX := $(CXX_WRAPPER) $(CXX)
+ 
+ # determine debug-related options
+ _DEBUG_CFLAGS :=
+diff --git a/configure.in b/configure.in
+--- a/configure.in
++++ b/configure.in
+@@ -2892,21 +2892,23 @@ case "$target" in
+     if test -z "$GNU_CC"; then
+         NO_LD_ARCHIVE_FLAGS=
+     fi
+     ;;
+ esac
+ AC_SUBST(NO_LD_ARCHIVE_FLAGS)
+ 
+ dnl ========================================================
+-dnl = Flags to strip unused symbols from .so components
++dnl = Flags to strip unused symbols from .so components and
++dnl = to export jemalloc symbols when linking a program
+ dnl ========================================================
+ case "$target" in
+     *-linux*|*-kfreebsd*-gnu|*-gnu*)
+         MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS='-Wl,--version-script -Wl,$(BUILD_TOOLS)/gnu-ld-scripts/components-version-script'
++        MOZ_JEMALLOC_STANDALONE_GLUE_LDOPTS='-rdynamic -Wl,--version-script -Wl,$(BUILD_TOOLS)/gnu-ld-scripts/jemalloc-standalone-linkage-version-script'
+         ;;
+     *-solaris*)
+         if test -z "$GNU_CC"; then
+          MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS='-M $(BUILD_TOOLS)/gnu-ld-scripts/components-mapfile'
+         else
+          if test -z "$GCC_USE_GNU_LD"; then
+           MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS='-Wl,-M -Wl,$(BUILD_TOOLS)/gnu-ld-scripts/components-mapfile'
+          else
+@@ -8909,16 +8911,17 @@ AC_SUBST(MOZ_USER_DIR)
+ AC_SUBST(MOZ_CRASHREPORTER)
+ AC_SUBST(MOZ_UPDATER)
+ 
+ AC_SUBST(ENABLE_STRIP)
+ AC_SUBST(PKG_SKIP_STRIP)
+ AC_SUBST(USE_ELF_DYNSTR_GC)
+ AC_SUBST(INCREMENTAL_LINKER)
+ AC_SUBST(MOZ_COMPONENTS_VERSION_SCRIPT_LDFLAGS)
++AC_SUBST(MOZ_JEMALLOC_STANDALONE_GLUE_LDOPTS)
+ AC_SUBST(MOZ_COMPONENT_NSPR_LIBS)
+ 
+ AC_SUBST(MOZ_FIX_LINK_PATHS)
+ AC_SUBST(XPCOM_LIBS)
+ AC_SUBST(XPCOM_FROZEN_LDOPTS)
+ AC_SUBST(XPCOM_GLUE_LDOPTS)
+ AC_SUBST(XPCOM_STANDALONE_GLUE_LDOPTS)
+ 
+diff --git a/xpcom/base/nsMemoryReporterManager.cpp b/xpcom/base/nsMemoryReporterManager.cpp
+--- a/xpcom/base/nsMemoryReporterManager.cpp
++++ b/xpcom/base/nsMemoryReporterManager.cpp
+@@ -54,20 +54,16 @@
+ #    include "jemalloc.h"
+ #  elif defined(XP_LINUX)
+ #    define HAVE_JEMALLOC_STATS 1
+ #    include "jemalloc_types.h"
+ // jemalloc is directly linked into firefox-bin; libxul doesn't link
+ // with it.  So if we tried to use jemalloc_stats directly here, it
+ // wouldn't be defined.  Instead, we don't include the jemalloc header
+ // and weakly link against jemalloc_stats.
+-//
+-// NB: we don't null-check this symbol at runtime because we expect it
+-// to have been resolved.  If it hasn't, the crash jumping to NULL
+-// will indicate the bug.
+ extern "C" {
+ extern void jemalloc_stats(jemalloc_stats_t* stats)
+   NS_VISIBILITY_DEFAULT __attribute__((weak));
+ }
+ #  endif  // XP_LINUX
+ #endif  // MOZ_MEMORY
+ 
+ #if HAVE_JEMALLOC_STATS
+@@ -214,16 +210,20 @@ NS_MEMORY_REPORTER_IMPLEMENT(Win32Privat
+  ** nsMemoryReporterManager implementation
+  **/
+ 
+ NS_IMPL_ISUPPORTS1(nsMemoryReporterManager, nsIMemoryReporterManager)
+ 
+ NS_IMETHODIMP
+ nsMemoryReporterManager::Init()
+ {
++#if HAVE_JEMALLOC_STATS && defined(XP_LINUX)
++    if (!jemalloc_stats)
++        return NS_ERROR_FAILURE;
++#endif
+     /*
+      * Register our core reporters
+      */
+ #define REGISTER(_x)  RegisterReporter(new NS_MEMORY_REPORTER_NAME(_x))
+ 
+     /*
+      * Register our core jemalloc/malloc reporters
+      */

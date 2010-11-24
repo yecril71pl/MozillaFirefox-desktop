@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Nov 24 16:34:11 UTC 2010 - wr@rosenauer.org
+
+- export jemalloc symbols from xulrunner stub to make stats
+  available within libxul
+
+-------------------------------------------------------------------
 Sat Nov  6 12:50:18 UTC 2010 - wr@rosenauer.org
 
 - update to 2.0b7 (20101105)

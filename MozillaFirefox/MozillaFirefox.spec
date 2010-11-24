@@ -32,9 +32,9 @@ BuildRequires:  wireless-tools
 BuildRequires:  %{xulrunner}-devel = 2.0b
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       web_browser
-Provides:       firefox
 Version:        4.0b
+Provides:       web_browser
+Provides:       firefox = %{version}
 Release:        1
 %define         releasedate 2010110500
 Summary:        Mozilla Firefox Web Browser

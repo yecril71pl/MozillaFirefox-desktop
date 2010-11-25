@@ -7,7 +7,7 @@ References:
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -548,16 +548,20 @@ MOZ_ENABLE_LIBNOTIFY	= @MOZ_ENABLE_LIBNO
+@@ -561,16 +561,20 @@ MOZ_ENABLE_LIBNOTIFY	= @MOZ_ENABLE_LIBNO
  
  GLIB_CFLAGS	= @GLIB_CFLAGS@
  GLIB_LIBS	= @GLIB_LIBS@
@@ -31,19 +31,19 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -7756,16 +7756,31 @@ AC_SUBST(MOZ_CAIRO_LIBS)
+@@ -8016,16 +8016,32 @@ AC_SUBST(QCMS_LIBS)
  
- dnl qcms
  dnl ========================================================
- 
- QCMS_LIBS='$(DEPTH)/gfx/qcms/$(LIB_PREFIX)mozqcms.$(LIB_SUFFIX)'
- AC_SUBST(QCMS_LIBS)
+ dnl OTS
+ dnl ========================================================
+ MOZ_OTS_LIBS='$(DEPTH)/gfx/ots/src/$(LIB_PREFIX)mozots.$(LIB_SUFFIX)'
+ AC_SUBST(MOZ_OTS_LIBS)
  
  dnl ========================================================
 +dnl Check for nss-shared-helper
 +dnl ========================================================
 +
-+  PKG_CHECK_MODULES(NSSHELPER, nss-shared-helper, 
++  PKG_CHECK_MODULES(NSSHELPER, nss-shared-helper,
 +   [MOZ_ENABLE_NSSHELPER=1],
 +   [MOZ_ENABLE_NSSHELPER=])
 +
@@ -53,6 +53,7 @@ diff --git a/configure.in b/configure.in
 +AC_SUBST(MOZ_ENABLE_NSSHELPER)
 +AC_SUBST(NSSHELPER_CFLAGS)
 +AC_SUBST(NSSHELPER_LIBS)
++
 +
 +dnl ========================================================
  dnl disable xul
@@ -115,7 +116,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  
  #include "nsNetUtil.h"
  #include "nsAppDirectoryServiceDefs.h"
-@@ -1600,17 +1607,31 @@ nsNSSComponent::InitializeNSS(PRBool sho
+@@ -1606,17 +1613,31 @@ nsNSSComponent::InitializeNSS(PRBool sho
      // The call to ConfigureInternalPKCS11Token needs to be done before NSS is initialized, 
      // but affects only static data.
      // If we could assume i18n will not change between profiles, one call per application

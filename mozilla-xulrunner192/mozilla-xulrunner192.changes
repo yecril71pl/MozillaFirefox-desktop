@@ -1,8 +1,14 @@
 -------------------------------------------------------------------
+Thu Nov 25 09:25:50 UTC 2010 - wr@rosenauer.org
+
+- security update to 1.9.2.13 (bnc#)
+
+-------------------------------------------------------------------
 Wed Oct 27 07:12:14 CEST 2010 - wr@rosenauer.org
 
-- security update to 1.9.2.12 (bnc#)
-  * CVE-2010-3765
+- security update to 1.9.2.12 (bnc#649492)
+  * MFSA 2010-73/CVE-2010-3765 (bmo#607222)
+    Heap buffer overflow mixing document.write and DOM insertion
 - ignore empty LANGUAGE environment variable (bnc#648854)
 
 -------------------------------------------------------------------

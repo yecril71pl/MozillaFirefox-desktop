@@ -32,8 +32,8 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b
 Release:        1
-%define         releasedate 2010110500
-%define         version_internal 2.0b7
+%define         releasedate 2010120700
+%define         version_internal 2.0b8pre
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -70,9 +70,7 @@ Patch9:         gecko-lockdown.patch
 Patch10:        toolkit-ui-lockdown.patch
 # ---
 Patch11:        mozilla-cpuid.patch
-Patch12:        mozilla-buildsymbols.patch
-Patch13:        mozilla-language.patch
-Patch14:        mozilla-jemalloc-symbols.patch
+Patch12:        mozilla-language.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -213,8 +211,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
@@ -426,7 +422,7 @@ exit 0
 
 %posttrans
 # needed for updates which transition directory to symlink
-%if 0%{?ga_version:1} 
+%if 0%{?ga_version:1}
 test -d %{_libdir}/xulrunner-%{ga_version} && rm -rf %{_libdir}/xulrunner-%{ga_version}
 ln -sf xulrunner-%{version_internal} %{_libdir}/xulrunner-%{ga_version}
 %endif

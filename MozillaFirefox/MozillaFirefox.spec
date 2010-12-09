@@ -36,7 +36,7 @@ Version:        4.0b
 Provides:       web_browser
 Provides:       firefox = %{version}
 Release:        1
-%define         releasedate 2010110500
+%define         releasedate 2010120700
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

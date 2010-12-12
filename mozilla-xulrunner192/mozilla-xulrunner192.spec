@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.13
 Release:        1
-%define         releasedate 2010112400
+%define         releasedate 2010120300
 %define         version_internal 1.9.2.13
 %define         apiversion 1.9.2
 %define         uaweight 192130

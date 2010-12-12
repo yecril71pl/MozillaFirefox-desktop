@@ -1,7 +1,31 @@
 -------------------------------------------------------------------
 Thu Nov 25 09:28:25 UTC 2010 - wr@rosenauer.org
 
-- security update to 3.6.13 (bnc#)
+- security update to 3.6.13 (bnc#657016)
+  * MFSA 2010-74/CVE-2010-3776/CVE-2010-3777/CVE-2010-3778
+    Miscellaneous memory safety hazards (rv:1.9.2.13/ 1.9.1.16)
+  * MFSA 2010-75/CVE-2010-3769 (bmo#608336)
+    Buffer overflow while line breaking after document.write with
+    long string
+  * MFSA 2010-76/CVE-2010-3771 (bmo#609437)
+    Chrome privilege escalation with window.open and <isindex> element
+  * MFSA 2010-77/CVE-2010-3772 (bmo#594547)
+    Crash and remote code execution using HTML tags inside a XUL tree
+  * MFSA 2010-78/CVE-2010-3768 (bmo#527276)
+    Add support for OTS font sanitizer
+  * MFSA 2010-79/CVE-2010-3775
+    Java security bypass from LiveConnect loaded via data: URL
+    meta refresh
+  * MFSA 2010-80/CVE-2010-3766 (bmo#590771)
+    Use-after-free error with nsDOMAttribute MutationObserver
+  * MFSA 2010-81/CVE-2010-3767 (bmo#599468)
+    Integer overflow vulnerability in NewIdArray
+  * MFSA 2010-82/CVE-2010-3773 (bmo#554449)
+    Incomplete fix for CVE-2010-0179
+  * MFSA 2010-83/VE-2010-3774 (bmo#602780)
+    Location bar SSL spoofing using network error page
+  * MFSA 2010-84/CVE-2010-3770 (bmo#601429)
+    XSS hazard in multiple character encodings
 - export a versioned provides for "firefox"
 
 -------------------------------------------------------------------

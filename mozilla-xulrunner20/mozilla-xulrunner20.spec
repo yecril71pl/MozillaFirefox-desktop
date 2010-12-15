@@ -32,8 +32,8 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b
 Release:        1
-%define         releasedate 2010120700
-%define         version_internal 2.0b8pre
+%define         releasedate 2010121400
+%define         version_internal 2.0b8
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -71,6 +71,7 @@ Patch10:        toolkit-ui-lockdown.patch
 # ---
 Patch11:        mozilla-cpuid.patch
 Patch12:        mozilla-language.patch
+Patch13:        mozilla-firefox-sync.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -211,6 +212,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %endif
 %patch12 -p1
+%patch13 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

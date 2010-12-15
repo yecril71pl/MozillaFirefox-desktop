@@ -36,7 +36,7 @@ Version:        4.0b
 Provides:       web_browser
 Provides:       firefox = %{version}
 Release:        1
-%define         releasedate 2010120700
+%define         releasedate 2010121400
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -52,15 +52,16 @@ Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
 Source11:       firefox.1
+Patch0:         mozilla-firefox-sync.patch
 Patch1:         toolkit-download-folder.patch
 Patch2:         firefox-linkorder.patch
 Patch3:         firefox-browser-css.patch
 Patch4:         firefox-cross-desktop.patch
 Patch5:         firefox-appname.patch
 Patch6:         firefox-kde.patch
-Patch7:        firefox-ui-lockdown.patch
-Patch8:        firefox-no-sync-l10n.patch
-Patch9:        firefox-libxulsdk-locales.patch
+Patch7:         firefox-ui-lockdown.patch
+Patch8:         firefox-no-sync-l10n.patch
+Patch9:         firefox-libxulsdk-locales.patch
 Patch10:        firefox-no-default-ualocale.patch
 Patch11:        firefox-multilocale-chrome.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -151,6 +152,7 @@ This package provides upstream look and feel for MozillaFirefox.
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1

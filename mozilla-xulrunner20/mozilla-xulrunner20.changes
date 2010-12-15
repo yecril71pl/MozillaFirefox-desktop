@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Mon Dec  6 07:13:18 UTC 2010 - wr@rosenauer.org
+Wed Dec 15 07:48:50 UTC 2010 - wr@rosenauer.org
 
-- update to 2.0b8pre (20101207)
+- update to 2.0b8
 - removed obsolete patches
   * mozilla-jemalloc-symbols
   * mozilla-buildsymbols

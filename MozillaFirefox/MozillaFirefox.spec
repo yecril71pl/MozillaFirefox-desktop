@@ -211,6 +211,11 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
 EOF
 %endif
+%ifarch ppc ppc64 s390 s390x
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-ipc
+EOF
+%endif
 make -f client.mk build
 
 %install

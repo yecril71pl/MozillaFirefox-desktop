@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jan  3 17:35:46 CET 2011 - meissner@suse.de
+
+- Mirror ac_add_options --disable-ipc from xulrunner for PowerPC.
+
+-------------------------------------------------------------------
 Wed Dec 15 07:49:45 UTC 2010 - wr@rosenauer.org
 
 - update to version 4.0beta8

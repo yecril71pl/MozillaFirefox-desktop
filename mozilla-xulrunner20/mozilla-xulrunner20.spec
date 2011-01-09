@@ -1,8 +1,8 @@
 #
-# spec file for package mozilla-xulrunner20 (Version 2.0b)
+# spec file for package mozilla-xulrunner20 (Version 2.0b8)
 #
-# Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2010 Wolfgang Rosenauer
+# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2011 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -30,10 +30,10 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        2.0b
+Version:        2.0b8
 Release:        1
-%define         releasedate 2010121400
-%define         version_internal 2.0b8
+%define         releasedate 2011010500
+%define         version_internal 2.0b9pre
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -71,7 +71,6 @@ Patch10:        toolkit-ui-lockdown.patch
 # ---
 Patch11:        mozilla-cpuid.patch
 Patch12:        mozilla-language.patch
-Patch13:        mozilla-firefox-sync.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -212,7 +211,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

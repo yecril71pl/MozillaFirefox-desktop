@@ -1,8 +1,8 @@
 #
-# spec file for package MozillaFirefox (Version 4.0b)
+# spec file for package MozillaFirefox (Version 4.0b8)
 #
-# Copyright (c) 2010 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2010 Wolfgang Rosenauer
+# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2011 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -29,14 +29,14 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0b
+BuildRequires:  %{xulrunner}-devel = 2.0b8
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        4.0b
+Version:        4.0b8
 Provides:       web_browser
 Provides:       firefox = %{version}
 Release:        1
-%define         releasedate 2010121400
+%define         releasedate 2011010500
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -52,7 +52,6 @@ Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
 Source11:       firefox.1
-Patch0:         mozilla-firefox-sync.patch
 Patch1:         toolkit-download-folder.patch
 Patch2:         firefox-linkorder.patch
 Patch3:         firefox-browser-css.patch
@@ -152,7 +151,6 @@ This package provides upstream look and feel for MozillaFirefox.
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1

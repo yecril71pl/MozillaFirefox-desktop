@@ -12,7 +12,6 @@ mozilla-kde.patch
 mozilla-cpuid.patch
 #mozilla-cairo-lcd.patch
 mozilla-language.patch
-mozilla-firefox-sync.patch
 
 # Firefox patches
 firefox-linkorder.patch

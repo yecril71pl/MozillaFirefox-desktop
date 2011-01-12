@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Tue Jan 11 06:13:40 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b9
+- added x-scheme-handler for http and https to desktop file for
+  newer Gnome environments
+- fixed default browser check/set for GIO (bmo#611953)
+  (mozilla-shellservice.patch)
+- removed obsolete firefox-appname.patch (integrated into
+  shellservice patch)
+
+-------------------------------------------------------------------
 Mon Jan  3 17:35:46 CET 2011 - meissner@suse.de
 
 - Mirror ac_add_options --disable-ipc from xulrunner for PowerPC.

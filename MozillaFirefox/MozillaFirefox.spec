@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 4.0b8)
+# spec file for package MozillaFirefox (Version 4.0b9)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -29,14 +29,14 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0b8
+BuildRequires:  %{xulrunner}-devel = 2.0b9
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        4.0b8
+Version:        4.0b9
 Provides:       web_browser
 Provides:       firefox = %{version}
 Release:        1
-%define         releasedate 2011010500
+%define         releasedate 2011011000
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -56,13 +56,14 @@ Patch1:         toolkit-download-folder.patch
 Patch2:         firefox-linkorder.patch
 Patch3:         firefox-browser-css.patch
 Patch4:         firefox-cross-desktop.patch
-Patch5:         firefox-appname.patch
-Patch6:         firefox-kde.patch
-Patch7:         firefox-ui-lockdown.patch
-Patch8:         firefox-no-sync-l10n.patch
-Patch9:         firefox-libxulsdk-locales.patch
-Patch10:        firefox-no-default-ualocale.patch
-Patch11:        firefox-multilocale-chrome.patch
+Patch5:         firefox-kde.patch
+Patch6:         firefox-ui-lockdown.patch
+Patch7:         firefox-no-sync-l10n.patch
+Patch8:         firefox-libxulsdk-locales.patch
+Patch9:        firefox-no-default-ualocale.patch
+Patch10:        firefox-multilocale-chrome.patch
+Patch11:        firefox-shell-bmo624267.patch
+Patch12:        firefox-shellservice.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -155,17 +156,18 @@ cd $RPM_BUILD_DIR/mozilla
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %if %suse_version >= 1110
-%patch6 -p1
+%patch5 -p1
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-#%patch7 -p1
+#%patch6 -p1
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jan 11 06:11:33 UTC 2011 - wr@rosenauer.org
+
+- update to 2.0b9
+- fixed GIO support (bmo#611953) (mozilla-gio.patch)
+
+-------------------------------------------------------------------
 Wed Dec 15 07:48:50 UTC 2010 - wr@rosenauer.org
 
 - update to 2.0b8

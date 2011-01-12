@@ -12,15 +12,17 @@ mozilla-kde.patch
 mozilla-cpuid.patch
 #mozilla-cairo-lcd.patch
 mozilla-language.patch
+mozilla-gio.patch
 
 # Firefox patches
 firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
-firefox-appname.patch
 firefox-kde.patch
 #firefox-ui-lockdown.patch
 firefox-no-sync-l10n.patch
 firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
+firefox-shell-bmo624267.patch
+firefox-shellservice.patch

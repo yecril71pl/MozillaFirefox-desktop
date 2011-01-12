@@ -21,7 +21,8 @@ diff --git a/modules/libpref/src/Makefile.in b/modules/libpref/src/Makefile.in
 diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefService.cpp
 --- a/modules/libpref/src/nsPrefService.cpp
 +++ b/modules/libpref/src/nsPrefService.cpp
-@@ -57,16 +57,17 @@
+@@ -55,16 +55,17 @@
+ #include "nsIStringEnumerator.h"
  #include "nsIZipReader.h"
  #include "nsPrefBranch.h"
  #include "nsXPIDLString.h"
@@ -29,7 +30,6 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "nsCOMArray.h"
  #include "nsXPCOMCID.h"
  #include "nsAutoPtr.h"
- #include "nsThreadUtils.h"
 +#include "nsKDEUtils.h"
  
  #include "nsQuickSort.h"
@@ -39,7 +39,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -798,30 +799,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+@@ -772,30 +773,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
  }
  
  static nsresult pref_LoadPrefsInDirList(const char *listId)
@@ -89,7 +89,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  }
  
  //----------------------------------------------------------------------------------------
-@@ -852,28 +871,40 @@ static nsresult pref_InitDefaults()
+@@ -826,28 +845,40 @@ static nsresult pref_InitDefaults()
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MAC) || defined(XP_MACOSX)

@@ -83,10 +83,10 @@ Requires:       %{name}-branding >= 4.0
 %define progname firefox
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
-%if %suse_version < 1140
-%define desktop_file_name %{name}
-%else
+%if %suse_version > 1130
 %define desktop_file_name firefox
+%else
+%define desktop_file_name %{name}
 %endif
 ### build options
 %define branding 1

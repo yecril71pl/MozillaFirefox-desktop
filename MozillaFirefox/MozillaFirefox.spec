@@ -297,7 +297,7 @@ for size in 16 32 48; do
          $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
 %endif
-%suse_update_desktop_file %{desktop_file_name} Network WebBrowser X-Ximian-Main X-Ximian-Toplevel GTK
+%suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
 # excludes
 rm -f $RPM_BUILD_ROOT%{progdir}/updater.ini
 rm -f $RPM_BUILD_ROOT%{progdir}/removed-files

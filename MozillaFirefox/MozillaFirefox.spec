@@ -275,7 +275,6 @@ chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
 ln -sf ../..%{progdir}/%{progname}.sh $RPM_BUILD_ROOT%{_bindir}/%{progname}
 # desktop definition
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-%if %suse_version < 1140
 install -m 644 %{SOURCE1} \
    $RPM_BUILD_ROOT%{_datadir}/applications/%{desktop_file_name}.desktop
 # additional mime-types

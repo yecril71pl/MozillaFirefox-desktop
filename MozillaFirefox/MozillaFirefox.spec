@@ -320,22 +320,8 @@ rm -rf %{_tmppath}/translations.*
 if [ -f usr/bin/update-mime-database ] ; then
   usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
 fi
-%if %suse_version >= 1030
 if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
-fi
-%else
-if [ -f opt/gnome/bin/update-mime-database ] ; then
-  opt/gnome/bin/update-mime-database > /dev/null || :
-fi
-%endif
-# move plugins to new location
-if [ "$1" = "2" ]; then
-  if [ -d /opt/MozillaFirefox/%{_lib}/plugins ]; then
-    rm -rf /opt/MozillaFirefox/%{_lib}/plugins/libnullplugin.so
-    cp -fud /opt/MozillaFirefox/%{_lib}/plugins/* %{progdir}/plugins
-    rm -rf /opt/MozillaFirefox/%{_lib}/plugins
-  fi
 fi
 exit 0
 
@@ -343,15 +329,9 @@ exit 0
 if [ -f usr/bin/update-mime-database ] ; then
   usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
 fi
-%if %suse_version >= 1030
 if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
-%else
-if [ -f opt/gnome/bin/update-mime-database ] ; then
-  opt/gnome/bin/update-mime-database > /dev/null || :
-fi
-%endif
 
 %files
 %defattr(-,root,root)

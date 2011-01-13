@@ -83,6 +83,11 @@ Requires:       %{name}-branding >= 4.0
 %define progname firefox
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
+%if %suse_version < 1140
+%define desktop_file_name %{name}
+%else
+%define desktop_file_name firefox
+%endif
 ### build options
 %define branding 1
 %define localize 1
@@ -270,8 +275,9 @@ chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
 ln -sf ../..%{progdir}/%{progname}.sh $RPM_BUILD_ROOT%{_bindir}/%{progname}
 # desktop definition
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
+%if %suse_version < 1140
 install -m 644 %{SOURCE1} \
-   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
+   $RPM_BUILD_ROOT%{_datadir}/applications/%{desktop_file_name}.desktop
 # additional mime-types
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
@@ -291,7 +297,7 @@ for size in 16 32 48; do
          $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
 %endif
-%suse_update_desktop_file %{name} Network WebBrowser X-Ximian-Main X-Ximian-Toplevel GTK
+%suse_update_desktop_file %{desktop_file_name} Network WebBrowser X-Ximian-Main X-Ximian-Toplevel GTK
 # excludes
 rm -f $RPM_BUILD_ROOT%{progdir}/updater.ini
 rm -f $RPM_BUILD_ROOT%{progdir}/removed-files
@@ -373,7 +379,7 @@ fi
 %{progdir}/crashreporter-override.ini
 %endif
 %{progdir}/chrome.manifest
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/%{desktop_file_name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*
 %if %branding

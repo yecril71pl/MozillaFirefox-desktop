@@ -8,6 +8,10 @@ Tue Jan 11 06:13:40 UTC 2011 - wr@rosenauer.org
   (mozilla-shellservice.patch)
 - removed obsolete firefox-appname.patch (integrated into
   shellservice patch)
+- renamed desktop file to firefox.desktop for 11.4 and newer
+  (bnc#664211)
+- removed support for 10.3 and older from the spec file
+- removed obsolete "Ximian" categories from desktop file
 
 -------------------------------------------------------------------
 Mon Jan  3 17:35:46 CET 2011 - meissner@suse.de

@@ -20,7 +20,7 @@
 # Portions created by the Initial Developer are Copyright (C) 1998
 # the Initial Developer. All Rights Reserved.
 #
-# Contributor(s): 
+# Contributor(s):
 #    Wolfgang Rosenauer <wolfgang.rosenauer@suse.de>
 #                       <wr@rosenauer.org>
 #
@@ -38,7 +38,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-## 
+##
 ## Usage:
 ##
 ## $ mozilla [args]
@@ -59,7 +59,16 @@ MOZ_DIST_LIB="%PROGDIR"
 MOZ_APPNAME="%APPNAME"
 MOZ_PROGRAM="$MOZ_DIST_LIB/$MOZ_APPNAME"
 
-export MOZ_APP_LAUNCHER="$MOZ_DIST_LIB/$MOZ_APPNAME.sh"
+MOZ_APP_LAUNCHER="$MOZ_DIST_LIB/$MOZ_APPNAME.sh"
+if [ "$0" = "$MOZ_APP_LAUNCHER" ]; then
+  [ -h "/usr/bin/$MOZ_APPNAME" ] && \
+   _link=$(readlink -f "/usr/bin/$MOZ_APPNAME")
+  if [ "$_link" = "$MOZ_APP_LAUNCHER" ]; then
+    export MOZ_APP_LAUNCHER="/usr/bin/$MOZ_APPNAME"
+  fi
+else
+  export MOZ_APP_LAUNCHER="/usr/bin/$MOZ_APPNAME"
+fi
 
 mozilla_lib=`file $MOZ_PROGRAM`
 LIB=lib

@@ -231,7 +231,10 @@ rm dist/bin/defaults/preferences/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
-cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT/%{progdir}
+cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
+# remove some executable permissions
+find $RPM_BUILD_ROOT%{progdir} \
+     -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install additional locales
 %if %localize
@@ -316,21 +319,34 @@ rm -rf %{_tmppath}/translations.*
 
 %post
 # update mime and desktop database
+%if %suse_version > 1130
+%mime_database_post
+%desktop_database_post
+%icon_theme_cache_post
+%else
 if [ -f usr/bin/update-mime-database ] ; then
   usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
 fi
 if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
+%endif
 exit 0
 
 %postun
+%if %suse_version > 1130
+%icon_theme_cache_postun
+%desktop_database_postun
+%mime_database_postun
+%else
 if [ -f usr/bin/update-mime-database ] ; then
   usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
 fi
 if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
+%endif
+exit 0
 
 %files
 %defattr(-,root,root)

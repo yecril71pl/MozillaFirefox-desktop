@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 4.0b9)
+# spec file for package MozillaFirefox (Version 4.0b10)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -29,14 +29,14 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0b9
+BuildRequires:  %{xulrunner}-devel = 2.0b10
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        4.0b9
+Version:        4.0b10
 Provides:       web_browser
 Provides:       firefox = %{version}
 Release:        1
-%define         releasedate 2011011000
+%define         releasedate 2011012100
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -60,10 +60,9 @@ Patch5:         firefox-kde.patch
 Patch6:         firefox-ui-lockdown.patch
 Patch7:         firefox-no-sync-l10n.patch
 Patch8:         firefox-libxulsdk-locales.patch
-Patch9:        firefox-no-default-ualocale.patch
+Patch9:         firefox-no-default-ualocale.patch
 Patch10:        firefox-multilocale-chrome.patch
-Patch11:        firefox-shell-bmo624267.patch
-Patch12:        firefox-shellservice.patch
+Patch11:        firefox-shellservice.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -172,7 +171,6 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -203,7 +201,7 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
-ac_add_options --enable-update-channel=beta
+#ac_add_options --enable-update-channel=beta
 EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG

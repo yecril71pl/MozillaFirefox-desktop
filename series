@@ -9,7 +9,7 @@ mozilla-kde.patch
 #mozilla-gconf-backend.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
-mozilla-cpuid.patch
+#mozilla-cpuid.patch
 #mozilla-cairo-lcd.patch
 mozilla-language.patch
 mozilla-gio.patch
@@ -24,5 +24,4 @@ firefox-no-sync-l10n.patch
 firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
-firefox-shell-bmo624267.patch
 firefox-shellservice.patch

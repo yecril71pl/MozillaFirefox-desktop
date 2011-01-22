@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BRANCH="mozilla-central"
-RELEASE_TAG="FIREFOX_4_0b9_RELEASE"
-VERSION="2.0b9"
+RELEASE_TAG="FIREFOX_4_0b10_RELEASE"
+VERSION="2.0b10"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

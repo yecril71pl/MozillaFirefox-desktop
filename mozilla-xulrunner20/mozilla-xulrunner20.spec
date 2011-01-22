@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner20 (Version 2.0b9)
+# spec file for package mozilla-xulrunner20 (Version 2.0b10)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -30,10 +30,10 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        2.0b9
+Version:        2.0b10
 Release:        1
-%define         releasedate 2011011000
-%define         version_internal 2.0b9
+%define         releasedate 2011012100
+%define         version_internal 2.0b10
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -209,7 +209,7 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch9 -p1
 #%patch10 -p1
 %if %suse_version < 1120
-%patch11 -p1
+#%patch11 -p1
 %endif
 %patch12 -p1
 %patch13 -p1

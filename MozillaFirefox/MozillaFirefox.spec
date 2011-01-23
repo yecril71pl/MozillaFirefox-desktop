@@ -119,7 +119,7 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
+Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;cy;el;en_ZA;eo;et;eu;fy_NL;ga_IE;gd;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk)
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
@@ -201,7 +201,7 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
-#ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=beta
 EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG
@@ -240,7 +240,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US)
+   ja-JP-mac|en-US|bn-IN)
 	;;
    *)
    	pushd $RPM_BUILD_DIR/compare-locales
@@ -350,6 +350,7 @@ exit 0
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
+%dir %{progdir}/distribution/
 %{progdir}/chrome/browser.*
 %{progdir}/chrome/localized.manifest
 %{progdir}/chrome/nonlocalized.manifest
@@ -359,7 +360,7 @@ exit 0
 %exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
 %dir %{progdir}/extensions/
-%{progdir}/extensions/testpilot@labs.mozilla.com
+%{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
 %{progdir}/modules/
@@ -382,7 +383,6 @@ exit 0
 %doc %{_mandir}/man1/%{progname}.1.gz
 
 %if %localize
-
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{progdir}

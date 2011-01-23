@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sat Jan 22 22:21:52 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b10
+- removed obsolete firefox-shell-bmo624267.patch
+- testpilot moved to distribution/extensions
+- updated locale provides and removed bn-IN from locales
+
+-------------------------------------------------------------------
 Tue Jan 11 06:13:40 UTC 2011 - wr@rosenauer.org
 
 - update to version 4.0b9

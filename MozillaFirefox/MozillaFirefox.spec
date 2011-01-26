@@ -57,12 +57,13 @@ Patch2:         firefox-linkorder.patch
 Patch3:         firefox-browser-css.patch
 Patch4:         firefox-cross-desktop.patch
 Patch5:         firefox-kde.patch
-Patch6:         firefox-ui-lockdown.patch
-Patch7:         firefox-no-sync-l10n.patch
-Patch8:         firefox-libxulsdk-locales.patch
-Patch9:         firefox-no-default-ualocale.patch
-Patch10:        firefox-multilocale-chrome.patch
-Patch11:        firefox-shellservice.patch
+Patch6:         firefox-kde-114.patch
+Patch7:         firefox-ui-lockdown.patch
+Patch8:         firefox-no-sync-l10n.patch
+Patch9:         firefox-libxulsdk-locales.patch
+Patch10:         firefox-no-default-ualocale.patch
+Patch11:        firefox-multilocale-chrome.patch
+Patch12:        firefox-shellservice.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -165,12 +166,15 @@ cd $RPM_BUILD_DIR/mozilla
 # install kde.js
 install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
-#%patch6 -p1
-%patch7 -p1
+%if %suse_version >= 1140
+%patch6 -p1
+%endif
+#%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}

@@ -19,6 +19,7 @@ firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
 firefox-kde.patch
+firefox-kde-114.patch
 #firefox-ui-lockdown.patch
 firefox-no-sync-l10n.patch
 firefox-libxulsdk-locales.patch

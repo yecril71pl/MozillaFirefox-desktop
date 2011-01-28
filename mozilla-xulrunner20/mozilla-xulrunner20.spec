@@ -111,14 +111,14 @@ Thunderbird.
 
 %package -n mozilla-js20
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Summary:        Mozilla JS 1.8 engine
+Summary:        Mozilla JS 1.8.5 engine
 Group:          Productivity/Other
 
 %description -n mozilla-js20
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
-with only mild differences from the published standard. 
+with only mild differences from the published standard.
 
 
 %package devel
@@ -126,7 +126,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner/Gecko SDK 2.0
 Group:          Development/Libraries/Other
 %if %has_system_nspr
-Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel) 
+Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel)
 %endif
 %if %has_system_nss
 Requires:       mozilla-nss-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss-devel)

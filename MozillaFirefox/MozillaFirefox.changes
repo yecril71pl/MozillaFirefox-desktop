@@ -1,5 +1,11 @@
 -------------------------------------------------------------------
-Fri Jan 28 08:56 UTC 2011 - wr@rosenauer.org
+Wed Feb  2 19:16:15 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b11
+- rebased some patches
+
+-------------------------------------------------------------------
+Fri Jan 28 08:56:12 UTC 2011 - wr@rosenauer.org
 
 - set correct desktop file name within KDE for 11.4 and up
 - add devel package with macros for extensions (from lnussel@suse.de)

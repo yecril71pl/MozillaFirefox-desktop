@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Feb  2 19:15:14 UTC 2011 - wr@rosenauer.org
+
+- update to 2.0b11
+- fixed build check for missing return value (bmo#631155 )
+  (mozilla-cairo-return.patch)
+
+-------------------------------------------------------------------
 Sat Jan 22 21:56:16 UTC 2011 - wr@rosenauer.org
 
 - update to 2.0b10

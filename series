@@ -13,6 +13,7 @@ mozilla-kde.patch
 #mozilla-cairo-lcd.patch
 mozilla-language.patch
 mozilla-gio.patch
+mozilla-cairo-return.patch
 
 # Firefox patches
 firefox-linkorder.patch

@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 4.0b10)
+# spec file for package MozillaFirefox (Version 4.0b11)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -31,15 +31,15 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0b10
+BuildRequires:  %{xulrunner}-devel = 2.0b11
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        %{mainver}b10
+Version:        %{mainver}b11
 Release:        1
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
-%define         releasedate 2011012100
+%define         releasedate 2011020200
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

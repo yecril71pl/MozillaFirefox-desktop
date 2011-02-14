@@ -1,7 +1,13 @@
 -------------------------------------------------------------------
-Sun Jan 23 22:41:47 UTC 2011 - wr@rosenauer.org
+Mon Feb 14 23:01:26 UTC 2011 - wr@rosenauer.org
 
 - security update to 1.9.2.14 (build1)
+
+-------------------------------------------------------------------
+Mon Feb 14 16:03:16 UTC 2011 - pcerny@novell.com
+
+- use full path to the ntlm_auth binary
+  (mozilla-ntlm-full-path.patch)
 
 -------------------------------------------------------------------
 Thu Nov 25 09:25:50 UTC 2010 - wr@rosenauer.org

@@ -41,7 +41,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        1.9.2.14
 Release:        1
-%define         releasedate 2011012200
+%define         releasedate 2011020700
 %define         version_internal 1.9.2.14
 %define         apiversion 1.9.2
 %define         uaweight 192140
@@ -85,6 +85,7 @@ Patch15:        mozilla-ua-locale-pref.patch
 Patch16:        mozilla-locale.patch
 Patch17:        mozilla-gdk-pixbuf.patch
 Patch18:        mozilla-prlog.patch
+Patch19:        mozilla-ntlm-full-path.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -235,6 +236,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 %if %suse_version >= 1110

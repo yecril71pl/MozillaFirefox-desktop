@@ -15,6 +15,7 @@ mozilla-cairo-lcd.patch
 mozilla-locale.patch
 mozilla-gdk-pixbuf.patch
 mozilla-prlog.patch
+mozilla-ntlm-full-path.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

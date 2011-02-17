@@ -32,7 +32,7 @@ BuildRequires:  wireless-tools
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Version:        2.0b11
 Release:        1
-%define         releasedate 2011020200
+%define         releasedate 2011020300
 %define         version_internal 2.0b11
 %define         apiversion 2.0
 %define         uaweight 199900
@@ -73,6 +73,8 @@ Patch11:        mozilla-cpuid.patch
 Patch12:        mozilla-language.patch
 Patch13:        mozilla-gio.patch
 Patch14:        mozilla-cairo-return.patch
+Patch15:        mozilla-gio-launch-uri.patch
+Patch16:        mozilla-ntlm-full-path.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -215,6 +217,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

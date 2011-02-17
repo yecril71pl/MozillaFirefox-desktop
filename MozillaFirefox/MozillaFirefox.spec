@@ -220,7 +220,7 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
-ac_add_options --enable-update-channel=beta
+#ac_add_options --enable-update-channel=beta
 EOF
 %if 0%{?use_xulrunner}
 cat << EOF >> $MOZCONFIG
@@ -249,6 +249,7 @@ make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
+mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{progdir} \
      -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x

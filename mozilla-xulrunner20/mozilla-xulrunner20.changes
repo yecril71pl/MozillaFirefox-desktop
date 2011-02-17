@@ -1,5 +1,13 @@
 -------------------------------------------------------------------
-Wed Feb  2 19:15:14 UTC 2011 - wr@rosenauer.org
+Thu Feb 17 16:50:53 UTC 2011 - wr@rosenauer.org
+
+- fix GIO helper app launch (bnc#672903)
+  (mozilla-gio-launch-uri.patch)
+- call to the ntlm_auth helper fails (bmo#634334)
+  (mozilla-ntlm-full-path.patch from Petr Cerny)
+
+-------------------------------------------------------------------
+Fri Feb  4 09:11:40 UTC 2011 - wr@rosenauer.org
 
 - update to 2.0b11
 - fixed build check for missing return value (bmo#631155 )

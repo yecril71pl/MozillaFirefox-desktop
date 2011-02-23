@@ -1,12 +1,12 @@
 # HG changeset patch
-# Parent f81b405b9adebc56c3af5cfbf2f74cf01c22956b
+# Parent 7d47a19639db505e19282ac69c305c636d0fec18
 
 diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
 --- a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
 +++ b/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
-@@ -51,16 +51,18 @@
- #include <contentaction/contentaction.h>
+@@ -53,16 +53,18 @@
  #include "nsContentHandlerApp.h"
+ #endif
  #endif
  
  #include "nsMIMEInfoUnix.h"
@@ -23,7 +23,7 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
  #include "nsKDEUtils.h"
  #endif
  
-@@ -170,38 +172,47 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
+@@ -172,38 +174,47 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
      }
      if (!mDefaultApplication)
        return NS_ERROR_FILE_NOT_FOUND;

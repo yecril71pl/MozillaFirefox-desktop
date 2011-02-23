@@ -1,8 +1,11 @@
 -------------------------------------------------------------------
-Wed Feb  2 19:16:15 UTC 2011 - wr@rosenauer.org
+Fri Feb  4 09:32:50 UTC 2011 - wr@rosenauer.org
 
 - update to version 4.0b11
-- rebased some patches
+  * loads of bugfixes compared to last beta
+  * added "Do Not Track" option
+- rebased patches
+- disable testpilot
 
 -------------------------------------------------------------------
 Fri Jan 28 08:56:12 UTC 2011 - wr@rosenauer.org

@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner20 (Version 2.0b11)
+# spec file for package mozilla-xulrunner20
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner20
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel nss-shared-helper-devel
+BuildRequires:  Mesa-devel autoconf213 fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel nss-shared-helper-devel pkg-config python startup-notification-devel yasm zip
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1110
@@ -189,6 +189,7 @@ KDE installations for example.
 
 
 %if %crashreporter
+
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}
@@ -539,6 +540,7 @@ exit 0
 %endif
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -551,6 +553,7 @@ exit 0
 %endif
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

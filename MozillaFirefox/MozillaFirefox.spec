@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox (Version 4.0b11)
+# spec file for package MozillaFirefox (Version 4.0b12)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -31,15 +31,15 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0b11
+BuildRequires:  %{xulrunner}-devel = 2.0b12
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        %{mainver}b11
+Version:        %{mainver}b12
 Release:        1
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
-%define         releasedate 2011020300
+%define         releasedate 2011022200
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -136,7 +136,7 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;cy;el;en_ZA;eo;et;eu;fy_NL;ga_IE;gd;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk)
+Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Feb 23 07:51:12 UTC 2011 - wr@rosenauer.org
+
+- update to 2.0b12
+- update supported locale provides
+
+-------------------------------------------------------------------
 Thu Feb 17 16:50:53 UTC 2011 - wr@rosenauer.org
 
 - fix GIO helper app launch (bnc#672903)

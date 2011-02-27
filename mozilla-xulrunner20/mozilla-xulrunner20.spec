@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner20
+# spec file for package mozilla-xulrunner20 (Version 2.0b12)
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -20,7 +20,7 @@
 
 
 Name:           mozilla-xulrunner20
-BuildRequires:  Mesa-devel autoconf213 fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel nss-shared-helper-devel pkg-config python startup-notification-devel yasm zip
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel nss-shared-helper-devel
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1110
@@ -30,10 +30,10 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        2.0b11
+Version:        2.0b12
 Release:        1
-%define         releasedate 2011020300
-%define         version_internal 2.0b11
+%define         releasedate 2011022200
+%define         version_internal 2.0b12
 %define         apiversion 2.0
 %define         uaweight 199900
 Summary:        Mozilla Runtime Environment 2.0
@@ -163,7 +163,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 2.0
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;as;be;bg;bn_BD;bn_IN;cy;el;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gl;gu_IN;he;hi_IN;hr;id;is;ka;kk;kn;ku;lt;lv;mk;ml;mr;nn_NO;oc;or;pa_IN;rm;ro;si;sk;sl;sq;sr;ta;ta_LK;te;th;tr;uk;vi)
+Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -189,7 +189,6 @@ KDE installations for example.
 
 
 %if %crashreporter
-
 %package buildsymbols
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Breakpad buildsymbols for %{name}
@@ -358,7 +357,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US)
+   ja-JP-mac|en-US|bn-IN)
       ;;
    *)
       pushd $RPM_BUILD_DIR/compare-locales
@@ -540,7 +539,6 @@ exit 0
 %endif
 
 %if %localize
-
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -553,7 +551,6 @@ exit 0
 %endif
 
 %if %crashreporter
-
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

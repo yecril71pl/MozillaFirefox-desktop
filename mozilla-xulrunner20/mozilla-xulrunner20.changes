@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Feb 28 12:03:35 UTC 2011 - wr@rosenauer.org
+
+- set useragent buildid to branded Firefox default
+
+-------------------------------------------------------------------
 Wed Feb 23 07:51:12 UTC 2011 - wr@rosenauer.org
 
 - update to 2.0b12

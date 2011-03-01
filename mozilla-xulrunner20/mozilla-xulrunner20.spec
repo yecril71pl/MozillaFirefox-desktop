@@ -226,6 +226,9 @@ if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file
   exit 1
 fi
+source other-licenses/branding/firefox/configure.sh
+unset MOZ_APP_DISPLAYNAME
+export MOZ_UA_BUILDID
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"

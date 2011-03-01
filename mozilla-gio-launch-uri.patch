@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 7d47a19639db505e19282ac69c305c636d0fec18
+# Parent 689e53e965fdd8c76354a69fa936a3fd4f07a220
 
 diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
 --- a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
@@ -23,7 +23,7 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
  #include "nsKDEUtils.h"
  #endif
  
-@@ -172,38 +174,47 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
+@@ -172,38 +174,50 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
      }
      if (!mDefaultApplication)
        return NS_ERROR_FILE_NOT_FOUND;
@@ -35,9 +35,12 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
 +  nsCAutoString uriSpec;
 +  if (giovfs) {
 +    // nsGIOMimeApp->Launch wants a URI string instead of local file
-+    nsCOMPtr<nsIIOService> ioservice = do_GetService(NS_IOSERVICE_CONTRACTID);
++    nsresult rv;
++    nsCOMPtr<nsIIOService> ioservice = do_GetService(NS_IOSERVICE_CONTRACTID, &rv);
++    NS_ENSURE_SUCCESS(rv, rv);
 +    nsCOMPtr<nsIURI> uri;
-+    ioservice->NewFileURI(aFile, getter_AddRefs(uri));
++    rv = ioservice->NewFileURI(aFile, getter_AddRefs(uri));
++    NS_ENSURE_SUCCESS(rv, rv);
 +    uri->GetSpec(uriSpec);
 +  }
 +

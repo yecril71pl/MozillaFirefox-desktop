@@ -1,25 +1,13 @@
 -------------------------------------------------------------------
+Fri Mar  4 12:41:44 UTC 2011 - wr@rosenauer.org
+
+- update to 3.6.15
+  * fix a few regressions introduced with previous update
+
+-------------------------------------------------------------------
 Tue Feb 22 08:17:39 UTC 2011 - wr@rosenauer.org
 
 - security update to 3.6.14 (build3) (bnc#667155)
-  * MFSA 2011-01/CVE-2011-0053/CVE-2011-0062
-    Miscellaneous memory safety hazards (rv:1.9.2.14/ 1.9.1.17)
-  * MFSA 2011-02/CVE-2011-0051 (bmo#616659)
-    Recursive eval call causes confirm dialogs to evaluate to true
-  * MFSA 2011-03/CVE-2011-0055 (bmo#616009, bmo#619255)
-    Use-after-free error in JSON.stringify
-  * MFSA 2011-04/CVE-2011-0054 (bmo#615657)
-    Buffer overflow in JavaScript upvarMap
-  * MFSA 2011-05/CVE-2011-0056 (bmo#622015)
-    Buffer overflow in JavaScript atom map
-  * MFSA 2011-06/CVE-2011-0057 (bmo#626631)
-    Use-after-free error using Web Workers
-  * MFSA 2011-08/CVE-2010-1585 (bmo#562547)
-    ParanoidFragmentSink allows javascript: URLs in chrome documents
-  * MFSA 2011-09/CVE-2011-0061 (bmo#610601)
-    Crash caused by corrupted JPEG image
-  * MFSA 2011-10/CVE-2011-0059 (bmo#573873)
-    CSRF risk with plugins and 307 redirects
 
 -------------------------------------------------------------------
 Thu Nov 25 09:28:25 UTC 2010 - wr@rosenauer.org

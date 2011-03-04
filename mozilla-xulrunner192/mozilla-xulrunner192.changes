@@ -1,7 +1,13 @@
 -------------------------------------------------------------------
-Wed Mar  2 10:33:25 UTC 2011 - pcerny@novell.com 
+Fri Mar  4 12:05:39 UTC 2011 - wr@rosenauer.org
 
-- use full path to the ntlm_auth binary
+- update to 1.9.2.15
+  * fix a few regressions introduced with previous update
+
+-------------------------------------------------------------------
+Wed Mar  2 10:33:25 UTC 2011 - pcerny@novell.com
+
+- use full path to the ntlm_auth binary (bmo#634334)
   (mozilla-ntlm-full-path.patch)
 
 -------------------------------------------------------------------

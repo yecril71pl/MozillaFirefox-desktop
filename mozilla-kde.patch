@@ -2945,7 +2945,7 @@ new file mode 100644
 diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
 --- a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
 +++ b/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp
-@@ -50,28 +50,31 @@
+@@ -50,30 +50,33 @@
  #include <QString>
  #if (MOZ_ENABLE_CONTENTACTION)
  #include <contentaction/contentaction.h>
@@ -2957,6 +2957,8 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
 -#include "nsGNOMERegistry.h"
 +#include "nsCommonRegistry.h"
  #include "nsIGIOService.h"
+ #include "nsNetCID.h"
+ #include "nsIIOService.h"
  #include "nsIGnomeVFSService.h"
  #include "nsAutoPtr.h"
  #ifdef MOZ_ENABLE_DBUS
@@ -2979,7 +2981,7 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
        nsCAutoString spec;
        aURI->GetAsciiSpec(spec);
        if (hildon_uri_open(spec.get(), action, nsnull))
-@@ -93,22 +96,22 @@ nsMIMEInfoUnix::LoadUriInternal(nsIURI *
+@@ -95,22 +98,22 @@ nsMIMEInfoUnix::LoadUriInternal(nsIURI *
  
    return rv;
  }
@@ -3004,7 +3006,7 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
    if (*_retval)
      return NS_OK;
  
-@@ -151,32 +154,49 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
+@@ -153,16 +156,33 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
      ContentAction::Action::defaultActionForFile(uri, QString(mSchemeOrType.get()));
    if (action.isValid()) {
      action.trigger();
@@ -3031,12 +3033,14 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
 +  }
 +
    nsCOMPtr<nsIGIOService> giovfs = do_GetService(NS_GIOSERVICE_CONTRACTID);
-   nsCOMPtr<nsIGnomeVFSService> gnomevfs = do_GetService(NS_GNOMEVFSSERVICE_CONTRACTID);
+   nsCAutoString uriSpec;
    if (giovfs) {
-     nsCOMPtr<nsIGIOMimeApp> app;
-     if (NS_SUCCEEDED(giovfs->GetAppForMimeType(mSchemeOrType, getter_AddRefs(app))) && app)
-       return app->Launch(nativePath);
-   } else if (gnomevfs) {
+     // nsGIOMimeApp->Launch wants a URI string instead of local file
+     nsresult rv;
+     nsCOMPtr<nsIIOService> ioservice = do_GetService(NS_IOSERVICE_CONTRACTID, &rv);
+     NS_ENSURE_SUCCESS(rv, rv);
+     nsCOMPtr<nsIURI> uri;
+@@ -180,17 +200,17 @@ nsMIMEInfoUnix::LaunchDefaultWithFile(ns
      /* Fallback to GnomeVFS */
      nsCOMPtr<nsIGnomeVFSMimeApp> app;
      if (NS_SUCCEEDED(gnomevfs->GetAppForMimeType(mSchemeOrType, getter_AddRefs(app))) && app)
@@ -3053,7 +3057,7 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
      if (giovfs) {
        nsCOMPtr<nsIGIOMimeApp> app;
        if (NS_SUCCEEDED(giovfs->GetAppForMimeType(type, getter_AddRefs(app))) && app)
-         return app->Launch(nativePath);
+         return app->Launch(uriSpec);
      } else if (gnomevfs) {
 diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exthandler/unix/nsOSHelperAppService.cpp
 --- a/uriloader/exthandler/unix/nsOSHelperAppService.cpp

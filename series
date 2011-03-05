@@ -14,8 +14,8 @@ mozilla-kde.patch
 mozilla-language.patch
 mozilla-gio.patch
 mozilla-cairo-return.patch
-mozilla-gio-launch-uri.patch
 mozilla-ntlm-full-path.patch
+mozilla-gecko-version.patch
 
 # Firefox patches
 firefox-linkorder.patch

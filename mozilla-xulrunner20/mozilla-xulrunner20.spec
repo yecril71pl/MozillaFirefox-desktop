@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner20 (Version 2.0b12)
+# spec file for package mozilla-xulrunner20
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -30,12 +30,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        2.0b12
+Version:        2.0.0
 Release:        1
-%define         releasedate 2011022200
-%define         version_internal 2.0b12
+%define         releasedate 2011030400
+%define         version_internal 2.0.0
 %define         apiversion 2.0
-%define         uaweight 199900
+%define         uaweight 200000
 Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -73,8 +73,8 @@ Patch11:        mozilla-cpuid.patch
 Patch12:        mozilla-language.patch
 Patch13:        mozilla-gio.patch
 Patch14:        mozilla-cairo-return.patch
-Patch15:        mozilla-gio-launch-uri.patch
-Patch16:        mozilla-ntlm-full-path.patch
+Patch15:        mozilla-ntlm-full-path.patch
+Patch16:        mozilla-gecko-version.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -182,9 +182,9 @@ Requires:       %{name} = %{version}-%{release}
 Requires(post): coreutils
 
 %description gnome
-This subpackage contains the Necko Gnome-VFS and Gnome components which
-rely on the gnome-vfs subsystem to be installed. They are recommended
-for full desktop integration but not mandatory for small disk footprint
+This subpackage contains the Gnome components which rely on certain
+Gnome subsystems to be installed. They are recommended for full
+desktop integration but not mandatory for small disk footprint
 KDE installations for example.
 
 

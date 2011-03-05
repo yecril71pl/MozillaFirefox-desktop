@@ -1,7 +1,9 @@
 -------------------------------------------------------------------
-Mon Feb 28 12:03:35 UTC 2011 - wr@rosenauer.org
+Fri Mar  4 15:16:56 UTC 2011 - wr@rosenauer.org
 
+- update to 2.0rc1
 - set useragent buildid to branded Firefox default
+- removed upstreamed mozilla-gio-launch-uri.patch
 
 -------------------------------------------------------------------
 Wed Feb 23 07:51:12 UTC 2011 - wr@rosenauer.org

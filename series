@@ -10,7 +10,7 @@ mozilla-kde.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
 #mozilla-cpuid.patch
-#mozilla-cairo-lcd.patch
+mozilla-cairo-lcd.patch
 mozilla-language.patch
 mozilla-gio.patch
 mozilla-cairo-return.patch

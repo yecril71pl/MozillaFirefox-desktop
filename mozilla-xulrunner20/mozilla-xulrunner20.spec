@@ -64,17 +64,18 @@ Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-shared-nss-db.patch
 Patch7:         mozilla-kde.patch
+Patch8:         mozilla-cairo-lcd.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024
-Patch8:         mozilla-gconf-backend.patch
-Patch9:         gecko-lockdown.patch
-Patch10:        toolkit-ui-lockdown.patch
+Patch9:         mozilla-gconf-backend.patch
+Patch10:         gecko-lockdown.patch
+Patch11:        toolkit-ui-lockdown.patch
 # ---
-Patch11:        mozilla-cpuid.patch
-Patch12:        mozilla-language.patch
-Patch13:        mozilla-gio.patch
-Patch14:        mozilla-cairo-return.patch
-Patch15:        mozilla-ntlm-full-path.patch
-Patch16:        mozilla-gecko-version.patch
+Patch12:        mozilla-cpuid.patch
+Patch13:        mozilla-language.patch
+Patch14:        mozilla-gio.patch
+Patch15:        mozilla-cairo-return.patch
+Patch16:        mozilla-ntlm-full-path.patch
+Patch17:        mozilla-gecko-version.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -163,7 +164,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        Extra translations for XULRunner 2.0
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
+Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -208,17 +209,18 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#%patch8 -p1
+%patch8 -p1
 #%patch9 -p1
 #%patch10 -p1
-%if %suse_version < 1120
 #%patch11 -p1
+%if %suse_version < 1120
+#%patch12 -p1
 %endif
-%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

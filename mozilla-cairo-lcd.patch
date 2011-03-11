@@ -1,14 +1,11 @@
-# HG changeset patch
-# Parent 863b8585016fffd4755445eca723011717f4b930
-Subject: Add a Cairo LCD filter to use FreeType LCD colour filtering features
-References:
-https://bugzilla.mozilla.org/show_bug.cgi?id=404637
-http://bugs.freedesktop.org/show_bug.cgi?id=10301
+Description: Add a Cairo LCD filter to use FreeType LCD colour filtering features
+Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=404637
+Bug-Cairo: http://bugs.freedesktop.org/show_bug.cgi?id=10301
 
 diff --git a/config/system-headers b/config/system-headers
 --- a/config/system-headers
 +++ b/config/system-headers
-@@ -262,16 +262,17 @@ Font.h
+@@ -267,16 +267,17 @@ Font.h
  Fonts.h
  fp.h
  fpieee.h
@@ -25,7 +22,7 @@ diff --git a/config/system-headers b/config/system-headers
  freetype/t1tables.h
  fribidi/fribidi.h
  FSp_fopen.h
- fstream.h
+ fstream
 diff --git a/gfx/cairo/cairo/src/cairo-font-options.c b/gfx/cairo/cairo/src/cairo-font-options.c
 --- a/gfx/cairo/cairo/src/cairo-font-options.c
 +++ b/gfx/cairo/cairo/src/cairo-font-options.c
@@ -232,7 +229,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  /* This is the max number of FT_face objects we keep open at once
   */
  #define MAX_OPEN_FACES 10
-@@ -772,46 +794,309 @@ _cairo_ft_unscaled_font_set_scale (cairo
+@@ -774,45 +796,309 @@ _cairo_ft_unscaled_font_set_scale (cairo
  					unscaled->face->available_sizes[best_i].height);
  	if (error)
  	    return _cairo_error (CAIRO_STATUS_NO_MEMORY);
@@ -549,7 +546,6 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
      int width, height, stride;
      unsigned char *data;
      int format = CAIRO_FORMAT_A8;
--    cairo_bool_t subpixel = FALSE;
 +    cairo_image_surface_t *image;
  
      width = bitmap->width;
@@ -559,7 +555,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  	*surface = (cairo_image_surface_t *)
  	    cairo_image_surface_create_for_data (NULL, format, 0, 0, 0);
  	return (*surface)->base.status;
-@@ -858,154 +1143,63 @@ _get_bitmap_surface (FT_Bitmap		     *bi
+@@ -859,150 +1145,63 @@ _get_bitmap_surface (FT_Bitmap		     *bi
  	}
  #endif
  	format = CAIRO_FORMAT_A1;
@@ -688,7 +684,6 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
 -	    data = data_rgba;
 -	    stride = stride_rgba;
  	    format = CAIRO_FORMAT_ARGB32;
--	    subpixel = TRUE;
 -	    break;
 -	}
  	}
@@ -714,14 +709,11 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  	return (*surface)->base.status;
      }
  
--    if (subpixel)
--	pixman_image_set_component_alpha ((*surface)->pixman_image, TRUE);
--
 -    _cairo_image_surface_assume_ownership_of_data ((*surface));
 +    if (font_options->antialias == CAIRO_ANTIALIAS_SUBPIXEL)
 +	pixman_image_set_component_alpha (image->pixman_image, TRUE);
 +
-+    _cairo_image_surface_assume_ownership_of_data (image);
++    _cairo_image_surface_assume_ownership_of_data ((image));
  
      _cairo_debug_check_image_surface_is_defined (&(*surface)->base);
  
@@ -730,7 +722,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  
  /* Converts an outline FT_GlyphSlot into an image
   *
-@@ -1022,129 +1216,169 @@ _get_bitmap_surface (FT_Bitmap		     *bi
+@@ -1019,129 +1218,169 @@ _get_bitmap_surface (FT_Bitmap		     *bi
   * when we add subpixel support. If so, we may want to eliminate
   * this version of the code path entirely.
   */
@@ -967,7 +959,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  _render_glyph_bitmap (FT_Face		      face,
  		      cairo_font_options_t   *font_options,
  		      cairo_image_surface_t **surface)
-@@ -1354,16 +1588,17 @@ _get_pattern_ft_options (FcPattern *patt
+@@ -1350,16 +1589,17 @@ _get_pattern_ft_options (FcPattern *patt
  
      /* disable antialiasing if requested */
      if (FcPatternGetBool (pattern,
@@ -985,7 +977,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  
  	if (FcPatternGetInteger (pattern,
  				 FC_RGBA, 0, &rgba) != FcResultMatch)
-@@ -1389,16 +1624,35 @@ _get_pattern_ft_options (FcPattern *patt
+@@ -1385,16 +1625,35 @@ _get_pattern_ft_options (FcPattern *patt
  	    break;
  	}
  
@@ -1013,15 +1005,15 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
 +	    }
 +	}
 +
- #ifdef FC_HINT_STYLE    
- 	if (FcPatternGetInteger (pattern, 
+ #ifdef FC_HINT_STYLE
+ 	if (FcPatternGetInteger (pattern,
  				 FC_HINT_STYLE, 0, &hintstyle) != FcResultMatch)
  	    hintstyle = FC_HINT_FULL;
  
  	if (!hinting)
  	    hintstyle = FC_HINT_NONE;
  
-@@ -1490,16 +1744,22 @@ _cairo_ft_options_merge (cairo_ft_option
+@@ -1486,16 +1745,22 @@ _cairo_ft_options_merge (cairo_ft_option
      }
  
      if (options->base.hint_style == CAIRO_HINT_STYLE_DEFAULT)
@@ -1044,7 +1036,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
  	load_flags |= FT_LOAD_MONOCHROME;
      } else {
  	switch (options->base.hint_style) {
-@@ -1513,21 +1773,21 @@ _cairo_ft_options_merge (cairo_ft_option
+@@ -1509,21 +1774,21 @@ _cairo_ft_options_merge (cairo_ft_option
  	    break;
  	case CAIRO_HINT_STYLE_FULL:
  	case CAIRO_HINT_STYLE_DEFAULT:
@@ -1068,7 +1060,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
      }
  
      options->load_flags = load_flags | load_target;
-@@ -2510,16 +2770,44 @@ _cairo_ft_font_options_substitute (const
+@@ -2512,16 +2777,44 @@ _cairo_ft_font_options_substitute (const
  		rgba = FC_RGBA_NONE;
  	    }
  
@@ -1116,13 +1108,13 @@ diff --git a/gfx/cairo/cairo/src/cairo-ft-font.c b/gfx/cairo/cairo/src/cairo-ft-
 diff --git a/gfx/cairo/cairo/src/cairo-surface.c b/gfx/cairo/cairo/src/cairo-surface.c
 --- a/gfx/cairo/cairo/src/cairo-surface.c
 +++ b/gfx/cairo/cairo/src/cairo-surface.c
-@@ -60,16 +60,17 @@ const cairo_surface_t name = {					\
-     0.0,				/* y_fallback_resolution */	\
-     NULL,				/* clip */		\
-     0,					/* next_clip_serial */	\
-     0,					/* current_clip_serial */	\
-     FALSE,				/* is_snapshot */	\
-     FALSE,				/* has_font_options */	\
+@@ -68,16 +68,17 @@ const cairo_surface_t name = {					\
+     NULL,				/* snapshot_detach */	\
+     { 0,	/* size */					\
+       0,	/* num_elements */				\
+       0,	/* element_size */				\
+       NULL,	/* elements */					\
+     },					/* snapshots */		\
      { CAIRO_ANTIALIAS_DEFAULT,		/* antialias */		\
        CAIRO_SUBPIXEL_ORDER_DEFAULT,	/* subpixel_order */	\
 +      CAIRO_LCD_FILTER_DEFAULT,		/* lcd_filter */	\
@@ -1131,13 +1123,13 @@ diff --git a/gfx/cairo/cairo/src/cairo-surface.c b/gfx/cairo/cairo/src/cairo-sur
      }					/* font_options */	\
  }
  
+ /* XXX error object! */
+ 
  static DEFINE_NIL_SURFACE(CAIRO_STATUS_NO_MEMORY, _cairo_surface_nil);
- static DEFINE_NIL_SURFACE(CAIRO_STATUS_INVALID_CONTENT, _cairo_surface_nil_invalid_content);
- static DEFINE_NIL_SURFACE(CAIRO_STATUS_INVALID_FORMAT, _cairo_surface_nil_invalid_format);
 diff --git a/gfx/cairo/cairo/src/cairo-types-private.h b/gfx/cairo/cairo/src/cairo-types-private.h
 --- a/gfx/cairo/cairo/src/cairo-types-private.h
 +++ b/gfx/cairo/cairo/src/cairo-types-private.h
-@@ -110,19 +110,45 @@ struct _cairo_array {
+@@ -112,19 +112,45 @@ struct _cairo_array {
      unsigned int size;
      unsigned int num_elements;
      unsigned int element_size;
@@ -1179,17 +1171,41 @@ diff --git a/gfx/cairo/cairo/src/cairo-types-private.h b/gfx/cairo/cairo/src/cai
      cairo_hint_metrics_t hint_metrics;
  };
  
- typedef cairo_bool_t (*cairo_cache_predicate_func_t) (const void *entry);
- 
- struct _cairo_cache {
-     cairo_hash_table_t *hash_table;
+ /* XXX: Right now, the _cairo_color structure puts unpremultiplied
+    color in the doubles and premultiplied color in the shorts. Yes,
+    this is crazy insane, (but at least we don't export this
+    madness). I'm still working on a cleaner API, but in the meantime,
 diff --git a/gfx/cairo/cairo/src/cairo-xlib-screen.c b/gfx/cairo/cairo/src/cairo-xlib-screen.c
 --- a/gfx/cairo/cairo/src/cairo-xlib-screen.c
 +++ b/gfx/cairo/cairo/src/cairo-xlib-screen.c
-@@ -145,23 +145,32 @@ get_integer_default (Display    *dpy,
+@@ -56,16 +56,23 @@
+ 
+ #include "cairo-xlib-private.h"
+ #include "cairo-xlib-xrender-private.h"
+ 
+ #include "cairo-xlib-surface-private.h"
+ 
+ #include <fontconfig/fontconfig.h>
+ 
++#ifndef FC_LCD_NONE
++#define FC_LCD_NONE	0
++#define FC_LCD_DEFAULT	1
++#define FC_LCD_LIGHT	2
++#define FC_LCD_LEGACY	3
++#endif
++
+ static int
+ parse_boolean (const char *v)
+ {
+     char c0, c1;
+ 
+     c0 = *v;
+     if (c0 == 't' || c0 == 'T' || c0 == 'y' || c0 == 'Y' || c0 == '1')
+ 	return 1;
+@@ -145,23 +152,32 @@ get_integer_default (Display    *dpy,
  static void
  _cairo_xlib_init_screen_font_options (Display *dpy,
- 				      cairo_xlib_screen_info_t *info)
+ 				      cairo_xlib_screen_t *info)
  {
      cairo_bool_t xft_hinting;
      cairo_bool_t xft_antialias;
@@ -1219,7 +1235,7 @@ diff --git a/gfx/cairo/cairo/src/cairo-xlib-screen.c b/gfx/cairo/cairo/src/cairo
  
      if (!get_integer_default (dpy, "rgba", &xft_rgba))
      {
-@@ -234,28 +243,47 @@ _cairo_xlib_init_screen_font_options (Di
+@@ -234,28 +250,47 @@ _cairo_xlib_init_screen_font_options (Di
  	subpixel_order = CAIRO_SUBPIXEL_ORDER_VBGR;
  	break;
      case FC_RGBA_UNKNOWN:
@@ -1262,15 +1278,15 @@ diff --git a/gfx/cairo/cairo/src/cairo-xlib-screen.c b/gfx/cairo/cairo/src/cairo
      cairo_font_options_set_hint_metrics (&info->font_options, CAIRO_HINT_METRICS_ON);
  }
  
- cairo_xlib_screen_info_t *
- _cairo_xlib_screen_info_reference (cairo_xlib_screen_info_t *info)
+ cairo_xlib_screen_t *
+ _cairo_xlib_screen_reference (cairo_xlib_screen_t *info)
  {
      assert (CAIRO_REFERENCE_COUNT_HAS_REFERENCE (&info->ref_count));
  
 diff --git a/gfx/cairo/cairo/src/cairoint.h b/gfx/cairo/cairo/src/cairoint.h
 --- a/gfx/cairo/cairo/src/cairoint.h
 +++ b/gfx/cairo/cairo/src/cairoint.h
-@@ -1444,16 +1444,23 @@ extern const cairo_private uint16_t _cai
+@@ -1400,16 +1400,23 @@ extern const cairo_private uint16_t _cai
  
  cairo_private void
  _cairo_font_options_init_default (cairo_font_options_t *options);
@@ -1294,3 +1310,24 @@ diff --git a/gfx/cairo/cairo/src/cairoint.h b/gfx/cairo/cairo/src/cairoint.h
  cairo_private unsigned char *
  _cairo_lzw_compress (unsigned char *data, unsigned long *size_in_out);
  
+diff --git a/js/src/config/system-headers b/js/src/config/system-headers
+--- a/js/src/config/system-headers
++++ b/js/src/config/system-headers
+@@ -267,16 +267,17 @@ Font.h
+ Fonts.h
+ fp.h
+ fpieee.h
+ frame/log.h
+ frame/req.h
+ freetype/freetype.h
+ freetype/ftcache.h
+ freetype/ftglyph.h
++freetype/ftlcdfil.h
+ freetype/ftsynth.h
+ freetype/ftoutln.h
+ freetype/ttnameid.h
+ freetype/tttables.h
+ freetype/t1tables.h
+ fribidi/fribidi.h
+ FSp_fopen.h
+ fstream

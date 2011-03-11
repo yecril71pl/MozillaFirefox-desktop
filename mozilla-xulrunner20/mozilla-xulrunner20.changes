@@ -2,8 +2,11 @@
 Fri Mar  4 15:16:56 UTC 2011 - wr@rosenauer.org
 
 - update to 2.0rc1
+  * removed upstreamed mozilla-gio-launch-uri.patch
+  * updated supported locale list
 - set useragent buildid to branded Firefox default
-- removed upstreamed mozilla-gio-launch-uri.patch
+- apply mozilla-cairo-lcd.patch for internal cairo to fix
+  font smoothing in combination with freetype
 
 -------------------------------------------------------------------
 Wed Feb 23 07:51:12 UTC 2011 - wr@rosenauer.org

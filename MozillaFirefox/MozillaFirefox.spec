@@ -337,10 +337,10 @@ cat <<'FIN' >%{buildroot}/etc/rpm/macros.%{progname}
 %%firefox_major              %{major}
 %%firefox_version            %{version}
 %%firefox_mainver            %{mainver}
-%%firefox_mozillapath        %{progdir}
+%%firefox_mozillapath        %%{_libdir}/%{progname}
 %%firefox_xulrunner          %{xulrunner}
 %%firefox_xulrunner_version  %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
-%%firefox_pluginsdir         %{_libdir}/browser-plugins
+%%firefox_pluginsdir         %%{_libdir}/browser-plugins
 %%firefox_appid              \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %%firefox_extdir             %%(if [ "%%_target_cpu" = "noarch" ]; then echo %%{_datadir}/mozilla/extensions/%%{firefox_appid}; else echo %%{_libdir}/mozilla/extensions/%%{firefox_appid}; fi)
 

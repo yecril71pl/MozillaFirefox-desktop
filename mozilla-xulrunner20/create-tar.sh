@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH="releases/mozilla-2.0"
-RELEASE_TAG="FIREFOX_4_0rc1_RELEASE"
+RELEASE_TAG="FIREFOX_4_0rc2_RELEASE"
 VERSION="2.0.0"
 
 # mozilla

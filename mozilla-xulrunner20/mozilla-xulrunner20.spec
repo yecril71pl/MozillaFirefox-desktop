@@ -102,7 +102,7 @@ BuildRequires:  mozilla-nspr-devel
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 %endif
 %if %has_system_nss
-BuildRequires:  mozilla-nss-devel >= 3.12.6
+BuildRequires:  mozilla-nss-devel >= 3.12.8
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
 Recommends:     %{name}-gnome

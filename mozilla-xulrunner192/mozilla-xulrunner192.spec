@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner192 (Version 1.9.2.15)
+# spec file for package mozilla-xulrunner192
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.15
+Version:        1.9.2.16
 Release:        1
-%define         releasedate 2011030300
-%define         version_internal 1.9.2.15
+%define         releasedate 2011031900
+%define         version_internal 1.9.2.16
 %define         apiversion 1.9.2
-%define         uaweight 192150
+%define         uaweight 192160
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -136,7 +136,7 @@ Group:          Productivity/Other
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
-with only mild differences from the published standard. 
+with only mild differences from the published standard.
 
 
 %package devel
@@ -144,7 +144,7 @@ License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
 Summary:        XULRunner/Gecko SDK 1.9.2
 Group:          Development/Libraries/Other
 %if %has_system_nspr
-Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel) 
+Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel)
 %endif
 %if %has_system_nss
 Requires:       mozilla-nss-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss-devel)

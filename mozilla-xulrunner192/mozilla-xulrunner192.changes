@@ -1,8 +1,14 @@
 -------------------------------------------------------------------
+Sat Mar 19 22:11:41 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.16 (bnc#680771)
+
+-------------------------------------------------------------------
 Fri Mar  4 12:05:39 UTC 2011 - wr@rosenauer.org
 
 - update to 1.9.2.15
-  * fix a few regressions introduced with previous update
+  * fix a regression introduced with previous update affecting
+    Java applet integration (bmo#629030)
 
 -------------------------------------------------------------------
 Wed Mar  2 10:33:25 UTC 2011 - pcerny@novell.com

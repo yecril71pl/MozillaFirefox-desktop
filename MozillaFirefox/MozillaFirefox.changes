@@ -1,7 +1,12 @@
 -------------------------------------------------------------------
+Sat Mar 19 22:13:40 UTC 2011 - wr@rosenauer.org
+
+- security update to 3.6.16 (bnc#680771)
+
+-------------------------------------------------------------------
 Fri Mar  4 12:45:50 UTC 2011 - wr@rosenauer.org
 
-- update to 1.9.2.15
+- update to 3.6.15
   * fix a few regressions introduced with previous update
 
 -------------------------------------------------------------------

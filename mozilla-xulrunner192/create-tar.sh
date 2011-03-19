@@ -1,7 +1,7 @@
 #!/bin/bash
 
-RELEASE_TAG="FIREFOX_3_6_15_RELEASE"
-VERSION="1.9.2.15"
+RELEASE_TAG="FIREFOX_3_6_16_RELEASE"
+VERSION="1.9.2.16"
 
 # mozilla
 hg clone http://hg.mozilla.org/releases/mozilla-1.9.2 mozilla

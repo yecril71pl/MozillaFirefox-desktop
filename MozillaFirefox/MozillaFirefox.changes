@@ -1,13 +1,22 @@
 -------------------------------------------------------------------
+Fri Mar 25 13:33:17 UTC 2011 - lnussel@suse.de
+
+- add macros file similar to Mandriva in order to simplify
+  packaging extensions
+
+-------------------------------------------------------------------
 Sat Mar 19 22:13:40 UTC 2011 - wr@rosenauer.org
 
 - security update to 3.6.16 (bnc#680771)
+  * MFSA 2011-11 (bmo#642395)
+    Update HTTPS certificate blacklist
 
 -------------------------------------------------------------------
 Fri Mar  4 12:45:50 UTC 2011 - wr@rosenauer.org
 
 - update to 3.6.15
-  * fix a few regressions introduced with previous update
+  * fix a regression introduced with previous update affecting
+    Java applet integration (bmo#629030)
 
 -------------------------------------------------------------------
 Tue Feb 22 08:17:39 UTC 2011 - wr@rosenauer.org

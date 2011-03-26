@@ -18,6 +18,8 @@
 
 # norootforbuild
 
+%define major 3
+%define mainver %major.6
 
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
@@ -32,10 +34,12 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        3.6.16
-Provides:       web_browser
-Provides:       firefox = %{version}
+Version:        %mainver.16
 Release:        1
+Provides:       web_browser
+Provides:       firefox = %{mainver}
+Provides:       firefox = %{version}-%{release}
+Provides:       firefox = %{version}
 %define         releasedate 2011031900
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
@@ -52,6 +56,7 @@ Source8:        firefox-mimeinfo.xml
 Source9:        firefox-lockdown.js
 Source16:       firefox.1
 Source17:       firefox-suse-default-prefs.js
+Source18:       mozilla-get-app-id
 Patch1:         firefox-libxul-sdk.patch
 Patch2:         firefox-credits.patch
 Patch3:         toolkit-download-folder.patch
@@ -73,6 +78,7 @@ Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEA
 Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %endif
 Requires:       %{name}-branding >= 3.5
+%define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
@@ -99,9 +105,19 @@ Mozilla Firefox is a standalone web browser, designed for standards
 compliance and performance.  Its functionality can be enhanced via a
 plethora of extensions.
 
+%package devel
+License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+Summary:        Devel package for Firefox
+Group:          Development/Tools/Other
+Provides:       firefox-devel = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires:       perl(XML::Simple)
+Requires:       perl(Archive::Zip)
+
+%description devel
+Development files for Firefox to make packaging of addons easier.
 
 %if %localize
-
 %package translations-common
 Summary:        Common translations for MozillaFirefox
 License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
@@ -276,6 +292,8 @@ EOF
 ##########
 # ADDONS
 #
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/extensions/%{firefox_appid}
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/mozilla/extensions/%{firefox_appid}
 mkdir -p $RPM_BUILD_ROOT/usr/share/pixmaps/
 ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}.png
 ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
@@ -294,6 +312,29 @@ rm -f $RPM_BUILD_ROOT%{progdir}/README.txt
 rm -f $RPM_BUILD_ROOT%{progdir}/old-homepage-default.properties
 rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
 rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
+# devel
+mkdir -p %{buildroot}%{_bindir}
+install -m 755 %SOURCE18 %{buildroot}%{_bindir}
+# inspired by mandriva
+mkdir -p %{buildroot}/etc/rpm
+cat <<'FIN' >%{buildroot}/etc/rpm/macros.%{progname}
+# Macros from %{name} package
+%%firefox_major              %{major}
+%%firefox_version            %{version}
+%%firefox_mainver            %{mainver}
+%%firefox_mozillapath        %%{_libdir}/%{progname}
+%%firefox_xulrunner          %{xulrunner}
+%%firefox_xulrunner_version  %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
+%%firefox_pluginsdir         %%{_libdir}/browser-plugins
+%%firefox_appid              \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
+%%firefox_extdir             %%(if [ "%%_target_cpu" = "noarch" ]; then echo %%{_datadir}/mozilla/extensions/%%{firefox_appid}; else echo %%{_libdir}/mozilla/extensions/%%{firefox_appid}; fi)
+
+%%firefox_ext_install() \
+	extdir="%%{buildroot}%%{firefox_extdir}/`mozilla-get-app-id '%%1'`" \
+	mkdir -p "$extdir" \
+	%%{__unzip} -q -d "$extdir" "%%1" \
+	%%{nil}
+FIN
 # fdupes
 %if %suse_version > 1020
 %fdupes $RPM_BUILD_ROOT%{progdir}
@@ -356,6 +397,12 @@ fi
 %{progdir}/components/
 %exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
+%dir %{_datadir}/mozilla
+%dir %{_datadir}/mozilla/extensions
+%dir %{_datadir}/mozilla/extensions/%{firefox_appid}
+%dir %{_libdir}/mozilla
+%dir %{_libdir}/mozilla/extensions
+%dir %{_libdir}/mozilla/extensions/%{firefox_appid}
 %{progdir}/extensions/
 %{progdir}/icons/
 %{progdir}/searchplugins/
@@ -395,5 +442,10 @@ fi
 %dir %{progdir}/defaults/
 %{progdir}/browserconfig.properties  
 %{progdir}/defaults/profile/bookmarks.html
+
+%files devel
+%defattr(-,root,root)  
+%{_bindir}/mozilla-get-app-id
+/etc/rpm/macros.%{progname}
 
 %changelog

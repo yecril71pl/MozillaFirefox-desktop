@@ -2,6 +2,8 @@
 Sat Mar 19 22:11:41 UTC 2011 - wr@rosenauer.org
 
 - security update to 1.9.2.16 (bnc#680771)
+  * MFSA 2011-11
+    Update HTTPS certificate blacklist (bmo#642395)
 
 -------------------------------------------------------------------
 Fri Mar  4 12:05:39 UTC 2011 - wr@rosenauer.org

@@ -1,7 +1,12 @@
 -------------------------------------------------------------------
+Mon Mar 28 16:25:25 UTC 2011 - llunak@novell.com
+
+- fix 'save as' with KDE integration (bnc#557598)
+
+-------------------------------------------------------------------
 Fri Mar 18 08:48:12 UTC 2011 - wr@rosenauer.org
 
-- update to 2.0rc2
+- update to 2.0 (rc2)
   * removed upstreamed mozilla-gio-launch-uri.patch
   * updated supported locale list
 - set useragent buildid to branded Firefox default

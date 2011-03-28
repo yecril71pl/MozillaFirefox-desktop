@@ -16,6 +16,7 @@ mozilla-gio.patch
 mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch
 mozilla-gecko-version.patch
+mozilla-gcc46.patch
 
 # Firefox patches
 firefox-linkorder.patch

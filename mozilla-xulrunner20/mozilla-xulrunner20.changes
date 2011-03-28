@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Mon Mar 28 19:21:46 UTC 2011 - idoenmez@novell.com
+
+- Add mozilla-gcc46.patch: fix compilation with gcc 4.6
+  See the following bug reports:
+    https://bugzilla.mozilla.org/show_bug.cgi?id=623116
+    https://bugzilla.mozilla.org/show_bug.cgi?id=623123
+    https://bugzilla.mozilla.org/show_bug.cgi?id=623126
+    https://bugzilla.mozilla.org/show_bug.cgi?id=628371
+
+-------------------------------------------------------------------
 Mon Mar 28 16:25:25 UTC 2011 - llunak@novell.com
 
 - fix 'save as' with KDE integration (bnc#557598)

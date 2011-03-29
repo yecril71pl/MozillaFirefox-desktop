@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar 29 11:55:53 UTC 2011 - cfarrell@novell.com
+
+- license update: MPLv1.1 or GPLv2+ or LGPLv2+
+  Sync licenses with Fedora. MPL does not state ^or later^
+
+-------------------------------------------------------------------
 Mon Mar 28 19:21:46 UTC 2011 - idoenmez@novell.com
 
 - Add mozilla-gcc46.patch: fix compilation with gcc 4.6

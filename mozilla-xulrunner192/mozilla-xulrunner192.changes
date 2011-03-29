@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Mar 28 16:25:25 UTC 2011 - llunak@novell.com
+
+- fix 'save as' with KDE integration (bnc#557598)
+
+-------------------------------------------------------------------
 Sat Mar 19 22:11:41 UTC 2011 - wr@rosenauer.org
 
 - security update to 1.9.2.16 (bnc#680771)

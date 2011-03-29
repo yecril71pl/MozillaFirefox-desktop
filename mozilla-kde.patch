@@ -2616,7 +2616,7 @@ diff --git a/toolkit/xre/nsKDEUtils.cpp b/toolkit/xre/nsKDEUtils.cpp
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/xre/nsKDEUtils.cpp
-@@ -0,0 +1,334 @@
+@@ -0,0 +1,328 @@
 +/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 +/* ***** BEGIN LICENSE BLOCK *****
 + * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -2816,12 +2816,6 @@ new file mode 100644
 +    nsCStringArray* output )
 +    {
 +    if( !startHelper())
-+        return false;
-+    // if Gtk has meanwhile gotten a grab (bnc#555202, somehow the file dialog
-+    // is called with a delay), then do not do anything, as this app would keep
-+    // the grabs but block waiting for the helper, which would be unable to do
-+    // anything because of the grab
-+    if( blockUi && gdk_pointer_is_grabbed())
 +        return false;
 +    feedCommand( command );
 +    // do not store the data in 'this' but in extra structure, just in case there

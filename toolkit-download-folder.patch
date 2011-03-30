@@ -15,9 +15,9 @@ diff --git a/browser/components/preferences/main.js b/browser/components/prefere
        iconUrlSpec = fph.getURLSpecFromFile(this._indexToFolder(1));
      } else {
        // 'Desktop'
-diff --git a/toolkit/components/downloads/src/nsDownloadManager.cpp b/toolkit/components/downloads/src/nsDownloadManager.cpp
---- a/toolkit/components/downloads/src/nsDownloadManager.cpp
-+++ b/toolkit/components/downloads/src/nsDownloadManager.cpp
+diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/components/downloads/nsDownloadManager.cpp
+--- a/toolkit/components/downloads/nsDownloadManager.cpp
++++ b/toolkit/components/downloads/nsDownloadManager.cpp
 @@ -1269,8 +1269,10 @@ nsDownloadManager::GetDefaultDownloadsDi
    // XDG user dir spec, with a fallback to Home/Downloads
  

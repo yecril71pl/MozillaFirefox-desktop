@@ -126,22 +126,23 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
    rv = pref_LoadPrefsInDirList(NS_APP_PREFS_DEFAULTS_DIR_LIST);
    NS_ENSURE_SUCCESS(rv, rv);
  
-diff --git a/toolkit/components/downloads/src/Makefile.in b/toolkit/components/downloads/src/Makefile.in
---- a/toolkit/components/downloads/src/Makefile.in
-+++ b/toolkit/components/downloads/src/Makefile.in
-@@ -71,8 +71,9 @@ EXTRA_COMPONENTS = \
-   nsDownloadManagerUI.manifest \
-   $(NULL)
+diff --git a/toolkit/components/downloads/Makefile.in b/toolkit/components/downloads/Makefile.in
+--- a/toolkit/components/downloads/Makefile.in
++++ b/toolkit/components/downloads/Makefile.in
+@@ -79,8 +79,10 @@ endif
+ 
+ ifdef ENABLE_TESTS
+ DIRS += test
  endif
  
  include $(topsrcdir)/config/rules.mk
  
  EXTRA_DSO_LDOPTS += $(MOZ_COMPONENT_LIBS)
- 
++
 +LOCAL_INCLUDES += -I$(topsrcdir)/toolkit/xre
-diff --git a/toolkit/components/downloads/src/nsDownloadManager.cpp b/toolkit/components/downloads/src/nsDownloadManager.cpp
---- a/toolkit/components/downloads/src/nsDownloadManager.cpp
-+++ b/toolkit/components/downloads/src/nsDownloadManager.cpp
+diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/components/downloads/nsDownloadManager.cpp
+--- a/toolkit/components/downloads/nsDownloadManager.cpp
++++ b/toolkit/components/downloads/nsDownloadManager.cpp
 @@ -71,16 +71,20 @@
  
  #if defined(XP_WIN) && !defined(WINCE)
@@ -2134,13 +2135,13 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -97,17 +97,18 @@ CMMSRCS = nsNativeAppSupportCocoa.mm
+@@ -94,17 +94,18 @@ EXPORTS = nsWindowsDllInterceptor.h
+ else
+ ifeq ($(MOZ_WIDGET_TOOLKIT),cocoa)
+ CMMSRCS = nsNativeAppSupportCocoa.mm
  else
  ifeq ($(MOZ_WIDGET_TOOLKIT),os2)
  CPPSRCS += nsNativeAppSupportOS2.cpp
- else
- ifeq ($(MOZ_WIDGET_TOOLKIT),beos)
- CPPSRCS += nsNativeAppSupportBeOS.cpp
  else
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
 -CPPSRCS += nsNativeAppSupportUnix.cpp
@@ -2572,7 +2573,7 @@ new file mode 100644
 diff --git a/uriloader/exthandler/Makefile.in b/uriloader/exthandler/Makefile.in
 --- a/uriloader/exthandler/Makefile.in
 +++ b/uriloader/exthandler/Makefile.in
-@@ -94,18 +94,19 @@ LOCAL_INCLUDES += -I$(topsrcdir)/dom/bas
+@@ -90,18 +90,19 @@ LOCAL_INCLUDES += -I$(topsrcdir)/dom/bas
              -I$(topsrcdir)/dom/ipc \
              -I$(topsrcdir)/content/base/src \
              -I$(topsrcdir)/content/events/src \
@@ -3663,7 +3664,7 @@ diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
 diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
 --- a/xpcom/io/nsLocalFileUnix.cpp
 +++ b/xpcom/io/nsLocalFileUnix.cpp
-@@ -93,16 +93,17 @@
+@@ -88,16 +88,17 @@
  #include "prproces.h"
  #include "nsIDirectoryEnumerator.h"
  #include "nsISimpleEnumerator.h"
@@ -3681,11 +3682,11 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  #include "prmem.h"
  #include "plbase64.h"
  
-@@ -1822,44 +1823,50 @@ nsLocalFile::Launch()
- 
-     return NS_OK;
+@@ -1730,44 +1731,50 @@ nsLocalFile::SetPersistentDescriptor(con
+     return InitWithNativePath(aPersistentDescriptor);
+ #endif
  }
- #else
+ 
  NS_IMETHODIMP
  nsLocalFile::Reveal()
  {
@@ -3746,7 +3747,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
        return rv;
      }
      return NS_ERROR_FAILURE;
-@@ -1885,16 +1892,23 @@ nsLocalFile::Launch()
+@@ -1793,16 +1800,23 @@ nsLocalFile::Launch()
  
      if (nsnull == connection)
        return NS_ERROR_FAILURE;

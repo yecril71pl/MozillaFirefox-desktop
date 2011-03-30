@@ -18,7 +18,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
     ja-JP-mac|en-US)
       ;;
     *)
-      hg clone http://hg.mozilla.org/releases/l10n-central/$locale l10n/$locale
+      hg clone http://hg.mozilla.org/l10n-central/$locale l10n/$locale
       [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
       ;;
   esac

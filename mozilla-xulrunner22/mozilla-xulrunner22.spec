@@ -75,7 +75,6 @@ Patch13:        mozilla-language.patch
 Patch14:        mozilla-gio.patch
 Patch15:        mozilla-cairo-return.patch
 Patch16:        mozilla-ntlm-full-path.patch
-Patch17:        mozilla-gecko-version.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js22 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -220,7 +219,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

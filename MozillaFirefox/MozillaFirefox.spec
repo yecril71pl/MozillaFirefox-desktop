@@ -68,6 +68,7 @@ Patch9:         firefox-libxulsdk-locales.patch
 Patch10:        firefox-no-default-ualocale.patch
 Patch11:        firefox-multilocale-chrome.patch
 Patch12:        firefox-shellservice.patch
+Patch13:        firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -190,6 +191,7 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 export MOZ_BUILD_DATE=%{releasedate}
@@ -313,7 +315,7 @@ mkdir -p $RPM_BUILD_ROOT/usr/share/pixmaps/
 ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}.png
 ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
 %if %branding
-for size in 16 32 48; do
+for size in 16 22 24 32 48 256; do
   mkdir -p $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
   ln -sf %{progdir}/chrome/icons/default/default$size.png \
          $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png

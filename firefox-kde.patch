@@ -1142,10 +1142,10 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
  #ifndef WINCE
  
  #include "nsProfileMigrator.h"
- #if !defined(XP_BEOS)
  #include "nsDogbertProfileMigrator.h"
- #endif
-@@ -84,18 +84,16 @@ using namespace mozilla::browser;
+ #if !defined(XP_OS2)
+ #include "nsOperaProfileMigrator.h"
+@@ -82,18 +82,16 @@ using namespace mozilla::browser;
  
  /////////////////////////////////////////////////////////////////////////////
  
@@ -1160,11 +1160,11 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
  
  #ifndef WINCE
  
- #if !defined(XP_BEOS)
  NS_GENERIC_FACTORY_CONSTRUCTOR(nsDogbertProfileMigrator)
- #endif
  #if !defined(XP_OS2)
-@@ -151,17 +149,17 @@ NS_DEFINE_NAMED_CID(NS_SEAMONKEYPROFILEM
+ NS_GENERIC_FACTORY_CONSTRUCTOR(nsOperaProfileMigrator)
+ #endif
+@@ -145,17 +143,17 @@ NS_DEFINE_NAMED_CID(NS_SEAMONKEYPROFILEM
  #endif /* WINCE */
  NS_DEFINE_NAMED_CID(NS_PRIVATE_BROWSING_SERVICE_WRAPPER_CID);
  
@@ -1625,7 +1625,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -442,16 +442,17 @@
+@@ -441,16 +441,17 @@
  #endif
  #endif
  

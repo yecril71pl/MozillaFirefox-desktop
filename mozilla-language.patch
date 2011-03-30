@@ -1,6 +1,6 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 05766406681babf9a5a433649b5ba2b9741b9962
+# Parent db620d83124746201970dcf50c661957df979eca
 Bug 583793 - Firefox interface language set to LANG, ignores LANGUAGE
 
 diff --git a/intl/locale/src/nsLocaleService.cpp b/intl/locale/src/nsLocaleService.cpp
@@ -11,7 +11,7 @@ diff --git a/intl/locale/src/nsLocaleService.cpp b/intl/locale/src/nsLocaleServi
  
  
  #ifdef MOZ_WIDGET_QT
-         const char* lang = QLocale::languageToString(QLocale::system().language()).toAscii();
+         const char* lang = QLocale::system().name().toAscii();
  #else
          // Get system configuration
          const char* lang = getenv("LANG");
@@ -45,4 +45,4 @@ diff --git a/intl/locale/src/nsLocaleService.cpp b/intl/locale/src/nsLocaleServi
          mApplicationLocale = do_QueryInterface(resultLocale);
      }  // if ( NS_SUCCEEDED )...
         
- #endif // XP_UNIX || XP_BEOS
+ #endif // XP_UNIX

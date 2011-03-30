@@ -1,0 +1,32 @@
+# xulrunner/gecko patches
+toolkit-download-folder.patch
+mozilla-pkgconfig.patch
+idldir.patch
+mozilla-nongnome-proxies.patch
+mozilla-prefer_plugin_pref.patch
+mozilla-shared-nss-db.patch
+mozilla-kde.patch
+#mozilla-gconf-backend.patch
+#gecko-lockdown.patch
+#toolkit-ui-lockdown.patch
+#mozilla-cpuid.patch
+mozilla-cairo-lcd.patch
+mozilla-language.patch
+mozilla-gio.patch
+mozilla-cairo-return.patch
+mozilla-ntlm-full-path.patch
+mozilla-gecko-version.patch
+mozilla-gcc46.patch
+
+# Firefox patches
+firefox-linkorder.patch
+firefox-browser-css.patch
+firefox-cross-desktop.patch
+firefox-kde.patch
+firefox-kde-114.patch
+#firefox-ui-lockdown.patch
+firefox-no-sync-l10n.patch
+firefox-libxulsdk-locales.patch
+firefox-no-default-ualocale.patch
+firefox-multilocale-chrome.patch
+firefox-shellservice.patch

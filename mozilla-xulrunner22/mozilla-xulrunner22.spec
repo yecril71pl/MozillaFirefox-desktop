@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner20
+# spec file for package mozilla-xulrunner22
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -19,7 +19,7 @@
 # norootforbuild
 
 
-Name:           mozilla-xulrunner20
+Name:           mozilla-xulrunner22
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel nss-shared-helper-devel
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
@@ -30,22 +30,22 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        2.0.0
+Version:        2.2a
 Release:        1
-%define         releasedate 2011031700
-%define         version_internal 2.0.0
-%define         apiversion 2.0
-%define         uaweight 200000
-Summary:        Mozilla Runtime Environment 2.0
+%define         releasedate 2011033000
+%define         version_internal 2.2a1pre
+%define         apiversion 2.2
+%define         uaweight 220000
+Summary:        Mozilla Runtime Environment 2.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
-Provides:       gecko20
+Provides:       gecko22
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 %ifarch %ix86
-Provides:       mozilla-xulrunner20-32bit = %{version}-%{release}
+Provides:       mozilla-xulrunner22-32bit = %{version}-%{release}
 %endif
 Source:         xulrunner-source-%{version}.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
@@ -76,9 +76,8 @@ Patch14:        mozilla-gio.patch
 Patch15:        mozilla-cairo-return.patch
 Patch16:        mozilla-ntlm-full-path.patch
 Patch17:        mozilla-gecko-version.patch
-Patch18:        mozilla-gcc46.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js20 = %{version}
+Requires:       mozilla-js22 = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
@@ -114,12 +113,12 @@ multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
 
-%package -n mozilla-js20
+%package -n mozilla-js22
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Mozilla JS 1.8.5 engine
 Group:          Productivity/Other
 
-%description -n mozilla-js20
+%description -n mozilla-js22
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
@@ -222,7 +221,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
@@ -518,7 +516,7 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
-%files -n mozilla-js20
+%files -n mozilla-js22
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %{_libdir}/xulrunner-%{apiversion}

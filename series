@@ -30,3 +30,4 @@ firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
 firefox-shellservice.patch
+firefox-branded-icons.patch

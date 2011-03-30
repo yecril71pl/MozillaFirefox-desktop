@@ -258,8 +258,8 @@ ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-optimize
 ac_add_options --enable-extensions=default
-ac_add_options --with-system-jpeg
-#ac_add_options --with-system-png # no APNG support
+#ac_add_options --with-system-jpeg # mozilla uses internal libjpeg-turbo now
+#ac_add_options --with-system-png  # no APNG support
 ac_add_options --with-system-zlib
 ac_add_options --with-l10n-base=../l10n
 ac_add_options --disable-tests

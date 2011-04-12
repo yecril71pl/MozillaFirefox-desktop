@@ -21,7 +21,7 @@ diff --git a/modules/libpref/src/Makefile.in b/modules/libpref/src/Makefile.in
 diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefService.cpp
 --- a/modules/libpref/src/nsPrefService.cpp
 +++ b/modules/libpref/src/nsPrefService.cpp
-@@ -55,16 +55,17 @@
+@@ -53,16 +53,17 @@
  #include "nsIStringEnumerator.h"
  #include "nsIZipReader.h"
  #include "nsPrefBranch.h"
@@ -39,7 +39,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -772,30 +773,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+@@ -758,30 +759,48 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
  }
  
  static nsresult pref_LoadPrefsInDirList(const char *listId)
@@ -89,7 +89,7 @@ diff --git a/modules/libpref/src/nsPrefService.cpp b/modules/libpref/src/nsPrefS
  }
  
  //----------------------------------------------------------------------------------------
-@@ -890,24 +909,36 @@ static nsresult pref_InitInitialObjects(
+@@ -876,24 +895,36 @@ static nsresult pref_InitInitialObjects(
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MAC) || defined(XP_MACOSX)
@@ -160,11 +160,11 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
  #include <CoreFoundation/CoreFoundation.h>
  #endif
  
- #define DOWNLOAD_MANAGER_BUNDLE "chrome://mozapps/locale/downloads/downloads.properties"
- #define DOWNLOAD_MANAGER_ALERT_ICON "chrome://mozapps/skin/downloads/downloadIcon.png"
- #define PREF_BDM_SHOWALERTONCOMPLETE "browser.download.manager.showAlertOnComplete"
- #define PREF_BDM_SHOWALERTINTERVAL "browser.download.manager.showAlertInterval"
-@@ -2199,16 +2203,25 @@ nsDownload::SetState(DownloadState aStat
+ #ifdef ANDROID
+ #include "AndroidBridge.h"
+ #endif
+ 
+@@ -2203,16 +2207,25 @@ nsDownload::SetState(DownloadState aStat
        nsCOMPtr<nsIPrefBranch> pref(do_GetService(NS_PREFSERVICE_CONTRACTID));
  
        // Master pref to control this function.
@@ -190,7 +190,8 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
          PRInt64 goat = PR_Now() - mStartTime;
          showTaskbarAlert = goat > alertIntervalUSec;
  
-@@ -2234,16 +2247,17 @@ nsDownload::SetState(DownloadState aStat
+@@ -2237,17 +2250,17 @@ nsDownload::SetState(DownloadState aStat
+               // retention policy, there's no reason to make the text clickable
                // because if it is, they'll click open the download manager and
                // the items they downloaded will have been removed.
                alerts->ShowAlertNotification(
@@ -198,11 +199,11 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
                    message, !removeWhenDone, EmptyString(), mDownloadManager,
                    EmptyString());
              }
-         }
+-        }
 +        } // end non-KDE block
        }
  
- #if (defined(XP_WIN) && !defined(WINCE)) || defined(XP_MACOSX)
+ #if (defined(XP_WIN) && !defined(WINCE)) || defined(XP_MACOSX) || defined(ANDROID)
        nsCOMPtr<nsIFileURL> fileURL = do_QueryInterface(mTarget);
        nsCOMPtr<nsIFile> file;
        nsAutoString path;
@@ -2573,13 +2574,13 @@ new file mode 100644
 diff --git a/uriloader/exthandler/Makefile.in b/uriloader/exthandler/Makefile.in
 --- a/uriloader/exthandler/Makefile.in
 +++ b/uriloader/exthandler/Makefile.in
-@@ -90,18 +90,19 @@ LOCAL_INCLUDES += -I$(topsrcdir)/dom/bas
+@@ -88,18 +88,19 @@ LOCAL_INCLUDES = -I$(srcdir)
+ LOCAL_INCLUDES += -I$(topsrcdir)/dom/base \
              -I$(topsrcdir)/dom/ipc \
              -I$(topsrcdir)/content/base/src \
              -I$(topsrcdir)/content/events/src \
              -I$(topsrcdir)/netwerk/base/src \
              -I$(topsrcdir)/netwerk/protocol/http
- endif
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
 -OSHELPER	+= nsGNOMERegistry.cpp
@@ -3635,10 +3636,10 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
        continue;
  
      if (directive->regfunc) {
- #ifdef MOZ_IPC
        if (GeckoProcessType_Default != XRE_GetProcessType())
          continue;
- #endif
+ 
+       if (!nsChromeRegistry::gChromeRegistry) {
 diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
 --- a/xpcom/io/Makefile.in
 +++ b/xpcom/io/Makefile.in

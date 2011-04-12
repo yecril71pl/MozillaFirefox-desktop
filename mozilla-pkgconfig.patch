@@ -14,17 +14,17 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  include $(topsrcdir)/toolkit/mozapps/installer/packager.mk
  
 +# the apilibdir always ends with 1.9 as every patch update will provide a link
-+apilibdir = $(dir $(installdir))xulrunner-2.0
++apilibdir = $(dir $(installdir))xulrunner-2.2
 +
- $(MOZILLA_VERSION).system.conf: $(topsrcdir)/config/milestone.txt Makefile
- 	printf "[%s]\nGRE_PATH=%s\nxulrunner=true\nabi=%s" \
- 	  $(MOZILLA_VERSION) $(installdir) $(TARGET_XPCOM_ABI)> $@
+ # Add pkg-config files to the install:: target
  
- ifndef SKIP_GRE_REGISTRATION
- # to register xulrunner per-user, override this with $HOME/.gre.d
- regdir = /etc/gre.d
- 
-@@ -116,16 +119,17 @@ pkg_config_files += mozilla-nss.pc
+ pkg_config_files = \
+ 	libxul.pc \
+ 	libxul-embedding.pc \
+ 	mozilla-js.pc \
+ 	mozilla-plugin.pc \
+ 	mozilla-gtkmozembed.pc \
+@@ -103,16 +106,17 @@ pkg_config_files += mozilla-nss.pc
  endif
  
  %.pc: $(srcdir)/%.pc.in $(GLOBAL_DEPS)

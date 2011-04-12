@@ -1,9 +1,10 @@
 # HG changeset patch
-# Parent 33dfbc62844ac4883fbedb77d782a1b9ef5596c4
+# Parent 20b50e5bd650d19c30c308bb3b10f9903c83f581
+
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
 +++ b/browser/app/Makefile.in
-@@ -281,16 +281,21 @@ endif
+@@ -277,16 +277,21 @@ endif
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
  libs::
@@ -29,7 +30,7 @@ diff --git a/browser/installer/package-manifest.in b/browser/installer/package-m
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
 @@ -423,18 +423,21 @@
- #if MOZ_UPDATE_CHANNEL == beta
+ #ifdef SHIP_FEEDBACK
  @BINPATH@/distribution/extensions/testpilot@labs.mozilla.com.xpi
  #endif
  @BINPATH@/chrome/toolkit@JAREXT@

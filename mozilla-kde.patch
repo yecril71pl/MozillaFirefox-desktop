@@ -190,7 +190,8 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
          PRInt64 goat = PR_Now() - mStartTime;
          showTaskbarAlert = goat > alertIntervalUSec;
  
-@@ -2237,17 +2250,17 @@ nsDownload::SetState(DownloadState aStat
+@@ -2236,18 +2249,19 @@ nsDownload::SetState(DownloadState aStat
+               // If downloads are automatically removed per the user's
                // retention policy, there's no reason to make the text clickable
                // because if it is, they'll click open the download manager and
                // the items they downloaded will have been removed.
@@ -198,8 +199,9 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
                    NS_LITERAL_STRING(DOWNLOAD_MANAGER_ALERT_ICON), title,
                    message, !removeWhenDone, EmptyString(), mDownloadManager,
                    EmptyString());
-             }
--        }
+-            }
++          }
+         }
 +        } // end non-KDE block
        }
  

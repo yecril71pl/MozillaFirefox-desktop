@@ -347,11 +347,6 @@ cp %{SOURCE8} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/defaults/p
 sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
   %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
-# 64bit classification for GRE config
-%ifarch x86_64 s390x ppc64
-mv $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}.system.conf \
-   $RPM_BUILD_ROOT%{_sysconfdir}/gre.d/%{version_internal}-64bit.system.conf
-%endif
 # ghosts
 touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # install additional locales
@@ -504,9 +499,6 @@ exit 0
 %if %suse_version >= 1120
 %ghost %{_bindir}/xulrunner
 %endif
-# GRE
-%dir %{_sysconfdir}/gre.d/
-%attr(644,root,root) %{_sysconfdir}/gre.d/*
 # API symlink
 %{_libdir}/xulrunner-%{apiversion}
 # compat symlinks

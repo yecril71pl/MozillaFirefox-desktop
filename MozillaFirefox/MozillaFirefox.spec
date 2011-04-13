@@ -20,30 +20,29 @@
 
 %define major 4
 %define mainver %major.2
-%define use_xulrunner 1
-%define xulrunner mozilla-xulrunner22
 
 Name:           MozillaFirefox
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel yasm libproxy-devel
+BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel yasm
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
+BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-%if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.2a
-%else
 BuildRequires:  mozilla-nspr-devel >= 4.8.6
 BuildRequires:  mozilla-nss-devel >= 3.12.8
 BuildRequires:  nss-shared-helper-devel
-%endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}a
 Release:        1
+%define         releasedate 2011041100
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
-%define         releasedate 2011041100
+# this is needed to match this package with the kde4 helper package without the main package
+# having a hard requirement on the kde4 package
+%define kde_helper_version 6
+Provides:       mozilla-kde4-version = %{kde_helper_version}
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers
@@ -52,11 +51,9 @@ Source1:        MozillaFirefox.desktop
 Source2:        MozillaFirefox-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
-Source5:        firefox.schemas
 Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
-Source9:        firefox-lockdown.js
 Source10:       compare-locales.tar.bz2
 Source11:       firefox.1
 Source12:       mozilla-get-app-id
@@ -79,9 +76,7 @@ Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
 Patch33:        firefox-kde.patch
 Patch34:        firefox-kde-114.patch
-Patch35:        firefox-ui-lockdown.patch
 Patch36:        firefox-no-sync-l10n.patch
-Patch37:        firefox-libxulsdk-locales.patch
 Patch38:        firefox-no-default-ualocale.patch
 Patch39:        firefox-multilocale-chrome.patch
 Patch40:        firefox-shellservice.patch
@@ -89,17 +84,8 @@ Patch41:        firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
-%if 0%{?use_xulrunner}
-Requires:       %{xulrunner} >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
-%requires_eq    %{xulrunner}
-%ifarch %ix86
-Requires:       %{xulrunner}-32bit >= %(rpm -q --queryformat '%{VERSION}-%{RELEASE}' %{xulrunner})
-Requires:       %{xulrunner}-32bit = %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
-%endif
-%else
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
-%endif
 Requires:       %{name}-branding >= 4.0
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
@@ -181,7 +167,6 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: default homepage and some other default configuration options
 #BRAND: /usr/lib/firefox/defaults/profile/bookmarks.html that contains
 #BRAND: the list of default bookmarks
-#BRAND: /etc/gconf/schemas/firefox.schemas
 #BRAND: for mapping some Firefox prefs to gconf
 #BRAND: It's also possible to create a file
 #BRAND: /usr/lib/firefox/defaults/preferences/firefox-$vendor.js to set
@@ -192,7 +177,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 This package provides upstream look and feel for MozillaFirefox.
 
 
-%if %crashreporter && !0%{?use_xulrunner}
+%if %crashreporter
 %package buildsymbols
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
@@ -229,22 +214,18 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %if %suse_version >= 1140
 %patch34 -p1
 %endif
-#%patch35 -p1
 %patch36 -p1
-%patch37 -p1
 %patch38 -p1
 %patch39 -p1
 %patch40 -p1
 %patch41 -p1
 
 %build
-%if !0%{?use_xulrunner}
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
 if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file
   exit 1
 fi
-%endif
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
@@ -254,7 +235,6 @@ export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
 export CXXFLAGS="$CFLAGS"
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
-SDKDIR=$(pkg-config --variable=sdkdir libxul)
 cat << EOF > $MOZCONFIG
 mk_add_options MOZILLA_OFFICIAL=1
 mk_add_options BUILD_OFFICIAL=1
@@ -269,19 +249,20 @@ ac_add_options --includedir=%{_includedir}
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
-ac_add_options --with-system-jpeg
+#ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
 ac_add_options --with-system-zlib
 ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
+ac_add_options --enable-chrome-format=jar
 #ac_add_options --enable-update-channel=beta
 EOF
-%if 0%{?use_xulrunner}
+%if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
-ac_add_options --with-libxul-sdk=$SDKDIR
-ac_add_options --enable-chrome-format=jar
+ac_add_options --disable-gnomevfs
+ac_add_options --enable-gio
 EOF
 %endif
 %if %branding
@@ -308,9 +289,7 @@ make -f client.mk build
 
 %install
 cd $RPM_BUILD_DIR/obj
-# FIXME (will be needed once lockdown is integrated; needs omni.jar adoption)
-#cp %{SOURCE9} dist/bin/defaults/preferences/lockdown.js
-rm dist/bin/defaults/preferences/firefox-l10n.js
+rm dist/bin/defaults/pref/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
@@ -320,6 +299,10 @@ mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 find $RPM_BUILD_ROOT%{progdir} \
      -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
+# install add-plugins.sh
+sed "s:%%PROGDIR:%{progdir}:g" \
+  %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh
+chmod 755 $RPM_BUILD_ROOT%{progdir}/add-plugins.sh
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
@@ -394,6 +377,8 @@ rm -f $RPM_BUILD_ROOT%{progdir}/old-homepage-default.properties
 rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
 rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
 rm -f $RPM_BUILD_ROOT%{progdir}/precomplete
+rm -f $RPM_BUILD_ROOT%{progdir}/dictionaries/en-US*
+rm -f $RPM_BUILD_ROOT%{progdir}/firefox
 # devel
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %SOURCE12 %{buildroot}%{_bindir}
@@ -405,8 +390,6 @@ cat <<'FIN' >%{buildroot}/etc/rpm/macros.%{progname}
 %%firefox_version            %{version}
 %%firefox_mainver            %{mainver}
 %%firefox_mozillapath        %%{_libdir}/%{progname}
-%%firefox_xulrunner          %{xulrunner}
-%%firefox_xulrunner_version  %(rpm -q --queryformat '%{VERSION}' %{xulrunner})
 %%firefox_pluginsdir         %%{_libdir}/browser-plugins
 %%firefox_appid              \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %%firefox_extdir             %%(if [ "%%_target_cpu" = "noarch" ]; then echo %%{_datadir}/mozilla/extensions/%%{firefox_appid}; else echo %%{_libdir}/mozilla/extensions/%%{firefox_appid}; fi)
@@ -426,6 +409,18 @@ FIN
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{progdir}
 %fdupes $RPM_BUILD_ROOT%{_datadir}
+# create breakpad debugsymbols
+%if %crashreporter
+SYMBOLS_NAME="firefox-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
+make buildsymbols \
+  SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
+  SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
+  SYMBOL_ARCHIVE_BASENAME="$SYMBOLS_NAME"
+if [ -e dist/*symbols.zip ]; then
+  mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
+  cp dist/*symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
+fi
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -447,6 +442,7 @@ if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
 %endif
+%{progdir}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %postun
@@ -464,12 +460,23 @@ fi
 %endif
 exit 0
 
+%posttrans
+[ -e %{progdir}/add-plugins.sh ] && \
+  %{progdir}/add-plugins.sh > /dev/null 2>&1
+exit 0
+
+%preun
+rm -f %{progdir}/dictionaries/*
+exit 0
+
 %files
 %defattr(-,root,root)
 %dir %{progdir}
 %dir %{progdir}/chrome/
 %dir %{progdir}/distribution/
 %{progdir}/chrome/browser.*
+%{progdir}/chrome/pippki.*
+%{progdir}/chrome/toolkit.*
 %{progdir}/chrome/localized.manifest
 %{progdir}/chrome/nonlocalized.manifest
 %{progdir}/chrome/en-US.*
@@ -477,18 +484,30 @@ exit 0
 %{progdir}/components/
 %exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
+%{progdir}/dictionaries/
 %dir %{progdir}/extensions/
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
 %{progdir}/modules/
+%{progdir}/res/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
-%{progdir}/firefox
+%{progdir}/Throbber-small.gif
+%{progdir}/firefox-bin
+%{progdir}/add-plugins.sh
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
+%{progdir}/dependentlibs.list
+%{progdir}/greprefs.js
+%{progdir}/*.so
+%{progdir}/mozilla-xremote-client
+%{progdir}/platform.ini
+%{progdir}/plugin-container
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
+%{progdir}/crashreporter
+%{progdir}/crashreporter.ini
 %endif
 %{progdir}/chrome.manifest
 %{_datadir}/applications/%{desktop_file_name}.desktop
@@ -528,5 +547,11 @@ exit 0
 %dir %{progdir}
 %dir %{progdir}/defaults/
 %{progdir}/defaults/profile/bookmarks.html
+
+%if %crashreporter
+%files buildsymbols
+%defattr(-,root,root)
+%{_datadir}/mozilla/*.zip
+%endif
 
 %changelog

@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Apr 13 05:41:13 UTC 2011 - wr@rosenauer.org
+
+- update to 4.2a-20110411
+- transformed to standalone Firefox (not xulrunner based)
+  (with new Firefox rapid release cycle it makes no sense anymore)
+  * imported all relevant xulrunner patches
+
+-------------------------------------------------------------------
 Wed Mar 30 11:24:36 UTC 2011 - wr@rosenauer.org
 
 - add all available icon sizes

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BRANCH="mozilla-central"
+BRANCH="mozilla-aurora"
 RELEASE_TAG="default"
-VERSION="4.2a"
+VERSION="5.0a"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

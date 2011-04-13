@@ -338,7 +338,7 @@ done
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g
 s:%%PROGDIR:%{progdir}:g
-s:%%APPNAME:firefox:g
+s:%%APPNAME:firefox-bin:g
 s:%%PROFILE:.mozilla/firefox:g" \
   %{SOURCE3} > $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
 chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh

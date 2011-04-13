@@ -79,6 +79,11 @@ if [ ! -d $BROWSER_PLUGIN_DIR ]; then
   BROWSER_PLUGIN_DIR=/opt/netscape/plugins
 fi
 
+MOZILLA_FIVE_HOME="$MOZ_DIST_LIB"
+export MOZILLA_FIVE_HOME
+LD_LIBRARY_PATH=$MOZ_DIST_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH
+
 # ignore composite extension (needed for Flash)
 export XLIB_SKIP_ARGB_VISUALS=1
 

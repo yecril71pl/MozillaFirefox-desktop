@@ -33,7 +33,7 @@ License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        2.0.1
 Release:        1
 %define         releasedate 2011041400
-%define         version_internal 2.0.0
+%define         version_internal 2.0.1
 %define         apiversion 2.0
 %define         uaweight 200100
 Summary:        Mozilla Runtime Environment 2.0

@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 4
-%define mainver %major.2
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip fdupes Mesa-devel yasm
@@ -33,9 +33,9 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.6
 BuildRequires:  mozilla-nss-devel >= 3.12.8
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        %{mainver}a
+Version:        %{mainver}
 Release:        1
-%define         releasedate 2011041100
+%define         releasedate 2011041300
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -86,7 +86,7 @@ Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
-Requires:       %{name}-branding >= 4.0
+Requires:       %{name}-branding > 4.0
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
@@ -256,7 +256,7 @@ ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
-ac_add_options --enable-chrome-format=jar
+#ac_add_options --enable-chrome-format=jar
 #ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
@@ -338,7 +338,7 @@ done
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g
 s:%%PROGDIR:%{progdir}:g
-s:%%APPNAME:firefox-bin:g
+s:%%APPNAME:firefox:g
 s:%%PROFILE:.mozilla/firefox:g" \
   %{SOURCE3} > $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
 chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
@@ -474,23 +474,15 @@ exit 0
 %dir %{progdir}
 %dir %{progdir}/chrome/
 %dir %{progdir}/distribution/
-%{progdir}/chrome/browser.*
-%{progdir}/chrome/pippki.*
-%{progdir}/chrome/toolkit.*
-%{progdir}/chrome/localized.manifest
-%{progdir}/chrome/nonlocalized.manifest
-%{progdir}/chrome/en-US.*
 %{progdir}/chrome/icons
 %{progdir}/components/
-%exclude %{progdir}/defaults/profile/bookmarks.html
+#%exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
 %{progdir}/dictionaries/
 %dir %{progdir}/extensions/
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
-%{progdir}/modules/
-%{progdir}/res/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/Throbber-small.gif
@@ -499,9 +491,10 @@ exit 0
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
 %{progdir}/dependentlibs.list
-%{progdir}/greprefs.js
+#%{progdir}/greprefs.js
 %{progdir}/*.so
 %{progdir}/mozilla-xremote-client
+%{progdir}/omni.jar
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %if %crashreporter
@@ -542,11 +535,11 @@ exit 0
 %dir %{progdir}/extensions/
 %endif
 
-%files branding-upstream
-%defattr(-,root,root)
-%dir %{progdir}
-%dir %{progdir}/defaults/
-%{progdir}/defaults/profile/bookmarks.html
+#%files branding-upstream
+#%defattr(-,root,root)
+#%dir %{progdir}
+#%dir %{progdir}/defaults/
+#%{progdir}/defaults/profile/bookmarks.html
 
 %if %crashreporter
 %files buildsymbols

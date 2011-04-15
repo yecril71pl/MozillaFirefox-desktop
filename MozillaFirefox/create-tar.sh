@@ -2,7 +2,7 @@
 
 BRANCH="mozilla-aurora"
 RELEASE_TAG="default"
-VERSION="5.0a"
+VERSION="4.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

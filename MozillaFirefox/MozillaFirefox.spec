@@ -31,15 +31,15 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 %if 0%{?use_xulrunner}
-BuildRequires:  %{xulrunner}-devel = 2.0.0
+BuildRequires:  %{xulrunner}-devel = 2.0.1
 %endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        %{mainver}.0
+Version:        %{mainver}.1
 Release:        1
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
-%define         releasedate 2011031700
+%define         releasedate 2011041400
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

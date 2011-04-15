@@ -30,12 +30,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        2.0.0
+Version:        2.0.1
 Release:        1
-%define         releasedate 2011031700
+%define         releasedate 2011041400
 %define         version_internal 2.0.0
 %define         apiversion 2.0
-%define         uaweight 200000
+%define         uaweight 200100
 Summary:        Mozilla Runtime Environment 2.0
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -67,7 +67,7 @@ Patch7:         mozilla-kde.patch
 Patch8:         mozilla-cairo-lcd.patch
 # PATCH-FEATURE-SLED FATE#302023, FATE#302024
 Patch9:         mozilla-gconf-backend.patch
-Patch10:         gecko-lockdown.patch
+Patch10:        gecko-lockdown.patch
 Patch11:        toolkit-ui-lockdown.patch
 # ---
 Patch12:        mozilla-cpuid.patch
@@ -75,8 +75,7 @@ Patch13:        mozilla-language.patch
 Patch14:        mozilla-gio.patch
 Patch15:        mozilla-cairo-return.patch
 Patch16:        mozilla-ntlm-full-path.patch
-Patch17:        mozilla-gecko-version.patch
-Patch18:        mozilla-gcc46.patch
+Patch17:        mozilla-gcc46.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js20 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -222,7 +221,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
 
 %build
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)

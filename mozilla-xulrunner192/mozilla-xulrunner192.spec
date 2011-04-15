@@ -38,13 +38,13 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
-Version:        1.9.2.16
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
+Version:        1.9.2.17
 Release:        1
-%define         releasedate 2011031900
-%define         version_internal 1.9.2.16
+%define         releasedate 2011041400
+%define         version_internal 1.9.2.17
 %define         apiversion 1.9.2
-%define         uaweight 192160
+%define         uaweight 192170
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -128,7 +128,7 @@ Thunderbird.
 
 
 %package -n mozilla-js192
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Mozilla JS 1.8 engine
 Group:          Productivity/Other
 
@@ -140,7 +140,7 @@ with only mild differences from the published standard.
 
 
 %package devel
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        XULRunner/Gecko SDK 1.9.2
 Group:          Development/Libraries/Other
 %if %has_system_nspr
@@ -157,7 +157,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 %if %localize
 
 %package translations-common
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Common translations for XULRunner 1.9.2
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -174,7 +174,7 @@ delivered in the main package.
 
 
 %package translations-other
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -190,7 +190,7 @@ This package contains rarely used languages.
 %endif
 
 %package gnome
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 Requires:       %{name} = %{version}-%{release}
@@ -206,7 +206,7 @@ KDE installations for example.
 %if %crashreporter
 
 %package buildsymbols
-License:        GPLv2+ ; LGPLv2.1+ ; MPLv1.1+
+License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Debug
 

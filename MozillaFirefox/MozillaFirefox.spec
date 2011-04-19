@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011041300
+%define         releasedate 2011041800
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -101,7 +101,7 @@ Requires:       %{name}-branding > 4.0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
@@ -167,7 +167,6 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: default homepage and some other default configuration options
 #BRAND: /usr/lib/firefox/defaults/profile/bookmarks.html that contains
 #BRAND: the list of default bookmarks
-#BRAND: for mapping some Firefox prefs to gconf
 #BRAND: It's also possible to create a file
 #BRAND: /usr/lib/firefox/defaults/preferences/firefox-$vendor.js to set
 #BRAND: custom preference overrides.
@@ -257,7 +256,7 @@ ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
 #ac_add_options --enable-chrome-format=jar
-#ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
@@ -363,11 +362,13 @@ ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progn
 ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
 %if %branding
 for size in 16 22 24 32 48 256; do
+%else
+for size in 16 32 48; do
+%endif
   mkdir -p $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
   ln -sf %{progdir}/chrome/icons/default/default$size.png \
          $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
-%endif
 %suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
 # excludes
 rm -f $RPM_BUILD_ROOT%{progdir}/updater.ini
@@ -512,9 +513,7 @@ exit 0
 %dir %{_libdir}/mozilla
 %dir %{_libdir}/mozilla/extensions
 %dir %{_libdir}/mozilla/extensions/%{firefox_appid}
-%if %branding
 %{gnome_dir}/share/icons/hicolor/
-%endif
 %{_bindir}/%{progname}
 %doc %{_mandir}/man1/%{progname}.1.gz
 

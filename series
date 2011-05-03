@@ -15,6 +15,7 @@ mozilla-language.patch
 mozilla-gio.patch
 mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch
+mozilla-ppc-ipc.patch
 
 # Firefox patches
 firefox-linkorder.patch

@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011041800
+%define         releasedate 2011042700
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -70,6 +70,7 @@ Patch7:         mozilla-language.patch
 Patch8:         mozilla-gio.patch
 Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
+Patch11:        mozilla-ppc-ipc.patch
 # Firefox/browser
 Patch30:        firefox-linkorder.patch
 Patch31:        firefox-browser-css.patch
@@ -105,10 +106,8 @@ Requires:       %{name}-branding > 4.0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
-%define plugincontainer  0
 %else
 %define crashreporter    1
-%define plugincontainer  1
 %endif
 ### build options end
 
@@ -201,6 +200,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 #
 %patch30 -p1
 %patch31 -p1
@@ -277,11 +277,6 @@ EOF
 %if ! %crashreporter
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
-EOF
-%endif
-%if ! %plugincontainer
-cat << EOF >> $MOZCONFIG
-ac_add_options --disable-ipc
 EOF
 %endif
 make -f client.mk build
@@ -486,7 +481,6 @@ exit 0
 %{progdir}/icons/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
-%{progdir}/Throbber-small.gif
 %{progdir}/firefox-bin
 %{progdir}/add-plugins.sh
 %{progdir}/application.ini
@@ -502,6 +496,7 @@ exit 0
 %{progdir}/crashreporter-override.ini
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini
+%{progdir}/Throbber-small.gif
 %endif
 %{progdir}/chrome.manifest
 %{_datadir}/applications/%{desktop_file_name}.desktop

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Wed Apr 13 05:41:13 UTC 2011 - wr@rosenauer.org
+Thu Apr 28 05:37:36 UTC 2011 - wr@rosenauer.org
 
-- update to 5.0a-20110418
+- update to 5.0a-20110427
 - set unofficial branding for Aurora
 - transformed to standalone Firefox (not xulrunner based)
   (with new Firefox rapid release cycle it makes no sense anymore)

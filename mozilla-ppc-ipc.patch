@@ -1,6 +1,6 @@
 # HG changeset patch
 # Parent f6996f95c7f8007fd7bf759092488ead6843441a
-Bug 587188 - Failed to build firefox from trunk on PPC
+Bug 587188 - Failed to build firefox from trunk on PPC (fixed m-c)
 
 diff --git a/ipc/chromium/Makefile.in b/ipc/chromium/Makefile.in
 --- a/ipc/chromium/Makefile.in

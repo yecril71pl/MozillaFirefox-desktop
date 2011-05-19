@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011042700
+%define         releasedate 2011050300
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}

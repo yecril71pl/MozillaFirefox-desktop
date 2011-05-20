@@ -86,6 +86,7 @@ Patch16:        mozilla-locale.patch
 Patch17:        mozilla-gdk-pixbuf.patch
 Patch18:        mozilla-prlog.patch
 Patch19:        mozilla-ntlm-full-path.patch
+Patch20:        mozilla-gcc46.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -237,6 +238,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 %if %suse_version >= 1110

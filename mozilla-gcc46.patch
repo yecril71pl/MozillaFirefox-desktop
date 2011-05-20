@@ -1,0 +1,192 @@
+# HG changeset patch
+# Parent 8bb5926317b6f1e7c9291c8e7079b0c51ccc4615
+From: Christophe Giboudeaux
+Subject: gcc 4.6 build fixes.
+
+diff --git a/embedding/browser/gtk/src/EmbedPrivate.cpp b/embedding/browser/gtk/src/EmbedPrivate.cpp
+--- a/embedding/browser/gtk/src/EmbedPrivate.cpp
++++ b/embedding/browser/gtk/src/EmbedPrivate.cpp
+@@ -99,16 +99,17 @@ nsISupports             *EmbedPrivate::s
+ GtkWidget               *EmbedPrivate::sOffscreenWindow = 0;
+ GtkWidget               *EmbedPrivate::sOffscreenFixed  = 0;
+ 
+ nsIDirectoryServiceProvider *EmbedPrivate::sAppFileLocProvider = nsnull;
+ 
+ class GTKEmbedDirectoryProvider : public nsIDirectoryServiceProvider2
+ {
+ public:
++  GTKEmbedDirectoryProvider() {}
+   NS_DECL_ISUPPORTS_INHERITED
+   NS_DECL_NSIDIRECTORYSERVICEPROVIDER
+   NS_DECL_NSIDIRECTORYSERVICEPROVIDER2
+ };
+ 
+ static const GTKEmbedDirectoryProvider kDirectoryProvider;
+ 
+ NS_IMPL_QUERY_INTERFACE2(GTKEmbedDirectoryProvider,
+diff --git a/gfx/ots/src/os2.cc b/gfx/ots/src/os2.cc
+--- a/gfx/ots/src/os2.cc
++++ b/gfx/ots/src/os2.cc
+@@ -1,12 +1,14 @@
+ // Copyright (c) 2009 The Chromium Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
+ 
++#include <cstddef>
++
+ #include "os2.h"
+ 
+ #include "head.h"
+ 
+ // OS/2 - OS/2 and Windows Metrics
+ // http://www.microsoft.com/opentype/otspec/os2.htm
+ 
+ namespace ots {
+diff --git a/intl/unicharutil/util/nsUnicharUtils.h b/intl/unicharutil/util/nsUnicharUtils.h
+--- a/intl/unicharutil/util/nsUnicharUtils.h
++++ b/intl/unicharutil/util/nsUnicharUtils.h
+@@ -67,16 +67,18 @@ inline PRBool IsLowerCase(PRUnichar c) {
+   return ToUpperCase(c) != c;
+ }
+ 
+ #ifdef MOZILLA_INTERNAL_API
+ 
+ class nsCaseInsensitiveStringComparator : public nsStringComparator
+ {
+ public:
++  nsCaseInsensitiveStringComparator() {
++  }
+   virtual int operator() (const PRUnichar*,
+                           const PRUnichar*,
+                           PRUint32 aLength) const;
+   virtual int operator() (PRUnichar,
+                           PRUnichar) const;
+ };
+ 
+ class nsCaseInsensitiveStringArrayComparator
+diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/language.cc b/toolkit/crashreporter/google-breakpad/src/common/linux/language.cc
+--- a/toolkit/crashreporter/google-breakpad/src/common/linux/language.cc
++++ b/toolkit/crashreporter/google-breakpad/src/common/linux/language.cc
+@@ -34,16 +34,17 @@
+ 
+ #include "common/linux/language.h"
+ 
+ namespace google_breakpad {
+ 
+ // C++ language-specific operations.
+ class CPPLanguage: public Language {
+  public:
++  CPPLanguage() {}
+   string MakeQualifiedName(const string &parent_name,
+                            const string &name) const {
+     if (parent_name.empty())
+       return name;
+     else
+       return parent_name + "::" + name;
+   }
+ };
+diff --git a/toolkit/xre/nsAppRunner.cpp b/toolkit/xre/nsAppRunner.cpp
+--- a/toolkit/xre/nsAppRunner.cpp
++++ b/toolkit/xre/nsAppRunner.cpp
+@@ -635,16 +635,17 @@ class nsXULAppInfo : public nsIXULAppInf
+ #endif
+ #ifdef MOZ_CRASHREPORTER
+                      public nsICrashReporter_MOZILLA_1_9_2_BRANCH,
+ #endif
+                      public nsIXULRuntime
+ 
+ {
+ public:
++  nsXULAppInfo() {}
+   NS_DECL_ISUPPORTS_INHERITED
+   NS_DECL_NSIXULAPPINFO
+   NS_DECL_NSIXULRUNTIME
+ #ifdef MOZ_CRASHREPORTER
+   NS_DECL_NSICRASHREPORTER
+   NS_DECL_NSICRASHREPORTER_MOZILLA_1_9_2_BRANCH
+ #endif
+ #ifdef XP_WIN
+diff --git a/xpcom/base/nsDebugImpl.h b/xpcom/base/nsDebugImpl.h
+--- a/xpcom/base/nsDebugImpl.h
++++ b/xpcom/base/nsDebugImpl.h
+@@ -35,16 +35,17 @@
+  * ***** END LICENSE BLOCK ***** */
+ 
+ #include "nsIDebug.h"
+ #include "nsIDebug2.h"
+ 
+ class nsDebugImpl : public nsIDebug2
+ {
+ public:
++  nsDebugImpl() {}
+     NS_DECL_ISUPPORTS
+     NS_DECL_NSIDEBUG
+     NS_DECL_NSIDEBUG2
+     
+     static NS_METHOD Create(nsISupports* outer, const nsIID& aIID, void* *aInstancePtr);
+ };
+ 
+ 
+diff --git a/xpcom/base/nsTraceRefcntImpl.h b/xpcom/base/nsTraceRefcntImpl.h
+--- a/xpcom/base/nsTraceRefcntImpl.h
++++ b/xpcom/base/nsTraceRefcntImpl.h
+@@ -39,16 +39,17 @@
+ #define nsTraceRefcntImpl_h___
+ 
+ #include <stdio.h> // for FILE
+ #include "nsITraceRefcnt.h"
+ 
+ class nsTraceRefcntImpl : public nsITraceRefcnt
+ {
+ public:
++  nsTraceRefcntImpl() {}
+   NS_DECL_ISUPPORTS
+   NS_DECL_NSITRACEREFCNT
+ 
+   static NS_COM void Startup();
+   static NS_COM void Shutdown();
+ 
+   enum StatisticsType {
+     ALL_STATS,
+diff --git a/xpcom/glue/nsEnumeratorUtils.cpp b/xpcom/glue/nsEnumeratorUtils.cpp
+--- a/xpcom/glue/nsEnumeratorUtils.cpp
++++ b/xpcom/glue/nsEnumeratorUtils.cpp
+@@ -47,16 +47,17 @@
+ 
+ #include "nsCOMPtr.h"
+ 
+ class EmptyEnumeratorImpl : public nsISimpleEnumerator,
+                             public nsIUTF8StringEnumerator,
+                             public nsIStringEnumerator
+ {
+ public:
++  EmptyEnumeratorImpl() {}
+     // nsISupports interface
+     NS_DECL_ISUPPORTS_INHERITED  // not really inherited, but no mRefCnt
+ 
+     // nsISimpleEnumerator
+     NS_DECL_NSISIMPLEENUMERATOR
+     NS_DECL_NSIUTF8STRINGENUMERATOR
+     // can't use NS_DECL_NSISTRINGENUMERATOR because they share the
+     // HasMore() signature
+diff --git a/xpcom/io/nsUnicharInputStream.h b/xpcom/io/nsUnicharInputStream.h
+--- a/xpcom/io/nsUnicharInputStream.h
++++ b/xpcom/io/nsUnicharInputStream.h
+@@ -46,16 +46,17 @@
+ #define NS_SIMPLE_UNICHAR_STREAM_FACTORY_CID \
+ { 0x428dca6f, 0x1a0f, 0x4cda, { 0xb5, 0x16, 0xd, 0x52, 0x44, 0x74, 0x5a, 0x6a } }
+ 
+ class nsSimpleUnicharStreamFactory :
+   public nsIFactory, 
+   private nsISimpleUnicharStreamFactory
+ {
+ public:
++  nsSimpleUnicharStreamFactory() {}
+   NS_DECL_ISUPPORTS_INHERITED
+   NS_DECL_NSIFACTORY
+   NS_DECL_NSISIMPLEUNICHARSTREAMFACTORY
+ 
+   static NS_COM nsSimpleUnicharStreamFactory* GetInstance();
+ 
+ private:
+   static const nsSimpleUnicharStreamFactory kInstance;

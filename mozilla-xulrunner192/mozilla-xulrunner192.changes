@@ -1,7 +1,22 @@
 -------------------------------------------------------------------
-Fri Apr 15 07:14:51 UTC 2011 - wr@rosenauer.org
+Wed May 11 09:44:20 UTC 2011 - cgiboudeaux@gmx.com
 
-- security update to 1.9.2.17
+- Add mozilla-gcc46.patch. Fixes various build errors with GCC4.6
+
+-------------------------------------------------------------------
+Thu Apr 21 10:16:51 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.17 (bnc#689281)
+  * MFSA 2011-12/ CVE-2011-0069 CVE-2011-0070 CVE-2011-0072
+    CVE-2011-0074 CVE-2011-0075 CVE-2011-0077 CVE-2011-0078
+    CVE-2011-0080 CVE-2011-0081
+    Miscellaneous memory safety hazards
+  * MFSA 2011-13/CVE-2011-0065/CVE-2011-0066/CVE-2011-0073
+    Multiple dangling pointer vulnerabilities
+  * MFSA 2011-14/CVE-2011-0067 (bmo#527935)
+    Information stealing via form history
+  * MFSA 2011-18/CVE-2011-1202 (bmo#640339)
+    XSLT generate-id() function heap address leak
 
 -------------------------------------------------------------------
 Mon Mar 28 16:25:25 UTC 2011 - llunak@novell.com

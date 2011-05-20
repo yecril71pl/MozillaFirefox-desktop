@@ -40,7 +40,7 @@ Provides:       web_browser
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{version}
-%define         releasedate 2011041400
+%define         releasedate 2011042000
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

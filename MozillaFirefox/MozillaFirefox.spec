@@ -102,7 +102,7 @@ Requires:       %{name}-branding > 4.0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
@@ -220,6 +220,12 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %patch41 -p1
 
 %build
+# no need to add build time to binaries
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/%{name}.changes")"
+DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
+TIME="\"$(date -d "${modified}" "+%%R")\""
+find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
+#
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
 if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file

@@ -141,7 +141,6 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
-
 %package translations-common
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Common translations for XULRunner 2.0
@@ -223,6 +222,10 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch17 -p1
 
 %build
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/%{name}.changes")"
+DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
+TIME="\"$(date -d "${modified}" "+%%R")\""
+find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
 kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
 if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file

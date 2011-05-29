@@ -1,7 +1,19 @@
 -------------------------------------------------------------------
+Mon May 23 19:01:46 UTC 2011 - crrodriguez@opensuse.org
+
+- Do not include build dates in binaries
+
+-------------------------------------------------------------------
 Fri Apr 15 07:07:01 UTC 2011 - wr@rosenauer.org
 
-- security update to 2.0.1
+- security update to 2.0.1 (bnc#689281)
+  * MFSA 2011-12/ CVE-2011-0069 CVE-2011-0070 CVE-2011-0079
+    CVE-2011-0080 CVE-2011-0081
+    Miscellaneous memory safety hazards
+  * MFSA 2011-17/CVE-2011-0068 (bmo#623791)
+    WebGLES vulnerabilities
+  * MFSA 2011-18/CVE-2011-1202 (bmo#640339)
+    XSLT generate-id() function heap address leak
 
 -------------------------------------------------------------------
 Tue Mar 29 11:55:53 UTC 2011 - cfarrell@novell.com

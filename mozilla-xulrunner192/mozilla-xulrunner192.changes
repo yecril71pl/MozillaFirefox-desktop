@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jun 14 09:36:29 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.18 (bnc#)
+- speedier find-external-requires.sh
+
+-------------------------------------------------------------------
 Wed May 11 09:44:20 UTC 2011 - cgiboudeaux@gmx.com
 
 - Add mozilla-gcc46.patch. Fixes various build errors with GCC4.6

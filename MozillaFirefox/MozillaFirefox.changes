@@ -1,7 +1,23 @@
 -------------------------------------------------------------------
-Fri Apr 15 07:17:03 UTC 2011 - wr@rosenauer.org
+Tue Jun 14 09:54:04 UTC 2011 - wr@rosenauer.org
 
-- security update to 3.6.17
+- security update to 3.6.18 (bnc#)
+- speedier find-external-requires.sh
+
+-------------------------------------------------------------------
+Thu Apr 21 10:18:09 UTC 2011 - wr@rosenauer.org
+
+- security update to 3.6.17 (bnc#689281)
+  * MFSA 2011-12/ CVE-2011-0069 CVE-2011-0070 CVE-2011-0072
+    CVE-2011-0074 CVE-2011-0075 CVE-2011-0077 CVE-2011-0078
+    CVE-2011-0080 CVE-2011-0081
+    Miscellaneous memory safety hazards
+  * MFSA 2011-13/CVE-2011-0065/CVE-2011-0066/CVE-2011-0073
+    Multiple dangling pointer vulnerabilities
+  * MFSA 2011-14/CVE-2011-0067 (bmo#527935)
+    Information stealing via form history
+  * MFSA 2011-18/CVE-2011-1202 (bmo#640339)
+    XSLT generate-id() function heap address leak
 
 -------------------------------------------------------------------
 Fri Mar 25 13:33:17 UTC 2011 - lnussel@suse.de

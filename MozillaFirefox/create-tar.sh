@@ -1,13 +1,18 @@
 #!/bin/bash
 
 BRANCH="mozilla-beta"
-RELEASE_TAG="FIREFOX_5_0b3_RELEASE"
+RELEASE_TAG="FIREFOX_5_0b6_RELEASE"
 VERSION="4.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla
 pushd mozilla
 [ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
+# get repo and source stamp
+echo -n "REV=" > ../source-stamp.txt
+hg -R . parent --template="{node|short}\n" >> ../source-stamp.txt
+echo -n "REPO=" >> ../source-stamp.txt
+hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" >> ../source-stamp.txt
 popd
 tar cjf firefox-$VERSION-source.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
 

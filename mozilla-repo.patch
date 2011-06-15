@@ -1,0 +1,70 @@
+# HG changeset patch
+# Parent 84ecc6172ec5f01c80346bdb819520d08f982bac
+
+diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
+--- a/toolkit/content/Makefile.in
++++ b/toolkit/content/Makefile.in
+@@ -61,17 +61,17 @@ MOZ_SOURCE_STAMP ?= $(shell hg -R $(tops
+ ifdef MOZ_SOURCE_STAMP
+ DEFINES += -DSOURCE_CHANGESET="$(MOZ_SOURCE_STAMP)"
+ endif
+ 
+ # strip a trailing slash from the repo URL because it's not always present,
+ # and we want to construct a working URL in buildconfig.html
+ # make+shell+sed = awful
+ _dollar=$$
+-SOURCE_REPO := $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
++SOURCE_REPO ?= $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
+ # extra sanity check for old versions of hg
+ # that don't support showconfig
+ ifeq (http,$(patsubst http%,http,$(SOURCE_REPO)))
+ DEFINES += -DSOURCE_REPO="$(SOURCE_REPO)"
+ endif
+ 
+ ifdef MOZ_TOOLKIT_SEARCH
+ DEFINES += -DMOZ_TOOLKIT_SEARCH
+diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
+--- a/toolkit/mozapps/installer/package-name.mk
++++ b/toolkit/mozapps/installer/package-name.mk
+@@ -154,17 +154,17 @@ SYMBOL_ARCHIVE_BASENAME = $(PKG_BASENAME
+ TEST_PACKAGE = $(PKG_BASENAME).tests.zip
+ 
+ ifneq (,$(wildcard $(DIST)/bin/application.ini))
+ BUILDID = $(shell $(PYTHON) $(MOZILLA_DIR)/config/printconfigsetting.py $(DIST)/bin/application.ini App BuildID)
+ else
+ BUILDID = $(shell $(PYTHON) $(MOZILLA_DIR)/config/printconfigsetting.py $(DIST)/bin/platform.ini Build BuildID)
+ endif
+ 
+-MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node|short}\n" 2>/dev/null))
++#MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node|short}\n" 2>/dev/null))
+ 
+ # strip a trailing slash from the repo URL because it's not always present,
+ # and we want to construct a working URL in the sourcestamp file.
+ # make+shell+sed = awful
+ _dollar=$$
+-MOZ_SOURCE_REPO = $(shell cd $(MOZILLA_DIR) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
++#MOZ_SOURCE_REPO = $(shell cd $(MOZILLA_DIR) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
+ 
+ MOZ_SOURCESTAMP_FILE = $(DIST)/$(PKG_PATH)/$(PKG_BASENAME).txt
+diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
+--- a/toolkit/xre/Makefile.in
++++ b/toolkit/xre/Makefile.in
+@@ -235,17 +235,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
+ endif
+ endif
+ 
+ MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null))
+ # strip a trailing slash from the repo URL because it's not always present,
+ # and we want to construct a working URL in buildconfig.html
+ # make+shell+sed = awful
+ _dollar=$$
+-SOURCE_REPO := $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
++SOURCE_REPO ?= $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
+ 
+ ifdef MOZ_SOURCE_STAMP
+ INIARGS = --sourcestamp=$(MOZ_SOURCE_STAMP)
+ # extra sanity check for old versions of hg
+ # that don't support showconfig
+ ifeq (http,$(patsubst http%,http,$(SOURCE_REPO)))
+ INIARGS += --sourcerepo=$(SOURCE_REPO)
+ endif

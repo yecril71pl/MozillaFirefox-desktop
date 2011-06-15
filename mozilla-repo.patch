@@ -1,6 +1,28 @@
 # HG changeset patch
 # Parent 84ecc6172ec5f01c80346bdb819520d08f982bac
 
+diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
+--- a/browser/app/Makefile.in
++++ b/browser/app/Makefile.in
+@@ -67,17 +67,17 @@ GRE_BUILDID = $(shell $(PYTHON) $(topsrc
+ 
+ DEFINES += -DGRE_MILESTONE=$(GRE_MILESTONE) -DGRE_BUILDID=$(GRE_BUILDID)
+ 
+ MOZ_SOURCE_STAMP ?= $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null)
+ ifdef MOZ_SOURCE_STAMP
+ DEFINES += -DMOZ_SOURCE_STAMP="$(MOZ_SOURCE_STAMP)"
+ endif
+ 
+-SOURCE_REPO := $(shell hg -R $(topsrcdir) showconfig paths.default 2>/dev/null | sed -e "s/^ssh:/http:/")
++SOURCE_REPO ?= $(shell hg -R $(topsrcdir) showconfig paths.default 2>/dev/null | sed -e "s/^ssh:/http:/")
+ ifdef SOURCE_REPO
+ DEFINES += -DMOZ_SOURCE_REPO="$(SOURCE_REPO)"
+ endif
+ 
+ LIBS += $(JEMALLOC_LIBS)
+ 
+ ifdef LIBXUL_SDK
+ include $(topsrcdir)/config/rules.mk
 diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 --- a/toolkit/content/Makefile.in
 +++ b/toolkit/content/Makefile.in

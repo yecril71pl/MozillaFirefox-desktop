@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011053000
+%define         releasedate 2011061300
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -51,6 +51,7 @@ Source1:        MozillaFirefox.desktop
 Source2:        MozillaFirefox-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
+Source5:        source-stamp.txt
 Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
@@ -71,6 +72,7 @@ Patch8:         mozilla-gio.patch
 Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
 Patch11:        mozilla-ppc-ipc.patch
+Patch12:        mozilla-repo.patch
 # Firefox/browser
 Patch30:        firefox-linkorder.patch
 Patch31:        firefox-browser-css.patch
@@ -201,6 +203,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 #
 %patch30 -p1
 %patch31 -p1
@@ -231,6 +234,10 @@ if test "$kdehelperversion" != %{kde_helper_version}; then
   echo fix kde helper version in the .spec file
   exit 1
 fi
+source %{SOURCE5}
+export MOZ_SOURCE_STAMP=$REV
+export SOURCE_REPO=$REPO
+export MOZ_SOURCE_REPO=$REPO
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
@@ -290,6 +297,9 @@ make -f client.mk build
 %install
 cd $RPM_BUILD_DIR/obj
 rm dist/bin/defaults/pref/firefox-l10n.js
+source %{SOURCE5}
+export MOZ_SOURCE_STAMP=$REV
+export MOZ_SOURCE_REPO=$REPO
 make -C browser/installer STRIP=/bin/true
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}

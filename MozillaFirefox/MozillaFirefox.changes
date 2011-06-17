@@ -1,5 +1,11 @@
 -------------------------------------------------------------------
-Fri Jun 10 08:17:36 UTC 2011 - wr@rosenauer.org
+Fri Jun 17 13:13:47 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0b7
+  * updated supported locales
+
+-------------------------------------------------------------------
+Wed Jun 15 14:59:32 UTC 2011 - wr@rosenauer.org
 
 - update to 5.0b6
 - include proper revision information into the build
@@ -13,6 +19,18 @@ Tue May 31 06:53:55 UTC 2011 - wr@rosenauer.org
   (with new Firefox rapid release cycle it makes no sense anymore)
   * imported all relevant xulrunner patches
 - do not compile in build timestamp
+
+-------------------------------------------------------------------
+Fri Apr 15 07:08:53 UTC 2011 - wr@rosenauer.org
+
+- security update to 4.0.1 (bnc#689281)
+  * MFSA 2011-12/ CVE-2011-0069 CVE-2011-0070 CVE-2011-0079
+    CVE-2011-0080 CVE-2011-0081
+    Miscellaneous memory safety hazards
+  * MFSA 2011-17/CVE-2011-0068 (bmo#623791)
+    WebGLES vulnerabilities
+  * MFSA 2011-18/CVE-2011-1202 (bmo#640339)
+    XSLT generate-id() function heap address leak
 
 -------------------------------------------------------------------
 Wed Mar 30 11:24:36 UTC 2011 - wr@rosenauer.org

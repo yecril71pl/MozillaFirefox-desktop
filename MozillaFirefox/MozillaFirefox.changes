@@ -1,8 +1,10 @@
 -------------------------------------------------------------------
-Fri Jun 17 13:13:47 UTC 2011 - wr@rosenauer.org
+Mon Jun 20 09:17:42 UTC 2011 - wr@rosenauer.org
 
 - update to 5.0b7
   * updated supported locales
+- do not build dump_syms static (not needed for us)
+  -> fix build for openSUSE 12.1 and above
 
 -------------------------------------------------------------------
 Wed Jun 15 14:59:32 UTC 2011 - wr@rosenauer.org

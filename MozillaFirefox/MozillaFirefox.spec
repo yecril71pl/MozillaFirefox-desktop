@@ -73,6 +73,7 @@ Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
 Patch11:        mozilla-ppc-ipc.patch
 Patch12:        mozilla-repo.patch
+Patch13:        mozilla-dump_syms-static.patch
 # Firefox/browser
 Patch30:        firefox-linkorder.patch
 Patch31:        firefox-browser-css.patch
@@ -204,6 +205,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 #
 %patch30 -p1
 %patch31 -p1

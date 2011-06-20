@@ -17,6 +17,7 @@ mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch
 mozilla-ppc-ipc.patch
 mozilla-repo.patch
+mozilla-dump_syms-static.patch
 
 # Firefox patches
 firefox-linkorder.patch

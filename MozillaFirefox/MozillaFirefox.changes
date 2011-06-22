@@ -1,4 +1,33 @@
 -------------------------------------------------------------------
+Wed Jun 22 06:41:17 UTC 2011 - wr@rosenauer.org
+
+- enable startup notification (bnc#701465)
+
+-------------------------------------------------------------------
+Mon Jun 20 19:37:01 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0 final
+- included fixes for security issues: (bnc#701296, bnc#700578)
+  * MFSA 2011-19/CVE-2011-2374 CVE-2011-2375
+    Miscellaneous memory safety hazards
+  * MFSA 2011-20/CVE-2011-2373 (bmo#617247)
+    Use-after-free vulnerability when viewing XUL document with
+    script disabled
+  * MFSA 2011-21/CVE-2011-2377 (bmo#638018, bmo#639303)
+    Memory corruption due to multipart/x-mixed-replace images
+  * MFSA 2011-22/CVE-2011-2371 (bmo#664009)
+    Integer overflow and arbitrary code execution in
+    Array.reduceRight()
+  * MFSA 2011-25/CVE-2011-2366
+    Stealing of cross-domain images using WebGL textures
+  * MFSA 2011-26/CVE-2011-2367 CVE-2011-2368
+    Multiple WebGL crashes
+  * MFSA 2011-27/CVE-2011-2369 (bmo#650001)
+    XSS encoding hazard with inline SVG
+  * MFSA 2011-28/CVE-2011-2370 (bmo#645699)
+    Non-whitelisted site can trigger xpinstall
+
+-------------------------------------------------------------------
 Mon Jun 20 09:17:42 UTC 2011 - wr@rosenauer.org
 
 - update to 5.0b7

@@ -74,6 +74,7 @@ Patch10:        mozilla-ntlm-full-path.patch
 Patch11:        mozilla-ppc-ipc.patch
 Patch12:        mozilla-repo.patch
 Patch13:        mozilla-dump_syms-static.patch
+Patch14:        mozilla-sle11.patch
 # Firefox/browser
 Patch30:        firefox-linkorder.patch
 Patch31:        firefox-browser-css.patch
@@ -206,6 +207,9 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%if %suse_version < 1120
+%patch14 -p1
+%endif
 #
 %patch30 -p1
 %patch31 -p1

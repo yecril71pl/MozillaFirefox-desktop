@@ -9,7 +9,6 @@ mozilla-kde.patch
 #mozilla-gconf-backend.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
-#mozilla-cpuid.patch
 mozilla-cairo-lcd.patch
 mozilla-language.patch
 mozilla-gio.patch
@@ -18,6 +17,7 @@ mozilla-ntlm-full-path.patch
 mozilla-ppc-ipc.patch
 mozilla-repo.patch
 mozilla-dump_syms-static.patch
+mozilla-sle11.patch
 
 # Firefox patches
 firefox-linkorder.patch

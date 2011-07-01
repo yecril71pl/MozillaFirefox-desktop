@@ -495,7 +495,6 @@ exit 0
 %dir %{progdir}/distribution/
 %{progdir}/chrome/icons
 %{progdir}/components/
-#%exclude %{progdir}/defaults/profile/bookmarks.html
 %{progdir}/defaults/
 %{progdir}/dictionaries/
 %dir %{progdir}/extensions/
@@ -509,7 +508,6 @@ exit 0
 %{progdir}/application.ini
 %{progdir}/blocklist.xml
 %{progdir}/dependentlibs.list
-#%{progdir}/greprefs.js
 %{progdir}/*.so
 %{progdir}/mozilla-xremote-client
 %{progdir}/omni.jar
@@ -552,11 +550,11 @@ exit 0
 %dir %{progdir}/extensions/
 %endif
 
-#%files branding-upstream
-#%defattr(-,root,root)
-#%dir %{progdir}
-#%dir %{progdir}/defaults/
-#%{progdir}/defaults/profile/bookmarks.html
+# this package does not need to provide files but is needed to fulfill
+# requirements if no other branding package is to be installed
+%files branding-upstream
+%defattr(-,root,root)
+%dir %{progdir}
 
 %if %crashreporter
 %files buildsymbols

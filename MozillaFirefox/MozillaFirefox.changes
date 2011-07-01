@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Jul  1 06:45:08 UTC 2011 - wr@rosenauer.org
+
+- create upstream branding package again (supposedly empty)
+  (bnc#703401)
+- fix build on SLE11 (changes do not affect/are not applied for
+  later versions)
+
+-------------------------------------------------------------------
 Wed Jun 22 06:41:17 UTC 2011 - wr@rosenauer.org
 
 - enable startup notification (bnc#701465)

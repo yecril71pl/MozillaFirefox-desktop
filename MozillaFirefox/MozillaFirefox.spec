@@ -162,7 +162,7 @@ of MozillaFirefox.
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Upstream branding for MozillaFirefox
 Group:          Productivity/Networking/Web/Browsers
-Provides:       %{name}-branding = 4.0
+Provides:       %{name}-branding = 5.0
 Conflicts:      otherproviders(%{name}-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -

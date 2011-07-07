@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jul  1 19:53:18 CEST 2011 - vuntz@opensuse.org
+
+- Add x-scheme-handler/ftp to the MimeType key in the .desktop, to
+  let desktops know that Firefox can deal with ftp: URIs.
+
+-------------------------------------------------------------------
 Fri Jul  1 06:45:08 UTC 2011 - wr@rosenauer.org
 
 - create upstream branding package again (supposedly empty)

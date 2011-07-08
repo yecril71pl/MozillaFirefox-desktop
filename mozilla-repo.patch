@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 84ecc6172ec5f01c80346bdb819520d08f982bac
+# Parent 1eb30390d6af83e41be9143c5d8c5fedf2ef69ef
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
@@ -19,10 +19,10 @@ diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
  DEFINES += -DMOZ_SOURCE_REPO="$(SOURCE_REPO)"
  endif
  
- LIBS += $(JEMALLOC_LIBS)
+ DEFINES += -DMOZ_APP_BASENAME="$(MOZ_APP_BASENAME)" \
+            -DMOZ_APP_VENDOR="$(MOZ_APP_VENDOR)"
  
- ifdef LIBXUL_SDK
- include $(topsrcdir)/config/rules.mk
+ ifdef MOZ_APP_PROFILE
 diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 --- a/toolkit/content/Makefile.in
 +++ b/toolkit/content/Makefile.in
@@ -71,7 +71,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -235,17 +235,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
+@@ -229,17 +229,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
  endif
  endif
  

@@ -11,24 +11,19 @@ mozilla-kde.patch
 #toolkit-ui-lockdown.patch
 mozilla-cairo-lcd.patch
 mozilla-language.patch
-mozilla-gio.patch
 mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch
-mozilla-ppc-ipc.patch
 mozilla-repo.patch
 mozilla-dump_syms-static.patch
 mozilla-sle11.patch
 
 # Firefox patches
-firefox-linkorder.patch
 firefox-browser-css.patch
 firefox-cross-desktop.patch
 firefox-kde.patch
 firefox-kde-114.patch
 #firefox-ui-lockdown.patch
-firefox-no-sync-l10n.patch
 firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
-firefox-shellservice.patch
 firefox-branded-icons.patch

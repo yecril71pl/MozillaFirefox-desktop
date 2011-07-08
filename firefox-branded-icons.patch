@@ -1,10 +1,10 @@
 # HG changeset patch
-# Parent 20b50e5bd650d19c30c308bb3b10f9903c83f581
+# Parent 0a9fd1d7099ccdff12205e23f0d9bf4d93a328ee
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
 +++ b/browser/app/Makefile.in
-@@ -277,16 +277,21 @@ endif
+@@ -221,16 +221,21 @@ endif
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
  libs::
@@ -26,34 +26,9 @@ diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
  	$(INSTALL) $(IFLAGS1) $(DIST)/branding/splash.bmp $(DIST)/bin
  endif
  endif
-diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
---- a/browser/installer/package-manifest.in
-+++ b/browser/installer/package-manifest.in
-@@ -423,18 +423,21 @@
- #ifdef SHIP_FEEDBACK
- @BINPATH@/distribution/extensions/testpilot@labs.mozilla.com.xpi
- #endif
- @BINPATH@/chrome/toolkit@JAREXT@
- @BINPATH@/chrome/toolkit.manifest
- #ifdef XP_UNIX
- #ifndef XP_MACOSX
- @BINPATH@/chrome/icons/default/default16.png
-+@BINPATH@/chrome/icons/default/default22.png
-+@BINPATH@/chrome/icons/default/default24.png
- @BINPATH@/chrome/icons/default/default32.png
- @BINPATH@/chrome/icons/default/default48.png
-+@BINPATH@/chrome/icons/default/default256.png
- #endif
- #endif
- 
- 
- ; shell icons
- #ifdef XP_UNIX
- #ifndef XP_MACOSX
- @BINPATH@/icons/*.xpm
-diff --git a/other-licenses/branding/firefox/Makefile.in b/other-licenses/branding/firefox/Makefile.in
---- a/other-licenses/branding/firefox/Makefile.in
-+++ b/other-licenses/branding/firefox/Makefile.in
+diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/Makefile.in
+--- a/browser/branding/official/Makefile.in
++++ b/browser/branding/official/Makefile.in
 @@ -68,18 +68,21 @@ OSX_BRANDING_FILES = \
  	firefox.icns \
  	disk.icns \
@@ -76,3 +51,28 @@ diff --git a/other-licenses/branding/firefox/Makefile.in b/other-licenses/brandi
  	firefox-os2.ico \
  	document-os2.ico \
  	$(NULL)
+diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
+--- a/browser/installer/package-manifest.in
++++ b/browser/installer/package-manifest.in
+@@ -416,18 +416,21 @@
+ #ifdef SHIP_FEEDBACK
+ @BINPATH@/distribution/extensions/testpilot@labs.mozilla.com.xpi
+ #endif
+ @BINPATH@/chrome/toolkit@JAREXT@
+ @BINPATH@/chrome/toolkit.manifest
+ #ifdef XP_UNIX
+ #ifndef XP_MACOSX
+ @BINPATH@/chrome/icons/default/default16.png
++@BINPATH@/chrome/icons/default/default22.png
++@BINPATH@/chrome/icons/default/default24.png
+ @BINPATH@/chrome/icons/default/default32.png
+ @BINPATH@/chrome/icons/default/default48.png
++@BINPATH@/chrome/icons/default/default256.png
+ #endif
+ #endif
+ 
+ 
+ ; shell icons
+ #ifdef XP_UNIX
+ #ifndef XP_MACOSX
+ @BINPATH@/icons/*.xpm

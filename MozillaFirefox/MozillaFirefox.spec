@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 5
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011061500
+%define         releasedate 2011070600
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -68,23 +68,18 @@ Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
 Patch6:         mozilla-cairo-lcd.patch
 Patch7:         mozilla-language.patch
-Patch8:         mozilla-gio.patch
 Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
-Patch11:        mozilla-ppc-ipc.patch
 Patch12:        mozilla-repo.patch
 Patch13:        mozilla-dump_syms-static.patch
 Patch14:        mozilla-sle11.patch
 # Firefox/browser
-Patch30:        firefox-linkorder.patch
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
 Patch33:        firefox-kde.patch
 Patch34:        firefox-kde-114.patch
-Patch36:        firefox-no-sync-l10n.patch
 Patch38:        firefox-no-default-ualocale.patch
 Patch39:        firefox-multilocale-chrome.patch
-Patch40:        firefox-shellservice.patch
 Patch41:        firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
@@ -201,17 +196,15 @@ cd $RPM_BUILD_DIR/mozilla
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %if %suse_version < 1120
 %patch14 -p1
 %endif
 #
-%patch30 -p1
+#%patch30 -p1
 %patch31 -p1
 %patch32 -p1
 %if %suse_version >= 1110
@@ -222,10 +215,9 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %if %suse_version >= 1140
 %patch34 -p1
 %endif
-%patch36 -p1
+#%patch36 -p1
 %patch38 -p1
 %patch39 -p1
-%patch40 -p1
 %patch41 -p1
 
 %build
@@ -276,7 +268,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=default
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
@@ -501,6 +493,7 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
+%{progdir}/hyphenation/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox-bin

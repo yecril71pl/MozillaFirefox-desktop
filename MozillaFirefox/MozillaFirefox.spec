@@ -204,7 +204,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %endif
 #
-#%patch30 -p1
 %patch31 -p1
 %patch32 -p1
 %if %suse_version >= 1110
@@ -215,7 +214,6 @@ install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %if %suse_version >= 1140
 %patch34 -p1
 %endif
-#%patch36 -p1
 %patch38 -p1
 %patch39 -p1
 %patch41 -p1

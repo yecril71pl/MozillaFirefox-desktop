@@ -23,7 +23,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1078 @@
+@@ -0,0 +1,1076 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -133,7 +133,9 @@ new file mode 100644
 +
 +# All sets except for popupsets (commands, keys, stringbundles and broadcasters) *must* go into the
 +# browser-sets.inc file for sharing with hiddenWindow.xul.
++#define FULL_BROWSER_WINDOW
 +#include browser-sets.inc
++#undef FULL_BROWSER_WINDOW
 +
 +  <popupset id="mainPopupSet">
 +    <menupopup id="tabContextMenu"
@@ -163,7 +165,7 @@ new file mode 100644
 +                oncommand="gBrowser.replaceTabWithWindow(TabContextMenu.contextTab);"/>
 +      <menuseparator/>
 +      <menuitem id="context_reloadAllTabs" label="&reloadAllTabs.label;" accesskey="&reloadAllTabs.accesskey;"
-+                tbattr="tabbrowser-multiple"
++                tbattr="tabbrowser-multiple-visible"
 +                oncommand="gBrowser.reloadAllTabs();"/>
 +      <menuitem id="context_bookmarkAllTabs"
 +                label="&bookmarkAllTabs.label;"
@@ -201,6 +203,7 @@ new file mode 100644
 +
 +    <panel id="editBookmarkPanel"
 +           type="arrow"
++           footertype="promobox"
 +           orient="vertical"
 +           ignorekeys="true"
 +           hidden="true"
@@ -264,7 +267,7 @@ new file mode 100644
 +           noautohide="true"
 +           titlebar="normal"
 +           close="true"
-+           onpopuphiding="InspectorUI.closeInspectorUI(true);"
++           onpopuphiding="InspectorUI.closeInspectorUI();"
 +           label="&inspectPanelTitle.label;">
 +      <toolbar id="inspector-toolbar"
 +               nowindowdrag="true">
@@ -361,8 +364,13 @@ new file mode 100644
 +
 +    <menupopup id="placesContext"/>
 +
-+    <panel id="notification-popup" type="arrow" position="after_start"
-+           hidden="true" orient="vertical"/>
++    <panel id="notification-popup"
++           type="arrow"
++           footertype="promobox"
++           position="after_start"
++           hidden="true"
++           orient="vertical"
++           role="alert"/>
 +
 +    <!-- Popup for site identity information -->
 +    <panel id="identity-popup"
@@ -487,15 +495,11 @@ new file mode 100644
 +#endif
 +
 +<deck flex="1" id="tab-view-deck">
-+<vbox flex="1">
++<vbox flex="1" id="browser-panel">
 +
 +  <toolbox id="navigator-toolbox"
 +           defaultmode="icons" mode="icons"
-+#ifdef WINCE
-+           defaulticonsize="small" iconsize="small"
-+#else
 +           iconsize="large"
-+#endif
 +           tabsontop="true"
 +           persist="tabsontop">
 +    <!-- Menu -->
@@ -523,13 +527,8 @@ new file mode 100644
 +    <toolbar id="nav-bar" class="toolbar-primary chromeclass-toolbar"
 +             toolbarname="&navbarCmd.label;" accesskey="&navbarCmd.accesskey;"
 +             fullscreentoolbar="true" mode="icons" customizable="true"
-+#ifdef WINCE
-+             iconsize="small" defaulticonsize="small"
-+             defaultset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,navigator-throbber,fullscreenflex,window-controls"
-+#else
 +             iconsize="large"
 +             defaultset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,fullscreenflex,window-controls"
-+#endif
 +             context="toolbar-context-menu">
 +
 +      <toolbaritem id="unified-back-forward-button" class="chromeclass-toolbar-additional"
@@ -877,9 +876,8 @@ new file mode 100644
 +                    key="key_tabview"
 +                    label="&viewTabGroups.label;"
 +                    command="Browser:ToggleTabView"
-+                    observes="tabviewGroupsNumber"
-+                    keepme="true"/>
-+          <menuseparator id="alltabs-popup-separator" keepme="true"/>
++                    observes="tabviewGroupsNumber"/>
++          <menuseparator id="alltabs-popup-separator"/>
 +        </menupopup>
 +      </toolbarbutton>
 +

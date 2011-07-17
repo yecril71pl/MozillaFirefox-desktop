@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Fri Jul  8 06:16:10 UTC 2011 - wr@rosenauer.org
+Sun Jul 17 09:22:31 UTC 2011 - wr@rosenauer.org
 
-- update to 6.0b1
+- update to 6.0b2
   * removed obsolete patches
     - firefox-shellservice.patch
     - mozilla-gio.patch

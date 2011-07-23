@@ -8,6 +8,7 @@ Fri Jul 22 13:34:12 UTC 2011 - wr@rosenauer.org
     - mozilla-ppc-ipc.patch
     - firefox-linkorder.patch
     - firefox-no-sync-l10n.patch
+- recognize linux3 as platform for symbolstore.py
 
 -------------------------------------------------------------------
 Fri Jul  1 19:53:18 CEST 2011 - vuntz@opensuse.org

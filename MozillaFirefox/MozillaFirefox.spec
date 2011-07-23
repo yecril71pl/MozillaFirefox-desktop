@@ -18,7 +18,7 @@
 
 # norootforbuild
 
-%define major 5
+%define major 6
 %define mainver %major.99
 
 Name:           MozillaFirefox
@@ -102,7 +102,7 @@ Requires:       %{name}-branding > 4.0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
@@ -195,7 +195,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#%patch6 -p1
 %patch7 -p1
 %patch9 -p1
 %patch10 -p1

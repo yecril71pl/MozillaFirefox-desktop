@@ -9,7 +9,7 @@ mozilla-kde.patch
 #mozilla-gconf-backend.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
-mozilla-cairo-lcd.patch
+#mozilla-cairo-lcd.patch
 mozilla-language.patch
 mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch

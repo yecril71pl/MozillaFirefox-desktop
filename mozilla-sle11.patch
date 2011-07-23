@@ -2,30 +2,6 @@ Subject: Patches needed to build on SLE11/11.1
 References:
 https://bugzilla.mozilla.org/show_bug.cgi?id=513422
 
-diff --git a/gfx/cairo/cairo/src/cairo-xlib-surface.c b/gfx/cairo/cairo/src/cairo-xlib-surface.c
---- a/gfx/cairo/cairo/src/cairo-xlib-surface.c
-+++ b/gfx/cairo/cairo/src/cairo-xlib-surface.c
-@@ -4041,17 +4041,19 @@ _cairo_xlib_surface_add_glyph (Display *
- 	    new = malloc (4 * c);
- 	    if (unlikely (new == NULL)) {
- 		status = _cairo_error (CAIRO_STATUS_NO_MEMORY);
- 		goto BAIL;
- 	    }
- 	    n = new;
- 	    d = (uint32_t *) data;
- 	    do {
--		*n++ = bswap_32 (*d++);
-+		*n = bswap_32 (*d);
-+                *n++;
-+                *d++;
- 	    } while (--c);
- 	    data = (uint8_t *) new;
- 	}
- 	break;
-     case CAIRO_FORMAT_RGB24:
-     default:
- 	ASSERT_NOT_REACHED;
- 	break;
 diff --git a/xpcom/glue/SSE.cpp b/xpcom/glue/SSE.cpp
 --- a/xpcom/glue/SSE.cpp
 +++ b/xpcom/glue/SSE.cpp

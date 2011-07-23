@@ -16,6 +16,7 @@ mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-dump_syms-static.patch
 mozilla-sle11.patch
+mozilla-linux3.patch
 
 # Firefox patches
 firefox-browser-css.patch

@@ -73,6 +73,7 @@ Patch10:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-repo.patch
 Patch13:        mozilla-dump_syms-static.patch
 Patch14:        mozilla-sle11.patch
+Patch15:        mozilla-linux3.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -203,6 +204,7 @@ cd $RPM_BUILD_DIR/mozilla
 %if %suse_version < 1120
 %patch14 -p1
 %endif
+%patch15 -p1
 #
 %patch31 -p1
 %patch32 -p1

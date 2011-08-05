@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH="releases/mozilla-beta"
-RELEASE_TAG="FIREFOX_6_0b3_RELEASE"
+RELEASE_TAG="FIREFOX_6_0b5_RELEASE"
 VERSION="5.99"
 
 # mozilla

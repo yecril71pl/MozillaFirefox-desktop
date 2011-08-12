@@ -90,6 +90,7 @@ Patch19:        mozilla-ntlm-full-path.patch
 Patch20:        mozilla-gcc46.patch
 Patch21:        mozilla-implicit-declarations.patch
 Patch22:        mozilla-curl.patch
+Patch23:        mozilla-linux3.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -245,6 +246,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 %build
 %if %suse_version >= 1110

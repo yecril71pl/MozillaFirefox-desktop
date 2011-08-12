@@ -1,10 +1,14 @@
 -------------------------------------------------------------------
 Fri Aug  5 09:35:34 UTC 2011 - wr@rosenauer.org
 
-- security update to 1.9.2.20
+- security update to 1.9.2.20 (bnc#711954)
+  * fixed issues
+    https://www.mozilla.org/security/known-vulnerabilities/firefox36.html
 - added mozilla-implicit-declarations.patch to fix rpmlint/gcc
   checks
 - added mozilla-curl.patch to remove obsolete header dependency
+- added mozilla-linux3.patch to make python symbol dumper aware
+  of the "linux3" platform
 
 -------------------------------------------------------------------
 Mon Jun 20 09:32:58 UTC 2011 - wr@rosenauer.org

@@ -20,6 +20,7 @@ mozilla-ntlm-full-path.patch
 mozilla-gcc46.patch
 mozilla-implicit-declarations.patch
 mozilla-curl.patch
+mozilla-linux3.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

@@ -4,6 +4,7 @@ mozilla-libproxy.patch
 mozilla-pkgconfig.patch
 idldir.patch
 mozilla-nongnome-proxies.patch
+mozilla-dump_syms-static.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
 mozilla-kde.patch
@@ -17,6 +18,8 @@ mozilla-gdk-pixbuf.patch
 mozilla-prlog.patch
 mozilla-ntlm-full-path.patch
 mozilla-gcc46.patch
+mozilla-implicit-declarations.patch
+mozilla-curl.patch
 
 # Firefox patches
 firefox-libxul-sdk.patch

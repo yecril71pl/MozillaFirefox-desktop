@@ -1,8 +1,33 @@
 -------------------------------------------------------------------
-Tue Jun 14 09:36:29 UTC 2011 - wr@rosenauer.org
+Fri Aug  5 09:35:34 UTC 2011 - wr@rosenauer.org
 
-- security update to 1.9.2.18 (bnc#)
+- security update to 1.9.2.20
+- added mozilla-implicit-declarations.patch to fix rpmlint/gcc
+  checks
+- added mozilla-curl.patch to remove obsolete header dependency
+
+-------------------------------------------------------------------
+Mon Jun 20 09:32:58 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.18 (bnc#701296)
+  * MFSA 2011-19/CVE-2011-2374 CVE-2011-2376 CVE-2011-2364
+    CVE-2011-2365
+    Miscellaneous memory safety hazards
+  * MFSA 2011-20/CVE-2011-2373 (bmo#617247)
+    Use-after-free vulnerability when viewing XUL document with
+    script disabled
+  * MFSA 2011-21/CVE-2011-2377 (bmo#638018, bmo#639303)
+    Memory corruption due to multipart/x-mixed-replace images
+  * MFSA 2011-22/CVE-2011-2371 (bmo#664009)
+    Integer overflow and arbitrary code execution in
+    Array.reduceRight()
+  * MFSA 2011-23/CVE-2011-0083 CVE-2011-0085 CVE-2011-2363
+    Multiple dangling pointer vulnerabilities
+  * MFSA 2011-24/CVE-2011-2362 (bmo#616264)
+    Cookie isolation error
 - speedier find-external-requires.sh
+- do not build dump_syms static as it is not needed for us
+  -> fixes build for 12.1 and above
 
 -------------------------------------------------------------------
 Wed May 11 09:44:20 UTC 2011 - cgiboudeaux@gmx.com

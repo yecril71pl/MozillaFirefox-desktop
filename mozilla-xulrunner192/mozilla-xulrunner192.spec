@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        1.9.2.18
+Version:        1.9.2.20
 Release:        1
-%define         releasedate 2011061300
-%define         version_internal 1.9.2.18
+%define         releasedate 2011080400
+%define         version_internal 1.9.2.20
 %define         apiversion 1.9.2
-%define         uaweight 192180
+%define         uaweight 192200
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -72,6 +72,7 @@ Patch2:         mozilla-libproxy.patch
 Patch3:         mozilla-pkgconfig.patch
 Patch4:         idldir.patch
 Patch5:         mozilla-nongnome-proxies.patch
+Patch6:         mozilla-dump_syms-static.patch
 Patch7:         mozilla-prefer_plugin_pref.patch
 Patch8:         mozilla-shared-nss-db.patch
 Patch10:        mozilla-kde.patch
@@ -87,6 +88,8 @@ Patch17:        mozilla-gdk-pixbuf.patch
 Patch18:        mozilla-prlog.patch
 Patch19:        mozilla-ntlm-full-path.patch
 Patch20:        mozilla-gcc46.patch
+Patch21:        mozilla-implicit-declarations.patch
+Patch22:        mozilla-curl.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js192 = %{version}
 Requires(post):  update-alternatives coreutils
@@ -223,6 +226,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %if %suse_version >= 1110
@@ -239,6 +243,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 %build
 %if %suse_version >= 1110

@@ -1,7 +1,27 @@
 -------------------------------------------------------------------
+Fri Aug  5 09:37:39 UTC 2011 - wr@rosenauer.org
+
+- security update to 3.6.20
+
+-------------------------------------------------------------------
 Tue Jun 14 09:54:04 UTC 2011 - wr@rosenauer.org
 
-- security update to 3.6.18 (bnc#)
+- security update to 3.6.18 (bnc#701296)
+  * MFSA 2011-19/CVE-2011-2374 CVE-2011-2376 CVE-2011-2364
+    CVE-2011-2365
+    Miscellaneous memory safety hazards
+  * MFSA 2011-20/CVE-2011-2373 (bmo#617247)
+    Use-after-free vulnerability when viewing XUL document with
+    script disabled
+  * MFSA 2011-21/CVE-2011-2377 (bmo#638018, bmo#639303)
+    Memory corruption due to multipart/x-mixed-replace images
+  * MFSA 2011-22/CVE-2011-2371 (bmo#664009)
+    Integer overflow and arbitrary code execution in
+    Array.reduceRight()
+  * MFSA 2011-23/CVE-2011-0083 CVE-2011-0085 CVE-2011-2363
+    Multiple dangling pointer vulnerabilities
+  * MFSA 2011-24/CVE-2011-2362 (bmo#616264)
+    Cookie isolation error
 - speedier find-external-requires.sh
 
 -------------------------------------------------------------------

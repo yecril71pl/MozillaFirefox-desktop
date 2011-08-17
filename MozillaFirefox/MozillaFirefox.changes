@@ -1,7 +1,20 @@
 -------------------------------------------------------------------
 Fri Aug  5 09:37:39 UTC 2011 - wr@rosenauer.org
 
-- security update to 3.6.20
+- security update to 3.6.20 (bnc#712224)
+  fixed security issues MFSA 2011-30
+  * CVE-2011-2982
+    Miscellaneous memory safety hazards
+  * CVE-2011-0084 (bmo#648094)
+    Crash in SVGTextElement.getCharNumAtPosition()
+  * CVE-2011-2981
+    Privilege escalation using event handlers
+  * CVE-2011-2378 (bmo#572129)
+    Privilege escalation dropping a tab element in content area
+  * CVE-2011-2980 (bmo#642469)
+    Binary planting vulnerability in ThinkPadSensor::Startup
+  * CVE-2011-2983 (bmo#626297)
+    Private data leakage using RegExp.input
 
 -------------------------------------------------------------------
 Tue Jun 14 09:54:04 UTC 2011 - wr@rosenauer.org

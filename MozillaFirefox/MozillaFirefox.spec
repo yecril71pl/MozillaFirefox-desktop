@@ -29,13 +29,13 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.6
-BuildRequires:  mozilla-nss-devel >= 3.12.8
+BuildRequires:  mozilla-nspr-devel >= 4.8.8
+BuildRequires:  mozilla-nss-devel >= 3.12.10
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011080400
+%define         releasedate 2011081800
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -103,7 +103,7 @@ Requires:       %{name}-branding > 4.0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0

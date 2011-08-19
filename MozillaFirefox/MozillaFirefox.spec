@@ -29,8 +29,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.6
-BuildRequires:  mozilla-nss-devel >= 3.12.8
+BuildRequires:  mozilla-nspr-devel >= 4.8.8
+BuildRequires:  mozilla-nss-devel >= 3.12.10
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}

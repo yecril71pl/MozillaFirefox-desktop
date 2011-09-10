@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 6
-%define mainver %major.0
+%define mainver %major.0.2
 
 Name:           MozillaFirefox
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011081200
+%define         releasedate 2011090700
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}

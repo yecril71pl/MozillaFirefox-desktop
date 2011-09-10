@@ -39,12 +39,12 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        1.9.2.20
+Version:        1.9.2.22
 Release:        1
-%define         releasedate 2011080400
-%define         version_internal 1.9.2.20
+%define         releasedate 2011090700
+%define         version_internal 1.9.2.22
 %define         apiversion 1.9.2
-%define         uaweight 192200
+%define         uaweight 192220
 Summary:        Mozilla Runtime Environment 1.9.2
 Url:            http://www.mozilla.org
 Group:          Productivity/Other
@@ -213,7 +213,7 @@ KDE installations for example.
 %package buildsymbols
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
-Group:          Development/Debug
+Group:          Development/Tools/Other
 
 %description buildsymbols
 This subpackage contains the Breakpad created and compatible debugging

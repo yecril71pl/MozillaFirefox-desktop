@@ -1,4 +1,19 @@
 -------------------------------------------------------------------
+Wed Sep  7 14:30:34 UTC 2011 - pcerny@suse.com
+
+- security update to 1.9.2.22 (bnc#714931)
+  * Complete blocking of certificates issued by DigiNotar
+    (bmo#683449)
+
+-------------------------------------------------------------------
+Fri Sep  2 14:40:07 UTC 2011 - pcerny@suse.com
+
+- security update to 1.9.2.21 (bnc#714931)
+  * MFSA 2011-34
+    Protection against fraudulent DigiNotar certificates
+    (bmo#682927)
+
+-------------------------------------------------------------------
 Fri Aug  5 09:35:34 UTC 2011 - wr@rosenauer.org
 
 - security update to 1.9.2.20 (bnc#712224)

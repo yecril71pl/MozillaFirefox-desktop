@@ -22,7 +22,7 @@
 %define mainver %major.0.2
 
 Name:           MozillaFirefox
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
+BuildRequires:  autoconf213 dbus-1-glib-devel gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel

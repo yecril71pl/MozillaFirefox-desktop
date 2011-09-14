@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Sep 14 07:08:55 UTC 2011 - wr@rosenauer.org
+
+- add dbus-1-glib-devel to BuildRequires (not pulled in
+  automatically with 12.1)
+
+-------------------------------------------------------------------
 Wed Sep  7 14:30:34 UTC 2011 - pcerny@suse.com
 
 - security update to 1.9.2.22 (bnc#714931)

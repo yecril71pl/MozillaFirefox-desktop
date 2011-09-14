@@ -1,5 +1,5 @@
 #
-# spec file for package mozilla-xulrunner22
+# spec file for package xulrunner
 #
 # Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2011 Wolfgang Rosenauer
@@ -19,35 +19,31 @@
 # norootforbuild
 
 
-Name:           mozilla-xulrunner22
-BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel zip pkg-config fdupes hunspell-devel yasm Mesa-devel nss-shared-helper-devel
-# needed for brp-check-bytecode-version (jar, fastjar would do as well)
-BuildRequires:  unzip
+Name:           xulrunner
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config yasm nss-shared-helper-devel zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
+BuildRequires:  mozilla-nspr-devel >= 4.8.8
+BuildRequires:  mozilla-nss-devel >= 3.12.10
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        2.2a
+Version:        6.0.2
 Release:        1
-%define         releasedate 2011041100
-%define         version_internal 2.2a1pre
-%define         apiversion 2.2
-%define         uaweight 220000
-Summary:        Mozilla Runtime Environment 2.2
-Url:            http://www.mozilla.org
+%define         releasedate 2011091300
+%define         version_internal 6.0.2
+%define         apiversion 6
+%define         uaweight 600000
+Summary:        Mozilla Runtime Environment
+Url:            http://www.mozilla.org/
 Group:          Productivity/Other
-Provides:       gecko22
-# this is needed to match this package with the kde4 helper package without the main package
-# having a hard requirement on the kde4 package
-%define kde_helper_version 6
-Provides:       mozilla-kde4-version = %{kde_helper_version}
+Provides:       gecko
 %ifarch %ix86
-Provides:       mozilla-xulrunner22-32bit = %{version}-%{release}
+Provides:       xulrunner-32bit = %{version}-%{release}
 %endif
-Source:         xulrunner-source-%{version}.tar.bz2
+Source:         xulrunner-%{version}-source.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
 Source2:        find-external-requires.sh
 Source3:        %{name}-rpmlintrc
@@ -65,18 +61,11 @@ Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-shared-nss-db.patch
 Patch7:         mozilla-kde.patch
 Patch8:         mozilla-cairo-lcd.patch
-# PATCH-FEATURE-SLED FATE#302023, FATE#302024
-Patch9:         mozilla-gconf-backend.patch
-Patch10:         gecko-lockdown.patch
-Patch11:        toolkit-ui-lockdown.patch
-# ---
-Patch12:        mozilla-cpuid.patch
-Patch13:        mozilla-language.patch
-Patch14:        mozilla-gio.patch
-Patch15:        mozilla-cairo-return.patch
-Patch16:        mozilla-ntlm-full-path.patch
+Patch9:        mozilla-language.patch
+Patch10:        mozilla-cairo-return.patch
+Patch11:        mozilla-ntlm-full-path.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       mozilla-js22 = %{version}
+Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 ### build configuration ###
@@ -97,11 +86,9 @@ Requires(preun): update-alternatives coreutils
 %global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint' | %__find_provides"
 %global __find_provides %provfind
 %if %has_system_nspr
-BuildRequires:  mozilla-nspr-devel
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 %endif
 %if %has_system_nss
-BuildRequires:  mozilla-nss-devel >= 3.12.8
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
 Recommends:     %{name}-gnome
@@ -112,12 +99,12 @@ multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
 
-%package -n mozilla-js22
+%package -n mozilla-js
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Summary:        Mozilla JS 1.8.5 engine
+Summary:        Mozilla JS engine
 Group:          Productivity/Other
 
-%description -n mozilla-js22
+%description -n mozilla-js
 JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
@@ -126,7 +113,7 @@ with only mild differences from the published standard.
 
 %package devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Summary:        XULRunner/Gecko SDK 2.0
+Summary:        XULRunner/Gecko SDK
 Group:          Development/Libraries/Other
 %if %has_system_nspr
 Requires:       mozilla-nspr-devel >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr-devel)
@@ -140,10 +127,9 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
-
 %package translations-common
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Summary:        Common translations for XULRunner 2.0
+Summary:        Common translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
@@ -160,7 +146,7 @@ delivered in the main package.
 
 %package translations-other
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Summary:        Extra translations for XULRunner 2.0
+Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
 Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
@@ -209,23 +195,17 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-#%patch9 -p1
-#%patch10 -p1
-#%patch11 -p1
-%if %suse_version < 1120
-#%patch12 -p1
-%endif
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
-kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
-if test "$kdehelperversion" != %{kde_helper_version}; then
-  echo fix kde helper version in the .spec file
-  exit 1
-fi
+# no need to add build time to binaries
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/%{name}.changes")"
+DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
+TIME="\"$(date -d "${modified}" "+%%R")\""
+find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
+#
 source other-licenses/branding/firefox/configure.sh
 unset MOZ_APP_DISPLAYNAME
 export MOZ_UA_BUILDID
@@ -259,15 +239,13 @@ ac_add_options --enable-extensions=default
 #ac_add_options --with-system-jpeg # mozilla uses internal libjpeg-turbo now
 #ac_add_options --with-system-png  # no APNG support
 ac_add_options --with-system-zlib
-ac_add_options --with-l10n-base=../l10n
+ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 ac_add_options --disable-tests
 ac_add_options --disable-mochitest
 ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-javaxpcom
 ac_add_options --enable-startup-notification
-ac_add_options --enable-url-classifier
-ac_add_options --enable-system-hunspell
 ac_add_options --enable-shared-js
 #ac_add_options --enable-debug
 EOF
@@ -506,7 +484,7 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
-%files -n mozilla-js22
+%files -n mozilla-js
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %{_libdir}/xulrunner-%{apiversion}

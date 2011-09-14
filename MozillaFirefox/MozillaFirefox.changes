@@ -1,8 +1,14 @@
 -------------------------------------------------------------------
-Tue Sep 13 16:47:05 UTC 2011 - wr@rosenauer.org
+Wed Sep 14 07:02:04 UTC 2011 - wr@rosenauer.org
 
 - add dbus-1-glib-devel to BuildRequires (not pulled in
   automatically anymore on 12.1)
+- increase minversions for NSPR and NSS
+
+-------------------------------------------------------------------
+Fri Sep  9 20:44:15 UTC 2011 - wr@rosenauer.org
+
+- recreated source archive to get correct source-stamp.txt
 
 -------------------------------------------------------------------
 Wed Sep  7 14:30:34 UTC 2011 - pcerny@suse.com

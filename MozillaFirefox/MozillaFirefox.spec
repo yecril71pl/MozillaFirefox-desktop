@@ -22,7 +22,7 @@
 %define mainver %major.0.2
 
 Name:           MozillaFirefox
-BuildRequires:  autoconf213 dbus-1-glib-devel gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -186,7 +186,6 @@ Group:          Development/Debug
 This subpackage contains the Breakpad created and compatible debugging
 symbols meant for upload to Mozilla's crash collector database.
 %endif
-
 
 %prep
 %setup -q -n mozilla -b 7 -b 10
@@ -547,6 +546,7 @@ exit 0
 
 # this package does not need to provide files but is needed to fulfill
 # requirements if no other branding package is to be installed
+
 %files branding-upstream
 %defattr(-,root,root)
 %dir %{progdir}

@@ -20,7 +20,7 @@
 
 
 Name:           xulrunner
-BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config yasm nss-shared-helper-devel zip
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config yasm nss-shared-helper-devel zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -51,19 +51,20 @@ Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
 Source7:        baselibs.conf
-Source8:        toolkit-lockdown.js
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
-Patch6:         mozilla-shared-nss-db.patch
-Patch7:         mozilla-kde.patch
 Patch8:         mozilla-cairo-lcd.patch
-Patch9:        mozilla-language.patch
+Patch9:         mozilla-language.patch
 Patch10:        mozilla-cairo-return.patch
 Patch11:        mozilla-ntlm-full-path.patch
+Patch12:        mozilla-dump_syms-static.patch
+Patch13:        mozilla-sle11.patch
+Patch14:        mozilla-linux3.patch
+Patch15:        mozilla-curl.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -72,7 +73,7 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 1
+%define localize 0
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
 %define plugincontainer  0
@@ -91,7 +92,6 @@ Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr
 %if %has_system_nss
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 %endif
-Recommends:     %{name}-gnome
 
 %description
 XULRunner is a single installable package that can be used to bootstrap
@@ -160,19 +160,6 @@ Thunderbird.
 This package contains rarely used languages.
 %endif
 
-%package gnome
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Summary:        XULRunner components depending on gnome-vfs
-Group:          Productivity/Other
-Requires:       %{name} = %{version}-%{release}
-Requires(post): coreutils
-
-%description gnome
-This subpackage contains the Gnome components which rely on certain
-Gnome subsystems to be installed. They are recommended for full
-desktop integration but not mandatory for small disk footprint
-KDE installations for example.
-
 
 %if %crashreporter
 %package buildsymbols
@@ -192,12 +179,17 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%if %suse_version < 1120
+%patch13 -p1
+%endif
+%patch14 -p1
+%patch15 -p1
+
 
 %build
 # no need to add build time to binaries
@@ -206,9 +198,6 @@ DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
 #
-source other-licenses/branding/firefox/configure.sh
-unset MOZ_APP_DISPLAYNAME
-export MOZ_UA_BUILDID
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
@@ -245,6 +234,7 @@ ac_add_options --disable-mochitest
 ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-javaxpcom
+ac_add_options --enable-system-hunspell
 ac_add_options --enable-startup-notification
 ac_add_options --enable-shared-js
 #ac_add_options --enable-debug
@@ -290,6 +280,8 @@ make -f client.mk build
 
 %install
 cd ../obj
+# preferences (to package in omni.jar)
+cp %{SOURCE4} dist/bin/defaults/pref/all-openSUSE.js
 %makeinstall STRIP=/bin/true
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
@@ -316,11 +308,6 @@ tar --exclude=*.cpp --exclude=*.mm \
     mozilla/testing mozilla/toolkit/mozapps/installer mozilla/probes mozilla/memory \
     mozilla/toolkit/xre mozilla/nsprpub/config mozilla/tools mozilla/xpcom/build
 popd
-# XPI example
-#cp -rL dist/xpi-stage/simple $RPM_BUILD_ROOT/%{_libdir}/xulrunner-%{version_internal}/
-# preferences
-cp %{SOURCE4} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/defaults/pref/all-openSUSE.js
-cp %{SOURCE8} $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/defaults/pref/lockdown.js
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
   %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
@@ -333,7 +320,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|bn-IN)
+   ja-JP-mac|en-US)
       ;;
    *)
       pushd $RPM_BUILD_DIR/compare-locales
@@ -341,21 +328,19 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
         scripts/compare-locales -m ../l10n-merged/$locale \
 	../mozilla/toolkit/locales/l10n.ini ../l10n $locale
       popd
-      LOCALE_MERGEDIR=../l10n-merged \
-      make -C toolkit/locales libs-$locale
-      cp dist/xpi-stage/locale-$locale/chrome/$locale.jar \
-         $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/chrome
-      cp dist/xpi-stage/locale-$locale/chrome/$locale.manifest \
-         $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/chrome
+      LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
+      make -C toolkit/locales langpack-$locale
+      cp dist/xpi-stage/locale-$locale \
+         $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions/langpack-$locale@firefox.mozilla.org
+      # remove prefs and profile defaults from langpack
+      rm -rf $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions/langpack-$locale@firefox.mozilla.org/defaults
       # check against the fixed common list and sort into the right filelist
       _matched=0
       for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
         [ "$_match" = "$locale" ] && _matched=1
       done
       [ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other
-      echo %{_libdir}/xulrunner-%{version_internal}/chrome/$locale.jar \
-         >> %{_tmppath}/translations.$_l10ntarget
-      echo %{_libdir}/xulrunner-%{version_internal}/chrome/$locale.manifest \
+      echo %{_libdir}/xulrunner-%{version_internal}/extensions/langpack-$locale@firefox.mozilla.org \ \
          >> %{_tmppath}/translations.$_l10ntarget
   esac
 done
@@ -376,6 +361,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/LICENSE
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/nspr-config
+rm -f $RPM_BUILD_ROOT%{_libdir}/pkgconfig/mozilla-plugin.pc
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
@@ -437,21 +423,11 @@ exit 0
 %dir %{_libdir}/xulrunner-%{version_internal}/chrome/
 %dir %{_libdir}/xulrunner-%{version_internal}/dictionaries/
 %dir %{_libdir}/xulrunner-%{version_internal}/extensions/
-%{_libdir}/xulrunner-%{version_internal}/chrome/en-US.*
-%{_libdir}/xulrunner-%{version_internal}/chrome/pippki.*
-%{_libdir}/xulrunner-%{version_internal}/chrome/toolkit.*
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
-%exclude %{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
-%if %suse_version <= 1130
-%exclude %{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
-%endif
-%{_libdir}/xulrunner-%{version_internal}/defaults/
-%{_libdir}/xulrunner-%{version_internal}/greprefs.js
+%{_libdir}/xulrunner-%{version_internal}/hyphenation/
 %{_libdir}/xulrunner-%{version_internal}/icons/
-%{_libdir}/xulrunner-%{version_internal}/modules/
 %{_libdir}/xulrunner-%{version_internal}/plugins/
-%{_libdir}/xulrunner-%{version_internal}/res/
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
@@ -466,6 +442,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
+%{_libdir}/xulrunner-%{version_internal}/omni.jar
 # crashreporter files
 %if %crashreporter
 %{_libdir}/xulrunner-%{version_internal}/crashreporter
@@ -494,22 +471,11 @@ exit 0
 %defattr(-,root,root)
 %{_libdir}/xulrunner-%{version_internal}/xpcshell
 %{_libdir}/xulrunner-%{version_internal}/xpidl
-%{_libdir}/xulrunner-%{version_internal}/xpt_dump
-%{_libdir}/xulrunner-%{version_internal}/xpt_link
 %{_libdir}/xulrunner-devel-%{version_internal}/
 # FIXME symlink dynamic libs below sdk/lib
 %attr(644,root,root) %{_libdir}/pkgconfig/*
 %{_includedir}/xulrunner-%{version_internal}/
 %{_datadir}/xulrunner-%{version_internal}/
-
-%files gnome
-%defattr(-,root,root)
-%dir %{_libdir}/xulrunner-%{version_internal}/
-%dir %{_libdir}/xulrunner-%{version_internal}/components/
-%{_libdir}/xulrunner-%{version_internal}/components/libmozgnome.so
-%if %suse_version <= 1130
-%{_libdir}/xulrunner-%{version_internal}/components/libnkgnomevfs.so
-%endif
 
 %if %localize
 %files translations-common -f %{_tmppath}/translations.common

@@ -1,15 +1,20 @@
 #!/bin/bash
 
-BRANCH="mozilla-central"
-RELEASE_TAG="default"
-VERSION="2.2a"
+BRANCH="releases/mozilla-beta"
+RELEASE_TAG="FIREFOX_7_0b5_RELEASE"
+VERSION="6.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla
 pushd mozilla
 [ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
+# get repo and source stamp
+echo -n "REV=" > ../source-stamp.txt
+hg -R . parent --template="{node|short}\n" >> ../source-stamp.txt
+echo -n "REPO=" >> ../source-stamp.txt
+hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" >> ../source-stamp.txt
 popd
-tar cjf xulrunner-source-$VERSION.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
+tar cjf xulrunner-$VERSION-source.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
 
 # l10n
 test ! -d l10n && mkdir l10n
@@ -18,7 +23,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
     ja-JP-mac|en-US)
       ;;
     *)
-      hg clone http://hg.mozilla.org/l10n-central/$locale l10n/$locale
+      hg clone http://hg.mozilla.org/releases/l10n/mozilla-beta/$locale l10n/$locale
       [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
       ;;
   esac

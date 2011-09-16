@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 16 06:57:38 UTC 2011 - wr@rosenauer.org
+
+- fixed loading of kde.js under KDE (bnc#718311)
+
+-------------------------------------------------------------------
 Wed Sep 14 07:02:04 UTC 2011 - wr@rosenauer.org
 
 - add dbus-1-glib-devel to BuildRequires (not pulled in

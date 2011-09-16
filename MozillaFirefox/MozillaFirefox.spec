@@ -212,8 +212,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch32 -p1
 %if %suse_version >= 1110
 %patch33 -p1
-# install kde.js
-install -m 644 %{SOURCE6} browser/app/profile/kde.js
 %endif
 %if %suse_version >= 1140
 %patch34 -p1
@@ -310,6 +308,10 @@ mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 find $RPM_BUILD_ROOT%{progdir} \
      -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
+# install kde.js
+%if %suse_version >= 1110
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/pref/kde.js
+%endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
   %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh

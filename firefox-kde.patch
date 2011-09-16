@@ -1,24 +1,3 @@
-diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
---- a/browser/app/Makefile.in
-+++ b/browser/app/Makefile.in
-@@ -44,16 +44,17 @@ srcdir		= @srcdir@
- VPATH		= @srcdir@
- 
- include $(DEPTH)/config/autoconf.mk
- 
- DIRS		= profile/extensions
- 
- PREF_JS_EXPORTS = $(srcdir)/profile/firefox.js \
- 		  $(srcdir)/profile/channel-prefs.js \
-+		  $(srcdir)/profile/kde.js \
- 		  $(NULL)
- 
- 
- # hardcode en-US for the moment
- AB_CD = en-US
- 
- DEFINES += -DAB_CD=$(AB_CD)
- 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
 --- /dev/null

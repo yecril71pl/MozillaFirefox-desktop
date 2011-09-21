@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Sep 21 10:17:09 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.23
+- bring KDE's dialog.xml in sync with original widget
+
+-------------------------------------------------------------------
 Wed Sep 14 07:08:55 UTC 2011 - wr@rosenauer.org
 
 - add dbus-1-glib-devel to BuildRequires (not pulled in

@@ -634,7 +634,7 @@ diff --git a/toolkit/content/widgets/dialog-kde.xml b/toolkit/content/widgets/di
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/content/widgets/dialog-kde.xml
-@@ -0,0 +1,445 @@
+@@ -0,0 +1,447 @@
 +<?xml version="1.0"?>
 +
 +<bindings id="dialogBindings"
@@ -808,27 +808,29 @@ new file mode 100644
 +              document.commandDispatcher.advanceFocusIntoSubtree(dialog);
 +
 +              var focusedElt = document.commandDispatcher.focusedElement;
-+              var initialFocusedElt = focusedElt;
-+              while (focusedElt.localName == "tab" ||
-+                     focusedElt.getAttribute("noinitialfocus") == "true") {
-+                document.commandDispatcher.advanceFocusIntoSubtree(focusedElt);
-+                focusedElt = document.commandDispatcher.focusedElement;
-+                if (focusedElt == initialFocusedElt)
-+                  break;
-+              }
-+
-+              if (initialFocusedElt.localName == "tab") {
-+                if (focusedElt.hasAttribute("dlgtype")) {
-+                  // We don't want to focus on anonymous OK, Cancel, etc. buttons,
-+                  // so return focus to the tab itself
-+                  initialFocusedElt.focus();
++              if (focusedElt) {
++                var initialFocusedElt = focusedElt;
++                while (focusedElt.localName == "tab" ||
++                       focusedElt.getAttribute("noinitialfocus") == "true") {
++                  document.commandDispatcher.advanceFocusIntoSubtree(focusedElt);
++                  focusedElt = document.commandDispatcher.focusedElement;
++                  if (focusedElt == initialFocusedElt)
++                    break;
 +                }
-+              }
++
++                if (initialFocusedElt.localName == "tab") {
++                  if (focusedElt.hasAttribute("dlgtype")) {
++                    // We don't want to focus on anonymous OK, Cancel, etc. buttons,
++                    // so return focus to the tab itself
++                    initialFocusedElt.focus();
++                  }
++                }
 +#ifndef XP_MACOSX
-+              else if (focusedElt.hasAttribute("dlgtype") && focusedElt != defaultButton) {
-+                defaultButton.focus();
-+              }
++                else if (focusedElt.hasAttribute("dlgtype") && focusedElt != defaultButton) {
++                  defaultButton.focus();
++                }
 +#endif
++              }
 +            }
 +
 +            try {
@@ -3982,7 +3984,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  #include <hildon-mime.h>
  #include <libosso.h>
  #endif
-@@ -1627,36 +1628,46 @@ nsLocalFile::Launch()
+@@ -1666,36 +1667,46 @@ nsLocalFile::Launch()
  
      return NS_OK;
  }
@@ -4035,7 +4037,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  NS_IMETHODIMP
  nsLocalFile::Launch()
  {
-@@ -1674,16 +1685,23 @@ nsLocalFile::Launch()
+@@ -1713,16 +1724,23 @@ nsLocalFile::Launch()
  
      if (nsnull == connection)
        return NS_ERROR_FAILURE;

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Sep 20 11:54:28 UTC 2011 - wr@rosenauer.org
+
+- install xpt.py into SDK (mozilla-639554.patch) (bnc#639554)
+
+-------------------------------------------------------------------
 Wed Sep 14 13:07:39 UTC 2011 - wr@rosenauer.org
 
 - initial xulrunner package

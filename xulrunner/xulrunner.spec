@@ -20,7 +20,7 @@
 
 
 Name:           xulrunner
-BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config yasm nss-shared-helper-devel zip
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel nss-shared-helper-devel pkg-config python startup-notification-devel unzip yasm zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -65,6 +65,7 @@ Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-curl.patch
+Patch16:        mozilla-639554.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -127,6 +128,7 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
+
 %package translations-common
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Common translations for XULRunner
@@ -160,8 +162,8 @@ Thunderbird.
 This package contains rarely used languages.
 %endif
 
-
 %if %crashreporter
+
 %package buildsymbols
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
@@ -189,7 +191,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch14 -p1
 %patch15 -p1
-
+%patch16 -p1
 
 %build
 # no need to add build time to binaries
@@ -283,6 +285,8 @@ cd ../obj
 # preferences (to package in omni.jar)
 cp %{SOURCE4} dist/bin/defaults/pref/all-openSUSE.js
 %makeinstall STRIP=/bin/true
+# xpt.py is not executable
+chmod a+x $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/bin/xpt.py
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
      -type f -perm -111 -exec chmod a-x {} \;
@@ -478,6 +482,7 @@ exit 0
 %{_datadir}/xulrunner-%{version_internal}/
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -490,6 +495,7 @@ exit 0
 %endif
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

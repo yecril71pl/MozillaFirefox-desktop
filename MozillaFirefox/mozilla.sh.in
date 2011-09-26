@@ -84,9 +84,6 @@ export MOZILLA_FIVE_HOME
 LD_LIBRARY_PATH=$MOZ_DIST_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 export LD_LIBRARY_PATH
 
-# ignore composite extension (needed for Flash)
-export XLIB_SKIP_ARGB_VISUALS=1
-
 # needed for SUN Java under Xorg >= 7.2
 export LIBXCB_ALLOW_SLOPPY_LOCK=1
 

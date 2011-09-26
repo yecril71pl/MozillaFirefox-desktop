@@ -1,4 +1,17 @@
 -------------------------------------------------------------------
+Fri Sep 23 11:22:22 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 7 (bnc#720264)
+  including
+  * Improve Responsiveness with Memory Reductions
+  * Instant Sync
+  * WebSocket protocol 8
+- removed obsolete mozilla-cairo-lcd.patch
+- rebased patches
+- removed XLIB_SKIP_ARGB_VISUALS=1 from environment in
+  mozilla.sh.in (bnc#680758)
+
+-------------------------------------------------------------------
 Fri Sep 16 06:57:38 UTC 2011 - wr@rosenauer.org
 
 - fixed loading of kde.js under KDE (bnc#718311)

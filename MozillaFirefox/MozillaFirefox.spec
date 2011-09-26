@@ -18,11 +18,11 @@
 
 # norootforbuild
 
-%define major 6
-%define mainver %major.99
+%define major 7
+%define mainver %major.0
 
 Name:           MozillaFirefox
-BuildRequires:  autoconf213 dbus-1-glib-devel gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files zip fdupes Mesa-devel yasm
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011090900
+%define         releasedate 2011092200
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -66,7 +66,6 @@ Patch2:         mozilla-nongnome-proxies.patch
 Patch3:         mozilla-prefer_plugin_pref.patch
 Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
-Patch6:         mozilla-cairo-lcd.patch
 Patch7:         mozilla-language.patch
 Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
@@ -130,6 +129,7 @@ Requires:       perl(Archive::Zip)
 Development files for Firefox to make packaging of addons easier.
 
 %if %localize
+
 %package translations-common
 Summary:        Common translations for MozillaFirefox
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
@@ -177,6 +177,7 @@ This package provides upstream look and feel for MozillaFirefox.
 
 
 %if %crashreporter
+
 %package buildsymbols
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
@@ -187,7 +188,6 @@ This subpackage contains the Breakpad created and compatible debugging
 symbols meant for upload to Mozilla's crash collector database.
 %endif
 
-
 %prep
 %setup -q -n mozilla -b 7 -b 10
 cd $RPM_BUILD_DIR/mozilla
@@ -196,7 +196,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#%patch6 -p1
 %patch7 -p1
 %patch9 -p1
 %patch10 -p1
@@ -268,7 +267,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=default
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
@@ -536,6 +535,7 @@ exit 0
 %config /etc/rpm/macros.%{progname}
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{progdir}
@@ -549,11 +549,13 @@ exit 0
 
 # this package does not need to provide files but is needed to fulfill
 # requirements if no other branding package is to be installed
+
 %files branding-upstream
 %defattr(-,root,root)
 %dir %{progdir}
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/*.zip

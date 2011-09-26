@@ -20,7 +20,7 @@
 
 
 Name:           xulrunner
-BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip pkg-config yasm nss-shared-helper-devel zip
+BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel nss-shared-helper-devel pkg-config python startup-notification-devel unzip yasm zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -30,10 +30,10 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        6.99
+Version:        7.0
 Release:        1
-%define         releasedate 2011091300
-%define         version_internal 7.0b5
+%define         releasedate 2011092200
+%define         version_internal 7.0
 %define         apiversion 7
 %define         uaweight 700000
 Summary:        Mozilla Runtime Environment
@@ -57,7 +57,6 @@ Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
-Patch8:         mozilla-cairo-lcd.patch
 Patch9:         mozilla-language.patch
 Patch10:        mozilla-cairo-return.patch
 Patch11:        mozilla-ntlm-full-path.patch
@@ -127,6 +126,7 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
+
 %package translations-common
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Common translations for XULRunner
@@ -160,8 +160,8 @@ Thunderbird.
 This package contains rarely used languages.
 %endif
 
-
 %if %crashreporter
+
 %package buildsymbols
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
@@ -179,7 +179,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
@@ -189,7 +188,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch14 -p1
 %patch15 -p1
-
 
 %build
 # no need to add build time to binaries
@@ -283,6 +281,8 @@ cd ../obj
 # preferences (to package in omni.jar)
 cp %{SOURCE4} dist/bin/defaults/pref/all-openSUSE.js
 %makeinstall STRIP=/bin/true
+# xpt.py is not executable
+chmod a+x $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/bin/xpt.py
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
      -type f -perm -111 -exec chmod a-x {} \;
@@ -478,6 +478,7 @@ exit 0
 %{_datadir}/xulrunner-%{version_internal}/
 
 %if %localize
+
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -490,6 +491,7 @@ exit 0
 %endif
 
 %if %crashreporter
+
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

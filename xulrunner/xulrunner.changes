@@ -1,0 +1,17 @@
+-------------------------------------------------------------------
+Fri Sep 23 11:36:04 UTC 2011 - wr@rosenauer.org
+
+- update to version 7.0 (bnc#720264)
+  - removed obsolete mozilla-cairo-lcd.patch
+  - rebased patches
+
+-------------------------------------------------------------------
+Tue Sep 20 11:54:28 UTC 2011 - wr@rosenauer.org
+
+- install xpt.py into SDK (mozilla-639554.patch) (bnc#639554)
+
+-------------------------------------------------------------------
+Wed Sep 14 13:07:39 UTC 2011 - wr@rosenauer.org
+
+- initial xulrunner package
+

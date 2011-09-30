@@ -30,12 +30,12 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        7.0
+Version:        7.0.1
 Release:        1
-%define         releasedate 2011092200
-%define         version_internal 7.0
+%define         releasedate 2011092900
+%define         version_internal 7.0.1
 %define         apiversion 7
-%define         uaweight 700000
+%define         uaweight 700001
 Summary:        Mozilla Runtime Environment
 Url:            http://www.mozilla.org/
 Group:          Productivity/Other

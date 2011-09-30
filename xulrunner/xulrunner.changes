@@ -1,9 +1,32 @@
 -------------------------------------------------------------------
+Fri Sep 30 10:59:54 UTC 2011 - wr@rosenauer.org
+
+- update to minor release 7.0.1
+  * fixed staged addon updates
+
+-------------------------------------------------------------------
 Fri Sep 23 11:36:04 UTC 2011 - wr@rosenauer.org
 
 - update to version 7.0 (bnc#720264)
-  - removed obsolete mozilla-cairo-lcd.patch
-  - rebased patches
+  * MFSA 2011-36/CVE-2011-2995/CVE-2011-2996/CVE-2011-2997
+    Miscellaneous memory safety hazards
+  * MFSA 2011-39/CVE-2011-3000 (bmo#655389)
+    Defense against multiple Location headers due to CRLF Injection
+  * MFSA 2011-40/CVE-2011-2372/CVE-2011-3001
+    Code installation through holding down Enter
+  * MFSA 2011-41/CVE-2011-3002/CVE-2011-3003 (bmo#680840, bmo#682335)
+    Potentially exploitable WebGL crashes
+  * MFSA 2011-42/CVE-2011-3232 (bmo#653672)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-43/CVE-2011-3004 (bmo#653926)
+    loadSubScript unwraps XPCNativeWrapper scope parameter
+  * MFSA 2011-44/CVE-2011-3005 (bmo#675747)
+    Use after free reading OGG headers
+  * MFSA 2011-45
+    Inferring keystrokes from motion data
+- removed obsolete mozilla-cairo-lcd.patch
+- rebased patches
 
 -------------------------------------------------------------------
 Tue Sep 20 11:54:28 UTC 2011 - wr@rosenauer.org

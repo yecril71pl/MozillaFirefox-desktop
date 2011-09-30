@@ -33,9 +33,9 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        %{mainver}
+Version:        %{mainver}.1
 Release:        1
-%define         releasedate 2011092200
+%define         releasedate 2011092900
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}

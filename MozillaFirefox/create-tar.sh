@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BRANCH="releases/mozilla-release"
-RELEASE_TAG="FIREFOX_7_0_RELEASE"
-VERSION="7.0"
+RELEASE_TAG="FIREFOX_7_0_1_RELEASE"
+VERSION="7.0.1"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

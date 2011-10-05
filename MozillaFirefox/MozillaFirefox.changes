@@ -3,6 +3,8 @@ Fri Sep 30 10:52:36 UTC 2011 - wr@rosenauer.org
 
 - update to minor release 7.0.1
   * fixed staged addon updates
+- set intl.locale.matchOS=true in the base package as it causes
+  too much confusion when it's only available with branding-openSUSE
 
 -------------------------------------------------------------------
 Fri Sep 23 11:22:22 UTC 2011 - wr@rosenauer.org

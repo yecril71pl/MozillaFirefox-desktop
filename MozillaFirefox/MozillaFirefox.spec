@@ -66,6 +66,7 @@ Patch2:         mozilla-nongnome-proxies.patch
 Patch3:         mozilla-prefer_plugin_pref.patch
 Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
+Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch9:         mozilla-cairo-return.patch
 Patch10:        mozilla-ntlm-full-path.patch
@@ -196,6 +197,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch9 -p1
 %patch10 -p1

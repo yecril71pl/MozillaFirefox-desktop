@@ -30,12 +30,12 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        7.0.1
+Version:        7.99
 Release:        1
-%define         releasedate 2011092900
-%define         version_internal 7.0.1
-%define         apiversion 7
-%define         uaweight 700001
+%define         releasedate 2011100400
+%define         version_internal 8.0b1
+%define         apiversion 8
+%define         uaweight 790001
 Summary:        Mozilla Runtime Environment
 Url:            http://www.mozilla.org/
 Group:          Productivity/Other
@@ -58,12 +58,10 @@ Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch9:         mozilla-language.patch
-Patch10:        mozilla-cairo-return.patch
 Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
-Patch15:        mozilla-curl.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -180,14 +178,12 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch4 -p1
 %patch5 -p1
 %patch9 -p1
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %if %suse_version < 1120
 %patch13 -p1
 %endif
 %patch14 -p1
-%patch15 -p1
 
 %build
 # no need to add build time to binaries

@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 732243388ea9cc592d30e1951f29a94a0ce5a035
+# Parent 07dc7ea11c92368cb7c137a403feaaa6861abb3c
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
@@ -26,9 +26,9 @@ diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 --- a/toolkit/content/Makefile.in
 +++ b/toolkit/content/Makefile.in
-@@ -61,17 +61,17 @@ MOZ_SOURCE_STAMP ?= $(shell hg -R $(tops
- ifdef MOZ_SOURCE_STAMP
- DEFINES += -DSOURCE_CHANGESET="$(MOZ_SOURCE_STAMP)"
+@@ -65,17 +65,17 @@ endif
+ ifeq (Android,$(OS_TARGET))
+ DEFINES += -DANDROID_PACKAGE_NAME=$(ANDROID_PACKAGE_NAME)
  endif
  
  # strip a trailing slash from the repo URL because it's not always present,
@@ -74,7 +74,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -231,17 +231,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
+@@ -227,17 +227,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
  endif
  endif
  

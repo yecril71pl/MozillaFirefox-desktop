@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 7
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
@@ -33,9 +33,9 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        %{mainver}.1
+Version:        %{mainver}
 Release:        1
-%define         releasedate 2011092900
+%define         releasedate 2011100400
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -68,13 +68,11 @@ Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
 Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
-Patch9:         mozilla-cairo-return.patch
-Patch10:        mozilla-ntlm-full-path.patch
-Patch12:        mozilla-repo.patch
-Patch13:        mozilla-dump_syms-static.patch
-Patch14:        mozilla-sle11.patch
-Patch15:        mozilla-linux3.patch
-Patch16:        mozilla-curl.patch
+Patch8:         mozilla-ntlm-full-path.patch
+Patch9:         mozilla-repo.patch
+Patch10:        mozilla-dump_syms-static.patch
+Patch11:        mozilla-sle11.patch
+Patch12:        mozilla-linux3.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -199,15 +197,13 @@ cd $RPM_BUILD_DIR/mozilla
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch12 -p1
-%patch13 -p1
 %if %suse_version < 1120
-%patch14 -p1
+%patch11 -p1
 %endif
-%patch15 -p1
-%patch16 -p1
+%patch12 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -269,7 +265,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=default
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

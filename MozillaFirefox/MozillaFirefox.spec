@@ -301,9 +301,6 @@ make -C browser/installer STRIP=/bin/true
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
 mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
-# remove some executable permissions
-find $RPM_BUILD_ROOT%{progdir} \
-     -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install kde.js
 %if %suse_version >= 1110
@@ -329,8 +326,8 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	popd
 	LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
   	make -C browser/locales langpack-$locale
-	cp -r dist/xpi-stage/locale-$locale \
-	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
+	cp -rL dist/xpi-stage/locale-$locale \
+	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs and profile defaults from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
 	# check against the fixed common list and sort into the right filelist
@@ -344,6 +341,13 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   esac
 done
 %endif
+# remove some executable permissions
+find $RPM_BUILD_ROOT%{progdir} \
+     -name "*.js" -o \
+     -name "*.jsm" -o \
+     -name "*.rdf" -o \
+     -name "*.properties" -o \
+     -name "*.dtd" | xargs chmod a-x
 # overwrite the mozilla start-script and link it to /usr/bin
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g

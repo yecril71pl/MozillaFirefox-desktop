@@ -240,6 +240,7 @@ export MOZ_SOURCE_REPO=$REPO
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
+export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"

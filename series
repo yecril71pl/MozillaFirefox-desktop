@@ -11,13 +11,11 @@ mozilla-preferences.patch
 #gecko-lockdown.patch
 #toolkit-ui-lockdown.patch
 mozilla-language.patch
-mozilla-cairo-return.patch
 mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-dump_syms-static.patch
 mozilla-sle11.patch
 mozilla-linux3.patch
-mozilla-curl.patch
 
 # Firefox patches
 firefox-browser-css.patch

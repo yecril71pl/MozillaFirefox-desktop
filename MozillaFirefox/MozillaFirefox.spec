@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 7
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
@@ -33,9 +33,9 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.8
 BuildRequires:  mozilla-nss-devel >= 3.12.10
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        %{mainver}.1
+Version:        %{mainver}
 Release:        1
-%define         releasedate 2011092900
+%define         releasedate 2011102000
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -68,13 +68,11 @@ Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
 Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
-Patch9:         mozilla-cairo-return.patch
-Patch10:        mozilla-ntlm-full-path.patch
-Patch12:        mozilla-repo.patch
-Patch13:        mozilla-dump_syms-static.patch
-Patch14:        mozilla-sle11.patch
-Patch15:        mozilla-linux3.patch
-Patch16:        mozilla-curl.patch
+Patch8:         mozilla-ntlm-full-path.patch
+Patch9:         mozilla-repo.patch
+Patch10:        mozilla-dump_syms-static.patch
+Patch11:        mozilla-sle11.patch
+Patch12:        mozilla-linux3.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -199,15 +197,13 @@ cd $RPM_BUILD_DIR/mozilla
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch12 -p1
-%patch13 -p1
 %if %suse_version < 1120
-%patch14 -p1
+%patch11 -p1
 %endif
-%patch15 -p1
-%patch16 -p1
+%patch12 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -270,7 +266,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=default
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
@@ -306,9 +302,6 @@ make -C browser/installer STRIP=/bin/true
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
 mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
-# remove some executable permissions
-find $RPM_BUILD_ROOT%{progdir} \
-     -name "*.js" -o -name "*.jsm" -o -name "*.rdf" | xargs chmod a-x
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install kde.js
 %if %suse_version >= 1110
@@ -334,8 +327,8 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	popd
 	LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
   	make -C browser/locales langpack-$locale
-	cp -r dist/xpi-stage/locale-$locale \
-	      $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
+	cp -rL dist/xpi-stage/locale-$locale \
+	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs and profile defaults from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
 	# check against the fixed common list and sort into the right filelist
@@ -349,6 +342,13 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   esac
 done
 %endif
+# remove some executable permissions
+find $RPM_BUILD_ROOT%{progdir} \
+     -name "*.js" -o \
+     -name "*.jsm" -o \
+     -name "*.rdf" -o \
+     -name "*.properties" -o \
+     -name "*.dtd" | xargs chmod a-x
 # overwrite the mozilla start-script and link it to /usr/bin
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g

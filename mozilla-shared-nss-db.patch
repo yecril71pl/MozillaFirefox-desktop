@@ -7,7 +7,7 @@ References:
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -579,16 +579,20 @@ MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS
+@@ -577,16 +577,20 @@ MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS
  
  GLIB_CFLAGS	= @GLIB_CFLAGS@
  GLIB_LIBS	= @GLIB_LIBS@
@@ -31,7 +31,7 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8625,16 +8625,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8680,16 +8680,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -109,7 +109,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  
  #include "nsNetUtil.h"
  #include "nsAppDirectoryServiceDefs.h"
-@@ -1761,18 +1768,34 @@ nsNSSComponent::InitializeNSS(PRBool sho
+@@ -1748,18 +1755,34 @@ nsNSSComponent::InitializeNSS(PRBool sho
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -167,4 +167,4 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
  	-framework SystemConfiguration \
  	-framework QuickTime \
  	-framework IOKit \
- 	-lcrypto \
+ 	-F/System/Library/PrivateFrameworks -framework CoreUI \

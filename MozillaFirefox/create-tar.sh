@@ -1,8 +1,9 @@
 #!/bin/bash
 
-BRANCH="releases/mozilla-release"
-RELEASE_TAG="FIREFOX_7_0_1_RELEASE"
-VERSION="7.0.1"
+CHANNEL="beta"
+BRANCH="releases/mozilla-$CHANNEL"
+RELEASE_TAG="FIREFOX_8_0b4_RELEASE"
+VERSION="7.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla
@@ -23,7 +24,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
     ja-JP-mac|en-US)
       ;;
     *)
-      hg clone http://hg.mozilla.org/releases/l10n/mozilla-release/$locale l10n/$locale
+      hg clone http://hg.mozilla.org/releases/l10n/mozilla-$CHANNEL/$locale l10n/$locale
       [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
       ;;
   esac

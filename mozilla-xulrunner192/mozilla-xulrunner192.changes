@@ -1,7 +1,22 @@
 -------------------------------------------------------------------
+Tue Nov  1 20:53:16 UTC 2011 - wr@rosenauer.org
+
+- security update to 1.9.2.24
+
+-------------------------------------------------------------------
 Wed Sep 21 10:17:09 UTC 2011 - wr@rosenauer.org
 
-- security update to 1.9.2.23
+- security update to 1.9.2.23 (bnc#720264)
+  * MFSA 2011-36/CVE-2011-2996 (bmo#555018)
+    Miscellaneous memory safety hazards
+  * MFSA 2011-37/CVE-2011-2998 (bmo#684815)
+    Integer underflow when using JavaScript RegExp
+  * MFSA 2011-38/CVE-2011-2999 (bmo#665548)
+    XSS via plugins and shadowed window.location object
+  * MFSA 2011-39/CVE-2011-3000 (bmo#655389)
+    Defense against multiple Location headers due to CRLF Injection
+  * MFSA 2011-40/CVE-2011-2372/CVE-2011-3001
+    Code installation through holding down Enter
 - bring KDE's dialog.xml in sync with original widget
 
 -------------------------------------------------------------------

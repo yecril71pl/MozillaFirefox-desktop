@@ -89,8 +89,10 @@ Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Requires:       %{name}-branding > 4.0
 # since Firefox uses plugin-container now nspluginwrapper is not useful
 # in i386 environments (bnc#727018)
+%if %suse_version > 1140
 %ifarch %ix86
 Obsoletes:      nspluginwrapper
+%endif
 %endif
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0

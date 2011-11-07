@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Sun Nov  6 08:23:04 UTC 2011 - wr@rosenauer.org
+
+- update to release 8.0 (bnc#728520)
+- rebased patches
+
+-------------------------------------------------------------------
 Fri Sep 30 10:59:54 UTC 2011 - wr@rosenauer.org
 
 - update to minor release 7.0.1

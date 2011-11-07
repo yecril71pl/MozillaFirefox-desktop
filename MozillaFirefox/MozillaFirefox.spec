@@ -18,8 +18,8 @@
 
 # norootforbuild
 
-%define major 7
-%define mainver %major.99
+%define major 8
+%define mainver %major.0
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011102000
+%define         releasedate 2011110500
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -266,7 +266,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=default
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

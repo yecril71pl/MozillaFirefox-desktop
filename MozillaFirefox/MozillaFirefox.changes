@@ -3,7 +3,6 @@ Sun Nov  6 08:20:59 UTC 2011 - wr@rosenauer.org
 
 - update to Firefox 8 (bnc#728520)
 - rebased patches
-- obsolete nspluginwrapper for i386 environments (bnc#727018)
 
 -------------------------------------------------------------------
 Thu Oct 20 12:34:47 UTC 2011 - wr@rosenauer.org

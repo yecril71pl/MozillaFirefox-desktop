@@ -2,6 +2,14 @@
 Sun Nov  6 08:20:59 UTC 2011 - wr@rosenauer.org
 
 - update to Firefox 8 (bnc#728520)
+  * MFSA 2011-47/CVE-2011-3648 (bmo#690225)
+    Potential XSS against sites using Shift-JIS
+  * MFSA 2011-48/CVE-2011-3651/CVE-2011-3652/CVE-2011-3654
+    Miscellaneous memory safety hazards
+  * MFSA 2011-49/CVE-2011-3650 (bmo#674776)
+    Memory corruption while profiling using Firebug
+  * MFSA 2011-52/CVE-2011-3655 (bmo#672182)
+    Code execution via NoWaiverWrapper
 - rebased patches
 
 -------------------------------------------------------------------

@@ -73,6 +73,7 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
+Patch13:        mozilla-ppc64.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -204,6 +205,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %endif
 %patch12 -p1
+%patch13 -p1
 #
 %patch31 -p1
 %patch32 -p1

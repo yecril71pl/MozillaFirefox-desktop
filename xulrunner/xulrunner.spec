@@ -62,6 +62,7 @@ Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
+Patch15:        mozilla-ppc64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -184,6 +185,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %endif
 %patch14 -p1
+%patch15 -p1
 
 %build
 # no need to add build time to binaries

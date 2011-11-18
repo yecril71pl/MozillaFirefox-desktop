@@ -19,7 +19,7 @@
 # norootforbuild
 
 %define major 8
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
@@ -29,13 +29,13 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.8
-BuildRequires:  mozilla-nss-devel >= 3.12.10
+BuildRequires:  mozilla-nspr-devel >= 4.8.9
+BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011110500
+%define         releasedate 2011111700
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -268,7 +268,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=default
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
@@ -308,6 +308,9 @@ mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install kde.js
 %if %suse_version >= 1110
 install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/pref/kde.js
+# make sure that instantApply is true by default
+# (TODO: mozilla-kde.patch needs to be improved to really not load kde.js in non-KDE envs)
+echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/pref/firefox.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
@@ -350,7 +353,10 @@ find $RPM_BUILD_ROOT%{progdir} \
      -name "*.jsm" -o \
      -name "*.rdf" -o \
      -name "*.properties" -o \
-     -name "*.dtd" | xargs chmod a-x
+     -name "*.dtd" -o \
+     -name "*.txt" -o \
+     -name "*.xml" -o \
+     -name "*.css" | xargs chmod a-x
 # overwrite the mozilla start-script and link it to /usr/bin
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g

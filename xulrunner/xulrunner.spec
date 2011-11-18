@@ -27,15 +27,15 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.8
-BuildRequires:  mozilla-nss-devel >= 3.12.10
+BuildRequires:  mozilla-nspr-devel >= 4.8.9
+BuildRequires:  mozilla-nss-devel >= 3.13.1
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        8.0
+Version:        8.99
 Release:        1
-%define         releasedate 2011110500
-%define         version_internal 8.0
-%define         apiversion 8
-%define         uaweight 800000
+%define         releasedate 2011111700
+%define         version_internal 9.0
+%define         apiversion 9
+%define         uaweight 900000
 Summary:        Mozilla Runtime Environment
 Url:            http://www.mozilla.org/
 Group:          Productivity/Other

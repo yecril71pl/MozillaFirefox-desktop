@@ -126,7 +126,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 +      init_rv = ::NSS_Initialize(profileStr.get(), "", "",
 +                                 SECMOD_DB, init_flags);
 +    } else {
-+      init_rv = ::nsshelp_open_db ("mozilla-xul", profileStr.get(), init_flags);
++      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), init_flags);
 +
 +      if (init_rv != SECSuccess) {
 +        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));

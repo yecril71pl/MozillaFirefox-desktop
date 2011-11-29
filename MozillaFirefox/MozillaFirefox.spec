@@ -35,7 +35,7 @@ BuildRequires:  nss-shared-helper-devel
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        %{mainver}
 Release:        1
-%define         releasedate 2011111700
+%define         releasedate 2011112500
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -74,6 +74,7 @@ Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
 Patch13:        mozilla-ppc64.patch
+Patch14:        mozilla-a11y.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -206,6 +207,7 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 #
 %patch31 -p1
 %patch32 -p1

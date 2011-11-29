@@ -17,6 +17,7 @@ mozilla-dump_syms-static.patch
 mozilla-sle11.patch
 mozilla-linux3.patch
 mozilla-ppc64.patch
+mozilla-a11y.patch
 
 # Firefox patches
 firefox-browser-css.patch

@@ -32,7 +32,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.1
 License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Version:        8.99
 Release:        1
-%define         releasedate 2011111700
+%define         releasedate 2011120300
 %define         version_internal 9.0
 %define         apiversion 9
 %define         uaweight 900000

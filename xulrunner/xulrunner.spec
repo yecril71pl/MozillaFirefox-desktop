@@ -29,7 +29,7 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Version:        8.99
 Release:        1
 %define         releasedate 2011120300
@@ -98,7 +98,7 @@ Thunderbird.
 
 
 %package -n mozilla-js
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Mozilla JS engine
 Group:          Productivity/Other
 
@@ -110,7 +110,7 @@ with only mild differences from the published standard.
 
 
 %package devel
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        XULRunner/Gecko SDK
 Group:          Development/Libraries/Other
 %if %has_system_nspr
@@ -127,7 +127,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 %if %localize
 
 %package translations-common
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Common translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -144,7 +144,7 @@ delivered in the main package.
 
 
 %package translations-other
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -162,7 +162,7 @@ This package contains rarely used languages.
 %if %crashreporter
 
 %package buildsymbols
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Debug
 

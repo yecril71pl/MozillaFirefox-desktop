@@ -16,11 +16,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# norootforbuild
-
-
 Name:           mozilla-xulrunner192
-BuildRequires:  autoconf213 dbus-1-glib-devel gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel pkg-config python startup-notification-devel zip
+BuildRequires:  autoconf213
+BuildRequires:  dbus-1-glib-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libcurl-devel
+BuildRequires:  libgnomeui-devel
+BuildRequires:  libidl-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  pkg-config
+BuildRequires:  python
+BuildRequires:  startup-notification-devel
+BuildRequires:  zip
 # needed for brp-check-bytecode-version (jar, fastjar would do as well)
 BuildRequires:  unzip
 %if %suse_version > 1020
@@ -38,16 +45,16 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
-Version:        1.9.2.24
-Release:        1
-%define         releasedate 2011110100
-%define         version_internal 1.9.2.24
+Version:        1.9.2.25
+Release:        0
+%define         releasedate 2011121600
+%define         version_internal 1.9.2.25
 %define         apiversion 1.9.2
-%define         uaweight 192240
+%define         uaweight 192250
 Summary:        Mozilla Runtime Environment 1.9.2
-Url:            http://www.mozilla.org
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
+Url:            http://www.mozilla.org
 Provides:       gecko192
 %if %suse_version >= 1110
 # this is needed to match this package with the kde4 helper package without the main package
@@ -133,7 +140,6 @@ Thunderbird.
 
 
 %package -n mozilla-js192
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Mozilla JS 1.8 engine
 Group:          Productivity/Other
 
@@ -145,7 +151,6 @@ with only mild differences from the published standard.
 
 
 %package devel
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        XULRunner/Gecko SDK 1.9.2
 Group:          Development/Libraries/Other
 %if %has_system_nspr
@@ -162,7 +167,6 @@ Software Development Kit to embed XUL or Gecko into other applications.
 %if %localize
 
 %package translations-common
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Common translations for XULRunner 1.9.2
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -179,7 +183,6 @@ delivered in the main package.
 
 
 %package translations-other
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Extra translations for XULRunner 1.9.2
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -195,7 +198,6 @@ This package contains rarely used languages.
 %endif
 
 %package gnome
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        XULRunner components depending on gnome-vfs
 Group:          Productivity/Other
 Requires:       %{name} = %{version}-%{release}
@@ -211,7 +213,6 @@ KDE installations for example.
 %if %crashreporter
 
 %package buildsymbols
-License:        MPLv1.1 or GPLv2+ or LGPLv2+
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Tools/Other
 

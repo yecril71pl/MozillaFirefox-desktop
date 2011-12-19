@@ -16,11 +16,25 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# norootforbuild
-
 
 Name:           xulrunner
-BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ hunspell-devel libcurl-devel libgnomeui-devel libidl-devel libnotify-devel nss-shared-helper-devel pkg-config python startup-notification-devel unzip yasm zip
+BuildRequires:  Mesa-devel
+BuildRequires:  autoconf213
+BuildRequires:  dbus-1-glib-devel
+BuildRequires:  fdupes
+BuildRequires:  gcc-c++
+BuildRequires:  hunspell-devel
+BuildRequires:  libcurl-devel
+BuildRequires:  libgnomeui-devel
+BuildRequires:  libidl-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  nss-shared-helper-devel
+BuildRequires:  pkg-config
+BuildRequires:  python
+BuildRequires:  startup-notification-devel
+BuildRequires:  unzip
+BuildRequires:  yasm
+BuildRequires:  zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -29,16 +43,16 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
-Version:        8.99
-Release:        1
-%define         releasedate 2011120800
+Version:        9.0
+Release:        0
+%define         releasedate 2011121600
 %define         version_internal 9.0
 %define         apiversion 9
 %define         uaweight 900000
 Summary:        Mozilla Runtime Environment
-Url:            http://www.mozilla.org/
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
+Url:            http://www.mozilla.org/
 Provides:       gecko
 %ifarch %ix86
 Provides:       xulrunner-32bit = %{version}-%{release}
@@ -63,6 +77,7 @@ Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-ppc64.patch
+Patch16:        mozilla-a11y.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -98,7 +113,6 @@ Thunderbird.
 
 
 %package -n mozilla-js
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Mozilla JS engine
 Group:          Productivity/Other
 
@@ -110,7 +124,6 @@ with only mild differences from the published standard.
 
 
 %package devel
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        XULRunner/Gecko SDK
 Group:          Development/Libraries/Other
 %if %has_system_nspr
@@ -127,7 +140,6 @@ Software Development Kit to embed XUL or Gecko into other applications.
 %if %localize
 
 %package translations-common
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Common translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -144,7 +156,6 @@ delivered in the main package.
 
 
 %package translations-other
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
@@ -162,7 +173,6 @@ This package contains rarely used languages.
 %if %crashreporter
 
 %package buildsymbols
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Debug
 
@@ -186,6 +196,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 # no need to add build time to binaries
@@ -280,7 +291,7 @@ cd ../obj
 cp %{SOURCE4} dist/bin/defaults/pref/all-openSUSE.js
 %makeinstall STRIP=/bin/true
 # xpt.py is not executable
-chmod a+x $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/bin/xpt.py
+chmod a+x $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/bin/*.py
 # remove some executable permissions
 find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
      -type f -perm -111 -exec chmod a-x {} \;
@@ -451,8 +462,8 @@ exit 0
 %if %suse_version >= 1120
 %ghost %{_bindir}/xulrunner
 %endif
-# API symlink
-%{_libdir}/xulrunner-%{apiversion}
+# API symlink (already in mozilla-js)
+#%{_libdir}/xulrunner-%{apiversion}
 # compat symlinks
 %if 0%{?ga_version:1}
 %ghost %{_libdir}/xulrunner-%{ga_version}
@@ -467,7 +478,6 @@ exit 0
 %files devel
 %defattr(-,root,root)
 %{_libdir}/xulrunner-%{version_internal}/xpcshell
-%{_libdir}/xulrunner-%{version_internal}/xpidl
 %{_libdir}/xulrunner-devel-%{version_internal}/
 # FIXME symlink dynamic libs below sdk/lib
 %attr(644,root,root) %{_libdir}/pkgconfig/*

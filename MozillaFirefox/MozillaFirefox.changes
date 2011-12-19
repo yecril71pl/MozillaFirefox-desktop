@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sun Dec 18 09:52:08 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 9
+
+-------------------------------------------------------------------
 Sun Nov 27 03:51:54 UTC 2011 - mgorse@suse.com
 
 - Fix accessibility under GNOME 3 (bnc#732898)

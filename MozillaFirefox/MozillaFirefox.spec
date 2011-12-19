@@ -16,13 +16,25 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# norootforbuild
-
-%define major 8
-%define mainver %major.99
+%define major 9
+%define mainver %major.0
 
 Name:           MozillaFirefox
-BuildRequires:  Mesa-devel autoconf213 dbus-1-glib-devel fdupes gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python startup-notification-devel unzip update-desktop-files yasm zip
+BuildRequires:  Mesa-devel
+BuildRequires:  autoconf213
+BuildRequires:  dbus-1-glib-devel
+BuildRequires:  fdupes
+BuildRequires:  gcc-c++
+BuildRequires:  libcurl-devel
+BuildRequires:  libgnomeui-devel
+BuildRequires:  libidl-devel
+BuildRequires:  libnotify-devel
+BuildRequires:  python
+BuildRequires:  startup-notification-devel
+BuildRequires:  unzip
+BuildRequires:  update-desktop-files
+BuildRequires:  yasm
+BuildRequires:  zip
 %if %suse_version > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
@@ -32,10 +44,9 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Version:        %{mainver}
-Release:        1
-%define         releasedate 2011120800
+Release:        0
+%define         releasedate 2011121600
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -44,8 +55,9 @@ Provides:       firefox = %{mainver}
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Summary:        Mozilla Firefox Web Browser
-Url:            http://www.mozilla.org/
+License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Networking/Web/Browsers
+Url:            http://www.mozilla.org/
 Source:         firefox-%{version}-source.tar.bz2
 Source1:        MozillaFirefox.desktop
 Source2:        MozillaFirefox-rpmlintrc
@@ -118,7 +130,6 @@ compliance and performance.  Its functionality can be enhanced via a
 plethora of extensions.
 
 %package devel
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Devel package for Firefox
 Group:          Development/Tools/Other
 Provides:       firefox-devel = %{version}-%{release}
@@ -133,9 +144,8 @@ Development files for Firefox to make packaging of addons easier.
 
 %package translations-common
 Summary:        Common translations for MozillaFirefox
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
-Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Group:          System/Localization
+Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -145,9 +155,8 @@ of MozillaFirefox.
 
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;bn_IN;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Group:          System/Localization
+Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;bn_IN;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -157,7 +166,6 @@ of MozillaFirefox.
 %endif
 
 %package branding-upstream
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Upstream branding for MozillaFirefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 5.0
@@ -180,7 +188,6 @@ This package provides upstream look and feel for MozillaFirefox.
 %if %crashreporter
 
 %package buildsymbols
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Debug
 
@@ -270,7 +277,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=default
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

@@ -117,7 +117,7 @@ Requires:       %{name}-branding > 4.0
 ### build options
 %define branding 1
 %define localize 1
-%ifarch ppc ppc64 s390 s390x ia64
+%ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter    0
 %else
 %define crashreporter    1

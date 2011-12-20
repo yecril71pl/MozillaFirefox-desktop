@@ -2,6 +2,8 @@
 Sat Dec 17 23:02:00 UTC 2011 - wr@rosenauer.org
 
 - security update to 1.9.2.25 (bnc#737533)
+  * MFSA 2011-59/CVE-2011-3666 (bmo#704622)
+    .jar not treated as executable in Firefox 3.6 on Mac
 
 -------------------------------------------------------------------
 Tue Nov  1 20:53:16 UTC 2011 - wr@rosenauer.org

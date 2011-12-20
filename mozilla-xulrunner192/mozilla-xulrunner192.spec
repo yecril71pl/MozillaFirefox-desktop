@@ -16,6 +16,7 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 Name:           mozilla-xulrunner192
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel

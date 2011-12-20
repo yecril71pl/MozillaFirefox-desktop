@@ -2,6 +2,17 @@
 Sun Dec 18 09:28:02 UTC 2011 - wr@rosenauer.org
 
 - update to release 9.0 (bnc#737533)
+  * MFSA 2011-53/CVE-2011-3660
+    Miscellaneous memory safety hazards (rv:9.0)
+  * MFSA 2011-54/CVE-2011-3661 (bmo#691299)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-55/CVE-2011-3658 (bmo#708186)
+    nsSVGValue out-of-bounds access
+  * MFSA 2011-56/CVE-2011-3663 (bmo#704482)
+    Key detection without JavaScript via SVG animation
+  * MFSA 2011-58/VE-2011-3665 (bmo#701259)
+    Crash scaling <video> to extreme sizes
 
 -------------------------------------------------------------------
 Sat Nov 12 15:20:49 UTC 2011 - wr@rosenauer.org

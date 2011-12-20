@@ -16,7 +16,6 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
 Name:           xulrunner
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213

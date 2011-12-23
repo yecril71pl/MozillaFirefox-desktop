@@ -2,8 +2,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_9_0_RELEASE"
-VERSION="9.0"
+RELEASE_TAG="FIREFOX_9_0_1_RELEASE"
+VERSION="9.0.1"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

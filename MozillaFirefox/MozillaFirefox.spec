@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
-Version:        %{mainver}
+Version:        %{mainver}.1
 Release:        0
-%define         releasedate 2011121600
+%define         releasedate 2011122000
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}

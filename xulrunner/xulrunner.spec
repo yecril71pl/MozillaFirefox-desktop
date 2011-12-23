@@ -44,10 +44,10 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 Version:        9.0
 Release:        0
-%define         releasedate 2011121600
-%define         version_internal 9.0
+%define         releasedate 2011122000
+%define         version_internal 9.0.1
 %define         apiversion 9
-%define         uaweight 900000
+%define         uaweight 900001
 Summary:        Mozilla Runtime Environment
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other

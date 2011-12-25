@@ -4,8 +4,8 @@ Subject: introduce a pref to prefer certain plugins for mime-types
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -1637,17 +1637,48 @@ nsPluginHost::FindPluginForType(const ch
-                                 PRBool aCheckEnabled)
+@@ -1580,17 +1580,48 @@ nsPluginHost::FindPluginForType(const ch
+                                 bool aCheckEnabled)
  {
    if (!aMimeType) {
      return nsnull;

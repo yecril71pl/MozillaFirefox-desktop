@@ -17,7 +17,7 @@
 #
 
 %define major 9
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -85,8 +85,7 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
-Patch13:        mozilla-ppc64.patch
-Patch14:        mozilla-a11y.patch
+Patch13:        mozilla-a11y.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -203,7 +202,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -213,16 +212,15 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
+#%patch13 -p1
 #
 %patch31 -p1
 %patch32 -p1
 %if %suse_version >= 1110
-%patch33 -p1
+#%patch33 -p1
 %endif
 %if %suse_version >= 1140
-%patch34 -p1
+#%patch34 -p1
 %endif
 %patch38 -p1
 %patch39 -p1
@@ -277,7 +275,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=default
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

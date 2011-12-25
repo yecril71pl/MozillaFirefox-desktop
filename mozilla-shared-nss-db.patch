@@ -7,7 +7,7 @@ References:
 diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 --- a/config/autoconf.mk.in
 +++ b/config/autoconf.mk.in
-@@ -571,16 +571,20 @@ MOZ_LIBNOTIFY_LIBS	= @MOZ_LIBNOTIFY_LIBS
+@@ -567,16 +567,20 @@ MOZ_LIBNOTIFY_LIBS	= @MOZ_LIBNOTIFY_LIBS
  MOZ_ENABLE_LIBNOTIFY	= @MOZ_ENABLE_LIBNOTIFY@
  
  MOZ_ALSA_LIBS           = @MOZ_ALSA_LIBS@
@@ -31,7 +31,7 @@ diff --git a/config/autoconf.mk.in b/config/autoconf.mk.in
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8016,16 +8016,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8093,16 +8093,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -61,12 +61,12 @@ diff --git a/configure.in b/configure.in
  AC_SUBST(MOZ_OTS_LIBS)
  
  dnl ========================================================
- dnl disable xul
+ dnl Skia 
  dnl ========================================================
 diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
 --- a/security/manager/ssl/src/Makefile.in
 +++ b/security/manager/ssl/src/Makefile.in
-@@ -113,12 +113,14 @@ CSRCS += md4.c
+@@ -114,12 +114,14 @@ CSRCS += md4.c
  
  
  EXTRA_DEPS = $(NSS_DEP_LIBS)
@@ -109,7 +109,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  
  #include "nsNetUtil.h"
  #include "nsAppDirectoryServiceDefs.h"
-@@ -1727,18 +1734,34 @@ nsNSSComponent::InitializeNSS(PRBool sho
+@@ -1725,18 +1732,34 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -149,8 +149,8 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -138,17 +138,17 @@ ifdef MOZ_DEBUG
- EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
+@@ -126,17 +126,17 @@ EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
+ endif
  endif
  endif
  

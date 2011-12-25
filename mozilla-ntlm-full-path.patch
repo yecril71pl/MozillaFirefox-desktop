@@ -1,6 +1,6 @@
 # HG changeset patch
 # User Petr Cerny <pcerny@novell.com>
-# Parent 971259052418fda3b7fc81da75be4557ea5d82bc
+# Parent a843037ea4cee813a68dd529e7a503d1e40b81e4
 Bug 634334 - call to the ntlm_auth helper fails
 
 diff --git a/extensions/auth/nsAuthSambaNTLM.cpp b/extensions/auth/nsAuthSambaNTLM.cpp
@@ -23,5 +23,5 @@ diff --git a/extensions/auth/nsAuthSambaNTLM.cpp b/extensions/auth/nsAuthSambaNT
          nsnull
      };
  
-     PRBool isOK = SpawnIOChild(args, &mChildPID, &mFromChildFD, &mToChildFD);
+     bool isOK = SpawnIOChild(args, &mChildPID, &mFromChildFD, &mToChildFD);
      if (!isOK)  

@@ -3595,15 +3595,15 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
    NS_NAMED_LITERAL_STRING(kOsVersion, "osversion");
    NS_NAMED_LITERAL_STRING(kABI, "abi");
 +  NS_NAMED_LITERAL_STRING(kDesktop, "desktop");
+ #if defined(ANDROID)
+   NS_NAMED_LITERAL_STRING(kTablet, "tablet");
+ #endif
  
    // Obsolete
    NS_NAMED_LITERAL_STRING(kXPCNativeWrappers, "xpcnativewrappers");
  
    nsAutoString appID;
-   nsAutoString appVersion;
-   nsAutoString geckoVersion;
-   nsAutoString osTarget;
-@@ -478,39 +480,44 @@ ParseManifestCommon(NSLocationType aType
+@@ -481,41 +483,46 @@ ParseManifestCommon(NSLocationType aType
          CopyUTF8toUTF16(s, abi);
          abi.Insert(PRUnichar('_'), 0);
          abi.Insert(osTarget, 0);
@@ -3636,8 +3636,10 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
                                         gtk_minor_version);
 +  desktop = nsKDEUtils::kdeSession() ? NS_LITERAL_STRING("kde") : NS_LITERAL_STRING("gnome");
  #elif defined(ANDROID)
+   bool isTablet = false;
    if (mozilla::AndroidBridge::Bridge()) {
      mozilla::AndroidBridge::Bridge()->GetStaticStringField("android/os/Build$VERSION", "RELEASE", osVersion);
+     isTablet = mozilla::AndroidBridge::Bridge()->IsTablet();
    }
 +  desktop = NS_LITERAL_STRING("android");
  #endif
@@ -3648,13 +3650,13 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
  
    char *token;
    char *newline = buf;
-@@ -589,24 +596,26 @@ ParseManifestCommon(NSLocationType aType
-     TriState stAppVersion = eUnspecified;
-     TriState stGeckoVersion = eUnspecified;
-     TriState stApp = eUnspecified;
+@@ -597,24 +604,26 @@ ParseManifestCommon(NSLocationType aType
      TriState stOsVersion = eUnspecified;
      TriState stOs = eUnspecified;
      TriState stABI = eUnspecified;
+ #if defined(ANDROID)
+     TriState stTablet = eUnspecified;
+ #endif
      bool platform = false;
      bool contentAccessible = false;
 +    TriState stDesktop = eUnspecified;
@@ -3672,10 +3674,10 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
            CheckVersionFlag(kGeckoVersion, wtoken, geckoVersion, stGeckoVersion))
          continue;
  
-       if (directive->contentflags &&
-           (CheckFlag(kPlatform, wtoken, platform) ||
-            CheckFlag(kContentAccessible, wtoken, contentAccessible)))
-@@ -627,16 +636,17 @@ ParseManifestCommon(NSLocationType aType
+ #if defined(ANDROID)
+       bool tablet = false;
+       if (CheckFlag(kTablet, wtoken, tablet)) {
+@@ -643,16 +652,17 @@ ParseManifestCommon(NSLocationType aType
      }
  
      if (!ok ||
@@ -3685,14 +3687,14 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
          stOs == eBad ||
          stOsVersion == eBad ||
 +        stDesktop == eBad ||
+ #ifdef ANDROID
+         stTablet == eBad ||
+ #endif
          stABI == eBad)
        continue;
  
      if (directive->regfunc) {
        if (GeckoProcessType_Default != XRE_GetProcessType())
-         continue;
- 
-       if (!nsChromeRegistry::gChromeRegistry) {
 diff --git a/xpcom/io/Makefile.in b/xpcom/io/Makefile.in
 --- a/xpcom/io/Makefile.in
 +++ b/xpcom/io/Makefile.in

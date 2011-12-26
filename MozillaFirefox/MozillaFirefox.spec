@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
-Version:        %{mainver}.1
-Release:        0
-%define         releasedate 2011122000
+Version:        %{mainver}
+Release:        10
+%define         releasedate 2011122200
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -233,11 +233,11 @@ DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
 #
-kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
-if test "$kdehelperversion" != %{kde_helper_version}; then
-  echo fix kde helper version in the .spec file
-  exit 1
-fi
+#kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
+#if test "$kdehelperversion" != %{kde_helper_version}; then
+#  echo fix kde helper version in the .spec file
+#  exit 1
+#fi
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export SOURCE_REPO=$REPO
@@ -514,7 +514,6 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
-%{progdir}/hyphenation/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox-bin
@@ -524,7 +523,7 @@ exit 0
 %{progdir}/dependentlibs.list
 %{progdir}/*.so
 %{progdir}/mozilla-xremote-client
-%{progdir}/omni.jar
+%{progdir}/omni.ja
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %if %crashreporter

@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2011 Wolfgang Rosenauer
+# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2012 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        10
-%define         releasedate 2011122700
+%define         releasedate 2012011800
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}

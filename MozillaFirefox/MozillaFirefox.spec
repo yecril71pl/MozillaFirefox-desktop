@@ -86,6 +86,7 @@ Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
 Patch13:        mozilla-a11y.patch
+Patch14:        mozilla-disable-neon-option.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -213,6 +214,7 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -296,6 +298,12 @@ EOF
 %if ! %crashreporter
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
+EOF
+%endif
+# Disable neon for arm as it does not build correctly
+%ifarch %arm
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-neon
 EOF
 %endif
 make -f client.mk build

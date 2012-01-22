@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Sun Jan 22 12:08:07 UTC 2012 - joop.boonen@opensuse.org
+
+- Disable neon for arm as it doesn't build correctly
+
+-------------------------------------------------------------------
+Sun Jan 22 12:07:39 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0b5
+
+-------------------------------------------------------------------
 Fri Dec 23 17:02:01 UTC 2011 - wr@rosenauer.org
 
 - update to Firefox 9.0.1

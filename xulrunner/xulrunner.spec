@@ -1,8 +1,8 @@
 #
 # spec file for package xulrunner
 #
-# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2011 Wolfgang Rosenauer
+# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2012 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -77,6 +77,7 @@ Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-ppc64.patch
 Patch16:        mozilla-a11y.patch
+Patch17:        mozilla-disable-neon-option.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -196,6 +197,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 # no need to add build time to binaries
@@ -280,6 +282,12 @@ EOF
 cat << EOF >> $MOZCONFIG
 # Chromium IPC is not ported to Power,S/390 and Itanium (currently just x86,x86_64 and arm)
 ac_add_options --disable-ipc
+EOF
+%endif
+# Disable neon for arm as it does not build correctly
+%ifarch %arm
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-neon
 EOF
 %endif
 make -f client.mk build

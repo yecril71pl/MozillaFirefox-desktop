@@ -44,7 +44,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 Version:        9.99
 Release:        0
-%define         releasedate 2012011800
+%define         releasedate 2012012400
 %define         version_internal 10.0
 %define         apiversion 10
 %define         uaweight 1000000

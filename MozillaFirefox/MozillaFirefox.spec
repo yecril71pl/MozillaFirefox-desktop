@@ -16,8 +16,8 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define major 9
-%define mainver %major.99
+%define major 10
+%define mainver %major.0
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -45,8 +45,8 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
-Release:        10
-%define         releasedate 2012012400
+Release:        2
+%define         releasedate 2012012900
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -277,7 +277,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=beta
+ac_add_options --enable-update-channel=release
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

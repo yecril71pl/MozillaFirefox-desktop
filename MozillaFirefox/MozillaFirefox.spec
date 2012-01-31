@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2011 Wolfgang Rosenauer
+# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2012 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -24,7 +24,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2.25
+BuildRequires:  %{xulrunner}-devel = 1.9.2.26
 %if %suse_version > 1020
 BuildRequires:  fdupes
 %endif
@@ -34,13 +34,13 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
-Version:        %mainver.25
+Version:        %mainver.26
 Release:        1
 Provides:       web_browser
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{version}
-%define         releasedate 2011121600
+%define         releasedate 2012012400
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

@@ -42,9 +42,9 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
-Version:        9.99
+Version:        10.0
 Release:        0
-%define         releasedate 2012012400
+%define         releasedate 2012012900
 %define         version_internal 10.0
 %define         apiversion 10
 %define         uaweight 1000000
@@ -75,9 +75,8 @@ Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
-Patch15:        mozilla-ppc64.patch
-Patch16:        mozilla-a11y.patch
-Patch17:        mozilla-disable-neon-option.patch
+Patch15:        mozilla-a11y.patch
+Patch16:        mozilla-disable-neon-option.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -197,7 +196,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
 
 %build
 # no need to add build time to binaries
@@ -441,7 +439,6 @@ exit 0
 %dir %{_libdir}/xulrunner-%{version_internal}/extensions/
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
-%{_libdir}/xulrunner-%{version_internal}/hyphenation/
 %{_libdir}/xulrunner-%{version_internal}/plugins/
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
@@ -457,7 +454,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
-%{_libdir}/xulrunner-%{version_internal}/omni.jar
+%{_libdir}/xulrunner-%{version_internal}/omni.ja
 # crashreporter files
 %if %crashreporter
 %{_libdir}/xulrunner-%{version_internal}/crashreporter

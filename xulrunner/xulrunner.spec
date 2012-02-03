@@ -16,6 +16,7 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 Name:           xulrunner
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
@@ -64,6 +65,7 @@ Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
 Source7:        baselibs.conf
+Source8:        source-stamp.txt
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch

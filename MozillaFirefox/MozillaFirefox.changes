@@ -1,7 +1,26 @@
 -------------------------------------------------------------------
 Mon Jan 30 09:41:59 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 10.0
+- update to Firefox 10.0 (bnc#744275)
+  * MFSA 2012-01/CVE-2012-0442/CVE-2012-0443
+    Miscellaneous memory safety hazards
+  * MFSA 2012-03/CVE-2012-0445 (bmo#701071)
+    <iframe> element exposed across domains via name attribute
+  * MFSA 2012-04/CVE-2011-3659 (bmo#708198)
+    Child nodes from nsDOMAttribute still accessible after removal
+    of nodes
+  * MFSA 2012-05/CVE-2012-0446 (bmo#705651)
+    Frame scripts calling into untrusted objects bypass security
+    checks
+  * MFSA 2012-06/CVE-2012-0447 (bmo#710079)
+    Uninitialized memory appended when encoding icon images may
+    cause information disclosure
+  * MFSA 2012-07/CVE-2012-0444 (bmo#719612)
+    Potential Memory Corruption When Decoding Ogg Vorbis files
+  * MFSA 2012-08/CVE-2012-0449 (bmo#701806, bmo#702466)
+    Crash with malformed embedded XSLT stylesheets
+- KDE integration has been disabled since it needs refactoring
+- removed obsolete ppc64 patch
 
 -------------------------------------------------------------------
 Sun Jan 22 12:08:07 UTC 2012 - joop.boonen@opensuse.org

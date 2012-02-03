@@ -16,6 +16,7 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %define major 10
 %define mainver %major.0
 
@@ -45,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
-Release:        2
+Release:        0
 %define         releasedate 2012012900
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}

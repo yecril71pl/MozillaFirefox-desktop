@@ -16,7 +16,6 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
 Name:           mozilla-xulrunner192
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -51,7 +50,7 @@ Release:        0
 %define         releasedate 2012012400
 %define         version_internal 1.9.2.26
 %define         apiversion 1.9.2
-%define         uaweight 192250
+%define         uaweight 192260
 Summary:        Mozilla Runtime Environment 1.9.2
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other

@@ -1,7 +1,17 @@
 -------------------------------------------------------------------
 Wed Jan 25 11:48:35 UTC 2012 - wr@rosenauer.org
 
-- security update to 1.9.2.26 
+- security update to 1.9.2.26 (bnc#744275)
+  * MFSA 2012-01/CVE-2012-0442/CVE-2012-0443
+    Miscellaneous memory safety hazards
+  * MFSA 2012-02/CVE-2011-3670 (bmo#504014)
+  * MFSA 2012-04/CVE-2011-3659 (bmo#708198)
+    Child nodes from nsDOMAttribute still accessible after removal
+    of nodes
+  * MFSA 2012-07/CVE-2012-0444 (bmo#719612)
+    Potential Memory Corruption When Decoding Ogg Vorbis files
+  * MFSA 2012-08/CVE-2012-0449 (bmo#701806, bmo#702466)
+    Crash with malformed embedded XSLT stylesheets
 
 -------------------------------------------------------------------
 Sat Dec 17 23:02:00 UTC 2011 - wr@rosenauer.org

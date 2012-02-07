@@ -88,6 +88,8 @@ Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
 Patch13:        mozilla-a11y.patch
 Patch14:        mozilla-disable-neon-option.patch
+Patch15:        mozilla-bmo703534.patch
+Patch16:        mozilla-yarr-pcre.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -216,6 +218,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+%patch16 -p1
 #
 %patch31 -p1
 %patch32 -p1

@@ -79,6 +79,8 @@ Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-a11y.patch
 Patch16:        mozilla-disable-neon-option.patch
+Patch17:        mozilla-bmo703534.patch
+Patch18:        mozilla-yarr-pcre.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -198,6 +200,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 %build
 # no need to add build time to binaries

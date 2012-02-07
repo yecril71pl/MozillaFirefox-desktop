@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
+
+- Use YARR interpreter instead of PCRE on platforms where YARR JIT
+  is not supported, since PCRE doesnt build (bmo#691898)
+- fix ppc64 build (bmo#703534)
+
+-------------------------------------------------------------------
 Mon Jan 30 09:41:59 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 10.0 (bnc#744275)

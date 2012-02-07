@@ -18,7 +18,7 @@
 
 
 %define major 10
-%define mainver %major.0
+%define mainver %major.0esr
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel

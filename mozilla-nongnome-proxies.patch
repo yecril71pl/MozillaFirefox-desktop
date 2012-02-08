@@ -9,7 +9,8 @@ retrieving revision 1.1
 diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 --- a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 +++ b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
-@@ -68,16 +68,23 @@ private:
+@@ -71,18 +71,24 @@ private:
+   nsresult SetProxyResultFromGSettings(const char* aKeyBase, const char* aType, nsACString& aResult);
  };
  
  NS_IMPL_ISUPPORTS1(nsUnixSystemProxySettings, nsISystemProxySettings)
@@ -17,13 +18,15 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
  nsresult
  nsUnixSystemProxySettings::Init()
  {
-   mGConf = do_GetService(NS_GCONFSERVICE_CONTRACTID);
+-  mGConf = do_GetService(NS_GCONFSERVICE_CONTRACTID);
+-  mGSettings = do_GetService(NS_GSETTINGSSERVICE_CONTRACTID);
 +  // If this is a GNOME session, load gconf and try to use its preferences.
 +  // If gconf is not available (which would be stupid) we'll proceed as if
 +  // this was not a GNOME session, using *_PROXY environment variables.
 +  const char* sessionType = PR_GetEnv("DESKTOP_SESSION");
 +  if (sessionType && !strcmp(sessionType, "gnome")) {
 +    mGConf = do_GetService(NS_GCONFSERVICE_CONTRACTID);
++    mGSettings = do_GetService(NS_GSETTINGSSERVICE_CONTRACTID);
 +  }
    return NS_OK;
  }

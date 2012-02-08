@@ -1,19 +1,19 @@
 # HG changeset patch
-# Parent 2f2f266d47e42bf9ff421deeeeea2dd1985b19b0
+# Parent f63659c5a2c060ac43bf681191d1432cbb7c3e54
 We need to package toolkit locales explicitely into firefox langpacks even in xulrunner based builds
 
 diff --git a/browser/makefiles.sh b/browser/makefiles.sh
 --- a/browser/makefiles.sh
 +++ b/browser/makefiles.sh
-@@ -74,16 +74,21 @@ browser/installer/windows/Makefile
+@@ -77,16 +77,21 @@ browser/devtools/styleinspector/Makefile
+ browser/devtools/webconsole/Makefile
+ browser/fuel/Makefile
+ browser/fuel/public/Makefile
+ browser/fuel/src/Makefile
+ browser/installer/Makefile
  browser/locales/Makefile
+ browser/modules/Makefile
  browser/themes/Makefile
- browser/themes/pinstripe/browser/Makefile
- browser/themes/pinstripe/communicator/Makefile
- browser/themes/pinstripe/Makefile
- browser/themes/winstripe/browser/Makefile
- browser/themes/winstripe/communicator/Makefile
- browser/themes/winstripe/Makefile
 +netwerk/locales/Makefile
 +dom/locales/Makefile
 +security/manager/locales/Makefile
@@ -24,6 +24,6 @@ diff --git a/browser/makefiles.sh b/browser/makefiles.sh
  $MOZ_BRANDING_DIRECTORY/locales/Makefile
  "
  
- if [ "$ENABLE_TESTS" ]; then
+ if [ "$MOZ_SAFE_BROWSING" ]; then
    add_makefiles "
-     browser/base/content/test/Makefile
+     browser/components/safebrowsing/Makefile

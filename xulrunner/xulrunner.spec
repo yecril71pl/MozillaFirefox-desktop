@@ -41,14 +41,14 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.9
-BuildRequires:  mozilla-nss-devel >= 3.13.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.0
+BuildRequires:  mozilla-nss-devel >= 3.13.2
 Version:        10.0
 Release:        0
-%define         releasedate 2012012900
-%define         version_internal 10.0
-%define         apiversion 10
-%define         uaweight 1000000
+%define         releasedate 2012020300
+%define         version_internal 11.0
+%define         apiversion 11
+%define         uaweight 1100000
 Summary:        Mozilla Runtime Environment
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
@@ -77,10 +77,8 @@ Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
-Patch15:        mozilla-a11y.patch
 Patch16:        mozilla-disable-neon-option.patch
-Patch17:        mozilla-bmo703534.patch
-Patch18:        mozilla-yarr-pcre.patch
+Patch17:        mozilla-yarr-pcre.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -198,10 +196,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %endif
 %patch14 -p1
-%patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
 
 %build
 # no need to add build time to binaries

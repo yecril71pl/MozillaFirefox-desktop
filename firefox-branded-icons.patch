@@ -1,11 +1,11 @@
 # HG changeset patch
-# Parent 87462739809ad0f41fd335f9a68203fd70f9883c
+# Parent efffa19fa0b2530d2aca1ebd5b885a6fc68e51de
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
 +++ b/browser/app/Makefile.in
-@@ -194,16 +194,21 @@ DEFINES += -DMOZILLA_OFFICIAL
- endif
+@@ -169,16 +169,21 @@ endif # LIBXUL_SDK
+ DEFINES += -DFIREFOX_ICO=\"$(DIST)/branding/firefox.ico\" -DDOCUMENT_ICO=\"$(DIST)/branding/document.ico\"
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
  libs::
@@ -54,7 +54,7 @@ diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/M
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -415,18 +415,21 @@
+@@ -424,18 +424,21 @@
  #ifdef SHIP_FEEDBACK
  @BINPATH@/distribution/extensions/testpilot@labs.mozilla.com.xpi
  #endif

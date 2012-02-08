@@ -1,28 +1,28 @@
 # HG changeset patch
-# Parent 07dc7ea11c92368cb7c137a403feaaa6861abb3c
+# Parent e315e5900fa90c2183edccd211fbe1e81cdb4c5f
 
-diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
---- a/browser/app/Makefile.in
-+++ b/browser/app/Makefile.in
-@@ -68,17 +68,17 @@ GRE_BUILDID = $(shell $(PYTHON) $(topsrc
+diff --git a/build/Makefile.in b/build/Makefile.in
+--- a/build/Makefile.in
++++ b/build/Makefile.in
+@@ -86,17 +86,17 @@ DEFINES += -DMOZ_APP_VERSION="$(MOZ_APP_
+ APP_INI_DEPS += $(DEPTH)/config/autoconf.mk
  
- DEFINES += -DGRE_MILESTONE=$(GRE_MILESTONE) -DGRE_BUILDID=$(GRE_BUILDID)
- 
- MOZ_SOURCE_STAMP ?= $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null)
+ MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null))
  ifdef MOZ_SOURCE_STAMP
  DEFINES += -DMOZ_SOURCE_STAMP="$(MOZ_SOURCE_STAMP)"
  endif
  
--SOURCE_REPO := $(shell hg -R $(topsrcdir) showconfig paths.default 2>/dev/null | sed -e "s/^ssh:/http:/")
-+SOURCE_REPO ?= $(shell hg -R $(topsrcdir) showconfig paths.default 2>/dev/null | sed -e "s/^ssh:/http:/")
+ _dollar=$$
+-SOURCE_REPO := $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
++SOURCE_REPO ?= $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
  ifdef SOURCE_REPO
  DEFINES += -DMOZ_SOURCE_REPO="$(SOURCE_REPO)"
  endif
  
- DEFINES += -DMOZ_APP_BASENAME="$(MOZ_APP_BASENAME)" \
-            -DMOZ_APP_VENDOR="$(MOZ_APP_VENDOR)"
- 
- ifdef MOZ_APP_PROFILE
+ DEFINES += \
+   -DMOZ_APP_BASENAME="$(MOZ_APP_BASENAME)" \
+   -DMOZ_APP_VENDOR="$(MOZ_APP_VENDOR)" \
+   -DMOZ_APP_ID="$(MOZ_APP_ID)" \
 diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 --- a/toolkit/content/Makefile.in
 +++ b/toolkit/content/Makefile.in
@@ -48,7 +48,7 @@ diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
 +++ b/toolkit/mozapps/installer/package-name.mk
-@@ -154,20 +154,20 @@ SYMBOL_ARCHIVE_BASENAME = $(PKG_BASENAME
+@@ -156,20 +156,20 @@ SYMBOL_ARCHIVE_BASENAME = $(PKG_BASENAME
  TEST_PACKAGE = $(PKG_BASENAME).tests.zip
  
  ifneq (,$(wildcard $(DIST)/bin/application.ini))
@@ -74,7 +74,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -227,17 +227,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
+@@ -235,17 +235,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
  endif
  endif
  

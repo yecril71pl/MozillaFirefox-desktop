@@ -18,7 +18,7 @@
 
 
 %define major 10
-%define mainver %major.0
+%define mainver %major.99
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -42,12 +42,12 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.9
-BuildRequires:  mozilla-nss-devel >= 3.13.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.0
+BuildRequires:  mozilla-nss-devel >= 3.13.2
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012012900
+%define         releasedate 2012020300
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -86,10 +86,8 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
-Patch13:        mozilla-a11y.patch
 Patch14:        mozilla-disable-neon-option.patch
-Patch15:        mozilla-bmo703534.patch
-Patch16:        mozilla-yarr-pcre.patch
+Patch15:        mozilla-yarr-pcre.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -216,10 +214,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -282,7 +278,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=release
+ac_add_options --enable-update-channel=beta
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

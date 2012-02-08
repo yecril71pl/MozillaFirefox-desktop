@@ -1,12 +1,12 @@
 # HG changeset patch
 # User Joop Boonen <joop.boonen@opensuse.org>
-# Parent be20a0ae420eb2b3584ce2c5d241e2817bac8593
+# Parent 5f38d3aa0414fe0ac7ff1f0b47da44069e7ccdda
 Add configure option to allow disabling of neon.
 
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -1674,41 +1674,47 @@ if test -n "$all_flags"; then
+@@ -1726,41 +1726,47 @@ if test -n "$all_flags"; then
      ASFLAGS="$ASFLAGS $all_flags"
      if test -n "$thumb_flag"; then
          LDFLAGS="$LDFLAGS $thumb_flag"
@@ -20,26 +20,6 @@ diff --git a/configure.in b/configure.in
 -  # We try to link so that this also fails when
 -  # building with LTO.
 -  AC_TRY_LINK([],
--                 [asm("uqadd8 r1, r1, r2");],
--                 result="yes", result="no")
--  AC_MSG_RESULT("$result")
--  if test "$result" = "yes"; then
--      AC_DEFINE(HAVE_ARM_SIMD)
--      HAVE_ARM_SIMD=1
--  fi
--
--  AC_MSG_CHECKING(for ARM NEON support in compiler)
--  # We try to link so that this also fails when
--  # building with LTO.
--  AC_TRY_LINK([],
--                 [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
--                 result="yes", result="no")
--  AC_MSG_RESULT("$result")
--  if test "$result" = "yes"; then
--      AC_DEFINE(HAVE_ARM_NEON)
--      HAVE_ARM_NEON=1
--  fi
--fi # CPU_ARCH = arm
 +MOZ_ARG_DISABLE_BOOL(neon,
 +[  --disable-neon       Disable neon extensions],
 +    NS_DISABLE_NEON=1,
@@ -50,24 +30,36 @@ diff --git a/configure.in b/configure.in
 +    # We try to link so that this also fails when
 +    # building with LTO.
 +    AC_TRY_LINK([],
-+                   [asm("uqadd8 r1, r1, r2");],
-+                   result="yes", result="no")
+                  [asm("uqadd8 r1, r1, r2");],
+                  result="yes", result="no")
+-  AC_MSG_RESULT("$result")
+-  if test "$result" = "yes"; then
 +    AC_MSG_RESULT("$result")
 +    if test "$result" = "yes"; then
-+        AC_DEFINE(HAVE_ARM_SIMD)
-+        HAVE_ARM_SIMD=1
+       AC_DEFINE(HAVE_ARM_SIMD)
+       HAVE_ARM_SIMD=1
+-  fi
+-
+-  AC_MSG_CHECKING(for ARM NEON support in compiler)
+-  # We try to link so that this also fails when
+-  # building with LTO.
+-  AC_TRY_LINK([],
 +    fi
 +
 +    AC_MSG_CHECKING(for ARM NEON support in compiler)
 +    # We try to link so that this also fails when
 +    # building with LTO.
 +    AC_TRY_LINK([],
-+                   [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
-+                   result="yes", result="no")
+                  [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
+                  result="yes", result="no")
+-  AC_MSG_RESULT("$result")
+-  if test "$result" = "yes"; then
 +    AC_MSG_RESULT("$result")
 +    if test "$result" = "yes"; then
-+        AC_DEFINE(HAVE_ARM_NEON)
-+        HAVE_ARM_NEON=1
+       AC_DEFINE(HAVE_ARM_NEON)
+       HAVE_ARM_NEON=1
+-  fi
+-fi # CPU_ARCH = arm
 +    fi
 +  fi # CPU_ARCH = arm
 +fi
@@ -75,14 +67,14 @@ diff --git a/configure.in b/configure.in
  AC_SUBST(HAVE_ARM_SIMD)
  AC_SUBST(HAVE_ARM_NEON)
  
- dnl ========================================================
- dnl Android libstdc++, placed here so it can use MOZ_ARCH
- dnl computed above.
- dnl ========================================================
+ dnl =================================================================
+ dnl Set up and test static assertion macros used to avoid AC_TRY_RUN,
+ dnl which is bad when cross compiling.
+ dnl =================================================================
 diff --git a/js/src/configure.in b/js/src/configure.in
 --- a/js/src/configure.in
 +++ b/js/src/configure.in
-@@ -1604,41 +1604,47 @@ if test -n "$all_flags"; then
+@@ -1664,41 +1664,47 @@ if test -n "$all_flags"; then
      ASFLAGS="$ASFLAGS $all_flags"
      if test -n "$thumb_flag"; then
          LDFLAGS="$LDFLAGS $thumb_flag"
@@ -96,26 +88,6 @@ diff --git a/js/src/configure.in b/js/src/configure.in
 -  # We try to link so that this also fails when
 -  # building with LTO.
 -  AC_TRY_LINK([],
--                 [asm("uqadd8 r1, r1, r2");],
--                 result="yes", result="no")
--  AC_MSG_RESULT("$result")
--  if test "$result" = "yes"; then
--      AC_DEFINE(HAVE_ARM_SIMD)
--      HAVE_ARM_SIMD=1
--  fi
--
--  AC_MSG_CHECKING(for ARM NEON support in compiler)
--  # We try to link so that this also fails when
--  # building with LTO.
--  AC_TRY_LINK([],
--                 [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
--                 result="yes", result="no")
--  AC_MSG_RESULT("$result")
--  if test "$result" = "yes"; then
--      AC_DEFINE(HAVE_ARM_NEON)
--      HAVE_ARM_NEON=1
--  fi
--fi # CPU_ARCH = arm
 +MOZ_ARG_DISABLE_BOOL(neon,
 +[  --disable-neon       Disable neon extensions],
 +    NS_DISABLE_NEON=1,
@@ -126,24 +98,36 @@ diff --git a/js/src/configure.in b/js/src/configure.in
 +    # We try to link so that this also fails when
 +    # building with LTO.
 +    AC_TRY_LINK([],
-+                   [asm("uqadd8 r1, r1, r2");],
-+                   result="yes", result="no")
+                  [asm("uqadd8 r1, r1, r2");],
+                  result="yes", result="no")
+-  AC_MSG_RESULT("$result")
+-  if test "$result" = "yes"; then
 +    AC_MSG_RESULT("$result")
 +    if test "$result" = "yes"; then
-+        AC_DEFINE(HAVE_ARM_SIMD)
-+        HAVE_ARM_SIMD=1
+       AC_DEFINE(HAVE_ARM_SIMD)
+       HAVE_ARM_SIMD=1
+-  fi
+-
+-  AC_MSG_CHECKING(for ARM NEON support in compiler)
+-  # We try to link so that this also fails when
+-  # building with LTO.
+-  AC_TRY_LINK([],
 +    fi
 +
 +    AC_MSG_CHECKING(for ARM NEON support in compiler)
 +    # We try to link so that this also fails when
 +    # building with LTO.
 +    AC_TRY_LINK([],
-+                   [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
-+                   result="yes", result="no")
+                  [asm(".fpu neon\n vadd.i8 d0, d0, d0");],
+                  result="yes", result="no")
+-  AC_MSG_RESULT("$result")
+-  if test "$result" = "yes"; then
 +    AC_MSG_RESULT("$result")
 +    if test "$result" = "yes"; then
-+        AC_DEFINE(HAVE_ARM_NEON)
-+        HAVE_ARM_NEON=1
+       AC_DEFINE(HAVE_ARM_NEON)
+       HAVE_ARM_NEON=1
+-  fi
+-fi # CPU_ARCH = arm
 +    fi
 +  fi # CPU_ARCH = arm
 +fi
@@ -151,7 +135,7 @@ diff --git a/js/src/configure.in b/js/src/configure.in
  AC_SUBST(HAVE_ARM_SIMD)
  AC_SUBST(HAVE_ARM_NEON)
  
- dnl ========================================================
- dnl Android libstdc++, placed here so it can use MOZ_ARCH
- dnl computed above.
- dnl ========================================================
+ dnl =================================================================
+ dnl Set up and test static assertion macros used to avoid AC_TRY_RUN,
+ dnl which is bad when cross compiling.
+ dnl =================================================================

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="release"
+CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_10_0_RELEASE"
-VERSION="10.0"
+RELEASE_TAG="FIREFOX_11_0b1_RELEASE"
+VERSION="10.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

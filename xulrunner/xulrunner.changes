@@ -1,9 +1,16 @@
 -------------------------------------------------------------------
+Thu Feb  9 10:20:49 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0.1 (bnc#746616)
+  * MFSA 2012-10/CVE-2012-0452 (bmo#724284)
+    use after free in nsXBLDocumentInfo::ReadPrototypeBindings
+
+-------------------------------------------------------------------
 Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
 
 - Use YARR interpreter instead of PCRE on platforms where YARR JIT
   is not supported, since PCRE doesnt build (bmo#691898)
-  - fix ppc64 build (bmo#703534)
+- fix ppc64 build (bmo#703534)
 
 -------------------------------------------------------------------
 Mon Jan 30 09:43:21 UTC 2012 - wr@rosenauer.org

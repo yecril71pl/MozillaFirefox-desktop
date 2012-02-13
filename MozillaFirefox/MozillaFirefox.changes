@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Feb  9 09:26:11 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0.1 (bnc#746616)
+  * MFSA 2012-10/CVE-2012-0452 (bmo#724284)
+    use after free in nsXBLDocumentInfo::ReadPrototypeBindings
+
+-------------------------------------------------------------------
 Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
 
 - Use YARR interpreter instead of PCRE on platforms where YARR JIT

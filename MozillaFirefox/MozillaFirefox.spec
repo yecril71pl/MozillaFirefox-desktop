@@ -47,7 +47,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.2
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012020300
+%define         releasedate 2012021200
 Provides:       web_browser
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{mainver}
@@ -215,7 +215,7 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 %patch12 -p1
 %patch14 -p1
-%patch15 -p1
+#%patch15 -p1
 #
 %patch31 -p1
 %patch32 -p1

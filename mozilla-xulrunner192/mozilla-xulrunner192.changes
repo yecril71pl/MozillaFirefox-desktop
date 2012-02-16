@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Feb 16 10:57:34 UTC 2012 - wr@rosenauer.org
+
+- security update to 1.9.2.27 (bnc#747328)
+  * CVE-2011-3026 (bmo#727401)
+    libpng: integer overflow leading to heap-buffer overflow
+
+-------------------------------------------------------------------
 Wed Jan 25 11:48:35 UTC 2012 - wr@rosenauer.org
 
 - security update to 1.9.2.26 (bnc#744275)

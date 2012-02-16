@@ -2,8 +2,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_10_0_1_RELEASE"
-VERSION="10.0.1"
+RELEASE_TAG="FIREFOX_10_0_2_RELEASE"
+VERSION="10.0.2"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

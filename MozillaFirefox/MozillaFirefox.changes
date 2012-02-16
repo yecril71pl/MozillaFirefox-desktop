@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Feb 16 08:47:31 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0.2 (bnc#747328)
+  * CVE-2011-3026 (bmo#727401)
+    libpng: integer overflow leading to heap-buffer overflow
+
+-------------------------------------------------------------------
 Thu Feb  9 09:26:11 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 10.0.1 (bnc#746616)

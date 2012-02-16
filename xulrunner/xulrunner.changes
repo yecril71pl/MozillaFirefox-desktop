@@ -1,0 +1,126 @@
+-------------------------------------------------------------------
+Thu Feb 16 08:51:42 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0.2 (bnc#747328)
+  * CVE-2011-3026 (bmo#727401)
+    libpng: integer overflow leading to heap-buffer overflow
+
+-------------------------------------------------------------------
+Thu Feb  9 10:20:49 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0.1 (bnc#746616)
+  * MFSA 2012-10/CVE-2012-0452 (bmo#724284)
+    use after free in nsXBLDocumentInfo::ReadPrototypeBindings
+
+-------------------------------------------------------------------
+Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
+
+- Use YARR interpreter instead of PCRE on platforms where YARR JIT
+  is not supported, since PCRE doesnt build (bmo#691898)
+- fix ppc64 build (bmo#703534)
+
+-------------------------------------------------------------------
+Mon Jan 30 09:43:21 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0 (bnc#744275)
+  * MFSA 2012-01/CVE-2012-0442/CVE-2012-0443
+    Miscellaneous memory safety hazards
+  * MFSA 2012-03/CVE-2012-0445 (bmo#701071)
+    <iframe> element exposed across domains via name attribute
+  * MFSA 2012-04/CVE-2011-3659 (bmo#708198)
+    Child nodes from nsDOMAttribute still accessible after removal
+    of nodes
+  * MFSA 2012-05/CVE-2012-0446 (bmo#705651)
+    Frame scripts calling into untrusted objects bypass security
+    checks
+  * MFSA 2012-06/CVE-2012-0447 (bmo#710079)
+    Uninitialized memory appended when encoding icon images may
+    cause information disclosure
+  * MFSA 2012-07/CVE-2012-0444 (bmo#719612)
+    Potential Memory Corruption When Decoding Ogg Vorbis files
+  * MFSA 2012-08/CVE-2012-0449 (bmo#701806, bmo#702466)
+    Crash with malformed embedded XSLT stylesheets
+- removed obsolete ppc64 patch
+- disable neon for ARM as it doesn't build correctly
+
+-------------------------------------------------------------------
+Fri Dec 23 17:02:01 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 9.0.1
+  * (strongparent) parentNode of element gets lost (bmo#335998)
+
+-------------------------------------------------------------------
+Sun Dec 18 09:28:02 UTC 2011 - wr@rosenauer.org
+
+- update to release 9.0 (bnc#737533)
+  * MFSA 2011-53/CVE-2011-3660
+    Miscellaneous memory safety hazards (rv:9.0)
+  * MFSA 2011-54/CVE-2011-3661 (bmo#691299)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-55/CVE-2011-3658 (bmo#708186)
+    nsSVGValue out-of-bounds access
+  * MFSA 2011-56/CVE-2011-3663 (bmo#704482)
+    Key detection without JavaScript via SVG animation
+  * MFSA 2011-58/VE-2011-3665 (bmo#701259)
+    Crash scaling <video> to extreme sizes
+
+-------------------------------------------------------------------
+Sat Nov 12 15:20:49 UTC 2011 - wr@rosenauer.org
+
+- fix ppc64 build
+
+-------------------------------------------------------------------
+Sun Nov  6 08:23:04 UTC 2011 - wr@rosenauer.org
+
+- update to release 8.0 (bnc#728520)
+  * MFSA 2011-47/CVE-2011-3648 (bmo#690225)
+    Potential XSS against sites using Shift-JIS
+  * MFSA 2011-48/CVE-2011-3651/CVE-2011-3652/CVE-2011-3654
+    Miscellaneous memory safety hazards
+  * MFSA 2011-49/CVE-2011-3650 (bmo#674776)
+    Memory corruption while profiling using Firebug
+  * MFSA 2011-52/CVE-2011-3655 (bmo#672182)
+    Code execution via NoWaiverWrapper
+- rebased patches
+
+-------------------------------------------------------------------
+Fri Sep 30 10:59:54 UTC 2011 - wr@rosenauer.org
+
+- update to minor release 7.0.1
+  * fixed staged addon updates
+
+-------------------------------------------------------------------
+Fri Sep 23 11:36:04 UTC 2011 - wr@rosenauer.org
+
+- update to version 7.0 (bnc#720264)
+  * MFSA 2011-36/CVE-2011-2995/CVE-2011-2996/CVE-2011-2997
+    Miscellaneous memory safety hazards
+  * MFSA 2011-39/CVE-2011-3000 (bmo#655389)
+    Defense against multiple Location headers due to CRLF Injection
+  * MFSA 2011-40/CVE-2011-2372/CVE-2011-3001
+    Code installation through holding down Enter
+  * MFSA 2011-41/CVE-2011-3002/CVE-2011-3003 (bmo#680840, bmo#682335)
+    Potentially exploitable WebGL crashes
+  * MFSA 2011-42/CVE-2011-3232 (bmo#653672)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-43/CVE-2011-3004 (bmo#653926)
+    loadSubScript unwraps XPCNativeWrapper scope parameter
+  * MFSA 2011-44/CVE-2011-3005 (bmo#675747)
+    Use after free reading OGG headers
+  * MFSA 2011-45
+    Inferring keystrokes from motion data
+- removed obsolete mozilla-cairo-lcd.patch
+- rebased patches
+
+-------------------------------------------------------------------
+Tue Sep 20 11:54:28 UTC 2011 - wr@rosenauer.org
+
+- install xpt.py into SDK (mozilla-639554.patch) (bnc#639554)
+
+-------------------------------------------------------------------
+Wed Sep 14 13:07:39 UTC 2011 - wr@rosenauer.org
+
+- initial xulrunner package
+

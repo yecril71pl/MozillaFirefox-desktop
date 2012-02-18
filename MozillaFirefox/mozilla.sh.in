@@ -72,7 +72,7 @@ fi
 
 mozilla_lib=`file $MOZ_PROGRAM`
 LIB=lib
-echo $mozilla_lib | grep -q -E 'x86-64|s390x|64-bit.PowerPC' && LIB=lib64
+echo $mozilla_lib | grep -q -E 'ELF.64-bit.*(x86-64|S/390|PowerPC)' && LIB=lib64
 
 BROWSER_PLUGIN_DIR=/usr/$LIB/browser-plugins
 if [ ! -d $BROWSER_PLUGIN_DIR ]; then

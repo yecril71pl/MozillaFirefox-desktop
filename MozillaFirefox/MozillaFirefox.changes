@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Feb 17 17:41:11 UTC 2012 - pcerny@suse.com
+
+- better plugin directory resolution (bnc#747320)
+
+-------------------------------------------------------------------
 Thu Feb 16 08:47:31 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 10.0.2 (bnc#747328)

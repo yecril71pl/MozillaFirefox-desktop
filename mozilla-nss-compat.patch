@@ -1,0 +1,50 @@
+# HG changeset patch
+# Parent f241f48841a5d480f898cb7c34f3438aaa9a6c40
+# User Brian Smith <bsmith@mozilla.com>
+Bug 713934, Part 2, version 1: Update SetCertVerificationResult to use SSL_AuthCertificateComplete, r?honzab
+
+diff --git a/security/manager/ssl/src/nsNSSIOLayer.cpp b/security/manager/ssl/src/nsNSSIOLayer.cpp
+--- a/security/manager/ssl/src/nsNSSIOLayer.cpp
++++ b/security/manager/ssl/src/nsNSSIOLayer.cpp
+@@ -964,31 +964,31 @@ nsNSSSocketInfo::SetCertVerificationWait
+ 
+ void
+ nsNSSSocketInfo::SetCertVerificationResult(PRErrorCode errorCode,
+                                            SSLErrorMessageType errorMessageType)
+ {
+   NS_ASSERTION(mCertVerificationState == waiting_for_cert_verification,
+                "Invalid state transition to cert_verification_finished");
+ 
+-  if (errorCode != 0) {
+-    SetCanceled(errorCode, errorMessageType);
+-  } else if (mFd) {
+-    // We haven't closed the connection already, so restart it
+-    SECStatus rv = SSL_RestartHandshakeAfterAuthCertificate(mFd);
+-    if (rv != SECSuccess) {
++  if (mFd) {
++    SECStatus rv = SSL_AuthCertificateComplete(mFd, errorCode);
++    // Only replace errorCode if there was originally no error
++    if (rv != SECSuccess && errorCode == 0) {
+       errorCode = PR_GetError();
++      errorMessageType = PlainErrorMessage;
+       if (errorCode == 0) {
+-        NS_ERROR("SSL_RestartHandshakeAfterAuthCertificate didn't set error code");
++        NS_ERROR("SSL_AuthCertificateComplete didn't set error code");
+         errorCode = PR_INVALID_STATE_ERROR;
+       }
+-      SetCanceled(errorCode, PlainErrorMessage);
+     }
+-  } else {
+-    // If we closed the connection alreay, we don't have anything to do
++  }
++
++  if (errorCode) {
++    SetCanceled(errorCode, errorMessageType);
+   }
+ 
+   mCertVerificationState = after_cert_verification;
+ }
+ 
+ nsresult nsNSSSocketInfo::GetSSLStatus(nsISSLStatus** _result)
+ {
+   NS_ENSURE_ARG_POINTER(_result);

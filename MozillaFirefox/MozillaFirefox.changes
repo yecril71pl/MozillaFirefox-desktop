@@ -1,0 +1,2662 @@
+-------------------------------------------------------------------
+Fri Feb 17 17:41:11 UTC 2012 - pcerny@suse.com
+
+- better plugin directory resolution (bnc#747320)
+
+-------------------------------------------------------------------
+Thu Feb 16 08:47:31 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0.2 (bnc#747328)
+  * CVE-2011-3026 (bmo#727401)
+    libpng: integer overflow leading to heap-buffer overflow
+
+-------------------------------------------------------------------
+Thu Feb  9 09:26:11 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0.1 (bnc#746616)
+  * MFSA 2012-10/CVE-2012-0452 (bmo#724284)
+    use after free in nsXBLDocumentInfo::ReadPrototypeBindings
+
+-------------------------------------------------------------------
+Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
+
+- Use YARR interpreter instead of PCRE on platforms where YARR JIT
+  is not supported, since PCRE doesnt build (bmo#691898)
+- fix ppc64 build (bmo#703534)
+
+-------------------------------------------------------------------
+Mon Jan 30 09:41:59 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 10.0 (bnc#744275)
+  * MFSA 2012-01/CVE-2012-0442/CVE-2012-0443
+    Miscellaneous memory safety hazards
+  * MFSA 2012-03/CVE-2012-0445 (bmo#701071)
+    <iframe> element exposed across domains via name attribute
+  * MFSA 2012-04/CVE-2011-3659 (bmo#708198)
+    Child nodes from nsDOMAttribute still accessible after removal
+    of nodes
+  * MFSA 2012-05/CVE-2012-0446 (bmo#705651)
+    Frame scripts calling into untrusted objects bypass security
+    checks
+  * MFSA 2012-06/CVE-2012-0447 (bmo#710079)
+    Uninitialized memory appended when encoding icon images may
+    cause information disclosure
+  * MFSA 2012-07/CVE-2012-0444 (bmo#719612)
+    Potential Memory Corruption When Decoding Ogg Vorbis files
+  * MFSA 2012-08/CVE-2012-0449 (bmo#701806, bmo#702466)
+    Crash with malformed embedded XSLT stylesheets
+- KDE integration has been disabled since it needs refactoring
+- removed obsolete ppc64 patch
+
+-------------------------------------------------------------------
+Sun Jan 22 12:08:07 UTC 2012 - joop.boonen@opensuse.org
+
+- Disable neon for arm as it doesn't build correctly
+
+-------------------------------------------------------------------
+Fri Dec 23 17:02:01 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 9.0.1
+  * (strongparent) parentNode of element gets lost (bmo#335998)
+
+-------------------------------------------------------------------
+Sun Dec 18 09:58:52 UTC 2011 - adrian@suse.de
+
+- fix arm build, don't package crashreporter there
+
+-------------------------------------------------------------------
+Sun Dec 18 09:52:08 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 9 (bnc#737533)
+  * MFSA 2011-53/CVE-2011-3660
+    Miscellaneous memory safety hazards (rv:9.0)
+  * MFSA 2011-54/CVE-2011-3661 (bmo#691299)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-55/CVE-2011-3658 (bmo#708186)
+    nsSVGValue out-of-bounds access
+  * MFSA 2011-56/CVE-2011-3663 (bmo#704482)
+    Key detection without JavaScript via SVG animation
+  * MFSA 2011-58/VE-2011-3665 (bmo#701259)
+    Crash scaling <video> to extreme sizes
+
+-------------------------------------------------------------------
+Sun Nov 27 03:51:54 UTC 2011 - mgorse@suse.com
+
+- Fix accessibility under GNOME 3 (bnc#732898)
+
+-------------------------------------------------------------------
+Sat Nov 12 15:16:38 UTC 2011 - dvaleev@suse.com
+
+- fix ppc64 build
+
+-------------------------------------------------------------------
+Sun Nov  6 08:20:59 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 8 (bnc#728520)
+  * MFSA 2011-47/CVE-2011-3648 (bmo#690225)
+    Potential XSS against sites using Shift-JIS
+  * MFSA 2011-48/CVE-2011-3651/CVE-2011-3652/CVE-2011-3654
+    Miscellaneous memory safety hazards
+  * MFSA 2011-49/CVE-2011-3650 (bmo#674776)
+    Memory corruption while profiling using Firebug
+  * MFSA 2011-52/CVE-2011-3655 (bmo#672182)
+    Code execution via NoWaiverWrapper
+- rebased patches
+
+-------------------------------------------------------------------
+Thu Oct 20 12:34:47 UTC 2011 - wr@rosenauer.org
+
+- enable telemetry prompt
+
+-------------------------------------------------------------------
+Fri Sep 30 10:52:36 UTC 2011 - wr@rosenauer.org
+
+- update to minor release 7.0.1
+  * fixed staged addon updates
+- set intl.locale.matchOS=true in the base package as it causes
+  too much confusion when it's only available with branding-openSUSE
+
+-------------------------------------------------------------------
+Fri Sep 23 11:22:22 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 7 (bnc#720264)
+  including
+  * Improve Responsiveness with Memory Reductions
+  * Instant Sync
+  * WebSocket protocol 8
+  * MFSA 2011-36/CVE-2011-2995/CVE-2011-2996/CVE-2011-2997
+    Miscellaneous memory safety hazards
+  * MFSA 2011-39/CVE-2011-3000 (bmo#655389)
+    Defense against multiple Location headers due to CRLF Injection
+  * MFSA 2011-40/CVE-2011-2372/CVE-2011-3001
+    Code installation through holding down Enter
+  * MFSA 2011-41/CVE-2011-3002/CVE-2011-3003 (bmo#680840, bmo#682335)
+    Potentially exploitable WebGL crashes
+  * MFSA 2011-42/CVE-2011-3232 (bmo#653672)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-43/CVE-2011-3004 (bmo#653926)
+    loadSubScript unwraps XPCNativeWrapper scope parameter
+  * MFSA 2011-44/CVE-2011-3005 (bmo#675747)
+    Use after free reading OGG headers
+  * MFSA 2011-45
+    Inferring keystrokes from motion data
+- removed obsolete mozilla-cairo-lcd.patch
+- rebased patches
+- removed XLIB_SKIP_ARGB_VISUALS=1 from environment in
+  mozilla.sh.in (bnc#680758)
+
+-------------------------------------------------------------------
+Fri Sep 16 06:57:38 UTC 2011 - wr@rosenauer.org
+
+- fixed loading of kde.js under KDE (bnc#718311)
+
+-------------------------------------------------------------------
+Wed Sep 14 07:02:04 UTC 2011 - wr@rosenauer.org
+
+- add dbus-1-glib-devel to BuildRequires (not pulled in
+  automatically anymore on 12.1)
+- increase minversions for NSPR and NSS
+
+-------------------------------------------------------------------
+Fri Sep  9 20:44:15 UTC 2011 - wr@rosenauer.org
+
+- recreated source archive to get correct source-stamp.txt
+
+-------------------------------------------------------------------
+Wed Sep  7 14:30:34 UTC 2011 - pcerny@suse.com
+
+- security update to 6.0.2 (bnc#714931)
+  * Complete blocking of certificates issued by DigiNotar
+    (bmo#683449)
+
+-------------------------------------------------------------------
+Fri Sep  2 14:40:07 UTC 2011 - pcerny@suse.com
+
+- security update to 6.0.1 (bnc#714931)
+  * MFSA 2011-34
+    Protection against fraudulent DigiNotar certificates
+    (bmo#682927)
+
+-------------------------------------------------------------------
+Fri Aug 12 21:16:19 UTC 2011 - wr@rosenauer.org
+
+- update to 6.0 (bnc#712224)
+  included security fixes MFSA 2011-29
+  * CVE-2011-2989/CVE-2011-2991/CVE-2011-2992/CVE-2011-2985
+    Miscellaneous memory safety hazards
+  * CVE-2011-2993 (bmo#657267)
+    Unsigned scripts can call script inside signed JAR
+  * CVE-2011-2988 (bmo#665934)
+    Heap overflow in ANGLE library
+  * CVE-2011-0084 (bmo#648094)
+    Crash in SVGTextElement.getCharNumAtPosition()
+  * CVE-2011-2990
+    Credential leakage using Content Security Policy reports
+  * CVE-2011-2986 (bmo#655836)
+    Cross-origin data theft using canvas and Windows D2D
+- removed obsolete curl header dependency (mozilla-curl.patch)
+
+-------------------------------------------------------------------
+Fri Jul 22 13:34:12 UTC 2011 - wr@rosenauer.org
+
+- update to 6.0b3
+  * removed obsolete patches
+    - firefox-shellservice.patch
+    - mozilla-gio.patch
+    - mozilla-ppc-ipc.patch
+    - firefox-linkorder.patch
+    - firefox-no-sync-l10n.patch
+- recognize linux3 as platform for symbolstore.py
+
+-------------------------------------------------------------------
+Fri Jul  1 19:53:18 CEST 2011 - vuntz@opensuse.org
+
+- Add x-scheme-handler/ftp to the MimeType key in the .desktop, to
+  let desktops know that Firefox can deal with ftp: URIs.
+
+-------------------------------------------------------------------
+Fri Jul  1 06:45:08 UTC 2011 - wr@rosenauer.org
+
+- create upstream branding package again (supposedly empty)
+  (bnc#703401)
+- fix build on SLE11 (changes do not affect/are not applied for
+  later versions)
+
+-------------------------------------------------------------------
+Wed Jun 22 06:41:17 UTC 2011 - wr@rosenauer.org
+
+- enable startup notification (bnc#701465)
+
+-------------------------------------------------------------------
+Mon Jun 20 19:37:01 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0 final
+- included fixes for security issues: (bnc#701296, bnc#700578)
+  * MFSA 2011-19/CVE-2011-2374 CVE-2011-2375
+    Miscellaneous memory safety hazards
+  * MFSA 2011-20/CVE-2011-2373 (bmo#617247)
+    Use-after-free vulnerability when viewing XUL document with
+    script disabled
+  * MFSA 2011-21/CVE-2011-2377 (bmo#638018, bmo#639303)
+    Memory corruption due to multipart/x-mixed-replace images
+  * MFSA 2011-22/CVE-2011-2371 (bmo#664009)
+    Integer overflow and arbitrary code execution in
+    Array.reduceRight()
+  * MFSA 2011-25/CVE-2011-2366
+    Stealing of cross-domain images using WebGL textures
+  * MFSA 2011-26/CVE-2011-2367 CVE-2011-2368
+    Multiple WebGL crashes
+  * MFSA 2011-27/CVE-2011-2369 (bmo#650001)
+    XSS encoding hazard with inline SVG
+  * MFSA 2011-28/CVE-2011-2370 (bmo#645699)
+    Non-whitelisted site can trigger xpinstall
+
+-------------------------------------------------------------------
+Mon Jun 20 09:17:42 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0b7
+  * updated supported locales
+- do not build dump_syms static (not needed for us)
+  -> fix build for openSUSE 12.1 and above
+
+-------------------------------------------------------------------
+Wed Jun 15 14:59:32 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0b6
+- include proper revision information into the build
+- speedier find-external-requires.sh
+
+-------------------------------------------------------------------
+Tue May 31 06:53:55 UTC 2011 - wr@rosenauer.org
+
+- update to 5.0b3
+- transformed to standalone Firefox (not xulrunner based)
+  (with new Firefox rapid release cycle it makes no sense anymore)
+  * imported all relevant xulrunner patches
+- do not compile in build timestamp
+
+-------------------------------------------------------------------
+Fri Apr 15 07:08:53 UTC 2011 - wr@rosenauer.org
+
+- security update to 4.0.1 (bnc#689281)
+  * MFSA 2011-12/ CVE-2011-0069 CVE-2011-0070 CVE-2011-0079
+    CVE-2011-0080 CVE-2011-0081
+    Miscellaneous memory safety hazards
+  * MFSA 2011-17/CVE-2011-0068 (bmo#623791)
+    WebGLES vulnerabilities
+  * MFSA 2011-18/CVE-2011-1202 (bmo#640339)
+    XSLT generate-id() function heap address leak
+
+-------------------------------------------------------------------
+Wed Mar 30 11:24:36 UTC 2011 - wr@rosenauer.org
+
+- add all available icon sizes
+
+-------------------------------------------------------------------
+Tue Mar 29 11:55:53 UTC 2011 - cfarrell@novell.com
+
+- license update: MPLv1.1 or GPLv2+ or LGPLv2+
+  Sync licenses with Fedora. MPL does not state ^or later^
+
+-------------------------------------------------------------------
+Fri Mar 18 08:49:15 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0rc2
+- fixed rpm macros delivered with devel package (bnc#679950)
+
+-------------------------------------------------------------------
+Wed Feb 23 07:52:04 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b12
+- rebased patches
+
+-------------------------------------------------------------------
+Fri Feb  4 09:32:50 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b11
+  * loads of bugfixes compared to last beta
+  * added "Do Not Track" option
+- rebased patches
+- disable testpilot
+
+-------------------------------------------------------------------
+Fri Jan 28 08:56:12 UTC 2011 - wr@rosenauer.org
+
+- set correct desktop file name within KDE for 11.4 and up
+- add devel package with macros for extensions (from lnussel@suse.de)
+
+-------------------------------------------------------------------
+Sat Jan 22 22:21:52 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b10
+- removed obsolete firefox-shell-bmo624267.patch
+- testpilot moved to distribution/extensions
+- updated locale provides and removed bn-IN from locales
+
+-------------------------------------------------------------------
+Tue Jan 11 06:13:40 UTC 2011 - wr@rosenauer.org
+
+- update to version 4.0b9
+- added x-scheme-handler for http and https to desktop file for
+  newer Gnome environments
+- fixed default browser check/set for GIO (bmo#611953)
+  (mozilla-shellservice.patch)
+- removed obsolete firefox-appname.patch (integrated into
+  shellservice patch)
+- renamed desktop file to firefox.desktop for 11.4 and newer
+  (bnc#664211)
+- removed support for 10.3 and older from the spec file
+- removed obsolete "Ximian" categories from desktop file
+
+-------------------------------------------------------------------
+Mon Jan  3 17:35:46 CET 2011 - meissner@suse.de
+
+- Mirror ac_add_options --disable-ipc from xulrunner for PowerPC.
+
+-------------------------------------------------------------------
+Wed Dec 15 07:49:45 UTC 2010 - wr@rosenauer.org
+
+- update to version 4.0beta8
+
+-------------------------------------------------------------------
+Tue Nov 30 14:19:59 UTC 2010 - wr@rosenauer.org
+
+- major update to version 4.0beta7
+  * based on mozilla-xulrunner20
+  * far too many internal changes to list
+
+-------------------------------------------------------------------
+Wed Oct 27 07:12:14 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.12 (bnc#649492)
+  * MFSA 2010-73/CVE-2010-3765 (bmo#607222)
+    Heap buffer overflow mixing document.write and DOM insertion
+
+-------------------------------------------------------------------
+Wed Oct  6 07:13:52 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.11 (bnc#645315)
+  * MFSA 2010-64/CVE-2010-3174/CVE-2010-3175/CVE-2010-3176
+    Miscellaneous memory safety hazards
+  * MFSA 2010-65/CVE-2010-3179 (bmo#583077)
+    Buffer overflow and memory corruption using document.write
+  * MFSA 2010-66/CVE-2010-3180 (bmo#588929)
+    Use-after-free error in nsBarProp
+  * MFSA 2010-67/CVE-2010-3183 (bmo#598669)
+    Dangling pointer vulnerability in LookupGetterOrSetter
+  * MFSA 2010-68/CVE-2010-3177 (bmo#556734)
+    XSS in gopher parser when parsing hrefs
+  * MFSA 2010-69/CVE-2010-3178 (bmo#576616)
+    Cross-site information disclosure via modal calls
+  * MFSA 2010-70/CVE-2010-3170 (bmo#578697)
+    SSL wildcard certificate matching IP addresses
+  * MFSA 2010-71/CVE-2010-3182 (bmo#590753)
+    Unsafe library loading vulnerabilities
+  * MFSA 2010-72/CVE-2010-3173
+    Insecure Diffie-Hellman key exchange
+
+-------------------------------------------------------------------
+Wed Sep 15 07:39:22 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.10
+  * fixing startup topcrash (bmo#594699)
+
+-------------------------------------------------------------------
+Thu Aug 26 07:40:28 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.9 (bnc#637303)
+  * MFSA 2010-49/CVE-2010-3169
+    Miscellaneous memory safety hazards
+  * MFSA 2010-50/CVE-2010-2765 (bmo#576447)
+    Frameset integer overflow vulnerability
+  * MFSA 2010-51/CVE-2010-2767 (bmo#584512)
+    Dangling pointer vulnerability using DOM plugin array
+  * MFSA 2010-53/CVE-2010-3166 (bmo#579655)
+    Heap buffer overflow in nsTextFrameUtils::TransformText
+  * MFSA 2010-54/CVE-2010-2760 (bmo#585815)
+    Dangling pointer vulnerability in nsTreeSelection
+  * MFSA 2010-55/CVE-2010-3168 (bmo#576075)
+    XUL tree removal crash and remote code execution
+  * MFSA 2010-56/CVE-2010-3167 (bmo#576070)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-57/CVE-2010-2766 (bmo#580445)
+    Crash and remote code execution in normalizeDocument
+  * MFSA 2010-59/CVE-2010-2762 (bmo#584180)
+    SJOW creates scope chains ending in outer object
+  * MFSA 2010-61/CVE-2010-2768 (bmo#579744)
+    UTF-7 XSS by overriding document charset using <object> type
+    attribute
+  * MFSA 2010-62/CVE-2010-2769 (bmo#520189)
+    Copy-and-paste or drag-and-drop into designMode document allows
+    XSS
+  * MFSA 2010-63/CVE-2010-2764 (bmo#552090)
+    Information leak via XMLHttpRequest statusText
+
+-------------------------------------------------------------------
+Wed Jul 28 08:33:14 CEST 2010 - meissner@suse.de
+
+- disable crash reporter for non x86/x86_64 to make it build.
+
+-------------------------------------------------------------------
+Sat Jul 24 12:42:58 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.8 (bnc#622506)
+  * MFSA 2010-48/CVE-2010-2755 (bmo#575836)
+    Dangling pointer crash regression from plugin parameter array
+    fix
+
+-------------------------------------------------------------------
+Fri Jul 16 06:48:44 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.7 (bnc#622506)
+  * MFSA 2010-34/CVE-2010-1211/CVE-2010-1212
+    Miscellaneous memory safety hazards
+  * MFSA 2010-35/CVE-2010-1208 (bmo#572986)
+    DOM attribute cloning remote code execution vulnerability
+  * MFSA 2010-36/CVE-2010-1209 (bmo#552110)
+    Use-after-free error in NodeIterator
+  * MFSA 2010-37/CVE-2010-1214 (bmo#572985)
+    Plugin parameter EnsureCachedAttrParamArrays remote code
+    execution vulnerability
+  * MFSA 2010-38/CVE-2010-1215 (bmo#567069)
+    Arbitrary code execution using SJOW and fast native function
+  * MFSA 2010-39/CVE-2010-2752 (bmo#574059)
+    nsCSSValue::Array index integer overflow
+  * MFSA 2010-40/CVE-2010-2753 (bmo#571106)
+    nsTreeSelection dangling pointer remote code execution
+    vulnerability
+  * MFSA 2010-41/CVE-2010-1205 (bmo#570451)
+    Remote code execution using malformed PNG image
+  * MFSA 2010-42/CVE-2010-1213 (bmo#568148)
+    Cross-origin data disclosure via Web Workers and importScripts
+  * MFSA 2010-43/CVE-2010-1207 (bmo#571287)
+    Same-origin bypass using canvas context
+  * MFSA 2010-44/CVE-2010-1210 (bmo#564679)
+    Characters mapped to U+FFFD in 8 bit encodings cause subsequent
+    character to vanish
+  * MFSA 2010-45/CVE-2010-1206/CVE-2010-2751 (bmo#536466,556957)
+    Multiple location bar spoofing vulnerabilities
+  * MFSA 2010-46/CVE-2010-0654 (bmo#524223)
+    Cross-domain data theft using CSS
+  * MFSA 2010-47/CVE-2010-2754 (bmo#568564)
+    Cross-origin data leakage from script filename in error messages
+
+-------------------------------------------------------------------
+Sun Jun 27 20:24:31 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.6 release
+  * modifies the crash protection feature to increase the amount 
+    of time that plugins are allowed to be non-responsive before 
+    being terminated.
+
+-------------------------------------------------------------------
+Wed Jun 23 14:40:35 CEST 2010 - wr@rosenauer.org
+
+- update to final 3.6.4 release (bnc#603356)
+  * MFSA 2010-26/CVE-2010-1200/CVE-2010-1201/CVE-2010-1202/
+    CVE-2010-1203
+    Crashes with evidence of memory corruption (rv:1.9.2.4)
+  * MFSA 2010-28/CVE-2010-1198 (bmo#532246)
+    Freed object reuse across plugin instances
+  * MFSA 2010-29/CVE-2010-1196 (bmo#534666)
+    Heap buffer overflow in nsGenericDOMDataNode::SetTextInternal
+  * MFSA 2010-30/CVE-2010-1199 (bmo#554255)
+    Integer Overflow in XSLT Node Sorting
+  * MFSA 2010-31/CVE-2010-1125 (bmo#552255)
+    focus() behavior can be used to inject or steal keystrokes
+  * MFSA 2010-32/CVE-2010-1197 (bmo#537120)
+    Content-Disposition: attachment ignored if
+    Content-Type: multipart also present
+  * MFSA 2010-33/CVE-2008-5913 (bmo#475585)
+    User tracking across sites using Math.random()
+
+-------------------------------------------------------------------
+Mon Jun  7 07:07:33 CEST 2010 - wr@rosenauer.org
+
+- update to 3.6.4(build6)
+
+-------------------------------------------------------------------
+Sun Apr 18 09:42:40 CEST 2010 - wr@rosenauer.org
+
+- security update to 3.6.4 (Lorentz)
+  * enable crashreporter also for x86-64
+  * Flash runs in a separate process to avoid crashing Firefox
+    (ix86 only; x86-64 still uses nspluginwrapper)
+
+-------------------------------------------------------------------
+Thu Apr  1 11:15:38 UTC 2010 - wr@rosenauer.org
+
+- security update to 3.6.3
+  * MFSA 2010-25/CVE-2010-1121 (bmo#555109)
+    Re-use of freed object due to scope confusion
+
+-------------------------------------------------------------------
+Thu Mar 18 06:43:33 CET 2010 - wr@rosenauer.org
+
+- security update to version 3.6.2 (bnc#586567)
+  * MFSA 2010-08/CVE-2010-1028
+    WOFF heap corruption due to integer overflow
+  * MFSA 2010-09/CVE-2010-0164 (bmo#547143)
+    Deleted frame reuse in multipart/x-mixed-replace image
+  * MFSA 2010-10/CVE-2010-0170 (bmo#541530)
+    XSS via plugins and unprotected Location object
+  * MFSA 2010-11/CVE-2010-0165/CVE-2010-0166/CVE-2010-0167
+    Crashes with evidence of memory corruption
+  * MFSA 2010-12/CVE-2010-0171 (bmo#531364)
+    XSS using addEventListener and setTimeout on a wrapped object
+  * MFSA 2010-13/CVE-2010-0168 (bmo#540642)
+    Content policy bypass with image preloading
+  * MFSA 2010-14/CVE-2010-0169 (bmo#535806)
+    Browser chrome defacement via cached XUL stylesheets
+  * MFSA 2010-15/CVE-2010-0172 (bmo#537862)
+    Asynchronous Auth Prompt attaches to wrong window
+  * MFSA 2010-16/CVE-2010-0173/CVE-2010-0174
+    Crashes with evidence of memory corruption
+  * MFSA 2010-18/CVE-2010-0176 (bmo#538308)
+    Dangling pointer vulnerability in nsTreeContentView
+  * MFSA 2010-19/CVE-2010-0177 (bmo#538310)
+    Dangling pointer vulnerability in nsPluginArray
+  * MFSA 2010-20/CVE-2010-0178 (bmo#546909)
+    Chrome privilege escalation via forced URL drag and drop
+  * MFSA 2010-22/CVE-2009-3555 (bmo#545755)
+    Update NSS to support TLS renegotiation indication
+  * MFSA 2010-23/CVE-2010-0181 (bmo#452093)
+    Image src redirect to mailto: URL opens email editor
+  * MFSA 2010-24/CVE-2010-0182 (bmo#490790)
+    XMLDocument::load() doesn't check nsIContentPolicy
+
+-------------------------------------------------------------------
+Mon Jan 18 09:42:50 CET 2010 - wr@rosenauer.org
+
+- update to 3.6rc2 (already named 3.6.0)
+- removed obsolete orbit-devel build requirement
+
+-------------------------------------------------------------------
+Wed Jan  6 17:15:40 CET 2010 - wr@rosenauer.org
+
+- major update to 3.6rc1
+
+-------------------------------------------------------------------
+Fri Dec 25 09:39:42 CET 2009 - wr@rosenauer.org
+
+- update to version 3.5.7 (bnc#568011)
+  * DNS resolution in MakeSN of nsAuthSSPI causing issues for
+    proxy servers that support NTLM auth (bmo#535193)
+- added missing lockdown preferences (bnc#567131)
+
+-------------------------------------------------------------------
+Thu Dec 17 20:06:38 CET 2009 - wr@rosenauer.org
+
+- readded firefox-ui-lockdown.patch (bnc#546158)
+
+-------------------------------------------------------------------
+Thu Dec  3 21:53:59 CET 2009 - wr@rosenauer.org
+
+- security update to version 3.5.6 (bnc#559807)
+  * MFSA 2009-65/CVE-2009-3979/CVE-2009-3980/CVE-2009-3982
+    Crashes with evidence of memory corruption (rv:1.9.1.6)
+  * MFSA 2009-66/CVE-2009-3388 (bmo#504843,bmo#523816)
+    Memory safety fixes in liboggplay media library
+  * MFSA 2009-67/CVE-2009-3389 (bmo#515882,bmo#504613)
+    Integer overflow, crash in libtheora video library
+  * MFSA 2009-68/CVE-2009-3983 (bmo#487872)
+    NTLM reflection vulnerability
+  * MFSA 2009-69/CVE-2009-3984/CVE-2009-3985 (bmo#521461,bmo#514232)
+    Location bar spoofing vulnerabilities
+  * MFSA 2009-70/VE-2009-3986 (bmo#522430)
+    Privilege escalation via chrome window.opener
+- fixed firefox-browser-css.patch (bnc#561027)
+
+-------------------------------------------------------------------
+Mon Nov 23 22:31:21 CET 2009 - wr@rosenauer.org
+
+- rebased patches for fuzz=0
+
+-------------------------------------------------------------------
+Thu Nov  5 19:49:33 UTC 2009 - wr@rosenauer.org
+
+- update to version 3.5.5 (bnc#553172)
+
+-------------------------------------------------------------------
+Sat Oct 17 23:19:23 CEST 2009 - wr@rosenauer.org
+
+- security update to version 3.5.4 (bnc#545277)
+  * MFSA 2009-52/CVE-2009-3370 (bmo#511615)
+    Form history vulnerable to stealing
+  * MFSA 2009-53/CVE-2009-3274 (bmo#514823)
+    Local downloaded file tampering
+  * MFSA 2009-54/CVE-2009-3371 (bmo#514554)
+    Crash with recursive web-worker calls
+  * MFSA 2009-55/CVE-2009-3372 (bmo#500644)
+    Crash in proxy auto-configuration regexp parsing
+  * MFSA 2009-56/CVE-2009-3373 (bmo#511689)
+    Heap buffer overflow in GIF color map parser
+  * MFSA 2009-57/CVE-2009-3374 (bmo#505988)
+    Chrome privilege escalation in XPCVariant::VariantDataToJS()
+  * MFSA 2009-59/CVE-2009-1563 (bmo#516396, bmo#516862)
+    Heap buffer overflow in string to number conversion
+  * MFSA 2009-61/CVE-2009-3375 (bmo#503226)
+    Cross-origin data theft through document.getSelection()
+  * MFSA 2009-62/CVE-2009-3376 (bmo#511521)
+    Download filename spoofing with RTL override
+  * MFSA 2009-63/CVE-2009-3377/CVE-2009-3379/CVE-2009-3378
+    Upgrade media libraries to fix memory safety bugs
+  * MFSA 2009-64/CVE-2009-3380/CVE-2009-3381/CVE-2009-3383
+    Crashes with evidence of memory corruption
+- removed upstreamed patch
+  * firefox-bug506901.patch 
+
+-------------------------------------------------------------------
+Wed Oct  7 20:11:24 CEST 2009 - llunak@novell.com
+
+- fix KDE button order in one more place (bnc#170055)
+
+-------------------------------------------------------------------
+Fri Oct  2 20:26:49 CEST 2009 - wr@rosenauer.org
+
+- improve UI colors to be usable with dark themes at all 
+  (firefox-browser-css.patch) (bnc#503351)
+- extend list of supported architectures as ABI identifier
+  (mozilla-abi.patch) (bnc#543460)
+
+-------------------------------------------------------------------
+Mon Sep 14 00:07:55 CEST 2009 - wr@rosenauer.org
+
+- added KDE integration patch from llunak@novell.com  
+  (firefox-kde.patch)  
+  * support for knotify, making -kde4-addon obsolete  
+  * KDE-specific support functional (bnc#170055)
+- do not build libnkgnomevfs (bmo#512671) (firefox-no-gnomevfs)
+
+-------------------------------------------------------------------
+Thu Sep 10 09:34:26 CEST 2009 - wr@rosenauer.org
+
+- security update to version 3.5.3 (bnc#534458)
+  * MFSA 2009-47/CVE-2009-3069/CVE-2009-3070/CVE-2009-3071/
+    CVE-2009-3072/CVE-2009-3073/CVE-2009-3074/CVE-2009-3075
+    Crashes with evidence of memory corruption
+  * MFSA 2009-49/CVE-2009-3077 (bmo#506871)
+    TreeColumns dangling pointer vulnerability
+  * MFSA 2009-50/CVE-2009-3078 (bmo#453827)
+    Location bar spoofing via tall line-height Unicode characters
+  * MFSA 2009-51/CVE-2009-3079 (bmo#454363)
+    Chrome privilege escalation with FeedWriter
+
+-------------------------------------------------------------------
+Wed Aug 19 22:14:07 CEST 2009 - wr@rosenauer.org
+
+- renamed patch firefox-contextmenu-gnome to firefox-cross-desktop
+  as it contains more tweaks to handle non-Gnome environments and
+  especially KDE integration: 
+  * added the ability to set the KDE default browser 
+    (still part of bnc#170055)
+
+-------------------------------------------------------------------
+Sat Aug  8 00:14:18 CEST 2009 - wr@rosenauer.org
+
+- split -translations package into -common and -other
+  (bnc#529180)
+- remove "set as background" from context menu if not running in
+  Gnome (part of bnc#170055)
+
+-------------------------------------------------------------------
+Fri Jul 31 09:01:57 CEST 2009 - wr@rosenauer.org
+
+- security update to version 3.5.2
+  * MFSA 2009-38/CVE-2009-2470 (bmo#459524)
+    Data corruption with SOCKS5 reply containing DNS name longer
+    than 15 characters
+  * MFSA 2009-44/CVE-2009-2654 (bmo#451898)
+    Location bar and SSL indicator spoofing via window.open() on
+    invalid URL
+  * MFSA 2009-45
+    Crashes with evidence of memory corruption
+  * MFSA 2009-46 (bmo#498897)
+    Chrome privilege escalation due to incorrectly cached wrapper
+  * various other stability fixes
+- export MOZ_APP_LAUNCHER in the startscript (bmo#453689)
+
+-------------------------------------------------------------------
+Tue Jul 28 14:54:46 CEST 2009 - wr@rosenauer.org
+
+- fixed %exclude usage
+- fixed preferences' advanced pane for fresh profiles (bmo#506901)
+
+-------------------------------------------------------------------
+Wed Jul 15 20:13:19 CEST 2009 - wr@rosenauer.org
+
+- security update to version 3.5.1
+  * MFSA 2009-41
+    Corrupt JIT state after deep return from native function
+
+-------------------------------------------------------------------
+Mon Jul  6 12:33:47 CEST 2009 - wr@rosenauer.org
+
+- added mozilla-linkorder.patch to fix build with --as-needed
+
+-------------------------------------------------------------------
+Tue Jun 30 08:52:00 CEST 2009 - wr@rosenauer.org
+
+- update to final version 3.5 (20090623)
+
+-------------------------------------------------------------------
+Tue Jun 23 09:39:50 CEST 2009 - wr@rosenauer.org
+
+- fixed build by linking to a real file
+
+-------------------------------------------------------------------
+Thu Jun 18 10:19:40 CEST 2009 - wr@rosenauer.org
+
+- update to version 3.5rc2 (20090617)
+- BuildRequire mozilla-xulrunner191 = 1.9.1.0
+
+-------------------------------------------------------------------
+Sat Jun  6 15:59:02 CEST 2009 - wr@rosenauer.org
+
+- update to version 3.5b99 (20090604)
+- BuildRequire mozilla-xulrunner191 = 1.9.1b99
+
+-------------------------------------------------------------------
+Wed May 27 08:03:16 CEST 2009 - wr@rosenauer.org
+
+- fixed typos in improved xulrunner dependencies
+
+-------------------------------------------------------------------
+Mon May 11 18:25:12 CEST 2009 - wr@rosenauer.org
+
+- use non-localized Downloads folder (bnc#501724)
+
+-------------------------------------------------------------------
+Mon May  4 07:57:50 CEST 2009 - wr@rosenauer.org
+
+- update to new major version 3.5b4
+  * based on Gecko 1.9.1 (mozilla-xulrunner191)
+  * Private Browsing Mode
+  * TraceMonkey JavaScript engine
+  * Geolocation support
+  * native JSON and web worker threads support
+  * speculative parsing for faster content rendering
+  * Some HTML5 support
+- updated firefox.schemas
+- improved firefox-no-update.patch
+
+-------------------------------------------------------------------
+Tue Apr 28 10:47:54 CEST 2009 - wr@rosenauer.org
+
+- security update to 3.0.10
+  * MFSA 2009-23/CVE-2009-1313 (bmo#489647)
+      Crash in nsTextFrame::ClearTextRun()
+
+-------------------------------------------------------------------
+Thu Apr 16 13:52:21 CEST 2009 - wr@rosenauer.org
+
+- security update to 3.0.9 (bnc#495473)
+  * MFSA 2009-14/CVE-2009-1302/CVE-2009-1303/CVE-2009-1304/CVE-2009-1305
+      Crashes with evidence of memory corruption (rv:1.9.0.9)
+  * MFSA 2009-15/CVE-2009-0652 (bmo#479336)
+      URL spoofing with box drawing character
+  * MFSA 2009-16/CVE-2009-1306 (bmo#474536)
+      jar: scheme ignores the content-disposition: header on the
+      inner URI
+  * MFSA 2009-17/CVE-2009-1307 (bmo#481342)
+      Same-origin violations when Adobe Flash loaded via
+      view-source: scheme
+  * MFSA 2009-18/CVE-2009-1308 (bmo#481558)
+      XSS hazard using third-party stylesheets and XBL bindings
+  * MFSA 2009-19/CVE-2009-1309 (bmo#482206,478433)
+      Same-origin violations in XMLHttpRequest and
+      XPCNativeWrapper.toString
+  * MFSA 2009-20/CVE-2009-1310 (bmo#483086)
+      Malicious search plugins can inject code into arbitrary sites
+  * MFSA 2009-21/CVE-2009-1311 (bmo#471962)
+      POST data sent to wrong site when saving web page with
+      embedded frame
+  * MFSA 2009-22/CVE-2009-1312 (bmo#475636)
+      Firefox allows Refresh header to redirect to javascript: URIs
+
+-------------------------------------------------------------------
+Fri Mar 27 09:43:43 CET 2009 - wr@rosenauer.org
+
+- security update to 1.9.0.8 (bnc#488955,489411)
+  * MFSA 2009-12/CVE-2009-1169 (bmo#460090,485217)
+      Crash and remote code execution in XSL transformation
+  * MFSA 2009-13/CVE-2009-1044 (bmo#484320)
+      Arbitrary code execution via XUL tree moveToEdgeShift
+- allow RPM provides for stuff besides shared libraries
+  (e.g. mime-types)
+
+-------------------------------------------------------------------
+Sun Mar  1 11:08:58 CET 2009 - wr@rosenauer.org
+
+- security update to 3.0.7 (bnc#478625)
+  * MFSA 2009-07 - Crashes with evidence of memory corruption
+    CVE-2009-0771 - Layout Engine Crashes
+    CVE-2009-0772 - Layout Engine Crashes
+    CVE-2009-0773 - crashes in the JavaScript engine
+    CVE-2009-0774 - Layout Engine Crashes
+  * MFSA 2009-08/CVE-2009-0775 - (bmo#474456)
+    Mozilla Firefox XUL Linked Clones Double Free Vulnerability
+  * MFSA 2009-09/CVE-2009-0776 (bmo#414540)
+    XML data theft via RDFXMLDataSource and cross-domain redirect
+  * MFSA 2009-10/CVE-2009-0040 (bmo#478901)
+    Upgrade PNG library to fix memory safety hazards
+  * MFSA 2009-11/CVE-2009-0777 (bmo#452979)
+    URL spoofing with invisible control characters
+
+-------------------------------------------------------------------
+Wed Feb  4 18:58:59 EST 2009 - hfiguiere@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Wed Jan 28 13:48:00 CET 2009 - wr@rosenauer.org
+
+- security update to 3.0.6 (bnc#470074)
+  * MFSA 2009-06/CVE-2009-0358: Directives to not cache pages ignored
+    (bmo#441751)
+  * MFSA 2009-05/CVE-2009-0357: XMLHttpRequest allows reading 
+    HTTPOnly cookies (bmo#380418)
+  * MFSA 2009-04/CVE-2009-0356: Chrome privilege escalation via 
+    local .desktop files (bmo#460425)
+  * MFSA 2009-03/CVE-2009-0355: Local file stealing with SessionStore
+    (bmo#466937)
+  * MFSA 2009-02/CVE-2009-0354: XSS using a chrome XBL method 
+    and window.eval (bmo#468581)
+  * MFSA 2009-01/CVE-2009-0352 - CVE-2009-0353: Crashes with 
+    evidence of memory corruption (rv:1.9.0.6) (bmo#452913, 
+    bmo#449006, bmo#331088, bmo#401042, bmo#416461, bmo#422283,
+    bmo#422301, bmo#431705, bmo#437142, bmo#421839, bmo#420697,
+    bmo#461027)
+  * (non security) added lv locale
+
+-------------------------------------------------------------------
+Thu Jan 22 11:09:42 EST 2009 - hfiguiere@suse.de
+
+- Fix the wrapper script for PowerPC 64-bits (bnc#464753)
+
+-------------------------------------------------------------------
+Wed Dec 17 13:13:25 EST 2008 - hfiguiere@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Mon Dec 15 16:41:57 CET 2008 - wr@rosenauer.org
+
+- security update to 1.9.0.5 (bnc#455804)
+  for details
+  http://www.mozilla.org/security/known-vulnerabilities/firefox30.html
+  * removed aboutRights workaround again
+  * added et locale
+
+-------------------------------------------------------------------
+Tue Nov 25 10:14:45 EST 2008 - hfiguiere@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Sat Nov 22 13:26:03 CET 2008 - wr@rosenauer.org
+
+- replace license agreement with about:rights toolbar
+  (backported from upcoming FF 3.0.5) (bnc#436054, bmo#456439)
+  (it's always displayed in en-US)
+
+-------------------------------------------------------------------
+Fri Nov 21 03:11:41 EST 2008 - hfiguiere@suse.de
+
+- Update firefox-lockdown-ui.patch
+  * Print Setup is now properly locked down. bnc#431028
+  * Bookmark editing it now properly locked down. bnc#439335
+  * Bookmars are properly hidden.
+  * History is properly locked down. bnc#439343
+  * Make sure the search bar is not put back when resetting the 
+    toolbar. bnc#439358
+
+-------------------------------------------------------------------
+Thu Nov 20 18:49:19 CST 2008 - maw@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Thu Nov 13 08:22:13 CET 2008 - wr@rosenauer.org
+
+- lockdown cleanup
+  * removed gecko-lockdown.patch from Firefox (it's in xulrunner)
+  * stripped out some toolkit stuff from firefox-ui-lockdown
+  * added extra default preferences for lockdown
+
+-------------------------------------------------------------------
+Wed Nov 12 17:55:19 CST 2008 - maw@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Tue Nov 11 09:15:59 CET 2008 - wr@rosenauer.org
+
+- update to security/maintenance release 3.0.4 (bnc#439841)
+  * support additional locales (bg, cy, eo, oc)
+- removed obsolete configure option (enable-gconf)
+
+-------------------------------------------------------------------
+Fri Nov  7 15:39:54 CST 2008 - maw@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Tue Nov  4 23:27:03 CET 2008 - wr@rosenauer.org
+
+- moved gconf schema into branding packages (bnc#441646)
+
+-------------------------------------------------------------------
+Tue Oct 28 16:16:14 EDT 2008 - hfiguiere@suse.de
+
+- Fix missing %endif (for fix for bnc#434283)
+
+-------------------------------------------------------------------
+Mon Oct 27 17:05:02 EDT 2008 - hfiguiere@suse.de
+
+- Add disable_show_passwords to firefox.schemas. (FATE #301534)
+
+-------------------------------------------------------------------
+Mon Oct 27 11:57:29 CET 2008 - wr@rosenauer.org
+
+- make biarch dependencies work correctly (bnc#434283)
+
+-------------------------------------------------------------------
+Thu Oct 23 10:14:22 EDT 2008 - hfiguiere@suse.de
+
+- Added firefox-ui-lockdown.patch and gecko-lockdown.patch
+  * Lockdown: FATE#302023, FATE#302024
+
+-------------------------------------------------------------------
+Mon Oct  6 14:55:48 CEST 2008 - sbrabec@suse.cz
+
+- Conflict with other branding providers (FATE#304881).
+
+-------------------------------------------------------------------
+Mon Sep 29 12:27:43 CDT 2008 - maw@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Mon Sep 29 11:36:30 CDT 2008 - maw@suse.de
+
+- Remove a reference to a stale patch.
+
+-------------------------------------------------------------------
+Sun Sep 28 18:19:26 CEST 2008 - wr@rosenauer.org
+
+- update to regression fix release 3.0.3
+  * Fixed a problem where users were unable to retrieve saved
+    passwords or save new passwords (bmo#454708, bnc#429179#c20,
+    CVE-2008-4063, CVE-2008-4064, CVE-2008-3836, andCVE-2008-4070)
+
+-------------------------------------------------------------------
+Thu Sep 25 14:47:13 CDT 2008 - maw@suse.de
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Mon Sep 15 13:45:16 CEST 2008 - wr@rosenauer.org
+
+- update to security/maintenance release 3.0.2 (bnc#429179)
+- removed unused files from sources
+- fix more rpmlint complaints and provide a config file to filter
+  false positives
+- disable Gnome crashreporter as it has no value
+- brought man-page up to date for the firefox stub
+  (removing firefox-bin reference)
+- en-US locale not longer packaged in translations subpackage
+
+-------------------------------------------------------------------
+Fri Aug 15 18:56:26 CDT 2008 - maw@novell.com
+
+- Review and approve changes.
+
+-------------------------------------------------------------------
+Mon Aug  4 09:26:05 CEST 2008 - wr@rosenauer.org
+
+- Tweak branding split
+
+-------------------------------------------------------------------
+Tue Jul 29 15:02:47 CEST 2008 - vuntz@novell.com
+
+- Create branding package (bnc#390752):
+  + search-addons.tar.bz2, bookmarks.html.suse and
+    firefox-suse-default-prefs.js will be moved to
+    MozillaFirefox-branding-openSUSE
+  + create a MozillaFirefox-branding-upstream package
+
+-------------------------------------------------------------------
+Mon Jul 28 20:54:22 CEST 2008 - mauro@suse.de
+
+- Update to stability/security release 3.0.1 (bnc#407573) 
+  (thanks, Wolfgang)
+  + MFSA 2008-36  Crash with malformed GIF file on Mac OS X
+  + MFSA 2008-35 Command-line URLs launch multiple tabs when 
+    Firefox not running
+  + MFSA 2008-34 Remote code execution by overflowing CSS reference counter
+- Set browser.shell.checkDefaultBrowser to true (bnc#404119) 
+
+-------------------------------------------------------------------
+Tue Jun 17 18:49:33 CEST 2008 - maw@suse.de
+
+- Merge changes from the build service (thanks, Wolfgang)
+  (bnc#400001 and SWAMP#18164).
+
+-------------------------------------------------------------------
+Tue Jun 17 14:40:04 CEST 2008 - wr@rosenauer.org
+
+- update to version 3.0
+- fixed double entry in bookmarks for www.opensuse.org (bnc#396980
+
+-------------------------------------------------------------------
+Thu May 15 13:45:51 CEST 2008 - aj@suse.de
+
+- Add Planet SUSE, forums.o.o and How to participate to default
+  URLs.
+
+-------------------------------------------------------------------
+Fri May  2 16:25:24 CEST 2008 - maw@suse.de
+
+- network.protocol-handler.app.* prefs are no longer supported;
+  remove references to them from firefox-suse-default-prefs.js
+  (bnc#383697).
+
+-------------------------------------------------------------------
+Thu Apr  3 01:42:34 CEST 2008 - maw@suse.de
+
+- Update to Firefox 3.0b5 (2.9.95) (thanks, Wolfgang).
+
+-------------------------------------------------------------------
+Wed Mar 26 01:05:18 CET 2008 - maw@suse.de
+
+- Merge changes from the build service (thanks, Wolfgang)
+- Update to the fourth Firefox 3.0 Beta (2.9.94):
+  + Based upon the Gecko 1.9 Web rendering platform, which improves
+    performance, stability, and rendering correctness; it also
+    boasts a considerable simplification in its code
+  + Security improvements:
+    * One-click site info
+    * Malware Protection
+    * New Web Forgery Protection page
+    * New SSL error pages
+    * Add-ons and Plugin version check
+    * Secure add-on updates
+    * Effective top-level domain (eTLD) service to better restrict
+      cookies and other restricted content to a single domain
+    * Better protection against cross-site JSON data leaks
+  + Usability improvements:
+    * Easier password management
+    * Simplified add-on installation
+    * New Download Manager
+    * Resumable downloading
+    * Full page zoom
+    * Podcasts and Videocasts can be associated with your media
+      playback tools
+    * Tab scrolling and quickmenu
+    * Save what you were doing: Firefox will prompt users to save
+      tabs on exit
+    * Optimized Open in Tabs behavior
+    * Location and Search bar size can now be customized with a
+      simple resizer item
+    * Text selection improvements
+    * Find toolbar
+    * Improved integration with Linux: Firefox's default icons,
+      buttons, and menu styles now use the native GTK theme
+  + Personalization improvements:
+    * Star button: quickly add bookmarks from the location bar
+      with a single click; a second click lets you file and tag them
+    * Tags: associate keywords with your bookmarks to sort them
+      by topic
+    * Location bar & auto-complete
+    * Smart Bookmarks Folder
+    * Places Organizer: view, organize and search through all
+      of your bookmarks, tags, and browsing history with multiple
+      views and smart folders to store your frequent searches
+    * Web-based protocol handlers
+    * Download & Install Add-ons
+    * Easy to use Download Actions
+  + Improved platform for web developers:
+    * New graphics and font handling: new graphics and text
+      rendering architectures in Gecko 1.9 provides rendering
+      improvements in CSS, SVG as well as improved display of
+      fonts with ligatures and complex scripts
+    * Color management: (set gfx.color_management.enabled on
+      in about:config and restart the browser to enable.);
+      Firefox can now adjust images with embedded color profiles
+    * Offline support: enables web applications to provide
+      offline functionality (website authors must add support
+      for offline browsing to their site for this feature
+      to be available to users)
+  + Improved performance:
+    * Speed: improvements to the JavaScript engine as well as
+      profile guided optimizations have resulted in significant
+      improvements in performance; compared to Firefox 2,
+      web applications like Google Mail and Zoho Office run
+      twice as fast in Firefox 3 Beta 4, and the popular
+      SunSpider test from Apple shows improvements over
+      previous releases
+    * Memory usage: Several new technologies work together to
+      reduce the amount of memory used by Firefox 3 Beta 4
+      over a web browsing session;  memory cycles are broken
+      and collected by an automated cycle collector, a new
+      memory allocator reduces fragmentation, hundreds of leaks
+      have been fixed, and caching strategies have been tuned
+    * Reliability: A user's bookmarks, history, cookies, and
+      preferences are now stored in a transactionally secure
+      database format which will prevent data loss even if their
+      system crashes
+- This version depends upon the mozilla-xulrunner190 package
+- Drop various stale packages, respin several that have been
+  kept around, and add a few new ones.
+
+-------------------------------------------------------------------
+Mon Feb 11 18:18:14 CET 2008 - maw@suse.de
+
+- Security update to version 2.0.0.12 (bnc#354469):
+  + MFSA 2008-11/CVE-2008-0594 Web forgery overwrite with div
+    overlay
+  + MFSA 2008-10/CVE-2008-0593 URL token stealing via stylesheet
+    redirect
+  + MFSA 2008-09/CVE-2008-0592 Mishandling of locally-saved plain
+    text files
+  + MFSA 2008-08/CVE-2008-0591 File action dialog tampering
+  + MFSA 2008-06/CVE-2008-0419 Web browsing history and forward
+    navigation stealing
+  + MFSA 2008-05/CVE-2008-0418 Directory traversal via chrome: URI
+  + MFSA 2008-04/CVE-2008-0417 Stored password corruption
+  + MFSA 2008-03/CVE-2008-0415 Privilege escalation, XSS, Remote
+    Code Execution
+  + MFSA 2008-02/CVE-2008-0414 Multiple file input focus stealing
+    vulnerabilities
+  + MFSA 2008-01/CVE-2008-0412 Crashes with evidence of memory
+    corruption (rv:1.8.1.12)
+- Reference libaoss.so in start script (bnc#117079)
+- Remove mozilla-canvas-1.8.1.10.patch, as it has been upstreamed
+- Update firefox-ui-lockdown.patch (FATE#301534, FATE#302023, and
+  FATE#302024)
+- Add application/x-xpinstall mime type to MozillaFirefox.desktop
+- Add MozillaFirefox.xml to bind .xpi to application/x-xpinstall
+  in desktop.
+
+-------------------------------------------------------------------
+Thu Jan 17 17:52:47 CET 2008 - maw@suse.de
+
+- Add mozilla-maxpathlen.patch (#354150 and bmo #412610).
+
+-------------------------------------------------------------------
+Fri Dec 21 18:46:50 CET 2007 - maw@suse.de
+
+- Add firefox-348446-empty-lists.patch (bnc#348446).
+
+-------------------------------------------------------------------
+Wed Dec  5 02:21:26 CET 2007 - maw@suse.de
+
+- Respin proxy-dev.patch (bnc#340678) -- thanks, Anders!
+
+-------------------------------------------------------------------
+Tue Nov 27 18:25:25 CET 2007 - maw@suse.de
+
+- Security update to version 2.0.0.10 (#341905, #341591):
+  + MFSA 2007-39  Referer-spoofing via window.location race condition
+  + MFSA 2007-38 Memory corruption vulnerabilities (rv:1.8.1.10)
+  + MFSA 2007-37 jar: URI scheme XSS hazard
+  + Fixes for regressions introduced in 2.0.0.8
+  + Updated dbus.patch, startup.patch, misc.dif, and configure.patch
+- Add mozilla-gcc4.3-fixes.patch
+- Add mozilla-canvas-1.8.1.10.patch (#341591#c10).
+
+-------------------------------------------------------------------
+Mon Nov 26 18:27:25 CET 2007 - maw@suse.de
+
+- Build with -ftree-vrp -fwrapv, per advice in #342603#c17.
+
+-------------------------------------------------------------------
+Tue Nov 13 17:49:01 CET 2007 - maw@suse.de
+
+- Add firefox-gcc4.3-fixes.patch.
+
+-------------------------------------------------------------------
+Fri Oct 19 02:04:45 CEST 2007 - maw@suse.de
+
+- Security update to version 2.0.0.8 (#332512) (thanks, Wolfgang)
+  * MFSA 2007-29 Crashes with evidence of memory corruption
+  * MFSA 2007-30 onUnload Tailgating
+  * MFSA 2007-31 Digest authentication request splitting
+  * MFSA 2007-32 File input focus stealing vulnerability
+  * MFSA 2007-33 XUL pages can hide the window titlebar
+  * MFSA 2007-34 Possible file stealing through sftp protocol
+  * MFSA 2007-35 XPCNativeWraper pollution using Script object
+  complete advisories on
+  http://www.mozilla.org/projects/security/known-vulnerabilities.html
+
+-------------------------------------------------------------------
+Sun Sep 23 19:49:12 CEST 2007 - maw@suse.de
+
+- Don't explicitly require libaoss.so (#326751).
+
+-------------------------------------------------------------------
+Fri Sep 14 23:13:06 CEST 2007 - maw@suse.de
+
+- Update the Novell Support search plugin in search-addons.tar.bz2
+  (#297261)
+- Set the browser.tabs.loadFolderAndReplace preference to false
+  by default (#230759).
+
+-------------------------------------------------------------------
+Wed Sep 12 15:21:06 CEST 2007 - dmueller@suse.de
+
+- fix hardlinks accross partitions 
+
+-------------------------------------------------------------------
+Thu Sep  6 16:07:12 CEST 2007 - maw@suse.de
+
+- Add http://software.opensuse.org/search?baseproject=openSUSE:10.3
+  to the default bookmarks (#308223).
+
+-------------------------------------------------------------------
+Mon Sep  3 22:33:09 CEST 2007 - ro@suse.de
+
+- move last change a bit further in specfile 
+
+-------------------------------------------------------------------
+Fri Aug 31 18:36:16 CEST 2007 - maw@suse.de
+
+- Mark a .png file as nonexecutable. 
+
+-------------------------------------------------------------------
+Tue Aug 28 16:44:08 CEST 2007 - maw@suse.de
+
+- Minor .spec update (#305193)
+  + Remove two obsolete patches
+  + Correct releasedate
+  + Include only the officially supported locales.
+
+-------------------------------------------------------------------
+Wed Aug 22 17:53:03 CEST 2007 - maw@suse.de
+
+- Merge changes from the build service (thanks, Wolfgang):
+  + Provide locale dependency information (#302288)
+  + Add x11-session.patch, supporting X11 session management
+    (#227047)
+  + Update to version 2.0.0.6
+    * MFSA 2007-26  Privilege escalation through chrome-loaded 
+                    about:blank windows
+    * MFSA 2007-27  Unescaped URIs passed to external programs
+                    (only relevant on Windows)
+- Use %fdupes.
+
+-------------------------------------------------------------------
+Tue Aug 21 09:45:35 CEST 2007 - aj@suse.de
+
+- Adjust bookmarks: Add news.opensuse.org, use new software.o.o
+  page.
+
+-------------------------------------------------------------------
+Thu Aug 16 14:57:27 CEST 2007 - mauro@suse.de 
+
+- Revert previous change.
+
+-------------------------------------------------------------------
+Tue Aug 14 11:58:23 CEST 2007 - mauro@suse.de
+
+- Added support for ymp in the mimetypes.rdf
+- Added OneClickInstallUrlHandler for handing the actual call from firefox.
+- Fixes bnc #295677 
+
+-------------------------------------------------------------------
+Mon Jul 23 18:57:07 CEST 2007 - maw@suse.de
+
+- Security update to version 2.0.0.5 (#288115) which has fixes for:
+MFSA 2007-18
+    CVE-2007-3734 - Browser flaws
+    CVE-2007-3735 - Javascript flaws
+
+MFSA 2007-19
+    CVE-2007-3736
+
+MFSA 2007-20
+    CVE-2007-3089
+
+MFSA 2007-21
+    CVE-2007-3737
+
+MFSA 2007-22
+    CVE-2007-3285
+
+MFSA 2007-23
+    CVE-2007-3670
+
+MFSA 2007-24
+    CVE-2007-3656
+
+MFSA 2007-25
+    CVE-2007-3738
+
+-------------------------------------------------------------------
+Thu Jun 21 15:59:01 CEST 2007 - adrian@suse.de
+
+- fix changelog entry order
+
+-------------------------------------------------------------------
+Mon Jun 18 13:22:42 CDT 2007 - maw@suse.de
+
+- Use mozilla.sh.in from the build service (#230681).
+
+-------------------------------------------------------------------
+Tue Jun  5 15:55:08 CEST 2007 - sbrabec@suse.cz
+
+- Removed invalid desktop category "Application" (#254654).
+
+-------------------------------------------------------------------
+Mon Jun  4 19:53:35 CDT 2007 - maw@suse.de
+
+- Security update to version 2.0.0.4
+- Refresh configure.patch, startup.patch, and visibility.patch
+- Now use l10n-%{version}.tar.bz2 instead of l10n.tar.bz2.
+
+-------------------------------------------------------------------
+Mon Apr 30 16:49:55 CEST 2007 - ro@suse.de
+
+- added unzip to BuildRequires 
+
+-------------------------------------------------------------------
+Wed Apr 18 14:16:44 CEST 2007 - mfabian@suse.de
+
+- add Japanese to the languages which get PANGO enabled in the
+  start script to support the Japanese combining characters
+  U+3099 U+309A (see bugzilla #262718 comment #29).
+
+-------------------------------------------------------------------
+Mon Mar 12 11:06:10 CST 2007 - maw@suse.de
+
+- Package gconf stuff.
+
+-------------------------------------------------------------------
+Wed Feb 21 16:37:25 CST 2007 - maw@suse.de
+
+- Security update to 2.0.0.2 (#244923), which covers:
+  + mfsa2007-01
+    * CVE-2007-0775 - layout engine crashes
+    * CVE-2007-0776 - SVG
+    * CVE-2007-0777 - javascript engine corruption
+  + mfsa2007-02
+    * CVE-2007-0995 - Invalid trailing characters in HTML tag attributes
+    * CVE-2007-0996 - Child frame character set inheritance
+    * CVE-2006-6077 - Injected password forms
+  + mfsa2007-02
+  + mfsa2007-03
+    * CVE-2007-0078
+  + mfsa2007-04
+    * CVE-2007-0079
+  + mfsa2007-05
+    * CVE-2007-0780
+    * CVE-2007-0800
+  + mfsa2007-06
+    * CVE-2007-0008 - client flaw
+    * CVE-2007-0009 - server flaw
+  + mfsa2007-07
+    * CVE-2007-0981
+- Updates mozilla.sh.in (#230681)
+- Fixes #232209
+- Updates the man page (#243037)
+- Properly propagates exit codes (#241492)
+- Adds em-356370.patch (#217374)
+
+-------------------------------------------------------------------
+Thu Jan 25 10:16:56 CST 2007 - maw@suse.de
+
+- Fixup the Gnome paths, keeping in closer sync with the
+ buildservice.
+
+-------------------------------------------------------------------
+Thu Jan 18 09:27:54 CST 2007 - maw@suse.de
+
+- Gnome is now in /usr, so remove references to /opt/gnome
+- Install firefox.png with the executable bit not set.
+
+-------------------------------------------------------------------
+Wed Jan 10 12:57:39 CET 2007 - meissner@suse.de
+
+- readd MozillaFirebird provides (was incorrect in removing it).
+
+-------------------------------------------------------------------
+Mon Jan  8 11:16:08 CET 2007 - meissner@suse.de
+
+- Do not provide MozillaFirebird, just obsolete it.
+
+-------------------------------------------------------------------
+Fri Dec  1 02:22:49 CET 2006 - maw@suse.de
+
+- Update gecko-lockdown.patch (#220616).
+
+-------------------------------------------------------------------
+Thu Nov 30 19:02:54 CET 2006 - maw@suse.de
+
+- Update firefox-suse-default-prefs.js, adding
+  'pref("browser.backspace_action", 2);' (#217374)
+
+-------------------------------------------------------------------
+Thu Nov 30 08:17:28 CET 2006 - aj@suse.de
+
+- Fix last change (#224431).
+
+-------------------------------------------------------------------
+Wed Nov 29 11:45:47 CET 2006 - aj@suse.de
+
+- Change download bookmark (#224431).
+- Rename bookmark folder to openSUSE.
+
+-------------------------------------------------------------------
+Tue Nov 28 08:09:48 CET 2006 - aj@suse.de
+
+- Sync from Buildservice with following critical fixes (thanks
+  Wolfgang Rosenauer!):
+  * fixed system-proxies.patch to actually work (#223881).
+  * Rearrange Bookmarks to pass trademark review.
+
+-------------------------------------------------------------------
+Mon Nov 27 19:40:44 CET 2006 - aj@suse.de
+
+- Fix tango theme (#223796).
+
+-------------------------------------------------------------------
+Mon Nov 27 17:40:50 CET 2006 - aj@suse.de
+
+- Use www.opensuse.org as home page.
+
+-------------------------------------------------------------------
+Sun Nov 12 11:28:00 CET 2006 - aj@suse.de
+
+- Set novell.com as home page.
+- Update from BuildService (thanks Wolfgang!):
+  - fixed crash in htmlparser (#217257, bmo #358797)
+  - added gconf2 as PreReq (#212505)
+  - added 32bit libaoss.so as requirement (#216266)
+  - Removed SUSE searchplugin (Portal not available anymore)
+    (#216054)
+  - Removed obsolete xul-picker.patch and system-nspr.patch
+  - Fixed building on 10.1 and 10.0 (dbus)
+  - Removed obsolete throbber preference
+
+-------------------------------------------------------------------
+Thu Nov  9 19:09:46 CET 2006 - jhargadon@suse.de
+
+- updated tango theme 
+
+-------------------------------------------------------------------
+Sun Oct 29 12:05:46 CET 2006 - aj@suse.de
+
+- Another fix for 214125, patch by Wolfgang Rosenauer.
+
+-------------------------------------------------------------------
+Thu Oct 26 06:58:59 CEST 2006 - aj@suse.de
+
+- Fix gcc warnings about undefined operations, patch by
+  Robert O'Callahan.
+- Update system-proxies.patch to fix error box (214125), patch by
+  Robert O'Callahan.
+
+-------------------------------------------------------------------
+Mon Oct 23 21:54:54 CEST 2006 - aj@suse.de
+
+- Update to current CVS version of 2.0.
+- Use www.opensuse.org as default home page for now (#203547).
+
+-------------------------------------------------------------------
+Sat Oct 21 08:53:50 CEST 2006 - aj@suse.de
+
+- Disable non-working plasticfox and tango themes.
+
+-------------------------------------------------------------------
+Fri Oct 20 20:16:29 CEST 2006 - aj@suse.de
+
+- Fix building of locales.
+
+-------------------------------------------------------------------
+Fri Oct 20 11:27:23 CEST 2006 - mkoenig@suse.de
+
+- update to version 2.0rc3:
+  * New features: Visual Refresh, Built-in phishing protection,
+    Enhanced search capabilities, Improved tabbed browsing,
+    Resuming your browsing session, Previewing and subscribing 
+    to Web feeds, Inline spell checking, Live Titles,
+    Improved Add-ons manager, JavaScript 1.7, Extended search 
+    plugin format, Updates to the extension system, 
+    Client-side session and persistent storage, SVG text
+
+-------------------------------------------------------------------
+Tue Oct 17 11:26:44 CEST 2006 - meissner@suse.de
+
+- disabled debugging.
+
+-------------------------------------------------------------------
+Tue Sep 12 20:27:02 CEST 2006 - stark@suse.de
+
+- security update to version 1.5.0.7
+
+-------------------------------------------------------------------
+Mon Aug 21 12:53:50 CEST 2006 - stark@suse.de
+
+- added greasemonkey helper change (#199920)
+- fixed packager.mk for new make version
+
+-------------------------------------------------------------------
+Fri Aug 11 20:51:48 CEST 2006 - stark@suse.de
+
+- fixed crash in dbus component (patch by thoenig #197928) 
+- use external adresses for PAC configuration (#196506)
+
+-------------------------------------------------------------------
+Mon Aug  7 09:26:58 CEST 2006 - stark@suse.de
+
+- added symlink for Firefox 1.0.x compatibility
+
+-------------------------------------------------------------------
+Sat Jul 29 08:48:53 CEST 2006 - stark@suse.de
+
+- update to regression release 1.5.0.6 (#195043)
+
+-------------------------------------------------------------------
+Thu Jul 27 06:20:36 CEST 2006 - stark@suse.de
+
+- security update to version 1.5.0.5 (#195043)
+  * observer-lock.patch integrated now
+- fixed leak in JS' liveconnect (#186066)
+- fixed desktop file for old distributions
+  (StartupNotify=false)
+
+-------------------------------------------------------------------
+Thu Jun 29 20:13:28 CEST 2006 - stark@suse.de
+
+- fixed printing crash if the last used printer is not available
+  anymore (#187013)
+  
+-------------------------------------------------------------------
+Fri Jun 16 22:11:22 CEST 2006 - stark@suse.de
+
+- added 48x48 icon (#185777)
+
+-------------------------------------------------------------------
+Mon Jun 12 20:20:02 CEST 2006 - stark@suse.de
+
+- fix overwrite confirmation for GTK filesaver (#179531)
+- get network.negotiate-auth.trusted-uris and
+  network.negotiate-auth.delegation-uris from gconf if
+  system-settings are enabled (#184489)
+
+-------------------------------------------------------------------
+Thu Jun  1 20:34:43 CEST 2006 - stark@suse.de
+
+- update to security/stability release 1.5.0.4 (#179011)
+- moved locale-global prefs to browserconfig.properties (#177881)
+
+-------------------------------------------------------------------
+Tue May 23 21:11:11 CEST 2006 - stark@suse.de
+
+- complete implementation of startup-notification (#115417)
+  (including autoconf and remote support)
+- different home-pages for SLE10 and SL (#177881)
+
+-------------------------------------------------------------------
+Tue May 16 06:27:26 CEST 2006 - stark@suse.de
+
+- fixed potential deadlock in nsObserverList::RemoveObserver
+  (#173986, bmo #338069)
+- base startup notification on libstartup-notification (#115417)
+
+-------------------------------------------------------------------
+Thu May 11 09:39:27 CEST 2006 - stark@suse.de
+
+- save printer settings properly (#174082, bmo #324072)
+- added startup notification support for showing load activity
+  in Gnome and to avoid focus stealing prevention (#115417)
+- added StartupNotify=true to desktop file (#115417)
+- provide legacy symlink for NLD9 update compatibility (#173138)
+- fixed system-proxies patch to avoid unwanted wpad requests
+  (#171743, #167613)
+
+-------------------------------------------------------------------
+Mon May  8 14:55:52 CEST 2006 - stark@suse.de
+
+- preconfigure the theme according to the used desktop (#151163)
+
+-------------------------------------------------------------------
+Thu Apr 27 10:24:07 CEST 2006 - stark@suse.de
+
+- last minute change for 1.5.0.3
+
+-------------------------------------------------------------------
+Wed Apr 26 14:23:33 CEST 2006 - stark@suse.de
+
+- security update to 1.5.0.3
+- fix for typo in postscript.patch
+
+-------------------------------------------------------------------
+Tue Apr 25 14:14:51 CEST 2006 - stark@suse.de
+
+- fixed iframe crash (#169039, bmo #334515)
+- fixed img tag misuse (#168710, bmo #334341)
+
+-------------------------------------------------------------------
+Mon Apr 24 08:04:16 CEST 2006 - stark@suse.de
+
+- improved postscript output (bmo #334485)
+- changed defaults for printer properties (#6534)
+- overwrite gnome-vfs' file protocol by providing "desktop-launch"
+  (#131501)
+- get available paper sizes from CUPS (#65482)
+- replaced/removed complicated gconfd reload in %post (#167989)
+- fixed memory leak in clipboard caching (bmo #289897)
+  
+-------------------------------------------------------------------
+Tue Apr 11 08:35:53 CEST 2006 - stark@suse.de
+
+- added (optional) plastikfox theme (#151163)
+- get some more security related patches (#148876)
+- finally fixed the default proxy configuration by adding a new
+  UI option (#132398)
+
+-------------------------------------------------------------------
+Mon Apr  3 11:41:13 CEST 2006 - stark@suse.de
+
+- fixed keyword fixup patch (#162532)
+
+-------------------------------------------------------------------
+Tue Mar 28 07:17:04 CEST 2006 - stark@suse.de
+
+- don't use keyword fixup for pasted text (#160034, bmo #331522)
+
+-------------------------------------------------------------------
+Mon Mar 20 09:28:58 CET 2006 - stark@suse.de
+
+- added Tango theme
+- fixed reading proxies from gconf (#132398)
+
+-------------------------------------------------------------------
+Sun Mar 12 09:04:05 CET 2006 - stark@suse.de
+
+- tweaked bookmarks (fixed URLs)
+- added Khmer (km-*) to pango locales (#157397)
+
+-------------------------------------------------------------------
+Sat Mar  4 21:08:45 CET 2006 - stark@suse.de
+
+- fixed crash with multipart JPEGs (bmo #328684) (#140416)
+- got latest security fixes from upstream (#148876)
+
+-------------------------------------------------------------------
+Wed Feb 22 13:24:58 CET 2006 - stark@suse.de
+
+- fixed plugin loading when launched from Thunderbird (#151614)
+- merged dbus reconnection patch (#150042)
+- default to autodetect proxy (network.proxy.type=4) (#151811)
+- added GTK category to desktop file
+
+-------------------------------------------------------------------
+Tue Feb 14 06:45:24 CET 2006 - stark@suse.de
+
+- modified lockdown patches (#67281, #67282)
+- applied set of security patches (#148876) 
+  bmo bugs: 282105, 307989, 315625, 320459, 323634, 325403, 325947
+
+-------------------------------------------------------------------
+Tue Feb  7 20:09:43 CET 2006 - stark@suse.de
+
+- fixed disabling of Pango (#148788)
+
+-------------------------------------------------------------------
+Thu Feb  2 21:51:30 CET 2006 - stark@suse.de
+
+- define gssapi lib explicitely (#147670)
+- use only official Firefox-Icon
+- changed home-download patch
+
+-------------------------------------------------------------------
+Sun Jan 29 09:54:49 CET 2006 - stark@suse.de
+
+- throbber URL is default again
+- removed firefox-showpass patch
+- removed additional CA certs from builtin NSS
+
+-------------------------------------------------------------------
+Fri Jan 27 17:55:21 CET 2006 - stark@suse.de
+
+- got some l10n changes from 1.8.0 branch
+
+-------------------------------------------------------------------
+Fri Jan 27 08:15:09 CET 2006 - stark@suse.de
+
+- final 1.5.0.1 version
+- make it possible to choose $HOME as download directory
+  (#144894, bmo #300856)
+
+-------------------------------------------------------------------
+Wed Jan 25 21:33:43 CET 2006 - mls@suse.de
+
+- converted neededforbuild to BuildRequires
+
+-------------------------------------------------------------------
+Sun Jan 22 17:06:57 CET 2006 - stark@suse.de
+
+- disable Pango if MOZ_ENABLE_PANGO is not set 
+  and no typical language which needs Pango is used (#143428)
+
+-------------------------------------------------------------------
+Wed Jan 18 10:27:30 CET 2006 - stark@suse.de
+
+- fixed DumpStackToFile() for glibc 2.4
+- added default (font) settings
+
+-------------------------------------------------------------------
+Thu Jan 12 10:23:58 CET 2006 - stark@suse.de
+
+- update to 1.5.0.1pre (20060111)
+- updated man-page
+- fixed hovered tab close button
+- only Requires mozilla-nspr instead of PreReq since
+  there is no postinstall registration necessary anymore
+- use system NSS from CODE10 on
+- use -fstack-protector where available
+- changed unixproxy component to work on older distributions
+
+-------------------------------------------------------------------
+Mon Jan  2 13:39:09 CET 2006 - stark@suse.de
+
+- added unixproxy component written by Robert O'Callahan (#132398)
+  (bmo #66057)
+- added official translations
+- preload libaoss for plugin sound (#117079)
+
+-------------------------------------------------------------------
+Wed Dec 28 08:16:03 CET 2005 - stark@suse.de
+
+- get some patches from 1.8.0 branch
+- readded modification to gconf-backend (bmo #321315)
+- readded lockdown stuff
+- enable additional extension install directory (#120329)
+  (/usr/lib/browser-extensions/firefox)
+- added patch to make the XUL filechooser optional
+  (MOZ_XUL_PICKER)
+
+-------------------------------------------------------------------
+Wed Dec 14 16:08:12 CET 2005 - stark@suse.de
+
+- fixed patch for parsing -remote parameter
+- removed default-plugin patch (not needed anymore)
+
+-------------------------------------------------------------------
+Fri Dec  9 17:21:29 CET 2005 - stark@suse.de
+
+- fix to ignore X composite extension (#135373)
+- fixed parsing of -remote parameters (#134396)
+- activated locales as released
+
+-------------------------------------------------------------------
+Tue Nov 29 21:33:13 CET 2005 - stark@suse.de
+
+- update to 1.5 (20051128)
+- don't override startup URL when changing Gecko versions (#135314)
+- added patch for GTK2 handling (#134831)
+- readded add-plugins stuff for compatibility
+
+-------------------------------------------------------------------
+Fri Nov 18 07:41:41 CET 2005 - stark@suse.de
+
+- update to 1.5rc3 (20051117) 
+
+-------------------------------------------------------------------
+Mon Oct 31 08:58:14 CET 2005 - stark@suse.de
+
+- updated l10n archive (20051030)
+- fixed postinstall script to copy plugin links instead of files
+
+-------------------------------------------------------------------
+Fri Oct 28 06:43:27 CEST 2005 - stark@suse.de
+
+- update to 1.5rc1 (20051027)
+- fixed profile locking on FAT partitions (bmo #313360)
+- introduced an rpath again
+
+-------------------------------------------------------------------
+Wed Oct 19 20:03:48 CEST 2005 - stark@suse.de
+
+- update to snapshot 1.5 (20051019)
+- moved installation to /usr/%{_lib}/firefox
+- added dbus component to be able to get network status from
+  NetworkManager (bmo #312793)
+- remove all update UI for application
+- removed diable-gconf (no registration at build time anymore)
+- removed rebuild-databases.sh (no system registration anymore)
+- open links in new windows (#128087)
+
+-------------------------------------------------------------------
+Thu Oct  6 20:44:53 CEST 2005 - stark@suse.de
+
+- update to Firefox 1.5b2 (20051005)
+- added supported translations
+
+-------------------------------------------------------------------
+Sat Oct  1 15:09:18 CEST 2005 - stark@suse.de
+
+- update to Firefox 1.5b1 (20050930) RPM version 1.4.1
+- removed rebuild-databases.sh calls
+- removed add-plugins.sh calls and corresponding triggers
+- enabled SVG and Canvas support
+- fixed gconf urlhandler registration
+
+-------------------------------------------------------------------
+Tue Sep 20 10:24:16 CEST 2005 - stark@suse.de
+
+- security update to 1.0.7 (#117619)
+  * MFSA 2005-57: IDN heap overrun using soft-hyphens (bmo #307259)
+    (enabled IDN pref again)
+  * MFSA 2005-58: 
+      CAN-2005-2701 Heap overrun in XBM image processing
+      CAN-2005-2702 Crash on "zero-width non-joiner" sequence
+      CAN-2005-2703 XMLHttpRequest header spoofing
+      CAN-2005-2704 Object spoofing using XBL <implements>
+      CAN-2005-2705 JavaScript integer overflow
+      CAN-2005-2706 Privilege escalation using about: scheme
+      CAN-2005-2707 Chrome window spoofing
+                    Regression fixes
+- register beagle extension if it gets installed (#116787)
+
+-------------------------------------------------------------------
+Tue Sep 13 15:41:37 CEST 2005 - aj@suse.de
+
+- Change SUSE bookmarks.
+
+-------------------------------------------------------------------
+Sun Sep 11 17:05:07 CEST 2005 - stark@suse.de
+
+- disable IDN per default (#116070)
+- unlocalize bookmarks (#114279)
+
+-------------------------------------------------------------------
+Thu Sep  8 08:52:13 CEST 2005 - stark@suse.de
+
+- fixed some filemodes (#114849)
+
+-------------------------------------------------------------------
+Sun Sep  4 00:03:53 CEST 2005 - stark@suse.de
+
+- fixed gconf-backend patch to be able to use
+  system prefs (#114054)
+
+-------------------------------------------------------------------
+Thu Sep  1 13:22:17 CEST 2005 - stark@suse.de
+
+- changed default font to sans-serif (#114464)
+- removed de-de parts of the bookmark-links (#114279)
+
+-------------------------------------------------------------------
+Mon Aug 22 06:10:12 CEST 2005 - stark@suse.de
+
+- install gconf schema for lockdown also on non-NLD
+- added backports (firefox-backports.patch)
+  * gtk_im_context_set_cursor_location() is not used (bmo #281339)
+  * fixed crash in imgCacheValidator::OnStartRequest() 
+    (bmo #293307)
+- workaround for linking with pangoxft and pangox
+  (broken by gtk 2.8 update) (#105764)
+- remove extensions on deinstallation
+- include dragonegg (kparts) plugin (#105468)
+
+-------------------------------------------------------------------
+Thu Aug 18 13:08:55 CEST 2005 - stark@suse.de
+
+- fixed regression in profile locking change (bmo #303633)
+- added rtsp handler to global config (#104434)
+- don't blacklist help: protocol (bmo #304833)
+- fixed Gdk-WARNING at startup (gtk.patch)
+- fixed crash with gtk 2.7 (bmo #300226, bnc #104586)
+- fixed installation of the beagle plugin
+- update industrial theme to 1.0.11 (#104564)
+- included lockdownV2 (removed obsolete gconf.diff)
+- linked firefox-bin with rpath to progdir
+
+-------------------------------------------------------------------
+Fri Aug  5 09:51:26 CEST 2005 - stark@suse.de
+
+- fixed profile locking (bmo #151188)
+- install beagle extension globally
+
+-------------------------------------------------------------------
+Fri Jul 29 06:58:24 CEST 2005 - stark@suse.de
+
+- don't require and provide NSS libs (#98002)
+- fixed printing error 'You cannot print while in print preview'
+  (#96991, bmo #302445)
+
+-------------------------------------------------------------------
+Wed Jul 27 09:34:12 CEST 2005 - stark@suse.de
+
+- fixed Firefox on ppc (stack-direction.patch) (#97359)
+- removed open-pref from startscript as it is done
+  automatically now (#73042)
+- updated Novell searchplugins
+
+-------------------------------------------------------------------
+Mon Jul 25 12:32:13 CEST 2005 - stark@suse.de
+
+- GTK filechooser is now modal (#8533)
+- backed out patch to add tooltips to print-preview
+  because it breaks localization
+
+-------------------------------------------------------------------
+Fri Jul 22 10:54:39 CEST 2005 - stark@suse.de
+
+- fixed another problem in printing patch
+
+-------------------------------------------------------------------
+Tue Jul 19 10:44:59 CEST 2005 - stark@suse.de
+
+- fixed error in ft-xft-ps2.patch
+- disabled stripping in spec instead of patch
+- added NSPR to PreReq
+
+-------------------------------------------------------------------
+Mon Jul 18 08:43:24 CEST 2005 - stark@suse.de
+
+- fixed some more regressions with final 1.0.6
+- fixed width calculation in Postscript module (bmo #290292)
+- fixed plugin event starvation (bnc #94749, #94751, bmo #301161)
+
+-------------------------------------------------------------------
+Fri Jul 15 11:24:47 CEST 2005 - stark@suse.de
+
+- searchplugins can now be installed per profile (#8176)
+
+-------------------------------------------------------------------
+Fri Jul 15 06:54:02 CEST 2005 - stark@suse.de
+
+- update to 1.0.6 which restores API compatibility
+
+-------------------------------------------------------------------
+Tue Jul 12 06:20:37 CEST 2005 - stark@suse.de
+
+- update to 1.0.5 final (#88509)
+- don't strip explicitely
+- don't ship beagle.xpi
+
+-------------------------------------------------------------------
+Wed Jul  6 14:13:09 CEST 2005 - stark@suse.de
+
+- update to 1.0.5-pre (20050705)
+- use RPM_OPT_FLAGS for NSS component
+- fixed implicit declarations and uninitialized used variables
+- added patch for bmo #87969
+
+-------------------------------------------------------------------
+Tue Jul  5 10:17:16 CEST 2005 - stark@suse.de
+
+- fixed regression from security update (#95069, bmo #298478)
+
+-------------------------------------------------------------------
+Mon Jun 27 21:46:58 CEST 2005 - stark@suse.de
+
+- don't use system-prefs by default on NLD
+- removed basic lockdown stuff for SUSE Linux
+  (it's not needed and caused problems: bnc #75418)
+- fixed NLD lockdown patch (bnc #75418)
+- don't write prefs back to gconf for now
+
+-------------------------------------------------------------------
+Wed Jun 22 07:32:42 CEST 2005 - stark@suse.de
+
+- new NLD lockdown patch which is syncing user prefs to gconf
+- update to 1.0.5pre security-release
+
+-------------------------------------------------------------------
+Thu Jun  9 06:56:02 CEST 2005 - stark@suse.de
+
+- new revision of NLD lockdown patch
+- fixed remote usage behaviour in start script (bnc #41903)
+- got more bugfixes from the branch
+
+-------------------------------------------------------------------
+Thu Jun  2 10:31:48 CEST 2005 - stark@suse.de
+
+- fixed neededforbuild
+
+-------------------------------------------------------------------
+Wed Jun  1 20:15:25 CEST 2005 - stark@suse.de
+
+- fixed IDN for 64bit platforms (bmo #236425, bnc #46268)
+
+-------------------------------------------------------------------
+Fri May 20 15:12:06 CEST 2005 - stark@suse.de
+
+- fixed keybinding for KP separator (bnc #84147)
+- pulled security related patch from upstream branch
+- update plastikfox theme to version 1.6
+
+-------------------------------------------------------------------
+Thu May 12 06:16:25 CEST 2005 - stark@suse.de
+
+- update to final 1.0.4 release
+
+-------------------------------------------------------------------
+Tue May 10 06:38:05 CEST 2005 - stark@suse.de
+
+- update to 1.0.4 security release
+- removed s390(x) patches (upstream)
+- made two more files %verify (81692)
+- updated NLD lockdown patch (81304)
+
+-------------------------------------------------------------------
+Thu Apr 28 09:45:53 CEST 2005 - stark@suse.de
+
+- use static NSPR libs from new location
+
+-------------------------------------------------------------------
+Sat Apr 23 15:56:08 CEST 2005 - stark@suse.de
+
+- activate usage of system NSPR for distributions after 9.3
+- add patch to be able to use systen NSPR at all
+
+-------------------------------------------------------------------
+Fri Apr 22 02:06:06 CEST 2005 - ro@suse.de
+
+- use mozilla-gcc4.patch 
+
+-------------------------------------------------------------------
+Thu Apr 21 12:51:19 CEST 2005 - stark@suse.de
+
+- don't execute gconf magic within build environment
+
+-------------------------------------------------------------------
+Sat Apr 16 13:05:37 CEST 2005 - stark@suse.de
+
+- update to final 1.0.3 release
+
+-------------------------------------------------------------------
+Fri Apr 15 00:10:54 CEST 2005 - ro@suse.de
+
+- fix problem in postinstall script 
+
+-------------------------------------------------------------------
+Wed Apr 14 09:20:02 CEST 2005 - stark@suse.de
+
+- included fixed lockdown patch for NLD
+- linked proxies within Firefox with gnome settings (NLD)
+- added gconfd restart procedure to install script 
+  (only needed if gconf changes are done) (#76852)
+
+-------------------------------------------------------------------
+Sat Apr  2 21:03:11 CEST 2005 - stark@suse.de
+
+- update to security pre-release 1.0.3 (#75692)
+  * Manual plug-in install, javascript vulnerability (bmo #288556)
+  * Access memory vulnerability (bmo #288688)
+
+-------------------------------------------------------------------
+Fri Apr  1 11:32:44 CEST 2005 - stark@suse.de
+
+- added advanced lockdown features for ZLM integration (NLD-only)
+
+-------------------------------------------------------------------
+Tue Mar 22 12:33:15 CET 2005 - stark@suse.de
+
+- update to final 1.0.2
+- use new theme handling on NLD
+- added default-plugin-less-annoying from mozilla
+- use GTK2 for Flash
+- use system NSPR on SUSE releases after 9.3
+- made startscript PIS aware 
+- set g-application-name correctly (bmo #281979)
+- added man-page
+- use GTK system colors
+- modify useragent string and add vendor id
+- activate smooth-scrolling by default (#74310)
+
+-------------------------------------------------------------------
+Tue Mar 22 08:59:06 CET 2005 - stark@suse.de
+
+- don't register beagle automatically (#74062)
+- added default bookmarks for SUSE LINUX
+
+-------------------------------------------------------------------
+Mon Mar 21 18:20:39 CET 2005 - max@suse.de
+
+- Fixed a typo in the shell code that handles inclusion of the
+  Acrobat Reader plugin (#70861).
+
+-------------------------------------------------------------------
+Thu Mar 17 21:01:11 CET 2005 - stark@suse.de
+
+- updates from upcoming 1.0.2 
+- added again logic to use Adobe Reader 7 (#70861)
+- fixed crash in ICO decoding (#67142, bmo #245631)
+- preinstall beagle extension (#72920)
+- bugfixes in trigger scripts
+- fixed industrial theming for Gnome (#72918)
+
+-------------------------------------------------------------------
+Sat Mar 12 12:42:16 CET 2005 - stark@suse.de
+
+- fixed more security related bugs
+  (bmo #284551, #284627, #285595)
+
+-------------------------------------------------------------------
+Wed Mar  9 21:42:05 CET 2005 - stark@suse.de
+
+- update also GNOME desktop file (#71810)
+- added firefox-gnome.png to filelist
+- use correct Firefox icon
+
+-------------------------------------------------------------------
+Mon Mar  7 20:47:00 CET 2005 - stark@suse.de
+
+- disable inclusion of acrobat plugin again (#70861)
+- don't use gconfd in registration phase (#66381) 
+
+-------------------------------------------------------------------
+Mon Mar  7 16:13:29 CET 2005 - adrian@suse.de
+
+- use standard icon again for the default desktop file and
+  add a Gnome-only desktop file for the Gnome icon
+- add plastikfox chrome theme to fix button order within KDE
+- add patch for automatic theme selection for KDE and Gnome
+- do register extensions in rebuild-databases.sh instead of %install,
+  to fix needed timestamps
+
+-------------------------------------------------------------------
+Fri Mar  4 07:54:47 CET 2005 - stark@suse.de
+
+- extend add-plugins to recognize Java 1.5 (#66909)
+- changed comment in desktop-file (#66867)
+
+-------------------------------------------------------------------
+Tue Feb 22 09:33:44 CET 2005 - stark@suse.de
+
+- make --display parameter working in all cases (bnc #66043)
+- revised postscript patch
+- final 1.0.1 codebase
+
+-------------------------------------------------------------------
+Mon Feb 21 13:09:30 CET 2005 - stark@suse.de
+
+- added patch to create Postscript level 2 (instead of 3)
+  (special thanks to Jungshik Shin)
+- disabled freetype explicitly to be able to use the above patch
+  (freetype wasn't used anymore since some time anyway)
+
+-------------------------------------------------------------------
+Fri Feb 18 09:10:10 CET 2005 - stark@suse.de
+
+- got more patches from branch to get another IDN fix and to
+  fix bug #51019
+- enabled IDN again
+
+-------------------------------------------------------------------
+Wed Feb 16 09:20:39 CET 2005 - stark@suse.de
+
+- bumped version number to 1.0.1
+
+-------------------------------------------------------------------
+Tue Feb 15 10:26:04 CET 2005 - stark@suse.de
+
+- got updates from 1.0.1 branch
+
+-------------------------------------------------------------------
+Thu Feb 10 06:57:33 CET 2005 - stark@suse.de
+
+- additional fireflashing fix (#50635, bmo #280664)
+- some more security related fixes 
+  (bmo #268483, #273498, #277322)
+- fire up GTK2 filepicker if GNOME is running
+  
+-------------------------------------------------------------------
+Tue Feb  8 07:51:13 CET 2005 - stark@suse.de
+
+- some prefs are ignored (bmo #261934)
+- disabled default IDN (#50566)
+- fixed some more bugzilla.mozilla.org bugs:
+  #276482, #280056, #280603
+
+-------------------------------------------------------------------
+Sun Feb  6 13:10:12 CET 2005 - stark@suse.de
+
+- use same desktop categories for Professional and NLD
+- added some lockdown stuff for printing and page saving
+  (bmo #280488)
+
+-------------------------------------------------------------------
+Wed Feb  2 13:58:53 CET 2005 - stark@suse.de
+
+- modified gconf.diff to honor ignore_hosts (bmo #280742)
+- added a JS crasher fix (bmo #268535)
+- added more fixes (bmo #255441, #273024, #275405, #275634)
+
+-------------------------------------------------------------------
+Fri Jan 28 12:39:37 CET 2005 - stark@suse.de
+
+- added gplflash inclusion
+- improved JRE inclusion
+- reactivated usage of Acrobat Reader plugin
+  (ready for acroread 7)
+
+-------------------------------------------------------------------
+Sat Jan 22 13:16:47 CET 2005 - stark@suse.de
+
+- added some backported bugfixes
+
+-------------------------------------------------------------------
+Sat Dec 18 10:30:11 CET 2004 - stark@suse.de
+
+- updated industrial theme to 1.0.9
+- use slightly changed icon for menu-entry (bnc #275)
+- use original desktop file for NLD again
+
+-------------------------------------------------------------------
+Thu Dec 16 19:37:48 CET 2004 - stark@suse.de
+
+- newer patch for GNOME associations (bnc #362)
+- fix overwriting of files with GTK picker (Ximian #65068)
+- readded the industrial default theme patch for NLD
+
+-------------------------------------------------------------------
+Wed Dec 15 11:50:56 CET 2004 - stark@suse.de
+
+- activate GTK filepicker for NLD again
+- fix for GNOME helper applications with parameters
+- make GNOME associations the default on NLD
+
+-------------------------------------------------------------------
+Sat Dec  4 16:11:01 CET 2004 - stark@suse.de
+
+- fixed build on s390/s390x
+- added patch to be able to install-global without running X
+  (bmo #265859)
+
+-------------------------------------------------------------------
+Thu Nov 18 21:48:05 CET 2004 - stark@suse.de
+
+- update industrial theme to 1.0.8 (still not activated)
+- added patch to make home-directory the default download dir
+  (on NLD is still used Desktop)
+
+-------------------------------------------------------------------
+Thu Nov 11 09:01:58 CET 2004 - stark@suse.de
+
+- made initial window height smaller again 
+
+-------------------------------------------------------------------
+Tue Nov  9 09:09:06 CET 2004 - stark@suse.de
+
+- update to final 1.0 release (20041109)
+
+-------------------------------------------------------------------
+Thu Nov  4 08:22:36 CET 2004 - stark@suse.de
+
+- update to 1.0rc2 
+
+-------------------------------------------------------------------
+Sat Oct 30 21:27:29 CEST 2004 - stark@suse.de
+
+- added missing s390(x) patch
+
+-------------------------------------------------------------------
+Wed Oct 27 07:26:25 CEST 2004 - stark@suse.de
+
+- update to 1.0rc1 codebase
+- printing via XFT/fontconfig
+- freetype changes to avoid API conflicts with newer freetype2
+- fixed build for s390/s390x
+- removed AMD64 patch (included upstream)
+- added translations sub-package
+- removed "Show folder" patch for NLD (resolved upstream)
+- don't use gnome-filepicker patch for NLD for now
+- removed hppa buildfix (included upstream)
+- removed untitled.patch (bmo #24068) resolved by (bmo #262478)
+- use make -C browser/installer now to prepare installation
+- don't check for default browser at startup (#47587)
+- updated industrial.jar (0.99.13) (disabled)
+
+-------------------------------------------------------------------
+Fri Oct 15 13:51:54 CEST 2004 - stark@suse.de
+
+- inherit locale from system
+- fixed chrome registration
+
+-------------------------------------------------------------------
+Wed Oct  6 23:11:01 CEST 2004 - joeshaw@suse.de
+ 
+ - disable gconf settings as default (Ximian #67718)
+
+-------------------------------------------------------------------
+Wed Oct  6 07:04:05 CEST 2004 - stark@suse.de
+
+- fixed inclusion of RealPlayer plugin again
+
+-------------------------------------------------------------------
+Tue Oct  5 10:09:04 CEST 2004 - stark@suse.de
+
+- small important fix in firefox-download.patch (Ximian #65472) 
+
+-------------------------------------------------------------------
+Sun Oct  3 00:02:09 CEST 2004 - stark@suse.de
+
+- added security-fix from 0.10.1 (mozilla.org #259708) (#46687)
+
+-------------------------------------------------------------------
+Fri Oct  1 12:49:38 CEST 2004 - stark@suse.de
+
+- final fix for downloading to Desktop folder (Ximian #65756)
+- remove Postscript from printer names (Ximian #65560)
+
+-------------------------------------------------------------------
+Thu Sep 30 16:14:10 CEST 2004 - shprasad@suse.de
+
+- Modified the MozillaFirefox.desktop file.
+  Changed the name 'Firefox' to 'Firefox Web Browser'.
+  Also changed it for all languages.
+
+-------------------------------------------------------------------
+Wed Sep 29 15:54:46 CEST 2004 - stark@suse.de
+
+- fix inclusion of RealPlayer plugin (Ximian #65711) 
+
+-------------------------------------------------------------------
+Mon Sep 27 17:51:24 CEST 2004 - joeshaw@suse.de
+
+- Update the industrial default patch, for some reason it didn't
+  take before.
+
+-------------------------------------------------------------------
+Fri Sep 24 07:34:48 CEST 2004 - stark@suse.de
+
+- fix for Ximian #65176 (mozilla.org #240068)
+- revised patch for update function (Ximian #65615)
+
+-------------------------------------------------------------------
+Thu Sep 23 20:21:39 CEST 2004 - joeshaw@suse.de
+
+- Uncomment the patch which tells the UI that industrial is the
+  default.
+
+-------------------------------------------------------------------
+Thu Sep 23 12:38:06 CEST 2004 - stark@suse.de
+
+- open Nautilus on NLD for 'Show folder' in download settings
+  (Ximian #65472) by sragavan@novell.com
+- save to Desktop folder if selected (Ximian #65756)
+  by sragavan@novell.com
+
+-------------------------------------------------------------------
+Wed Sep 22 10:23:01 CEST 2004 - stark@suse.de
+
+- synced NLD package with 9.2 version
+- GTK2 filepicker does now ask for confirmation when overwriting
+  files (Ximian #65068) by sagarwala@novell.com
+- no direct update function (Ximian #65615) by rganesan@novell.com 
+- throbber linked to Novell (Ximian #66283) by rganesan@novell.com
+- make industrial the default theme for NLD
+  (Ximian #65542) by joeshaw@suse.de
+
+-------------------------------------------------------------------
+Mon Sep 20 22:00:55 CEST 2004 - joeshaw@suse.de
+
+- Add default bookmarks.  Ximian #65546.
+- Add the industrial theme, but it's not the default yet.
+- Remove acroread from add-plugins because it's badly behaved.
+  Ximian #65499.
+
+-------------------------------------------------------------------
+Mon Sep 20 17:57:38 CEST 2004 - federico@ximian.com
+
+- Added MozillaFirefox-toplevel-window-height.diff for
+  http://bugzilla.ximian.com/show_bug.cgi?id=65543
+
+-------------------------------------------------------------------
+Sun Sep 19 15:42:30 CEST 2004 - stark@suse.de
+
+- use GNOME system prefs only for NLD by default 
+  (fixes bug #45575)
+
+-------------------------------------------------------------------
+Fri Sep 17 08:59:32 CEST 2004 - stark@suse.de
+
+- joeshaw@suse.de: Update GConf patch so that proxy settings work 
+  correctly (Ximian #64461)
+- don't search Java on every path (Ximian #65383)
+- added some missing fixes for official release
+- added new java package name for triggers (#45257)
+
+-------------------------------------------------------------------
+Sat Sep 11 13:25:41 CEST 2004 - stark@suse.de
+
+- update to official 1.0PR (0.10)
+- adopted gnome-filepicker patch
+- removed obsolete CUPS hack from start-script 
+  (Ximian #65635, #65560)
+
+-------------------------------------------------------------------
+Thu Sep  9 21:35:42 CEST 2004 - stark@suse.de
+
+- fixed endianess on AMD64 in JS component (#34743)
+
+-------------------------------------------------------------------
+Mon Sep  6 17:33:07 CEST 2004 - stark@suse.de
+
+- fixed filelist
+
+-------------------------------------------------------------------
+Mon Sep  6 13:48:03 CEST 2004 - stark@suse.de
+
+- update to 1.0PR (aka 0.10) 
+
+-------------------------------------------------------------------
+Fri Sep  3 21:35:47 CEST 2004 - stark@suse.de
+
+- added ppc64 patch
+
+-------------------------------------------------------------------
+Thu Sep  2 03:08:59 CEST 2004 - dave@suse.de
+
+- Fixed up the .desktop installation on nld 
+
+-------------------------------------------------------------------
+Wed Sep  1 15:05:48 CEST 2004 - shprasad@suse.de
+
+- Doesn't ask to set Firefox as default web-browser. 
+
+-------------------------------------------------------------------
+Tue Aug 31 14:01:18 CEST 2004 - stark@suse.de
+
+- next new version for filepicker stuff
+- deactivated native filepicker for NLD
+- update to snapshot (20040831)
+
+-------------------------------------------------------------------
+Tue Aug 24 17:35:52 CEST 2004 - stark@suse.de
+
+- new version of gnome-filepicker patch
+- added patch for config
+
+-------------------------------------------------------------------
+Fri Aug 20 17:12:48 CEST 2004 - stark@suse.de
+
+- update to snapshot (20040820) 
+
+-------------------------------------------------------------------
+Thu Aug 19 08:46:42 CEST 2004 - stark@suse.de
+
+- added workaround for mozilla bug #246313
+  (Firefox does not start: getting "cannot open display" error)
+
+-------------------------------------------------------------------
+Wed Aug 18 15:07:22 CEST 2004 - stark@suse.de
+
+- added some patches from Ximian
+  - use GNOME filepicker
+  - use more gconf settings
+  - set startup homepage to Novell
+
+-------------------------------------------------------------------
+Tue Aug 17 13:12:35 CEST 2004 - stark@suse.de
+
+- update to pre-1.0.0 (20040817)
+
+-------------------------------------------------------------------
+Thu Aug  5 06:27:41 CEST 2004 - stark@suse.de
+
+- security update to 0.9.3 
+  (including #43312 and others)
+- handle RealPlayer 9 plugin
+
+-------------------------------------------------------------------
+Mon Aug  2 15:11:51 CEST 2004 - ro@suse.de
+
+- recode desktop file to utf-8
+
+-------------------------------------------------------------------
+Wed Jul 28 08:46:31 CEST 2004 - stark@suse.de
+
+- added fix against certificate spoofing (#43312) 
+
+-------------------------------------------------------------------
+Fri Jul 23 06:31:41 CEST 2004 - stark@suse.de
+
+- update to 0.9.2
+- added workaround for extension registry 
+- removed old (incompatible) mozex extension
+
+-------------------------------------------------------------------
+Tue Jun 29 06:27:59 CEST 2004 - stark@suse.de
+
+- update to 0.9.1
+- added hint to run as root first
+
+-------------------------------------------------------------------
+Tue Jun 15 12:42:28 CEST 2004 - stark@suse.de
+
+- update to 0.9 
+- added patch for newer freetype
+
+-------------------------------------------------------------------
+Fri Apr  2 10:31:45 CEST 2004 - stark@suse.de
+
+- removing relocation of TEMP directory (#34391)
+
+-------------------------------------------------------------------
+Mon Mar 29 11:43:51 CEST 2004 - stark@suse.de
+
+- update to 0.8.0+ (20040503)
+- removed firefox logos and activate official branding for
+  milestone builds
+- changed profile-dir to .firefox
+- added some needed files
+- enabled gnomevfs extension 
+
+-------------------------------------------------------------------
+Fri Mar 26 18:09:34 CET 2004 - uli@suse.de
+
+- fixed hang during build on s390* (bug #35440)
+
+-------------------------------------------------------------------
+Wed Mar  3 06:52:00 CET 2004 - stark@suse.de
+
+- removed unused patches for GTK2 build 
+- more fixes for (#35179)
+
+-------------------------------------------------------------------
+Mon Mar  1 07:32:52 CET 2004 - stark@suse.de
+
+- improved start-script to interact with thunderbird (#35179) 
+
+-------------------------------------------------------------------
+Thu Feb 26 06:57:05 CET 2004 - stark@suse.de
+
+- use official releasedate
+- added official (trademarked) artwork
+- added firefox icon to /usr/share/pixmaps
+- cleaned up spec-file (there will be no GTK1 version)
+
+-------------------------------------------------------------------
+Tue Feb 24 16:43:17 CET 2004 - stark@suse.de
+
+- fixed optimization for non-x86 archs 
+
+-------------------------------------------------------------------
+Tue Feb 24 07:43:35 CET 2004 - stark@suse.de
+
+- adopted file-list and build options to original distribution 
+- added prdtoa fix (#32963)
+- added hook for static firefox build to rebuild-databases.sh
+- added compiler flags for security/ (nss-opt.patch) 
+- included mozex (mozex.mozdev.org)
+- added -Os as optimization flag
+
+-------------------------------------------------------------------
+Mon Feb  9 21:59:37 CET 2004 - stark@suse.de
+
+- renamed to MozillaFirefox
+- update to final version 0.8 
+
+-------------------------------------------------------------------
+Fri Feb  6 08:39:15 CET 2004 - stark@suse.de
+
+- update to Firebird 0.8 (20040205)
+- added mips build fix
+- set PS printer list in MozillaFirebird.sh 
+- use lib64 again for biarch platforms
+
+-------------------------------------------------------------------
+Sat Jan 10 10:33:54 CET 2004 - adrian@suse.de
+
+- build as user
+
+-------------------------------------------------------------------
+Fri Aug 22 11:32:07 CEST 2003 - stark@suse.de
+
+- upstream sync for 0.6.1post
+
+-------------------------------------------------------------------
+Sun Aug 10 22:01:12 CEST 2003 - stark@suse.de
+
+- removed dmoz from searchplugins-filelist
+
+-------------------------------------------------------------------
+Fri Aug  8 10:30:50 CEST 2003 - stark@suse.de
+
+- update to 0.6.1post (TRUNK)
+- use -fno-strict-aliasing
+
+-------------------------------------------------------------------
+Thu Jul 31 11:25:39 CEST 2003 - stark@suse.de
+
+- update to 0.6.1 (MOZILLA_1_4_BRANCH)
+- synchronized with mozilla-source
+- created file-list
+
+-------------------------------------------------------------------
+Thu Jul 10 09:45:49 CEST 2003 - stark@suse.de
+
+- update to snapshot 20030709
+- fixed generation of symlink MozillaFirebird-xremote-client
+
+-------------------------------------------------------------------
+Fri Jun 20 06:53:08 CEST 2003 - stark@suse.de
+
+- update to snapshot 20030622 (0.7pre) 
+
+-------------------------------------------------------------------
+Mon May 19 08:54:46 CEST 2003 - stark@suse.de
+
+- update to snapshot 20030518 (0.6) 
+
+-------------------------------------------------------------------
+Sun May  7 10:11:16 CEST 2003 - stark@suse.de
+
+- update to snapshot 20030507 
+
+-------------------------------------------------------------------
+Wed Apr 30 13:26:43 CEST 2003 - stark@suse.de
+
+- initial SuSE package 
+

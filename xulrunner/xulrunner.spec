@@ -43,7 +43,7 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.8.9
 BuildRequires:  mozilla-nss-devel >= 3.13.1
-Version:        10.0.2
+Version:        10.0.2esr
 Release:        0
 %define         releasedate 2012021500
 %define         version_internal 10.0.2

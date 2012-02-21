@@ -5,7 +5,7 @@ idldir.patch
 mozilla-nongnome-proxies.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
-#mozilla-kde.patch
+mozilla-kde.patch
 mozilla-preferences.patch
 #mozilla-gconf-backend.patch
 #gecko-lockdown.patch
@@ -23,8 +23,8 @@ mozilla-nss-compat.patch
 # Firefox patches
 firefox-browser-css.patch
 firefox-cross-desktop.patch
-#firefox-kde.patch
-#firefox-kde-114.patch
+firefox-kde.patch
+firefox-kde-114.patch
 #firefox-ui-lockdown.patch
 firefox-libxulsdk-locales.patch
 firefox-no-default-ualocale.patch

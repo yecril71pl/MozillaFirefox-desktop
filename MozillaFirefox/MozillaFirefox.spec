@@ -206,7 +206,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -223,10 +223,10 @@ cd $RPM_BUILD_DIR/mozilla
 %patch31 -p1
 %patch32 -p1
 %if %suse_version >= 1110
-#%patch33 -p1
+%patch33 -p1
 %endif
 %if %suse_version >= 1140
-#%patch34 -p1
+%patch34 -p1
 %endif
 %patch38 -p1
 %patch39 -p1
@@ -239,11 +239,11 @@ DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
 #
-#kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
-#if test "$kdehelperversion" != %{kde_helper_version}; then
-#  echo fix kde helper version in the .spec file
-#  exit 1
-#fi
+kdehelperversion=$(cat toolkit/xre/nsKDEUtils.cpp | grep '#define KMOZILLAHELPER_VERSION' | cut -d ' ' -f 3)
+if test "$kdehelperversion" != %{kde_helper_version}; then
+  echo fix kde helper version in the .spec file
+  exit 1
+fi
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export SOURCE_REPO=$REPO

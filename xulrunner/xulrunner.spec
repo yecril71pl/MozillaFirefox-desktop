@@ -33,6 +33,7 @@ BuildRequires:  pkg-config
 BuildRequires:  python
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
+BuildRequires:  xorg-x11-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 %if %suse_version > 1110

@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.2
 Version:        10.99
 Release:        0
-%define         releasedate 2012021500
+%define         releasedate 2012022200
 %define         version_internal 11.0
 %define         apiversion 11
 %define         uaweight 1100000
@@ -198,7 +198,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch14 -p1
 %patch16 -p1
-%patch17 -p1
+#%patch17 -p1
 
 %build
 # no need to add build time to binaries

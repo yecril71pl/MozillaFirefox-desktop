@@ -17,7 +17,6 @@ mozilla-dump_syms-static.patch
 mozilla-sle11.patch
 mozilla-linux3.patch
 mozilla-disable-neon-option.patch
-mozilla-nss-compat.patch
 #mozilla-yarr-pcre.patch
 
 # Firefox patches

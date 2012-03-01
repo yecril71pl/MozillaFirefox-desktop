@@ -34,7 +34,7 @@ BuildRequires:  python
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
 BuildRequires:  update-desktop-files
-BuildRequires:  xorg-x11-devel
+BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 %if %suse_version > 1110
@@ -44,14 +44,14 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
-BuildRequires:  mozilla-nss-devel >= 3.13.2
+BuildRequires:  mozilla-nss-devel >= 3.13.3
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012022200
-Provides:       web_browser
-Provides:       firefox = %{version}-%{release}
+%define         releasedate 2012022900
 Provides:       firefox = %{mainver}
+Provides:       firefox = %{version}-%{release}
+Provides:       web_browser
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
@@ -100,9 +100,9 @@ Patch41:        firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
+Requires:       %{name}-branding > 4.0
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
-Requires:       %{name}-branding > 4.0
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
@@ -136,8 +136,8 @@ Summary:        Devel package for Firefox
 Group:          Development/Tools/Other
 Provides:       firefox-devel = %{version}-%{release}
 Requires:       %{name} = %{version}
-Requires:       perl(XML::Simple)
 Requires:       perl(Archive::Zip)
+Requires:       perl(XML::Simple)
 
 %description devel
 Development files for Firefox to make packaging of addons easier.

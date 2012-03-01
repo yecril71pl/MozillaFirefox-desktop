@@ -33,7 +33,7 @@ BuildRequires:  pkg-config
 BuildRequires:  python
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
-BuildRequires:  xorg-x11-devel
+BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 %if %suse_version > 1110
@@ -43,10 +43,10 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
-BuildRequires:  mozilla-nss-devel >= 3.13.2
+BuildRequires:  mozilla-nss-devel >= 3.13.3
 Version:        10.99
 Release:        0
-%define         releasedate 2012022200
+%define         releasedate 2012022900
 %define         version_internal 11.0
 %define         apiversion 11
 %define         uaweight 1100000

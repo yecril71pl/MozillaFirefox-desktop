@@ -1,8 +1,10 @@
 -------------------------------------------------------------------
-Tue Feb 21 16:42:43 UTC 2012 - wr@rosenauer.org
+Fri Mar  2 08:44:46 UTC 2012 - wr@rosenauer.org
 
+- update to Firefox 10.0.3esr
+- require updated minimal NSPR and NSS versions
 - ported and reenabled KDE integration (bnc#746591)
-- explicitely build-require xorg-x11-devel
+- explicitely build-require X libs
 
 -------------------------------------------------------------------
 Fri Feb 17 17:41:11 UTC 2012 - pcerny@suse.com

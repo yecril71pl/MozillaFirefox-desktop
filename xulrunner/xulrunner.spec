@@ -33,6 +33,7 @@ BuildRequires:  pkg-config
 BuildRequires:  python
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
+BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 %if %suse_version > 1110
@@ -41,8 +42,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.8.9
-BuildRequires:  mozilla-nss-devel >= 3.13.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.0
+BuildRequires:  mozilla-nss-devel >= 3.13.3
 Version:        10.0.2esr
 Release:        0
 %define         releasedate 2012021500

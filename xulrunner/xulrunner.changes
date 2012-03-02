@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Mar  2 08:46:08 UTC 2012 - wr@rosenauer.org
+
+- update to 10.0.3esr
+- require updated minimal NSPR and NSS versions
+- explicitely build-require X libs
+
+-------------------------------------------------------------------
 Thu Feb 16 08:51:42 UTC 2012 - wr@rosenauer.org
 
 - update to version 10.0.2 (bnc#747328)

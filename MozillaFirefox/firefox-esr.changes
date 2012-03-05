@@ -1,7 +1,9 @@
 -------------------------------------------------------------------
-Fri Mar  2 08:44:46 UTC 2012 - wr@rosenauer.org
+Sun Mar  4 15:42:27 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 10.0.3esr
+- update to Firefox 10.0.3esr (bnc#750044)
+  * added mozilla-system-nss.patch (bmo#710268)
+- changed package name to firefox-esr
 - require updated minimal NSPR and NSS versions
 - ported and reenabled KDE integration (bnc#746591)
 - explicitely build-require X libs

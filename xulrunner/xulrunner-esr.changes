@@ -1,7 +1,10 @@
 -------------------------------------------------------------------
-Fri Mar  2 08:46:08 UTC 2012 - wr@rosenauer.org
+Mon Mar  5 07:15:57 UTC 2012 - wr@rosenauer.org
 
-- update to 10.0.3esr
+- update to 10.0.3esr (bnc#750044)
+  * added mozilla-system-nss.patch (bmo#710268)
+- package renamed to xulrunner-esr
+  * conflict with xulrunner
 - require updated minimal NSPR and NSS versions
 - explicitely build-require X libs
 

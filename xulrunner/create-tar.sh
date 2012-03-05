@@ -2,13 +2,12 @@
 
 CHANNEL="esr10"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_10_0_2esr_RELEASE"
-VERSION="10.0.2esr"
+RELEASE_TAG="FIREFOX_10_0_3esr_RELEASE"
+VERSION="10.0.3"
 
 # mozilla
-hg clone http://hg.mozilla.org/$BRANCH mozilla
+hg clone -r $RELEASE_TAG http://hg.mozilla.org/$BRANCH mozilla
 pushd mozilla
-[ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
 # get repo and source stamp
 echo -n "REV=" > ../source-stamp.txt
 hg -R . parent --template="{node|short}\n" >> ../source-stamp.txt

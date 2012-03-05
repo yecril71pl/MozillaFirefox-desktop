@@ -1,5 +1,5 @@
 #
-# spec file for package xulrunner
+# spec file for package xulrunner-esr
 #
 # Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2012 Wolfgang Rosenauer
@@ -17,7 +17,7 @@
 #
 
 
-Name:           xulrunner
+Name:           xulrunner-esr
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -44,20 +44,22 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
-Version:        10.0.2esr
+Version:        10.0.3
 Release:        0
-%define         releasedate 2012021500
-%define         version_internal 10.0.2
+%define         releasedate 2012030300
+%define         version_internal 10.0.3
 %define         apiversion 10
-%define         uaweight 1000002
-Summary:        Mozilla Runtime Environment
+%define         uaweight 1000003
+Summary:        Mozilla Runtime Environment ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
 Url:            http://www.mozilla.org/
 Provides:       gecko
 %ifarch %ix86
-Provides:       xulrunner-32bit = %{version}-%{release}
+Provides:       %{name}-32bit = %{version}-%{release}
 %endif
+# conflict with regular xulrunner
+Conflicts:      xulrunner
 Source:         xulrunner-%{version}-source.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
 Source2:        find-external-requires.sh
@@ -82,6 +84,7 @@ Patch15:        mozilla-a11y.patch
 Patch16:        mozilla-disable-neon-option.patch
 Patch17:        mozilla-bmo703534.patch
 Patch18:        mozilla-yarr-pcre.patch
+Patch19:        mozilla-system-nss.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -163,7 +166,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
+Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -203,6 +206,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 # no need to add build time to binaries

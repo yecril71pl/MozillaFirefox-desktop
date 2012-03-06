@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox
+# spec file for package firefox-esr
 #
 # Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2012 Wolfgang Rosenauer
@@ -55,14 +55,15 @@ Provides:       firefox-esr = %{mainver}
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
+Conflicts:      firefox
 Conflicts:      MozillaFirefox
 Summary:        Mozilla Firefox Web Browser ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Networking/Web/Browsers
 Url:            http://www.mozilla.org/
 Source:         firefox-%{version}-source.tar.bz2
-Source1:        MozillaFirefox.desktop
-Source2:        MozillaFirefox-rpmlintrc
+Source1:        firefox.desktop
+Source2:        firefox-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
 Source5:        source-stamp.txt
@@ -144,28 +145,28 @@ Development files for Firefox to make packaging of addons easier.
 %if %localize
 
 %package translations-common
-Summary:        Common translations for MozillaFirefox
+Summary:        Common translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
 
 %description translations-common
 This package contains several common languages for the user interface
-of MozillaFirefox.
+of Firefox.
 
 %package translations-other
-Summary:        Extra translations for MozillaFirefox
+Summary:        Extra translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 
 %description translations-other
 This package contains rarely used languages for the user interface
-of MozillaFirefox.
+of Firefox.
 %endif
 
 %package branding-upstream
-Summary:        Upstream branding for MozillaFirefox
+Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 5.0
 Conflicts:      otherproviders(%{name}-branding)
@@ -181,7 +182,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
 
 %description branding-upstream
-This package provides upstream look and feel for MozillaFirefox.
+This package provides upstream look and feel for Firefox.
 
 
 %if %crashreporter

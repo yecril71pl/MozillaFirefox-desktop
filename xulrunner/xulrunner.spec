@@ -78,7 +78,7 @@ Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
-Patch16:        mozilla-disable-neon-option.patch
+Patch15:        mozilla-arm-cpu-detection.patch
 Patch17:        mozilla-yarr-pcre.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
@@ -161,7 +161,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;zu)
+Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -197,7 +197,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch13 -p1
 %endif
 %patch14 -p1
-%patch16 -p1
+%patch15 -p1
 #%patch17 -p1
 
 %build
@@ -281,14 +281,29 @@ EOF
 %endif
 %if ! %plugincontainer
 cat << EOF >> $MOZCONFIG
-# Chromium IPC is not ported to Power,S/390 and Itanium (currently just x86,x86_64 and arm)
 ac_add_options --disable-ipc
 EOF
 %endif
-# Disable neon for arm as it does not build correctly
+# S/390
+%ifarch s390 s390x
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-jemalloc
+EOF
+%endif
+# ARM
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
-ac_add_options --disable-neon
+%ifarch armv7l
+ac_add_options --with-arch=armv7-a
+ac_add_options --with-float-abi=hard
+ac_add_options --with-fpu=vfpv3-d16
+ac_add_options --with-thumb=yes
+%endif
+%ifarch armv5tel
+ac_add_options --with-arch=armv5te
+ac_add_options --with-float-abi=soft
+ac_add_options --with-thumb=no
+%endif
 EOF
 %endif
 make -f client.mk build

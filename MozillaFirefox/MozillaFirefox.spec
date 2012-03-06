@@ -52,6 +52,7 @@ Release:        0
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
+Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
@@ -158,7 +159,7 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 Group:          System/Localization
-Provides:       locale(%{name}:af;ak;ast;be;bg;bn_BD;bn_IN;br;bs;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 

@@ -45,12 +45,12 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-Version:        1.9.2.27
+Version:        1.9.2.28
 Release:        0
-%define         releasedate 2012021500
-%define         version_internal 1.9.2.27
+%define         releasedate 2012030600
+%define         version_internal 1.9.2.28
 %define         apiversion 1.9.2
-%define         uaweight 192270
+%define         uaweight 192280
 Summary:        Mozilla Runtime Environment 1.9.2
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other

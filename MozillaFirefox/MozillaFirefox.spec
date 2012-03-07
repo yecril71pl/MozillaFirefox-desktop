@@ -24,7 +24,7 @@
 Name:           MozillaFirefox
 %define xulrunner mozilla-xulrunner192
 BuildRequires:  autoconf213 gcc-c++ libcurl-devel libgnomeui-devel libidl-devel libnotify-devel python unzip update-desktop-files zip
-BuildRequires:  %{xulrunner}-devel = 1.9.2.27
+BuildRequires:  %{xulrunner}-devel = 1.9.2.28
 %if %suse_version > 1020
 BuildRequires:  fdupes
 %endif
@@ -34,13 +34,13 @@ BuildRequires:  libiw-devel
 BuildRequires:  wireless-tools
 %endif
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
-Version:        %mainver.27
+Version:        %mainver.28
 Release:        1
 Provides:       web_browser
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       firefox = %{version}
-%define         releasedate 2012021500
+%define         releasedate 2012030600
 Summary:        Mozilla Firefox Web Browser
 Url:            http://www.mozilla.org/
 Group:          Productivity/Networking/Web/Browsers

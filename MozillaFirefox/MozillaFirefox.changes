@@ -1,14 +1,14 @@
 -------------------------------------------------------------------
+Thu Mar  8 17:03:11 UTC 2012 - wr@rosenauer.org
+
+- update to version 11.0b6
+- ported and reenabled KDE integration (bnc#746591)
+- explicitely build-require X libs
+
+-------------------------------------------------------------------
 Mon Mar  5 13:31:48 UTC 2012 - vdziewiecki@suse.com
 
 - add Provides: browser(npapi) FATE#313084
-
--------------------------------------------------------------------
-Tue Feb 28 07:25:08 UTC 2012 - wr@rosenauer.org
-
-- update to version 11.0b5
-- ported and reenabled KDE integration (bnc#746591)
-- explicitely build-require X libs
 
 -------------------------------------------------------------------
 Fri Feb 17 17:41:11 UTC 2012 - pcerny@suse.com

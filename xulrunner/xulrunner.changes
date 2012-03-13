@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu Mar  8 17:05:47 UTC 2012 - wr@rosenauer.org
+Fri Mar  9 21:49:05 UTC 2012 - wr@rosenauer.org
 
-- update to version 11.0b6
+- update to version 11.0 (bnc#750044)
 - fix build on ARM
 - disable jemalloc on s390(x)
 

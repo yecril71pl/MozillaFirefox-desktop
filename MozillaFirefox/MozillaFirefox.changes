@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu Mar  8 17:03:11 UTC 2012 - wr@rosenauer.org
+Fri Mar  9 21:47:07 UTC 2012 - wr@rosenauer.org
 
-- update to version 11.0b6
+- update to Firefox 11.0 (bnc#750044)
 - ported and reenabled KDE integration (bnc#746591)
 - explicitely build-require X libs
 

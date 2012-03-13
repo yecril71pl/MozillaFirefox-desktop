@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
-Version:        10.99
+Version:        11.0
 Release:        0
-%define         releasedate 2012030700
+%define         releasedate 2012031200
 %define         version_internal 11.0
 %define         apiversion 11
 %define         uaweight 1100000
@@ -80,6 +80,7 @@ Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-arm-cpu-detection.patch
 Patch17:        mozilla-yarr-pcre.patch
+Patch18:        mozilla-sle11-gcc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -199,6 +200,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch14 -p1
 %patch15 -p1
 #%patch17 -p1
+%patch18 -p1
 
 %build
 # no need to add build time to binaries

@@ -1,12 +1,12 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 8b1b35442fee96324a141ab5d7710c3a88769df5
+# Parent cc2dd10c3b24c5fceeaf318e00cc1264f99edba2
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -323,16 +323,20 @@ pref("browser.download.manager.scanWhenD
+@@ -341,16 +341,20 @@ pref("browser.download.manager.scanWhenD
  pref("browser.download.manager.resumeOnWakeDelay", 10000);
  
  // search engines URL
@@ -30,7 +30,7 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -167,29 +167,41 @@ libs:: $(call MERGE_FILES,$(addprefix pr
+@@ -153,17 +153,41 @@ libs:: $(call MERGE_FILES,$(addprefix pr
  install:: $(DESTDIR)$(mozappdir)/defaults/profile/bookmarks.html ;
  
  install:: $(addprefix generic/profile/,$(PROFILE_FILES))
@@ -41,28 +41,42 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  
 -SEARCH_PLUGINS = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt))
 +SEARCH_PLUGINS = $(shell cat \
-+  $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
-+       @srcdir@/en-US/searchplugins/list.txt ) )
- 
--libs:: $(addsuffix .xml,$(SEARCH_PLUGINS))
--	$(SYSINSTALL) $(IFLAGS1) $^ $(FINAL_TARGET)/searchplugins
++	$(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
++	@srcdir@/en-US/searchplugins/list.txt ) )
++
 +tmp-search.jar.mn::
 +	printf "$(AB_CD).jar:" > $@
 +	printf "$(foreach plugin,$(SEARCH_PLUGINS),$(subst __PLUGIN_SUBST__,$(plugin), \n locale/browser/searchplugins/__PLUGIN_SUBST__.xml (__PLUGIN_SUBST__.xml)))" >>  $@
 +	@echo   >> $@
- 
--install:: $(addsuffix .xml,$(SEARCH_PLUGINS))
--	$(SYSINSTALL) $(IFLAGS1) $^ $(DESTDIR)$(mozappdir)/searchplugins
-+searchplugins: tmp-search.jar.mn
++
++searchplugins:: $(addsuffix .xml,$(SEARCH_PLUGINS))
++	for SEARCH_PLUGIN in $^; do \
++	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
++	    $$SEARCH_PLUGIN > $$SEARCH_PLUGIN ; \
++	done
++
++searchplugins:: tmp-search.jar.mn
 +	$(PYTHON) $(MOZILLA_DIR)/config/JarMaker.py \
 +	  $(QUIET) -j $(FINAL_TARGET)/chrome \
 +	  -s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
 +	  -s $(LOCALE_SRCDIR)/searchplugins \
 +	  $(MAKE_JARS_FLAGS) tmp-search.jar.mn
- 
++
 +export:: searchplugins
 +
 +GARBAGE += tmp-search.jar.mn
+ 
+ libs:: $(addsuffix .xml,$(SEARCH_PLUGINS))
+ 	$(NSINSTALL) -D $(FINAL_TARGET)/searchplugins
+ 	for SEARCH_PLUGIN in $^; do\
+ 	  SEARCH_PLUGIN_BASE=`basename $$SEARCH_PLUGIN`;\
+ 	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
+ 	    $$SEARCH_PLUGIN > $(FINAL_TARGET)/searchplugins/$$SEARCH_PLUGIN_BASE; \
+ 	done
+@@ -176,16 +200,17 @@ install:: $(addsuffix .xml,$(SEARCH_PLUG
+ 	    $$SEARCH_PLUGIN > $(DESTDIR)$(mozappdir)/searchplugins/$$SEARCH_PLUGIN_BASE; \
+ 	done
+ 
  
  libs-%:
  	$(NSINSTALL) -D $(DIST)/install
@@ -80,7 +94,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -84,11 +84,12 @@
+@@ -97,11 +97,12 @@
      locale/browser-region/region.properties        (%chrome/browser-region/region.properties)
  # the following files are browser-specific overrides
  *   locale/browser/netError.dtd                (%chrome/overrides/netError.dtd)

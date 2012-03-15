@@ -18,7 +18,8 @@
 
 
 %define major 11
-%define mainver %major.0
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -48,7 +49,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.3
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012031200
+%define         releasedate 2012031400
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -282,7 +283,7 @@ ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
-ac_add_options --enable-update-channel=release
+ac_add_options --enable-update-channel=%{update_channel}
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

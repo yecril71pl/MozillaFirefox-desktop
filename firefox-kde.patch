@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1125 @@
+@@ -0,0 +1,1118 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -396,27 +396,27 @@ new file mode 100644
 +    <panel id="customizeToolbarSheetPopup"
 +           noautohide="true">
 +      <iframe id="customizeToolbarSheetIFrame"
-+              style="&dialog.style;"
++              style="&dialog.dimensions;"
 +              hidden="true"/>
 +    </panel>
 +
 +    <tooltip id="tabbrowser-tab-tooltip" onpopupshowing="gBrowser.createTooltip(event);"/>
 +
 +    <tooltip id="back-button-tooltip">
-+      <label value="&backButton.tooltip;"/>
++      <label class="tooltip-label" value="&backButton.tooltip;"/>
 +#ifdef XP_MACOSX
-+      <label value="&backForwardButtonMenuMac.tooltip;"/>
++      <label class="tooltip-label" value="&backForwardButtonMenuMac.tooltip;"/>
 +#else
-+      <label value="&backForwardButtonMenu.tooltip;"/>
++      <label class="tooltip-label" value="&backForwardButtonMenu.tooltip;"/>
 +#endif
 +    </tooltip>
 +  
 +    <tooltip id="forward-button-tooltip">
-+      <label value="&forwardButton.tooltip;"/>
++      <label class="tooltip-label" value="&forwardButton.tooltip;"/>
 +#ifdef XP_MACOSX
-+      <label value="&backForwardButtonMenuMac.tooltip;"/>
++      <label class="tooltip-label" value="&backForwardButtonMenuMac.tooltip;"/>
 +#else
-+      <label value="&backForwardButtonMenu.tooltip;"/>
++      <label class="tooltip-label" value="&backForwardButtonMenu.tooltip;"/>
 +#endif
 +    </tooltip>
 +  </popupset>
@@ -449,9 +449,7 @@ new file mode 100644
 +
 +  <toolbox id="navigator-toolbox"
 +           defaultmode="icons" mode="icons"
-+           iconsize="large"
-+           tabsontop="true"
-+           persist="tabsontop">
++           iconsize="large">
 +    <!-- Menu -->
 +    <toolbar type="menubar" id="toolbar-menubar" class="chromeclass-menubar" customizable="true"
 +             defaultset="menubar-items"
@@ -509,7 +507,7 @@ new file mode 100644
 +        <textbox id="urlbar" flex="1"
 +                 placeholder="&urlbar.placeholder;"
 +                 type="autocomplete"
-+                 autocompletesearch="history"
++                 autocompletesearch="urlinline history"
 +                 autocompletesearchparam="enable-actions"
 +                 autocompletepopup="PopupAutoCompleteRichResult"
 +                 completeselectedindex="true"
@@ -541,12 +539,12 @@ new file mode 100644
 +               onkeypress="gIdentityHandler.handleIdentityButtonEvent(event);"
 +               ondragstart="gIdentityHandler.onDragStart(event);">
 +            <hbox id="identity-box-inner" align="center">
-+              <stack id="page-proxy-stack"
-+                     onclick="PageProxyClickHandler(event);">
++              <hbox id="page-proxy-stack"
++                    onclick="PageProxyClickHandler(event);">
 +                <image id="page-proxy-favicon" validate="never"
 +                       pageproxystate="invalid"
 +                       onerror="this.removeAttribute('src');"/>
-+              </stack>
++              </hbox>
 +              <hbox id="identity-icon-labels">
 +                <label id="identity-icon-label" class="plain" flex="1"/>
 +                <label id="identity-icon-country-label" class="plain"/>
@@ -1000,7 +998,6 @@ new file mode 100644
 +             hidden="true">
 +      <vbox flex="1">
 +        <resizer id="inspector-top-resizer" flex="1" 
-+                 class="inspector-resizer"
 +                 dir="top" disabled="true"
 +                 element="inspector-tree-box"/>
 +        <hbox>
@@ -1021,8 +1018,8 @@ new file mode 100644
 +            <toolbarbutton id="inspector-3D-button"
 +                           class="devtools-toolbarbutton"
 +                           hidden="true"
-+                           label="&inspect3DButton.label;"
-+                           accesskey="&inspect3DButton.accesskey;"
++                           label="&inspect3DViewButton.label;"
++                           accesskey="&inspect3DViewButton.accesskey;"
 +                           command="Inspector:Tilt"/>
 +            <toolbarbutton id="inspector-style-button"
 +                           class="devtools-toolbarbutton"
@@ -1036,10 +1033,6 @@ new file mode 100644
 +                         oncommand="InspectorUI.closeInspectorUI(false);"
 +                         tooltiptext="&inspectCloseButton.tooltiptext;"/>
 +#endif
-+          <resizer id="inspector-end-resizer"
-+                   class="inspector-resizer"
-+                   dir="top" disabled="true"
-+                   element="inspector-tree-box"/>
 +        </hbox>
 +      </vbox>
 +    </toolbar>
@@ -1716,7 +1709,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -449,16 +449,17 @@
+@@ -450,16 +450,17 @@
  #endif
  #endif
  

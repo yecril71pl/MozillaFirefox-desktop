@@ -18,7 +18,6 @@ mozilla-sle11.patch
 mozilla-linux3.patch
 mozilla-arm-cpu-detection.patch
 mozilla-disable-neon-option.patch
-mozilla-sle11-gcc.patch
 #mozilla-yarr-pcre.patch
 
 # Firefox patches

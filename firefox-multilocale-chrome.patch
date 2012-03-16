@@ -1,6 +1,6 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent cc2dd10c3b24c5fceeaf318e00cc1264f99edba2
+# Parent de9c23d6bfd0b0a30aa3dfc55377658756ec6f70
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
@@ -30,7 +30,7 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -153,17 +153,41 @@ libs:: $(call MERGE_FILES,$(addprefix pr
+@@ -153,39 +153,48 @@ libs:: $(call MERGE_FILES,$(addprefix pr
  install:: $(DESTDIR)$(mozappdir)/defaults/profile/bookmarks.html ;
  
  install:: $(addprefix generic/profile/,$(PROFILE_FILES))
@@ -43,7 +43,11 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +SEARCH_PLUGINS = $(shell cat \
 +	$(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
 +	@srcdir@/en-US/searchplugins/list.txt ) )
-+
+ 
+-libs:: $(addsuffix .xml,$(SEARCH_PLUGINS))
+-	$(NSINSTALL) -D $(FINAL_TARGET)/searchplugins
+-	for SEARCH_PLUGIN in $^; do\
+-	  SEARCH_PLUGIN_BASE=`basename $$SEARCH_PLUGIN`;\
 +tmp-search.jar.mn::
 +	printf "$(AB_CD).jar:" > $@
 +	printf "$(foreach plugin,$(SEARCH_PLUGINS),$(subst __PLUGIN_SUBST__,$(plugin), \n locale/browser/searchplugins/__PLUGIN_SUBST__.xml (__PLUGIN_SUBST__.xml)))" >>  $@
@@ -51,32 +55,29 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +
 +searchplugins:: $(addsuffix .xml,$(SEARCH_PLUGINS))
 +	for SEARCH_PLUGIN in $^; do \
-+	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
-+	    $$SEARCH_PLUGIN > $$SEARCH_PLUGIN ; \
-+	done
-+
+ 	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
+-	    $$SEARCH_PLUGIN > $(FINAL_TARGET)/searchplugins/$$SEARCH_PLUGIN_BASE; \
++	    $$SEARCH_PLUGIN > $$SEARCH_PLUGIN-new ; \
++	  mv $$SEARCH_PLUGIN-new $$SEARCH_PLUGIN ; \
+ 	done
+ 
+-install:: $(addsuffix .xml,$(SEARCH_PLUGINS))
+-	$(NSINSTALL) -D $(DESTDIR)$(mozappdir)/searchplugins
+-	for i in $^; do \
+-	  SEARCH_PLUGIN_BASE=`basename $$SEARCH_PLUGIN`;\
+-	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
+-	    $$SEARCH_PLUGIN > $(DESTDIR)$(mozappdir)/searchplugins/$$SEARCH_PLUGIN_BASE; \
+-	done
 +searchplugins:: tmp-search.jar.mn
 +	$(PYTHON) $(MOZILLA_DIR)/config/JarMaker.py \
 +	  $(QUIET) -j $(FINAL_TARGET)/chrome \
 +	  -s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
 +	  -s $(LOCALE_SRCDIR)/searchplugins \
 +	  $(MAKE_JARS_FLAGS) tmp-search.jar.mn
-+
+ 
 +export:: searchplugins
 +
 +GARBAGE += tmp-search.jar.mn
- 
- libs:: $(addsuffix .xml,$(SEARCH_PLUGINS))
- 	$(NSINSTALL) -D $(FINAL_TARGET)/searchplugins
- 	for SEARCH_PLUGIN in $^; do\
- 	  SEARCH_PLUGIN_BASE=`basename $$SEARCH_PLUGIN`;\
- 	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
- 	    $$SEARCH_PLUGIN > $(FINAL_TARGET)/searchplugins/$$SEARCH_PLUGIN_BASE; \
- 	done
-@@ -176,16 +200,17 @@ install:: $(addsuffix .xml,$(SEARCH_PLUG
- 	    $$SEARCH_PLUGIN > $(DESTDIR)$(mozappdir)/searchplugins/$$SEARCH_PLUGIN_BASE; \
- 	done
- 
  
  libs-%:
  	$(NSINSTALL) -D $(DIST)/install

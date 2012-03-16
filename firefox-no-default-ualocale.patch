@@ -1,6 +1,6 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 4de3b724d8c78c38713aee20a01c702e132c2c4c
+# Parent d372da4f99f10c6e76fd483abc145cfbc485c168
 Do not overwrite the locale dynamic pref from xulrunner's all.js with a wrong default value
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
@@ -19,7 +19,7 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 +pref("general.useragent.locale", "chrome://global/locale/intl.properties");
  pref("general.skins.selectedSkin", "classic/1.0");
  
- pref("general.smoothScroll", true);
+ pref("general.smoothScroll", false);
  #ifdef UNIX_BUT_NOT_MAC
  pref("general.autoScroll", false);
  #else

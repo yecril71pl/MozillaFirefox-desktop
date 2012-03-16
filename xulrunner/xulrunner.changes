@@ -2,6 +2,21 @@
 Fri Mar  9 21:49:05 UTC 2012 - wr@rosenauer.org
 
 - update to version 11.0 (bnc#750044)
+  * MFSA 2012-13/CVE-2012-0455 (bmo#704354)
+    XSS with Drag and Drop and Javascript: URL
+  * MFSA 2012-14/CVE-2012-0456/CVE-2012-0457 (bmo#711653, #720103)
+    SVG issues found with Address Sanitizer
+  * MFSA 2012-15/CVE-2012-0451 (bmo#717511)
+    XSS with multiple Content Security Policy headers
+  * MFSA 2012-16/CVE-2012-0458
+    Escalation of privilege with Javascript: URL as home page
+  * MFSA 2012-17/CVE-2012-0459 (bmo#723446)
+    Crash when accessing keyframe cssText after dynamic modification
+  * MFSA 2012-18/CVE-2012-0460 (bmo#727303)
+    window.fullScreen writeable by untrusted content
+  * MFSA 2012-19/CVE-2012-0461/CVE-2012-0462/CVE-2012-0464/
+    CVE-2012-0463
+    Miscellaneous memory safety hazards
 - fix build on ARM
 - disable jemalloc on s390(x)
 

@@ -91,7 +91,6 @@ Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
 Patch14:        mozilla-disable-neon-option.patch
 Patch15:        mozilla-yarr-pcre.patch
-Patch16:        mozilla-sle11-gcc.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -220,7 +219,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch14 -p1
 #%patch15 -p1
-%patch16 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -425,6 +423,7 @@ rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
 rm -f $RPM_BUILD_ROOT%{progdir}/precomplete
 rm -f $RPM_BUILD_ROOT%{progdir}/dictionaries/en-US*
 rm -f $RPM_BUILD_ROOT%{progdir}/firefox
+rm -f $RPM_BUILD_ROOT%{progdir}/update-settings.ini
 # devel
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %SOURCE12 %{buildroot}%{_bindir}

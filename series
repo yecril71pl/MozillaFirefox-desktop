@@ -20,7 +20,6 @@ mozilla-a11y.patch
 mozilla-disable-neon-option.patch
 mozilla-bmo703534.patch
 mozilla-yarr-pcre.patch
-mozilla-system-nss.patch
 
 # Firefox patches
 firefox-browser-css.patch

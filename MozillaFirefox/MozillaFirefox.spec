@@ -105,6 +105,7 @@ Requires(postun): shared-mime-info desktop-file-utils
 Requires:       %{name}-branding > 4.0
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
+Recommends:     libcanberra0
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}

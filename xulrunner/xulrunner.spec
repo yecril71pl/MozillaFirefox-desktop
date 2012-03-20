@@ -79,6 +79,7 @@ Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-arm-cpu-detection.patch
+Patch16:        mozilla-revert_621446.patch
 Patch17:        mozilla-yarr-pcre.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
@@ -198,6 +199,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 #%patch17 -p1
 
 %build

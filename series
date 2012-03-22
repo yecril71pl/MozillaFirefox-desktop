@@ -19,6 +19,7 @@ mozilla-linux3.patch
 mozilla-arm-cpu-detection.patch
 mozilla-disable-neon-option.patch
 mozilla-revert_621446.patch
+mozilla-libnotify.patch
 #mozilla-yarr-pcre.patch
 
 # Firefox patches

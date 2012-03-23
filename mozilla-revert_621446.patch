@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent a4b050d8677d437a205e1cb88079ecd359cbd08d
+# Parent 8da41a2cee774ce4d00b9ac1032a495b8bc560a0
 Revert investigation patch for bmo#621446; as it is useless on desktop and breaks the build for certain compilers
 
 diff --git a/netwerk/protocol/http/HttpChannelParent.cpp b/netwerk/protocol/http/HttpChannelParent.cpp
@@ -57,7 +57,7 @@ diff --git a/netwerk/protocol/http/HttpChannelParent.cpp b/netwerk/protocol/http
      nsCOMPtr<nsIHttpChannel> newHttpChannel =
          do_QueryInterface(mRedirectChannel);
  
-@@ -348,40 +339,23 @@ HttpChannelParent::RecvRedirect2Verify(c
+@@ -348,40 +339,21 @@ HttpChannelParent::RecvRedirect2Verify(c
        for (PRUint32 i = 0; i < changedHeaders.Length(); i++) {
          newHttpChannel->SetRequestHeader(changedHeaders[i].mHeader,
                                           changedHeaders[i].mValue,
@@ -80,8 +80,8 @@ diff --git a/netwerk/protocol/http/HttpChannelParent.cpp b/netwerk/protocol/http
 -      NS_RUNTIMEABORT("Missing redirect channel");
 -  }
 -
-   mReceivedRedirect2Verify = true;
- 
+-  mReceivedRedirect2Verify = true;
+-
    mRedirectCallback->OnRedirectVerifyCallback(result);
    mRedirectCallback = nsnull;
    return true;
@@ -98,7 +98,7 @@ diff --git a/netwerk/protocol/http/HttpChannelParent.cpp b/netwerk/protocol/http
    mCacheDescriptor = 0;  // Else we'll block other channels reading same URI
    return true;
  }
-@@ -583,24 +557,18 @@ HttpChannelParent::StartRedirect(PRUint3
+@@ -583,24 +555,18 @@ HttpChannelParent::StartRedirect(PRUint3
  
    nsHttpChannel *httpChan = static_cast<nsHttpChannel *>(mChannel.get());
    nsHttpResponseHead *responseHead = httpChan->GetResponseHead();

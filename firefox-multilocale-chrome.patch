@@ -75,7 +75,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +	  -s $(LOCALE_SRCDIR)/searchplugins \
 +	  $(MAKE_JARS_FLAGS) tmp-search.jar.mn
  
-+export:: searchplugins
++libs:: searchplugins
 +
 +GARBAGE += tmp-search.jar.mn
  

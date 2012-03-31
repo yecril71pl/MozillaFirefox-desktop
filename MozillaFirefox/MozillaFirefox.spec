@@ -324,6 +324,8 @@ source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
 make -C browser/installer STRIP=/bin/true
+#DEBUG (break the build if searchplugins are missing / temporary)
+grep amazondotcom dist/firefox/omni.ja
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
@@ -358,8 +360,9 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   	make -C browser/locales langpack-$locale
 	cp -rL dist/xpi-stage/locale-$locale \
 	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
-	# remove prefs and profile defaults from langpack
+	# remove prefs, profile defaults, and hyphenation from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
+	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do

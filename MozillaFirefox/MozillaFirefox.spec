@@ -17,9 +17,9 @@
 #
 
 
-%define major 11
+%define major 12
 %define mainver %major.99
-%define update_channel beta
+%define update_channel aurora
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -91,8 +91,9 @@ Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-linux3.patch
 Patch14:        mozilla-disable-neon-option.patch
 Patch15:        mozilla-yarr-pcre.patch
-Patch16:        mozilla-revert_621446.patch
-Patch17:        mozilla-libnotify.patch
+Patch16:        mozilla-system-nspr.patch
+Patch17:        mozilla-revert_621446.patch
+Patch18:        mozilla-libnotify.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -122,7 +123,7 @@ Recommends:     libcanberra0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter    0
@@ -224,6 +225,7 @@ cd $RPM_BUILD_DIR/mozilla
 #%patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 #
 %patch31 -p1
 %patch32 -p1
@@ -535,6 +537,7 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
+%{progdir}/jssubloader/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox-bin

@@ -1,20 +1,20 @@
 # HG changeset patch
-# Parent 8ea0f829916d7d9dc54567813367bcdfe6cee179
+# Parent 271b5143e89573cbbde51d0b830a6116756a52e6
 
 diff --git a/build/Makefile.in b/build/Makefile.in
 --- a/build/Makefile.in
 +++ b/build/Makefile.in
-@@ -91,17 +91,17 @@ DEFINES += -DMOZ_APP_VERSION="$(MOZ_APP_
+@@ -89,17 +89,17 @@ DEFINES += -DMOZ_APP_VERSION="$(MOZ_APP_
  APP_INI_DEPS += $(DEPTH)/config/autoconf.mk
  
- MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null))
+ MOZ_SOURCE_STAMP := $(firstword $(shell cd $(topsrcdir)/$(MOZ_BUILD_APP)/.. && hg parent --template="{node|short}\n" 2>/dev/null))
  ifdef MOZ_SOURCE_STAMP
  DEFINES += -DMOZ_SOURCE_STAMP="$(MOZ_SOURCE_STAMP)"
  endif
  
  _dollar=$$
--SOURCE_REPO := $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
-+SOURCE_REPO ?= $(shell cd $(topsrcdir) && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
+-SOURCE_REPO := $(shell cd $(topsrcdir)/$(MOZ_BUILD_APP)/.. && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
++SOURCE_REPO ?= $(shell cd $(topsrcdir)/$(MOZ_BUILD_APP)/.. && hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" -e "s/\/$(_dollar)//" )
  ifdef SOURCE_REPO
  DEFINES += -DMOZ_SOURCE_REPO="$(SOURCE_REPO)"
  endif
@@ -26,7 +26,7 @@ diff --git a/build/Makefile.in b/build/Makefile.in
 diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 --- a/toolkit/content/Makefile.in
 +++ b/toolkit/content/Makefile.in
-@@ -65,17 +65,17 @@ endif
+@@ -67,17 +67,17 @@ endif
  ifeq (Android,$(OS_TARGET))
  DEFINES += -DANDROID_PACKAGE_NAME=$(ANDROID_PACKAGE_NAME)
  endif
@@ -43,8 +43,8 @@ diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
  DEFINES += -DSOURCE_REPO="$(SOURCE_REPO)"
  endif
  
- ifdef MOZ_TOOLKIT_SEARCH
- DEFINES += -DMOZ_TOOLKIT_SEARCH
+ BUILD_HOSTNAME = $(shell hostname -s || hostname)
+ DEFINES += -DBUILD_HOSTNAME="$(BUILD_HOSTNAME)"
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
 +++ b/toolkit/mozapps/installer/package-name.mk
@@ -74,7 +74,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -236,17 +236,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
+@@ -229,17 +229,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
  endif
  endif
  

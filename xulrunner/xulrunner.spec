@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
-Version:        11.99
+Version:        12.99
 Release:        0
 %define         releasedate 2012032100
-%define         version_internal 12.0
-%define         apiversion 12
-%define         uaweight 1200000
+%define         version_internal 13.0
+%define         apiversion 13
+%define         uaweight 1300000
 Summary:        Mozilla Runtime Environment
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
@@ -79,9 +79,10 @@ Patch12:        mozilla-dump_syms-static.patch
 Patch13:        mozilla-sle11.patch
 Patch14:        mozilla-linux3.patch
 Patch15:        mozilla-arm-cpu-detection.patch
-Patch16:        mozilla-revert_621446.patch
-Patch17:        mozilla-yarr-pcre.patch
-Patch18:        mozilla-libnotify.patch
+Patch16:        mozilla-system-nspr.patch
+Patch17:        mozilla-revert_621446.patch
+Patch18:        mozilla-yarr-pcre.patch
+Patch19:        mozilla-libnotify.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -203,6 +204,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch16 -p1
 #%patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 # no need to add build time to binaries

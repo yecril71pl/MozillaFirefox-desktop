@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu Mar 22 09:27:26 UTC 2012 - wr@rosenauer.org
+Wed Apr  4 13:19:56 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 12.0b3
+- update to Firefox 12.0b4
   * rebased patches
 - added mozilla-libnotify.patch to allow fallback from libnotify
   to xul based events if no notification-daemon is running

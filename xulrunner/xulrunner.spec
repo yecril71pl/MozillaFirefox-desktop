@@ -82,6 +82,7 @@ Patch15:        mozilla-arm-cpu-detection.patch
 Patch16:        mozilla-revert_621446.patch
 Patch17:        mozilla-yarr-pcre.patch
 Patch18:        mozilla-libnotify.patch
+Patch19:        mozilla-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -203,6 +204,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch16 -p1
 #%patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 # no need to add build time to binaries

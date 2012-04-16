@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1117 @@
+@@ -0,0 +1,1116 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -479,7 +479,7 @@ new file mode 100644
 +             toolbarname="&navbarCmd.label;" accesskey="&navbarCmd.accesskey;"
 +             fullscreentoolbar="true" mode="icons" customizable="true"
 +             iconsize="large"
-+             defaultset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,fullscreenflex,window-controls"
++             defaultset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,window-controls"
 +             context="toolbar-context-menu">
 +
 +      <toolbaritem id="unified-back-forward-button" class="chromeclass-toolbar-additional"
@@ -701,8 +701,7 @@ new file mode 100644
 +        </toolbarbutton>
 +      </toolbaritem>
 +
-+      <hbox id="fullscreenflex" flex="1" hidden="true" fullscreencontrol="true"/>
-+      <hbox id="window-controls" hidden="true" fullscreencontrol="true">
++      <hbox id="window-controls" hidden="true" fullscreencontrol="true" pack="end">
 +        <toolbarbutton id="minimize-button"
 +                       tooltiptext="&fullScreenMinimize.tooltip;"
 +                       oncommand="window.minimize();"/>

@@ -94,6 +94,7 @@ Patch15:        mozilla-yarr-pcre.patch
 Patch16:        mozilla-system-nspr.patch
 Patch17:        mozilla-revert_621446.patch
 Patch18:        mozilla-libnotify.patch
+Patch19:        mozilla-gcc47.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -226,6 +227,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 #
 %patch31 -p1
 %patch32 -p1

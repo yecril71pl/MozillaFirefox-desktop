@@ -83,6 +83,7 @@ Patch16:        mozilla-system-nspr.patch
 Patch17:        mozilla-revert_621446.patch
 Patch18:        mozilla-yarr-pcre.patch
 Patch19:        mozilla-libnotify.patch
+Patch20:        mozilla-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -205,6 +206,7 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 # no need to add build time to binaries

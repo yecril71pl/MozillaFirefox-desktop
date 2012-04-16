@@ -57,6 +57,10 @@ Provides:       firefox-esr = %{mainver}
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Conflicts:      firefox
 Conflicts:      MozillaFirefox
+# replace older MozillaFirefox packages for dists up to 11.2
+%if %suse_version < 1130
+Obsoletes:      MozillaFirefox < %{version}
+%endif
 Summary:        Mozilla Firefox Web Browser ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Networking/Web/Browsers

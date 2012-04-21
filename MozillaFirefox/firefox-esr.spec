@@ -18,7 +18,7 @@
 
 
 %define major 10
-%define mainver %major.0.3
+%define mainver %major.0.4
 
 Name:           firefox-esr
 BuildRequires:  Mesa-devel
@@ -48,7 +48,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.3
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012030300
+%define         releasedate 2012042100
 Provides:       web_browser
 Provides:       firefox-esr = %{mainver}
 # this is needed to match this package with the kde4 helper package without the main package
@@ -59,7 +59,10 @@ Conflicts:      firefox
 Conflicts:      MozillaFirefox
 # replace older MozillaFirefox packages for dists up to 11.2
 %if %suse_version < 1130
-Obsoletes:      MozillaFirefox < %{version}
+Provides:       MozillaFirefox = %{version}
+Obsoletes:      MozillaFirefox <= %{version}
+%else
+Conflicts:      MozillaFirefox
 %endif
 Summary:        Mozilla Firefox Web Browser ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+

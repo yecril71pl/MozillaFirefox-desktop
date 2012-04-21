@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Fri Apr 20 19:22:42 UTC 2012 - wr@rosenauer.org
+Sat Apr 21 10:03:42 UTC 2012 - wr@rosenauer.org
 
-- update to 12.0b6
+- update to 12.0 (bnc#758408)
   * rebased patches
 - added mozilla-libnotify.patch to allow fallback from libnotify
   to xul based events if no notification-daemon is running

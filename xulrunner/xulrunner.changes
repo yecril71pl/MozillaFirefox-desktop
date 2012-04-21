@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Fri Apr 20 19:22:42 UTC 2012 - wr@rosenauer.org
+
+- update to 12.0b6
+  * rebased patches
+- added mozilla-libnotify.patch to allow fallback from libnotify
+  to xul based events if no notification-daemon is running
+- gcc 4.7 fixes
+  * mozilla-gcc47.patch
+  * disabled crashreporter temporarily for Factory
+
+-------------------------------------------------------------------
 Fri Mar  9 21:49:05 UTC 2012 - wr@rosenauer.org
 
 - update to version 11.0 (bnc#750044)

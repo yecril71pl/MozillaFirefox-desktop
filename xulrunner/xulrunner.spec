@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
 Version:        11.99
 Release:        0
-%define         releasedate 2012041400
+%define         releasedate 2012042000
 %define         version_internal 12.0
 %define         apiversion 12
 %define         uaweight 1200000
@@ -98,6 +98,10 @@ Requires(preun): update-alternatives coreutils
 %else
 %define crashreporter    1
 %define plugincontainer  1
+%endif
+# temporary (gcc 4.7)
+%if %suse_version > 1210
+%define crashreporter    0
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
@@ -164,7 +168,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other

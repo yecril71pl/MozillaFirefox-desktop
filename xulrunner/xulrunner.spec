@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
-Version:        11.99
-Release:        0
-%define         releasedate 2012042000
+Version:        12.0
+Release:        2
+%define         releasedate 2012042100
 %define         version_internal 12.0
 %define         apiversion 12
 %define         uaweight 1200000

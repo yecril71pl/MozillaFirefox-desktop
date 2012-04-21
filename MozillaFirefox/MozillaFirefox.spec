@@ -17,9 +17,9 @@
 #
 
 
-%define major 11
-%define mainver %major.99
-%define update_channel beta
+%define major 12
+%define mainver %major.0
+%define update_channel release
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -48,8 +48,8 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
-Release:        0
-%define         releasedate 2012042000
+Release:        2
+%define         releasedate 2012042100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

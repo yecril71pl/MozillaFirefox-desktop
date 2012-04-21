@@ -1,10 +1,14 @@
 -------------------------------------------------------------------
-Sun Apr 15 06:39:59 UTC 2012 - wr@rosenauer.org
+Fri Apr 20 16:19:18 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 12.0b5
+- update to Firefox 12.0b6
   * rebased patches
 - added mozilla-libnotify.patch to allow fallback from libnotify
   to xul based events if no notification-daemon is running
+- gcc 4.7 fixes
+  * mozilla-gcc47.patch
+  * disabled crashreporter temporarily for Factory
+- recommend libcanberra0 for proper sound notifications
 
 -------------------------------------------------------------------
 Fri Mar  9 21:47:07 UTC 2012 - wr@rosenauer.org

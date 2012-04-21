@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
-Version:        10.0.3
+Version:        10.0.4
 Release:        0
-%define         releasedate 2012030300
-%define         version_internal 10.0.3
+%define         releasedate 2012042100
+%define         version_internal 10.0.4
 %define         apiversion 10
-%define         uaweight 1000003
+%define         uaweight 1000004
 Summary:        Mozilla Runtime Environment ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other

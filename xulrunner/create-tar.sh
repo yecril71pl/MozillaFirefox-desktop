@@ -2,8 +2,8 @@
 
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_12_0b3_RELEASE"
-VERSION="11.99"
+RELEASE_TAG="default"
+VERSION="12.99"
 
 # mozilla
 hg clone http://hg.mozilla.org/$BRANCH mozilla

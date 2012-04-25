@@ -3,7 +3,7 @@
 CHANNEL="aurora"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
-VERSION="12.99"
+VERSION="13.98"
 
 # mozilla
 echo "cloning $BRANCH..."

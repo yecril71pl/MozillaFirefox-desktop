@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CHANNEL="aurora"
+CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
 VERSION="12.99"

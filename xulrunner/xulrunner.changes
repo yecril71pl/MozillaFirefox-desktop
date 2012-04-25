@@ -3,6 +3,34 @@ Sat Apr 21 10:03:42 UTC 2012 - wr@rosenauer.org
 
 - update to 12.0 (bnc#758408)
   * rebased patches
+  * MFSA 2012-20/CVE-2012-0467/CVE-2012-0468
+    Miscellaneous memory safety hazards
+  * MFSA 2012-22/CVE-2012-0469 (bmo#738985)
+    use-after-free in IDBKeyRange
+  * MFSA 2012-23/CVE-2012-0470 (bmo#734288)
+    Invalid frees causes heap corruption in gfxImageSurface
+  * MFSA 2012-24/CVE-2012-0471 (bmo#715319)
+    Potential XSS via multibyte content processing errors
+  * MFSA 2012-25/CVE-2012-0472 (bmo#744480)
+    Potential memory corruption during font rendering using cairo-dwrite
+  * MFSA 2012-26/CVE-2012-0473 (bmo#743475)
+    WebGL.drawElements may read illegal video memory due to
+    FindMaxUshortElement error
+  * MFSA 2012-27/CVE-2012-0474 (bmo#687745, bmo#737307)
+    Page load short-circuit can lead to XSS
+  * MFSA 2012-28/CVE-2012-0475 (bmo#694576)
+    Ambiguous IPv6 in Origin headers may bypass webserver access
+    restrictions
+  * MFSA 2012-29/CVE-2012-0477 (bmo#718573)
+    Potential XSS through ISO-2022-KR/ISO-2022-CN decoding issues
+  * MFSA 2012-30/CVE-2012-0478 (bmo#727547)
+    Crash with WebGL content using textImage2D
+  * MFSA 2012-31/CVE-2011-3062 (bmo#739925)
+    Off-by-one error in OpenType Sanitizer
+  * MFSA 2012-32/CVE-2011-1187 (bmo#624621)
+    HTTP Redirections and remote content can be read by javascript errors
+  * MFSA 2012-33/CVE-2012-0479 (bmo#714631)
+    Potential site identity spoofing when loading RSS and Atom feeds
 - added mozilla-libnotify.patch to allow fallback from libnotify
   to xul based events if no notification-daemon is running
 - gcc 4.7 fixes

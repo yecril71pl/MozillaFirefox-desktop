@@ -56,11 +56,10 @@ Provides:       firefox-esr = %{mainver}
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Conflicts:      firefox
-Conflicts:      MozillaFirefox
 # replace older MozillaFirefox packages for dists up to 11.2
 %if %suse_version < 1130
 Provides:       MozillaFirefox = %{version}
-Obsoletes:      MozillaFirefox <= %{version}
+Obsoletes:      MozillaFirefox < %{version}
 %else
 Conflicts:      MozillaFirefox
 %endif
@@ -155,6 +154,13 @@ Summary:        Common translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
+%if %suse_version < 1130
+Provides:       MozillaFirefox-translations-common = %{version}
+Obsoletes:      MozillaFirefox-translations-common < %{version}
+%else
+Conflicts:      MozillaFirefox-translations-common
+%endif
+
 
 %description translations-common
 This package contains several common languages for the user interface
@@ -165,6 +171,12 @@ Summary:        Extra translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
+%if %suse_version < 1130
+Provides:       MozillaFirefox-translations-other = %{version}
+Obsoletes:      MozillaFirefox-translations-other < %{version}
+%else
+Conflicts:      MozillaFirefox-translations-other
+%endif
 
 %description translations-other
 This package contains rarely used languages for the user interface
@@ -176,6 +188,7 @@ Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 5.0
 Conflicts:      otherproviders(%{name}-branding)
+Conflicts:      otherproviders(MozillaFirefox-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -
 #BRAND: /usr/lib/firefox/browserconfig.properties that contains the

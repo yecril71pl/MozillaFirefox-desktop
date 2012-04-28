@@ -49,7 +49,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.4
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012042500
+%define         releasedate 2012042800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -88,21 +88,15 @@ Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
-Patch12:        mozilla-linux3.patch
-Patch14:        mozilla-disable-neon-option.patch
-Patch15:        mozilla-yarr-pcre.patch
-Patch16:        mozilla-system-nspr.patch
-Patch17:        mozilla-revert_621446.patch
-Patch18:        mozilla-libnotify.patch
-Patch19:        mozilla-gcc47.patch
+Patch12:        mozilla-disable-neon-option.patch
+Patch13:        mozilla-yarr-pcre.patch
 # Firefox/browser
-Patch31:        firefox-browser-css.patch
-Patch32:        firefox-cross-desktop.patch
-Patch33:        firefox-kde.patch
-Patch34:        firefox-kde-114.patch
-Patch38:        firefox-no-default-ualocale.patch
-Patch39:        firefox-multilocale-chrome.patch
-Patch41:        firefox-branded-icons.patch
+Patch30:        firefox-browser-css.patch
+Patch31:        firefox-kde.patch
+Patch32:        firefox-kde-114.patch
+Patch33:        firefox-no-default-ualocale.patch
+Patch34:        firefox-multilocale-chrome.patch
+Patch35:        firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -225,25 +219,19 @@ cd $RPM_BUILD_DIR/mozilla
 %if %suse_version < 1120
 %patch11 -p1
 %endif
-%patch12 -p1
-%patch14 -p1
-#%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
+#%patch12 -p1
+#%patch13 -p1
 #
-%patch31 -p1
-%patch32 -p1
+%patch30 -p1
 %if %suse_version >= 1110
-%patch33 -p1
+%patch31 -p1
 %endif
 %if %suse_version >= 1140
-%patch34 -p1
+%patch32 -p1
 %endif
-%patch38 -p1
-%patch39 -p1
-%patch41 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
 
 %build
 # no need to add build time to binaries

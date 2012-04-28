@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.4
 Version:        13.98
 Release:        0
-%define         releasedate 2012042500
+%define         releasedate 2012042800
 %define         version_internal 14.0
 %define         apiversion 14
 %define         uaweight 1400000
@@ -73,17 +73,12 @@ Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
-Patch9:         mozilla-language.patch
-Patch11:        mozilla-ntlm-full-path.patch
-Patch12:        mozilla-dump_syms-static.patch
-Patch13:        mozilla-sle11.patch
-Patch14:        mozilla-linux3.patch
-Patch15:        mozilla-arm-cpu-detection.patch
-Patch16:        mozilla-system-nspr.patch
-Patch17:        mozilla-revert_621446.patch
-Patch18:        mozilla-yarr-pcre.patch
-Patch19:        mozilla-libnotify.patch
-Patch20:        mozilla-gcc47.patch
+Patch6:         mozilla-language.patch
+Patch7:         mozilla-ntlm-full-path.patch
+Patch8:         mozilla-dump_syms-static.patch
+Patch9:         mozilla-sle11.patch
+Patch10:        mozilla-arm-cpu-detection.patch
+Patch11:        mozilla-yarr-pcre.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -194,19 +189,14 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch9 -p1
-%patch11 -p1
-%patch12 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 %if %suse_version < 1120
-%patch13 -p1
+%patch9 -p1
 %endif
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-#%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 # no need to add build time to binaries

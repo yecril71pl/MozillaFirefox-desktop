@@ -1,10 +1,15 @@
 From: Ubuntu
-Subject: introduce a pref to prefer certain plugins for mime-types
+Introduce a pref to prefer certain plugins for mime-types
+
+For example:
+ pref ("modules.plugins.mimetype.application/x-shockwave-flash", "/usr/lib/firefox-3.0.1/plugins/libflashplayer.so")
+
+ would make the flashplyer installed in that location the preferred one to use.
 
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -1580,17 +1580,48 @@ nsPluginHost::FindPluginForType(const ch
+@@ -1556,17 +1556,45 @@ nsPluginHost::FindPluginForType(const ch
                                  bool aCheckEnabled)
  {
    if (!aMimeType) {
@@ -13,38 +18,35 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
  
    LoadPlugins();
  
-+  nsresult res;
-+  nsCOMPtr<nsIPrefBranch> prefB (do_QueryInterface(mPrefService));
++  nsCAutoString mimetypePref("modules.plugins.mimetype.");
++  mimetypePref.Append(aMimeType);
 +
-+  char *preferredPluginPath = NULL;
-+  nsCAutoString mimetypePrefString ("modules.plugins.mimetype.");
-+  mimetypePrefString.Append(aMimeType);
-+  const char *mimetypePrefChar = mimetypePrefString.get();
-+  res = prefB->GetCharPref(mimetypePrefChar, &preferredPluginPath);
-+
-+  if(!NS_SUCCEEDED(res)) preferredPluginPath = NULL;
++  nsAdoptingCString preferred = Preferences::GetCString(mimetypePref.get());
 +
    nsPluginTag *plugin = mPlugins;
-+  if(preferredPluginPath) {
-+    while (nsnull != plugin) {
-+      if (0 == PL_strcasecmp(plugin->mFileName.get(), preferredPluginPath) ||
-+          0 == PL_strcasecmp(plugin->mFullPath.get(), preferredPluginPath)) {
-+        return plugin;
-+      }
-+      plugin = plugin->mNext;
-+    }
++  if(!preferred.IsEmpty()) {
++    nsCOMPtr<nsILocalFile> file;
++    nsresult rv = NS_NewNativeLocalFile(preferred, false, getter_AddRefs(file));
++    bool isAbsolute = NS_SUCCEEDED(rv);
 +
-+    // now lets search for substrings
-+    plugin = mPlugins;
-+    while (nsnull != plugin) {
-+      if (nsnull != PL_strstr(plugin->mFileName.get(), preferredPluginPath) ||
-+          nsnull != PL_strstr(plugin->mFullPath.get(), preferredPluginPath)) {
-+        return plugin;
++    while (plugin) {
++      if (((!isAbsolute && 0 == PL_strcasecmp(plugin->mFileName.get(), preferred.get())) ||
++            (isAbsolute && 0 == PL_strcasecmp(plugin->mFullPath.get(), preferred.get()))) &&
++          (!aCheckEnabled || plugin->IsEnabled())) {
++        PRInt32 mimeCount = plugin->mMimeTypes.Length();
++        for (PRInt32 i = 0; i < mimeCount; i++) {
++          if (0 == PL_strcasecmp(plugin->mMimeTypes[i].get(), aMimeType)) {
++            return plugin;
++          }
++        }
 +      }
 +      plugin = plugin->mNext;
 +    }
 +  }
 +
++  // if there is no pref for this mime-type, or if the plugin named in pref
++  // isn't found, we pick the first that matches for this mime-type
++  plugin = mPlugins;
    while (plugin) {
      if (!aCheckEnabled || plugin->IsEnabled()) {
        PRInt32 mimeCount = plugin->mMimeTypes.Length();

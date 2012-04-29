@@ -2,7 +2,7 @@
 
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="default"
+RELEASE_TAG="FIREFOX_13_0b1_RELEASE"
 VERSION="12.99"
 
 # mozilla

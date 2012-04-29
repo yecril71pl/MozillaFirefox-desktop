@@ -14,7 +14,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  # Add pkg-config files to the install:: target
  
 +# the apilibdir always ends with 1.9 as every patch update will provide a link
-+apilibdir = $(dir $(installdir))xulrunner-12
++apilibdir = $(dir $(installdir))xulrunner-13
 +
  pkg_config_files = \
  	libxul.pc \

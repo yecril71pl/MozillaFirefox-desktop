@@ -47,6 +47,11 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.4
 BuildRequires:  nss-shared-helper-devel
+%if %suse_version > 1140
+BuildRequires:  pkgconfig(gstreamer-0.10)
+BuildRequires:  pkgconfig(gstreamer-app-0.10)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
+%endif
 Version:        %{mainver}
 Release:        0
 %define         releasedate 2012042800
@@ -290,6 +295,11 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
+%if %suse_version > 1140
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-gstreamer
+EOF
+%endif
 %if %branding
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
@@ -315,11 +325,10 @@ make -f client.mk build
 
 %install
 cd $RPM_BUILD_DIR/obj
-rm dist/bin/defaults/pref/firefox-l10n.js
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
-make -C browser/installer STRIP=/bin/true
+make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
 grep amazondotcom dist/firefox/omni.ja
 # copy tree into RPM_BUILD_ROOT
@@ -329,10 +338,10 @@ mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install kde.js
 %if %suse_version >= 1110
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/pref/kde.js
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/kde.js
 # make sure that instantApply is true by default
 # (TODO: mozilla-kde.patch needs to be improved to really not load kde.js in non-KDE envs)
-echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/pref/firefox.js
+echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \

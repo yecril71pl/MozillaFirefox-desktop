@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.4
 Version:        12.99
 Release:        0
-%define         releasedate 2012042500
+%define         releasedate 2012050900
 %define         version_internal 13.0
 %define         apiversion 13
 %define         uaweight 1300000
@@ -73,17 +73,18 @@ Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
-Patch9:         mozilla-language.patch
-Patch11:        mozilla-ntlm-full-path.patch
-Patch12:        mozilla-dump_syms-static.patch
-Patch13:        mozilla-sle11.patch
-Patch14:        mozilla-linux3.patch
-Patch15:        mozilla-arm-cpu-detection.patch
-Patch16:        mozilla-system-nspr.patch
-Patch17:        mozilla-revert_621446.patch
-Patch18:        mozilla-yarr-pcre.patch
-Patch19:        mozilla-libnotify.patch
-Patch20:        mozilla-gcc47.patch
+Patch6:         mozilla-language.patch
+Patch7:         mozilla-ntlm-full-path.patch
+Patch8:         mozilla-dump_syms-static.patch
+Patch9:         mozilla-sle11.patch
+Patch10:        mozilla-linux3.patch
+Patch11:        mozilla-disable-neon-option.patch
+Patch12:        mozilla-system-nspr.patch
+Patch13:        mozilla-revert_621446.patch
+Patch14:        mozilla-yarr-pcre.patch
+Patch15:        mozilla-libnotify.patch
+Patch16:        mozilla-gcc47.patch
+Patch17:        mozilla-nsSound.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -93,12 +94,16 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nss   1
 %define has_system_cairo 0
 %define localize 0
-%ifarch ppc ppc64 s390 s390x ia64
+%ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter    0
 %define plugincontainer  0
 %else
 %define crashreporter    1
 %define plugincontainer  1
+%endif
+# temporary gcc 4.7
+%if %suse_version > 1210
+%define crashreporter 0
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
@@ -165,7 +170,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -194,19 +199,20 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%if %suse_version < 1120
 %patch9 -p1
+%endif
+%patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%if %suse_version < 1120
-%patch13 -p1
-%endif
-%patch14 -p1
+#%patch13 -p1
+#%patch14 -p1
 %patch15 -p1
 %patch16 -p1
-#%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
+%patch17 -p1
 
 %build
 # no need to add build time to binaries
@@ -301,17 +307,7 @@ EOF
 # ARM
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
-%ifarch armv7l
-ac_add_options --with-arch=armv7-a
-ac_add_options --with-float-abi=hard
-ac_add_options --with-fpu=vfpv3-d16
-ac_add_options --with-thumb=yes
-%endif
-%ifarch armv5tel
-ac_add_options --with-arch=armv5te
-ac_add_options --with-float-abi=soft
-ac_add_options --with-thumb=no
-%endif
+ac_add_options --disable-neon
 EOF
 %endif
 make -f client.mk build

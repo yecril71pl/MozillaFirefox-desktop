@@ -49,7 +49,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.4
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012042500
+%define         releasedate 2012050900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -95,6 +95,7 @@ Patch16:        mozilla-system-nspr.patch
 Patch17:        mozilla-revert_621446.patch
 Patch18:        mozilla-libnotify.patch
 Patch19:        mozilla-gcc47.patch
+Patch20:        mozilla-nsSound.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -232,6 +233,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 #
 %patch31 -p1
 %patch32 -p1

@@ -15,6 +15,7 @@ mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-dump_syms-static.patch
 mozilla-sle11.patch
+mozilla-gcc47.patch
 #mozilla-disable-neon-option.patch
 #mozilla-yarr-pcre.patch
 

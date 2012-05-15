@@ -1,7 +1,9 @@
 -------------------------------------------------------------------
-Sat Apr 28 20:54:34 UTC 2012 - wr@rosenauer.org
+Tue May 15 11:51:34 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 14 (20120425)
+- update to Aurora 14 (20120514)
+- enable crashreporter for Factory/12.2
+  (fixed in mozilla-gcc47.patch)
 
 -------------------------------------------------------------------
 Sat Apr 21 10:02:37 UTC 2012 - wr@rosenauer.org

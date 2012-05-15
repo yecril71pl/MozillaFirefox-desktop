@@ -101,10 +101,6 @@ Requires(preun): update-alternatives coreutils
 %define crashreporter    1
 %define plugincontainer  1
 %endif
-# temporary gcc 4.7
-%if %suse_version > 1210
-%define crashreporter 0
-%endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}

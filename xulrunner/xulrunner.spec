@@ -45,7 +45,7 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
 Version:        12.0
-Release:        2
+Release:        0
 %define         releasedate 2012042100
 %define         version_internal 12.0
 %define         apiversion 12
@@ -98,10 +98,6 @@ Requires(preun): update-alternatives coreutils
 %else
 %define crashreporter    1
 %define plugincontainer  1
-%endif
-# temporary (gcc 4.7)
-%if %suse_version > 1210
-%define crashreporter    0
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0

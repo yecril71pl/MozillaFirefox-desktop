@@ -48,7 +48,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.3
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
-Release:        2
+Release:        0
 %define         releasedate 2012042100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
@@ -129,10 +129,6 @@ Recommends:     libcanberra0
 %define crashreporter 0
 %else
 %define crashreporter 1
-%endif
-# temporary gcc 4.7
-%if %suse_version > 1210
-%define crashreporter 0
 %endif
 ### build options end
 

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed May 16 05:41:15 UTC 2012 - wr@rosenauer.org
+
+- reenabled crashreporter for Factory/12.2
+  (fix in mozilla-gcc47.patch)
+
+-------------------------------------------------------------------
 Sat Apr 21 10:03:42 UTC 2012 - wr@rosenauer.org
 
 - update to 12.0 (bnc#758408)

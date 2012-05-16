@@ -1,8 +1,9 @@
 # HG changeset patch
-# Parent debab900e37fdd4f8981c06beef6f193a04bd2b7
+# Parent 93e5d3b8061741abc83dcd4ed0fe93f1636583ef
 Patch to make Mozilla build with gcc 4.7, including
 - Bug 725655 - gcc 4.7 build failures (missing headers) (TM: Mozilla13)
 - Bug 734490 - "no viable overloaded 'PRIxPTR'" when building with Clang or GCC 4.7 (TM: Mozilla14)
+- Bug 741348 - Work around crashreporter client build failure with gcc 4.7 (TM: Mozilla15)
 
 diff --git a/ipc/chromium/src/base/file_util_linux.cc b/ipc/chromium/src/base/file_util_linux.cc
 --- a/ipc/chromium/src/base/file_util_linux.cc
@@ -172,3 +173,18 @@ diff --git a/layout/base/tests/TestPoisonArea.cpp b/layout/base/tests/TestPoison
  JumpTo(uintptr_t opaddr)
  {
  #ifdef __ia64
+diff --git a/toolkit/crashreporter/google-breakpad/src/common/linux/Makefile.in b/toolkit/crashreporter/google-breakpad/src/common/linux/Makefile.in
+--- a/toolkit/crashreporter/google-breakpad/src/common/linux/Makefile.in
++++ b/toolkit/crashreporter/google-breakpad/src/common/linux/Makefile.in
+@@ -61,8 +61,11 @@ HOST_CPPSRCS = \
+   file_id.cc \
+   guid_creator.cc \
+   $(NULL)
+ 
+ # need static lib
+ FORCE_STATIC_LIB = 1
+ 
+ include $(topsrcdir)/config/rules.mk
++
++# See https://bugzilla.mozilla.org/show_bug.cgi?id=741348#c11
++file_id.$(OBJ_SUFFIX): STL_FLAGS=

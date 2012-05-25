@@ -96,6 +96,7 @@ Patch17:        mozilla-revert_621446.patch
 Patch18:        mozilla-libnotify.patch
 Patch19:        mozilla-gcc47.patch
 Patch20:        mozilla-nsSound.patch
+Patch21:        mozilla-arm-disable-edsp.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -234,6 +235,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 #
 %patch31 -p1
 %patch32 -p1

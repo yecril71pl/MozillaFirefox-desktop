@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Tue May 15 18:27:09 UTC 2012 - wr@rosenauer.org
+Wed May 23 06:06:08 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 13.0beta (20120509)
+- update to Firefox 13.0beta (20120522)
 - require NSS 3.13.4
 - fix sound notifications when filename/path contains a whitespace
   (bmo#749739)

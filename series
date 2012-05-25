@@ -24,7 +24,6 @@ mozilla-libnotify.patch
 mozilla-gcc47.patch
 mozilla-nsSound.patch
 mozilla-arm-disable-edsp.patch
-#mozilla-yarr-pcre.patch
 
 # Firefox patches
 firefox-browser-css.patch

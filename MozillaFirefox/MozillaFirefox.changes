@@ -1,9 +1,15 @@
 -------------------------------------------------------------------
-Tue May 15 11:51:34 UTC 2012 - wr@rosenauer.org
+Wed May 30 15:42:48 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 14 (20120514)
+- update to Aurora 14 (20120530)
 - enable crashreporter for Factory/12.2
   (fixed in mozilla-gcc47.patch)
+- license change from tri license to MPL-2.0
+
+-------------------------------------------------------------------
+Wed May 23 14:40:16 UTC 2012 - adrian@suse.de
+
+- fix build on arm
 
 -------------------------------------------------------------------
 Sat Apr 21 10:02:37 UTC 2012 - wr@rosenauer.org

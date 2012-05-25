@@ -21,6 +21,7 @@ mozilla-disable-neon-option.patch
 mozilla-revert_621446.patch
 mozilla-libnotify.patch
 mozilla-gcc47.patch
+mozilla-arm-disable-edsp.patch
 #mozilla-yarr-pcre.patch
 
 # Firefox patches

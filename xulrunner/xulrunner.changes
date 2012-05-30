@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Tue May 15 18:29:55 UTC 2012 - wr@rosenauer.org
+Wed May 30 11:59:38 UTC 2012 - wr@rosenauer.org
 
-- update to 13.0beta (20120509)
+- update to 13.0beta (20120528)
 - reenabled crashreporter for Factory/12.2
   (fixed in mozilla-gcc47.patch)
 

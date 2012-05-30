@@ -64,7 +64,7 @@ Provides:       browser(npapi)
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Summary:        Mozilla Firefox Web Browser
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
+License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
 Url:            http://www.mozilla.org/
 Source:         firefox-%{version}-source.tar.bz2

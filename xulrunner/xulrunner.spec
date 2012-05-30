@@ -51,7 +51,7 @@ Release:        0
 %define         apiversion 14
 %define         uaweight 1400000
 Summary:        Mozilla Runtime Environment
-License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
+License:        MPL-2.0
 Group:          Productivity/Other
 Url:            http://www.mozilla.org/
 Provides:       gecko

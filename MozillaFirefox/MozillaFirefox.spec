@@ -49,7 +49,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.4
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012052200
+%define         releasedate 2012052800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

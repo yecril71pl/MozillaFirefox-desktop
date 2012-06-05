@@ -2,6 +2,20 @@
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org
 
 - update to 13.0 (bnc#765204)
+  * MFSA 2012-34/CVE-2012-1938/CVE-2012-1937/CVE-2011-3101
+    Miscellaneous memory safety hazards
+  * MFSA 2012-36/CVE-2012-1944 (bmo#751422)
+    Content Security Policy inline-script bypass
+  * MFSA 2012-37/CVE-2012-1945 (bmo#670514)
+    Information disclosure though Windows file shares and shortcut
+    files
+  * MFSA 2012-38/CVE-2012-1946 (bmo#750109)
+    Use-after-free while replacing/inserting a node in a document
+  * MFSA 2012-40/CVE-2012-1947/CVE-2012-1940/CVE-2012-1941
+    Buffer overflow and use-after-free issues found using Address
+    Sanitizer
+- require NSS 3.13.4
+  * MFSA 2012-39/CVE-2012-0441 (bmo#715073)
 - reenabled crashreporter for Factory/12.2
   (fixed in mozilla-gcc47.patch)
 

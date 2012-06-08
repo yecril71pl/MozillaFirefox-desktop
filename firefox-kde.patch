@@ -1714,21 +1714,21 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -495,16 +495,17 @@
- #endif
- #endif
- 
- ; [Default Preferences]
- ; All the pref files must be part of base to prevent migration bugs
- @BINPATH@/@PREF_DIR@/firefox.js
- @BINPATH@/@PREF_DIR@/firefox-branding.js
- @BINPATH@/@PREF_DIR@/channel-prefs.js
-+@BINPATH@/@PREF_DIR@/kde.js
+@@ -500,16 +500,17 @@
  #ifdef MOZ_SERVICES_SYNC
  @BINPATH@/@PREF_DIR@/services-sync.js
  #endif
  @BINPATH@/greprefs.js
  @BINPATH@/defaults/autoconfig/platform.js
  @BINPATH@/defaults/autoconfig/prefcalls.js
+ ; Warning: changing the path to channel-prefs.js can cause bugs (Bug 756325)
+ @BINPATH@/defaults/pref/channel-prefs.js
++@BINPATH@/defaults/pref/kde.js
  @BINPATH@/defaults/profile/prefs.js
  
+ ; [Layout Engine Resources]
+ ; Style Sheets, Graphics and other Resources used by the layout engine. 
+ @BINPATH@/res/EditorOverride.css
+ @BINPATH@/res/contenteditable.css
+ @BINPATH@/res/designmode.css
+ @BINPATH@/res/TopLevelImageDocument.css

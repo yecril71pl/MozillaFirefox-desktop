@@ -1,6 +1,6 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 1428abd68ddc03822b43154c98d0a95e43cfb0d1
+# Parent dd43958a61127a39cb7e59ba6118a57b685255e2
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
@@ -95,7 +95,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -103,14 +103,15 @@
+@@ -103,16 +103,17 @@
      locale/browser-region/region.properties        (%chrome/browser-region/region.properties)
  # the following files are browser-specific overrides
  *   locale/browser/netError.dtd                (%chrome/overrides/netError.dtd)
@@ -108,6 +108,8 @@ diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
  % locale testpilot @AB_CD@ %locale/feedback/
      locale/feedback/main.dtd                       (%feedback/main.dtd)
      locale/feedback/main.properties                (%feedback/main.properties)
+ #ifdef MOZ_WEBAPP_RUNTIME
  % locale webapprt @AB_CD@ %locale/webapprt/
      locale/webapprt/webapp.dtd                     (%webapprt/webapp.dtd)
      locale/webapprt/webapp.properties              (%webapprt/webapp.properties)
+ #endif

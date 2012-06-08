@@ -18,8 +18,8 @@
 
 
 %define major 13
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012053000
+%define         releasedate 2012060500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -125,7 +125,7 @@ Recommends:     libcanberra0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -338,10 +338,10 @@ mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
 # install kde.js
 %if %suse_version >= 1110
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/kde.js
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/pref/kde.js
 # make sure that instantApply is true by default
 # (TODO: mozilla-kde.patch needs to be improved to really not load kde.js in non-KDE envs)
-echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox.js
+echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/pref/firefox.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \

@@ -435,7 +435,6 @@ rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
 rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
 rm -f $RPM_BUILD_ROOT%{progdir}/precomplete
 rm -f $RPM_BUILD_ROOT%{progdir}/dictionaries/en-US*
-rm -f $RPM_BUILD_ROOT%{progdir}/firefox
 rm -f $RPM_BUILD_ROOT%{progdir}/update-settings.ini
 # devel
 mkdir -p %{buildroot}%{_bindir}
@@ -543,6 +542,7 @@ exit 0
 %{progdir}/jssubloader/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
+%{progdir}/firefox
 %{progdir}/firefox-bin
 %{progdir}/add-plugins.sh
 %{progdir}/application.ini

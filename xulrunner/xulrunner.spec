@@ -42,14 +42,14 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.0
-BuildRequires:  mozilla-nss-devel >= 3.13.4
-Version:        13.99
+BuildRequires:  mozilla-nspr-devel >= 4.9.1
+BuildRequires:  mozilla-nss-devel >= 3.13.5
+Version:        14.98
 Release:        0
-%define         releasedate 2012060500
-%define         version_internal 14.0
-%define         apiversion 14
-%define         uaweight 1400000
+%define         releasedate 2012060800
+%define         version_internal 15.0
+%define         apiversion 15
+%define         uaweight 1500000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other

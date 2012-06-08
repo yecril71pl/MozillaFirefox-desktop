@@ -17,9 +17,9 @@
 #
 
 
-%define major 13
-%define mainver %major.99
-%define update_channel beta
+%define major 14
+%define mainver %major.98
+%define update_channel aurora
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -44,8 +44,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.0
-BuildRequires:  mozilla-nss-devel >= 3.13.4
+BuildRequires:  mozilla-nspr-devel >= 4.9.1
+BuildRequires:  mozilla-nss-devel >= 3.13.5
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -125,7 +125,7 @@ Recommends:     libcanberra0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0

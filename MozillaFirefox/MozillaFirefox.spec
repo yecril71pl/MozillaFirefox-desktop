@@ -91,7 +91,6 @@ Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
-Patch10:        mozilla-dump_syms-static.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-disable-neon-option.patch
 Patch13:        mozilla-yarr-pcre.patch
@@ -218,7 +217,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 %if %suse_version < 1120
 %patch11 -p1
 %endif

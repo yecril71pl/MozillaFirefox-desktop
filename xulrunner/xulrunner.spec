@@ -75,7 +75,6 @@ Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
-Patch8:         mozilla-dump_syms-static.patch
 Patch9:         mozilla-sle11.patch
 Patch10:        mozilla-arm-cpu-detection.patch
 Patch11:        mozilla-yarr-pcre.patch
@@ -192,7 +191,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %if %suse_version < 1120
 %patch9 -p1
 %endif

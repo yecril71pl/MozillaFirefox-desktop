@@ -14,7 +14,6 @@ mozilla-language.patch
 mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-sle11.patch
-mozilla-gcc47.patch
 mozilla-arm-disable-edsp.patch
 #mozilla-disable-neon-option.patch
 #mozilla-yarr-pcre.patch

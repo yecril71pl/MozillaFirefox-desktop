@@ -94,7 +94,6 @@ Patch9:         mozilla-repo.patch
 Patch11:        mozilla-sle11.patch
 Patch12:        mozilla-disable-neon-option.patch
 Patch13:        mozilla-yarr-pcre.patch
-Patch14:        mozilla-gcc47.patch
 Patch15:        mozilla-arm-disable-edsp.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
@@ -222,7 +221,6 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 #%patch12 -p1
 #%patch13 -p1
-%patch14 -p1
 %patch15 -p1
 #
 %patch30 -p1
@@ -363,6 +361,7 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   	make -C browser/locales langpack-$locale
 	cp -rL dist/xpi-stage/locale-$locale \
 	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
+	rm $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/chrome/.mkdir.done
 	# remove prefs, profile defaults, and hyphenation from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
@@ -537,7 +536,6 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/icons/
-%{progdir}/jssubloader/
 %{progdir}/searchplugins/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
@@ -551,6 +549,8 @@ exit 0
 %{progdir}/omni.ja
 %{progdir}/platform.ini
 %{progdir}/plugin-container
+%{progdir}/webapprt-stub
+%{progdir}/webapprt/
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %{progdir}/crashreporter

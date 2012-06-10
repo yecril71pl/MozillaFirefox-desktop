@@ -78,7 +78,6 @@ Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
 Patch10:        mozilla-arm-cpu-detection.patch
 Patch11:        mozilla-yarr-pcre.patch
-Patch12:        mozilla-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -196,7 +195,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 
 %build
 # no need to add build time to binaries

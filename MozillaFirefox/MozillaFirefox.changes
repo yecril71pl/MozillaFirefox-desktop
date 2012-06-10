@@ -1,7 +1,9 @@
 -------------------------------------------------------------------
-Fri Jun  8 05:06:31 UTC 2012 - wr@rosenauer.org
+Sun Jun 10 22:17:04 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 15 (20120608)
+- update to Aurora 15 (20120610)
+- fix crashreporter restart option (bmo#762780)
+- fix HTML5 video crash with GStreamer enabled (bmo#761030)
 
 -------------------------------------------------------------------
 Sat Jun  2 08:22:51 UTC 2012 - wr@rosenauer.org

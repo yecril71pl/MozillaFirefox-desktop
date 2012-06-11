@@ -18,8 +18,8 @@ mozilla-sle11.patch
 mozilla-gcc47.patch
 mozilla-arm-disable-edsp.patch
 mozilla-crashreporter-restart-args.patch
+mozilla-yarr-pcre.patch
 #mozilla-disable-neon-option.patch
-#mozilla-yarr-pcre.patch
 
 # Firefox patches
 firefox-browser-css.patch

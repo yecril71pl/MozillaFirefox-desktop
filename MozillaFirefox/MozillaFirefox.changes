@@ -4,6 +4,7 @@ Mon Jun 11 12:57:51 UTC 2012 - wr@rosenauer.org
 - update to 14.0b6 (20120605)
 - license change from tri license to MPL-2.0
 - fix crashreporter restart option (bmo#762780)
+- reenabled mozilla-yarr-pcre.patch to fix build for PPC
 
 -------------------------------------------------------------------
 Sat Jun  2 08:22:51 UTC 2012 - wr@rosenauer.org

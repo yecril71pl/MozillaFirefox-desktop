@@ -224,7 +224,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %endif
 #%patch12 -p1
-#%patch13 -p1
+%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1

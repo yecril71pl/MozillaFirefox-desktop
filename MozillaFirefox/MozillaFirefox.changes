@@ -5,6 +5,7 @@ Thu Jun 14 07:19:33 UTC 2012 - wr@rosenauer.org
 - license change from tri license to MPL-2.0
 - fix crashreporter restart option (bmo#762780)
 - reenabled mozilla-yarr-pcre.patch to fix build for PPC
+- require NSS 3.13.5
 
 -------------------------------------------------------------------
 Sat Jun  2 08:22:51 UTC 2012 - wr@rosenauer.org

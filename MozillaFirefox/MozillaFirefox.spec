@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012060500
+%define         releasedate 2012061300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -112,8 +112,6 @@ Requires:       %{name}-branding > 4.0
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
-# libproxy's mozjs pacrunner crashes FF (bnc#759123)
-Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}

@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 9e165dc62d6ba0c3b2a82387a238fe5811acdc92
+# Parent 7f0b0738f036cd9d2e51c51c3552dc608ac598f9
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
@@ -23,9 +23,9 @@ diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
  libs:: $(srcdir)/profile/prefs.js
  	$(INSTALL) $(IFLAGS1) $^ $(DIST)/bin/defaults/profile
  
+ ifndef LIBXUL_SDK
  # channel-prefs.js is handled separate from other prefs due to bug 756325
  libs:: $(srcdir)/profile/channel-prefs.js
- 	$(NSINSTALL) -D $(DIST)/bin/defaults/pref
 diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/Makefile.in
 --- a/browser/branding/official/Makefile.in
 +++ b/browser/branding/official/Makefile.in

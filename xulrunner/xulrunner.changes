@@ -3,6 +3,7 @@ Thu Jun 14 07:20:01 UTC 2012 - wr@rosenauer.org
 
 - update to 14.0b7
 - license change from tri license to MPL-2.0
+- require NSS 3.13.5
 
 -------------------------------------------------------------------
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org

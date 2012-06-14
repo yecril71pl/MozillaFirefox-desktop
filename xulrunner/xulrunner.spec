@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.4
 Version:        13.99
 Release:        0
-%define         releasedate 2012060500
+%define         releasedate 20120613
 %define         version_internal 14.0
 %define         apiversion 14
 %define         uaweight 1400000
@@ -77,7 +77,6 @@ Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch8:         mozilla-dump_syms-static.patch
 Patch9:         mozilla-sle11.patch
-Patch10:        mozilla-arm-cpu-detection.patch
 Patch11:        mozilla-yarr-pcre.patch
 Patch12:        mozilla-gcc47.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -196,7 +195,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version < 1120
 %patch9 -p1
 %endif
-%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 

@@ -1720,16 +1720,20 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -500,16 +500,17 @@
- #ifdef MOZ_SERVICES_SYNC
+@@ -501,18 +501,20 @@
  @BINPATH@/@PREF_DIR@/services-sync.js
  #endif
  @BINPATH@/greprefs.js
  @BINPATH@/defaults/autoconfig/platform.js
  @BINPATH@/defaults/autoconfig/prefcalls.js
+ #ifndef LIBXUL_SDK
  ; Warning: changing the path to channel-prefs.js can cause bugs (Bug 756325)
  @BINPATH@/defaults/pref/channel-prefs.js
 +@BINPATH@/defaults/pref/kde.js
+ #else
+ @BINPATH@/@PREF_DIR@/channel-prefs.js
++@BINPATH@/@PREF_DIR@/kde.js
+ #endif
  @BINPATH@/defaults/profile/prefs.js
  
  ; [Layout Engine Resources]
@@ -1737,4 +1741,3 @@ diff --git a/browser/installer/package-manifest.in b/browser/installer/package-m
  @BINPATH@/res/EditorOverride.css
  @BINPATH@/res/contenteditable.css
  @BINPATH@/res/designmode.css
- @BINPATH@/res/TopLevelImageDocument.css

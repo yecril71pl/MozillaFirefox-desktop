@@ -465,7 +465,6 @@ exit 0
 %if %plugincontainer
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
 %endif
-%{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub

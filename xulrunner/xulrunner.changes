@@ -1,8 +1,13 @@
 -------------------------------------------------------------------
-Fri Jun  8 04:53:17 UTC 2012 - wr@rosenauer.org
+Mon Jun 25 20:14:50 UTC 2012 - wr@rosenauer.org
 
-- update to 14.0 (20120605)
-- license change from tri license to MPL-2.0
+- update to Aurora 15 (20120625)
+
+-------------------------------------------------------------------
+Fri Jun 15 12:40:23 UTC 2012 - wr@rosenauer.org
+
+- update to 13.0.1
+  * bugfix release
 
 -------------------------------------------------------------------
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org

@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.1
 BuildRequires:  mozilla-nss-devel >= 3.13.5
 Version:        14.98
 Release:        0
-%define         releasedate 2012060800
+%define         releasedate 2012062500
 %define         version_internal 15.0
 %define         apiversion 15
 %define         uaweight 1500000

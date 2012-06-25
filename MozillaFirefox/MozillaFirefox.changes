@@ -1,9 +1,28 @@
 -------------------------------------------------------------------
-Sun Jun 10 22:17:04 UTC 2012 - wr@rosenauer.org
+Mon Jun 25 20:13:06 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 15 (20120610)
+- update to Aurora 15 (20120625)
 - fix crashreporter restart option (bmo#762780)
 - fix HTML5 video crash with GStreamer enabled (bmo#761030)
+- updated filelist
+
+-------------------------------------------------------------------
+Mon Jun 25 19:16:07 UTC 2012 - wr@rosenauer.org
+
+- update to 14.0b9
+- license change from tri license to MPL-2.0
+- fix crashreporter restart option (bmo#762780)
+- reenabled mozilla-yarr-pcre.patch to fix build for PPC
+- require NSS 3.13.5
+- remove mozjs pacrunner obsoletes again for now
+- adopted mozilla-prefer_plugin_pref.patch
+
+-------------------------------------------------------------------
+Fri Jun 15 12:37:09 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 13.0.1
+  * bugfix release
+- obsolete libproxy's mozjs pacrunner (bnc#759123)
 
 -------------------------------------------------------------------
 Sat Jun  2 08:22:51 UTC 2012 - wr@rosenauer.org

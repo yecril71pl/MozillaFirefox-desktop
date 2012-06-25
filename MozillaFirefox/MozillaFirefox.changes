@@ -1,12 +1,13 @@
 -------------------------------------------------------------------
-Wed Jun 20 19:12:47 UTC 2012 - wr@rosenauer.org
+Mon Jun 25 19:16:07 UTC 2012 - wr@rosenauer.org
 
-- update to 14.0b8
+- update to 14.0b9
 - license change from tri license to MPL-2.0
 - fix crashreporter restart option (bmo#762780)
 - reenabled mozilla-yarr-pcre.patch to fix build for PPC
 - require NSS 3.13.5
 - remove mozjs pacrunner obsoletes again for now
+- adopted mozilla-prefer_plugin_pref.patch
 
 -------------------------------------------------------------------
 Fri Jun 15 12:37:09 UTC 2012 - wr@rosenauer.org

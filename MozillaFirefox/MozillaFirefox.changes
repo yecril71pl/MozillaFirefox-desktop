@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sun Jun 24 17:20:26 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 13.0.2
+- adopted mozilla-prefer_plugin_pref.patch to newest plugin loading
+  logic
+
+-------------------------------------------------------------------
 Fri Jun 15 12:37:09 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 13.0.1

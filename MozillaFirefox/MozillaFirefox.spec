@@ -18,7 +18,7 @@
 
 
 %define major 13
-%define mainver %major.0.1
+%define mainver %major.0.2
 %define update_channel release
 
 Name:           MozillaFirefox
@@ -49,7 +49,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.4
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012061400
+%define         releasedate 2012062300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

@@ -18,7 +18,7 @@
 
 
 %define major 10
-%define mainver %major.0.5
+%define mainver %major.0.6
 
 Name:           firefox-esr
 BuildRequires:  Mesa-devel
@@ -44,11 +44,11 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
-BuildRequires:  mozilla-nss-devel >= 3.13.4
+BuildRequires:  mozilla-nss-devel >= 3.13.5
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012060100
+%define         releasedate 2012071300
 Provides:       web_browser
 Provides:       firefox-esr = %{mainver}
 # this is needed to match this package with the kde4 helper package without the main package

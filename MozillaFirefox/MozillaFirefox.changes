@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Mon Jun 25 19:16:07 UTC 2012 - wr@rosenauer.org
+Sat Jul 14 19:31:51 UTC 2012 - wr@rosenauer.org
 
-- update to 14.0b9
+- update to 14.0.1 (bnc#)
 - license change from tri license to MPL-2.0
 - fix crashreporter restart option (bmo#762780)
 - reenabled mozilla-yarr-pcre.patch to fix build for PPC

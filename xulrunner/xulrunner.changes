@@ -4,6 +4,10 @@ Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org
 - update to 14.0.1 (bnc#)
 - license change from tri license to MPL-2.0
 - require NSS 3.13.5
+- PPC fixes:
+  * reenabled mozilla-yarr-pcre.patch to fix build for PPC
+  * add patches for bmo#750620 and bmo#746112
+  * fix xpcshell segfault on ppc
 
 -------------------------------------------------------------------
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org

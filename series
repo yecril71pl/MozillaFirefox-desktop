@@ -19,6 +19,7 @@ mozilla-gcc47.patch
 mozilla-arm-disable-edsp.patch
 mozilla-crashreporter-restart-args.patch
 mozilla-yarr-pcre.patch
+mozilla-ppc.patch
 #mozilla-disable-neon-option.patch
 
 # Firefox patches

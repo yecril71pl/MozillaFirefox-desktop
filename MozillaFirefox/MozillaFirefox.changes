@@ -4,10 +4,13 @@ Sat Jul 14 19:31:51 UTC 2012 - wr@rosenauer.org
 - update to 14.0.1 (bnc#)
 - license change from tri license to MPL-2.0
 - fix crashreporter restart option (bmo#762780)
-- reenabled mozilla-yarr-pcre.patch to fix build for PPC
 - require NSS 3.13.5
 - remove mozjs pacrunner obsoletes again for now
 - adopted mozilla-prefer_plugin_pref.patch
+- PPC fixes:
+  * reenabled mozilla-yarr-pcre.patch to fix build for PPC
+  * add patches for bmo#750620 and bmo#746112
+  * fix xpcshell segfault on ppc
 
 -------------------------------------------------------------------
 Fri Jun 15 12:37:09 UTC 2012 - wr@rosenauer.org

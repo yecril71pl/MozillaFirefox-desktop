@@ -98,6 +98,7 @@ Patch13:        mozilla-yarr-pcre.patch
 Patch14:        mozilla-gcc47.patch
 Patch15:        mozilla-arm-disable-edsp.patch
 Patch16:        mozilla-crashreporter-restart-args.patch
+Patch17:        mozilla-ppc.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -228,6 +229,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

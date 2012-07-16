@@ -79,6 +79,7 @@ Patch8:         mozilla-dump_syms-static.patch
 Patch9:         mozilla-sle11.patch
 Patch11:        mozilla-yarr-pcre.patch
 Patch12:        mozilla-gcc47.patch
+Patch13:        mozilla-ppc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -197,6 +198,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 # no need to add build time to binaries

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Sat Jul 14 18:27:24 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 1.0.6esr (bnc#)
+- require NSS 3.13.5
+
+-------------------------------------------------------------------
 Fri Jun  1 14:39:01 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 10.0.5esr (bnc#765204)

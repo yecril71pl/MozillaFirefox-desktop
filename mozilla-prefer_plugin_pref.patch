@@ -4,7 +4,7 @@ Subject: introduce a pref to prefer certain plugins for mime-types
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -1581,19 +1581,47 @@ nsPluginHost::FindPluginForType(const ch
+@@ -1561,17 +1561,45 @@ nsPluginHost::FindPluginForType(const ch
                                  bool aCheckEnabled)
  {
    if (!aMimeType) {
@@ -20,15 +20,13 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
 +  nsAdoptingCString pluginPath = Preferences::GetCString(mimetypePrefChar);
 +  preferredPluginPath = (char*) pluginPath.get();
 +
-   InfallibleTArray<nsPluginTag*> matchingPlugins;
- 
    nsPluginTag *plugin = mPlugins;
 +
 +  if(preferredPluginPath) {
 +    while (nsnull != plugin) {
 +      if (0 == PL_strcasecmp(plugin->mFileName.get(), preferredPluginPath) ||
 +          0 == PL_strcasecmp(plugin->mFullPath.get(), preferredPluginPath)) {
-+        matchingPlugins.AppendElement(plugin);
++        return plugin;
 +      }
 +      plugin = plugin->mNext;
 +    }
@@ -38,7 +36,7 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
 +    while (nsnull != plugin) {
 +      if (nsnull != PL_strstr(plugin->mFileName.get(), preferredPluginPath) ||
 +          nsnull != PL_strstr(plugin->mFullPath.get(), preferredPluginPath)) {
-+        matchingPlugins.AppendElement(plugin);
++        return plugin;
 +      }
 +      plugin = plugin->mNext;
 +    }
@@ -49,6 +47,6 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
        PRInt32 mimeCount = plugin->mMimeTypes.Length();
        for (PRInt32 i = 0; i < mimeCount; i++) {
          if (0 == PL_strcasecmp(plugin->mMimeTypes[i].get(), aMimeType)) {
-           matchingPlugins.AppendElement(plugin);
-           break;
+           return plugin;
          }
+       }

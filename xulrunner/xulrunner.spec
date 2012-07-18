@@ -91,10 +91,8 @@ Requires(preun): update-alternatives coreutils
 %define localize 0
 %ifarch ppc ppc64 s390 s390x ia64
 %define crashreporter    0
-%define plugincontainer  0
 %else
 %define crashreporter    1
-%define plugincontainer  1
 %endif
 ### configuration end ###
 %define _use_internal_dependency_generator 0
@@ -279,11 +277,6 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
 EOF
 %endif
-%if ! %plugincontainer
-cat << EOF >> $MOZCONFIG
-ac_add_options --disable-ipc
-EOF
-%endif
 # S/390
 %ifarch s390 s390x
 cat << EOF >> $MOZCONFIG
@@ -464,9 +457,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/chrome.manifest
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
-%if %plugincontainer
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
-%endif
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub

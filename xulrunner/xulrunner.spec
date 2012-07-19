@@ -466,6 +466,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
 %{_libdir}/xulrunner-%{version_internal}/omni.ja
+%{_libdir}/xulrunner-%{version_internal}/README.xulrunner
 # crashreporter files
 %if %crashreporter
 %{_libdir}/xulrunner-%{version_internal}/crashreporter
@@ -492,7 +493,6 @@ exit 0
 
 %files devel
 %defattr(-,root,root)
-%{_libdir}/xulrunner-%{version_internal}/xpcshell
 %{_libdir}/xulrunner-devel-%{version_internal}/
 # FIXME symlink dynamic libs below sdk/lib
 %attr(644,root,root) %{_libdir}/pkgconfig/*

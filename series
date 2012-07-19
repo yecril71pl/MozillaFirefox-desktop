@@ -17,6 +17,7 @@ mozilla-sle11.patch
 mozilla-arm-disable-edsp.patch
 mozilla-crashreporter-restart-args.patch
 mozilla-gstreamer.patch
+mozilla-ppc.patch
 #mozilla-disable-neon-option.patch
 #mozilla-yarr-pcre.patch
 

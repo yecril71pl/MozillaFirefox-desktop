@@ -80,6 +80,7 @@ Patch10:        mozilla-arm-cpu-detection.patch
 Patch11:        mozilla-yarr-pcre.patch
 Patch12:        mozilla-crashreporter-restart-args.patch
 Patch13:        mozilla-gstreamer.patch
+Patch14:        mozilla-ppc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -197,6 +198,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 # no need to add build time to binaries

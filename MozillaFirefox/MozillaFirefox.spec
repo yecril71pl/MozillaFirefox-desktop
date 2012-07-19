@@ -93,7 +93,6 @@ Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
-Patch12:        mozilla-yarr-pcre.patch
 Patch13:        mozilla-arm-disable-edsp.patch
 Patch14:        mozilla-crashreporter-restart-args.patch
 Patch15:        mozilla-gstreamer.patch
@@ -223,7 +222,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %endif
 #%patch11 -p1
-#%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1

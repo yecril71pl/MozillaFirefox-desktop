@@ -19,7 +19,6 @@ mozilla-crashreporter-restart-args.patch
 mozilla-gstreamer.patch
 mozilla-ppc.patch
 #mozilla-disable-neon-option.patch
-#mozilla-yarr-pcre.patch
 
 # Firefox patches
 firefox-browser-css.patch

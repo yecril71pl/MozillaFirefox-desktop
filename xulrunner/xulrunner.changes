@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Thu Jul 19 18:25:48 UTC 2012 - wr@rosenauer.org
+Fri Jul 20 07:39:54 UTC 2012 - wr@rosenauer.org
 
 - update to 15.0b1
 
@@ -44,6 +44,12 @@ Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org
   * add patches for bmo#750620 and bmo#746112
   * fix xpcshell segfault on ppc
 - build plugin-container on every arch
+
+-------------------------------------------------------------------
+Fri Jun 15 12:40:23 UTC 2012 - wr@rosenauer.org
+
+- update to 13.0.1
+  * bugfix release
 
 -------------------------------------------------------------------
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org

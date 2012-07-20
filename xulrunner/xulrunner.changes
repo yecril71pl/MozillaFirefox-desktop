@@ -41,6 +41,12 @@ Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org
 - build plugin-container on every arch
 
 -------------------------------------------------------------------
+Fri Jun 15 12:40:23 UTC 2012 - wr@rosenauer.org
+
+- update to 13.0.1
+  * bugfix release
+
+-------------------------------------------------------------------
 Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org
 
 - update to 13.0 (bnc#765204)

@@ -553,8 +553,6 @@ exit 0
 %{progdir}/omni.ja
 %{progdir}/platform.ini
 %{progdir}/plugin-container
-%{progdir}/webapprt-stub
-%{progdir}/webapprt/
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %{progdir}/crashreporter

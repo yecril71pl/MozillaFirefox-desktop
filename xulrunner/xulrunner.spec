@@ -76,7 +76,6 @@ Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
-Patch10:        mozilla-arm-cpu-detection.patch
 Patch12:        mozilla-crashreporter-restart-args.patch
 Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
@@ -193,7 +192,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version < 1120
 %patch9 -p1
 %endif
-%patch10 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1

@@ -1,7 +1,6 @@
 # xulrunner/gecko patches
 toolkit-download-folder.patch
 mozilla-pkgconfig.patch
-idldir.patch
 mozilla-nongnome-proxies.patch
 mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
@@ -15,7 +14,6 @@ mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-sle11.patch
 mozilla-arm-disable-edsp.patch
-mozilla-crashreporter-restart-args.patch
 mozilla-gstreamer.patch
 mozilla-ppc.patch
 #mozilla-disable-neon-option.patch

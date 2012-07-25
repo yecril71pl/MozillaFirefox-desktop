@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 0f6722dd9d75458124795d22e9240887c9b4aeca
+# Parent 58ae98c85e39def96a90cb21c90e871f41a03a71
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Bug 746112 - RegExp hang on ppc64 in execute.
 Bug 750620 - Make double-conversion portable to exotic architectures. TM: mozilla15
@@ -67,9 +67,9 @@ diff --git a/js/src/yarr/YarrPattern.h b/js/src/yarr/YarrPattern.h
          parentheses.subpatternId = subpatternId;
          parentheses.isCopy = false;
          parentheses.isTerminal = false;
-diff --git a/memory/jemalloc/jemalloc.c b/memory/jemalloc/jemalloc.c
---- a/memory/jemalloc/jemalloc.c
-+++ b/memory/jemalloc/jemalloc.c
+diff --git a/memory/mozjemalloc/jemalloc.c b/memory/mozjemalloc/jemalloc.c
+--- a/memory/mozjemalloc/jemalloc.c
++++ b/memory/mozjemalloc/jemalloc.c
 @@ -1086,17 +1086,19 @@ struct arena_s {
  static unsigned		ncpus;
  #endif

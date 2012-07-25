@@ -70,13 +70,11 @@ Source8:        source-stamp.txt
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch
-Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
-Patch12:        mozilla-crashreporter-restart-args.patch
 Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -184,7 +182,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %setup -n mozilla -q -b 1 -b 9
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -192,7 +189,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version < 1120
 %patch9 -p1
 %endif
-%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 

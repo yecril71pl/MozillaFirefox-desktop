@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent c9af3b8022c3f92070c1bd205553d799887cd1b8
+# Parent 7820633b718ca1983da7b105d7868c455809cff1
 
 diff --git a/build/Makefile.in b/build/Makefile.in
 --- a/build/Makefile.in
@@ -48,7 +48,7 @@ diff --git a/toolkit/content/Makefile.in b/toolkit/content/Makefile.in
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
 +++ b/toolkit/mozapps/installer/package-name.mk
-@@ -128,20 +128,20 @@ SYMBOL_ARCHIVE_BASENAME = $(PKG_BASENAME
+@@ -131,22 +131,22 @@ SYMBOL_ARCHIVE_BASENAME = $(PKG_BASENAME
  TEST_PACKAGE = $(PKG_BASENAME).tests.zip
  
  ifneq (,$(wildcard $(DIST)/bin/application.ini))
@@ -71,10 +71,12 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
  
  # JavaScript Shell
  PKG_JSSHELL = $(DIST)/jsshell-$(MOZ_PKG_PLATFORM).zip
+ 
+ endif # PACKAGE_NAME_MK_INCLUDED
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -220,20 +220,20 @@ endif
+@@ -218,20 +218,20 @@ endif
  
  MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null))
  ifdef MOZ_SOURCE_STAMP

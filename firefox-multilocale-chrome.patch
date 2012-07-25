@@ -1,12 +1,12 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 2f0c475e3ea9ba2309ab4ff7debb8bd0d6850a14
+# Parent 5c446cfb862fdb6685634dbeea9bff31fa19fc3e
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -332,16 +332,20 @@ pref("browser.download.useToolkitUI", tr
+@@ -327,16 +327,20 @@ pref("browser.download.useToolkitUI", fa
  pref("browser.download.panel.removeFinishedDownloads", false);
  
  // search engines URL
@@ -112,4 +112,4 @@ diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
      locale/pdfviewer/viewer.properties             (%pdfviewer/viewer.properties)
      locale/pdfviewer/chrome.properties             (%pdfviewer/chrome.properties)
  #ifdef MOZ_WEBAPP_RUNTIME
- % locale webapprt @AB_CD@ %locale/webapprt/
+ ../webapprt/chrome/@AB_CD@.jar:

@@ -17,9 +17,9 @@
 #
 
 
-%define major 14
-%define mainver %major.99
-%define update_channel beta
+%define major 15
+%define mainver %major.98
+%define update_channel aurora
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -44,7 +44,7 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.2
 BuildRequires:  mozilla-nss-devel >= 3.13.5
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012071800
+%define         releasedate 2012072300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -94,7 +94,6 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
 Patch13:        mozilla-arm-disable-edsp.patch
-Patch14:        mozilla-crashreporter-restart-args.patch
 Patch15:        mozilla-gstreamer.patch
 Patch16:        mozilla-ppc.patch
 # Firefox/browser
@@ -125,7 +124,7 @@ Recommends:     libcanberra0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -223,7 +222,6 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 #%patch11 -p1
 %patch13 -p1
-%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 #
@@ -275,8 +273,8 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-ac_add_options --with-system-nspr
-ac_add_options --with-system-nss
+#ac_add_options --with-system-nspr
+#ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support

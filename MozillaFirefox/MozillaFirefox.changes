@@ -7,6 +7,11 @@ Sun Jul 29 09:23:20 UTC 2012 - wr@rosenauer.org
 - updated filelist
 
 -------------------------------------------------------------------
+Sun Jul 29 08:34:39 UTC 2012 - aj@suse.de
+
+- Fix mozilla-kde.patch to include sys/resource.h for getrlimit etc (glibc 2.16)
+
+-------------------------------------------------------------------
 Sat Jul 14 19:31:51 UTC 2012 - wr@rosenauer.org
 
 - update to 14.0.1 (bnc#771583)

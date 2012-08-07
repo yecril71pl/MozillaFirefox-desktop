@@ -1298,7 +1298,7 @@ diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/ns
 diff --git a/browser/components/preferences/advanced.js b/browser/components/preferences/advanced.js
 --- a/browser/components/preferences/advanced.js
 +++ b/browser/components/preferences/advanced.js
-@@ -22,16 +22,22 @@ var gAdvancedPane = {
+@@ -23,16 +23,22 @@ var gAdvancedPane = {
      if (extraArgs && extraArgs["advancedTab"]){
        advancedPrefs.selectedTab = document.getElementById(extraArgs["advancedTab"]);
      } else {
@@ -1321,14 +1321,14 @@ diff --git a/browser/components/preferences/advanced.js b/browser/components/pre
  #endif
      this.updateOfflineApps();
  #ifdef MOZ_CRASHREPORTER
-@@ -705,12 +711,23 @@ var gAdvancedPane = {
-   /**
+@@ -715,12 +721,23 @@ var gAdvancedPane = {
     * Set browser as the operating system default browser.
     */
    setDefaultBrowser: function()
    {
-     var shellSvc = Components.classes["@mozilla.org/browser/shell-service;1"]
-                              .getService(Components.interfaces.nsIShellService);
+     let shellSvc = getShellService();
+     if (!shellSvc)
+       return;
      shellSvc.setDefaultBrowser(true, false);
 +    if (kde_session == 1) {
 +      var shellObj = Components.classes["@mozilla.org/file/local;1"]

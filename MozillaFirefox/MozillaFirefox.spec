@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012072300
+%define         releasedate 2012080700
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -273,8 +273,8 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-#ac_add_options --with-system-nspr
-#ac_add_options --with-system-nss
+ac_add_options --with-system-nspr
+ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
@@ -551,6 +551,8 @@ exit 0
 %{progdir}/omni.ja
 %{progdir}/platform.ini
 %{progdir}/plugin-container
+%{progdir}/webapprt-stub
+%{progdir}/webapprt/
 %if %crashreporter
 %{progdir}/crashreporter-override.ini
 %{progdir}/crashreporter

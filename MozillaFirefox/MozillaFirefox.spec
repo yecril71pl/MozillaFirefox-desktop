@@ -336,12 +336,10 @@ mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
 mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
+mkdir -p $RPM_BUILD_ROOT%{progdir}/defaults/preferences/
 # install kde.js
 %if %suse_version >= 1110
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/pref/kde.js
-# make sure that instantApply is true by default
-# (TODO: mozilla-kde.patch needs to be improved to really not load kde.js in non-KDE envs)
-echo 'pref("browser.preferences.instantApply", true);' > $RPM_BUILD_ROOT%{progdir}/defaults/pref/firefox.js
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/kde.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \

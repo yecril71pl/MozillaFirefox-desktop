@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sun Jul 29 09:23:20 UTC 2012 - wr@rosenauer.org
+Sun Aug  5 10:43:55 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 15.0b2
+- update to Firefox 15.0b3
 - fix HTML5 video crash with GStreamer enabled (bmo#761030)
 - GStreamer is only used for MP4 (no WebM, OGG)
 - updated filelist

@@ -43,8 +43,8 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.1
-BuildRequires:  mozilla-nss-devel >= 3.13.5
-Version:        14.99
+BuildRequires:  mozilla-nss-devel >= 3.13.6
+Version:        15.98
 Release:        0
 %define         releasedate 2012071800
 %define         version_internal 15.0

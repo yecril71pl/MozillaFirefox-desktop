@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012080700
+%define         releasedate 2012081500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -96,6 +96,7 @@ Patch11:        mozilla-disable-neon-option.patch
 Patch13:        mozilla-arm-disable-edsp.patch
 Patch15:        mozilla-gstreamer.patch
 Patch16:        mozilla-ppc.patch
+Patch17:        mozilla-gstreamer-760140.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -224,6 +225,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

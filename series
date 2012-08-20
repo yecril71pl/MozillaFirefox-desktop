@@ -15,6 +15,7 @@ mozilla-repo.patch
 mozilla-sle11.patch
 mozilla-arm-disable-edsp.patch
 mozilla-gstreamer.patch
+mozilla-gstreamer-760140.patch
 mozilla-ppc.patch
 #mozilla-disable-neon-option.patch
 

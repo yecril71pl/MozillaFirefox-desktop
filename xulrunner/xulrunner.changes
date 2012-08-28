@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
-Fri Jul 20 07:39:54 UTC 2012 - wr@rosenauer.org
+Tue Aug 21 05:08:37 UTC 2012 - wr@rosenauer.org
 
-- update to 15.0b1
+- update to 15.0b5
+- fix HTML5 video crash with GStreamer enabled (bmo#761030)
 
 -------------------------------------------------------------------
 Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org

@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.1
 BuildRequires:  mozilla-nss-devel >= 3.13.6
 Version:        14.99
 Release:        0
-%define         releasedate 2012072900
+%define         releasedate 2012081500
 %define         version_internal 15.0
 %define         apiversion 15
 %define         uaweight 1500000
@@ -77,7 +77,6 @@ Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
 Patch12:        mozilla-crashreporter-restart-args.patch
-Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
@@ -193,7 +192,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch9 -p1
 %endif
 %patch12 -p1
-%patch13 -p1
 %patch14 -p1
 
 %build

@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.1
 BuildRequires:  mozilla-nss-devel >= 3.13.6
-Version:        14.99
+Version:        15.0
 Release:        0
-%define         releasedate 2012081500
+%define         releasedate 2012082500
 %define         version_internal 15.0
 %define         apiversion 15
 %define         uaweight 1500000
@@ -454,9 +454,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
-%{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
-%{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
 %{_libdir}/xulrunner-%{version_internal}/omni.ja

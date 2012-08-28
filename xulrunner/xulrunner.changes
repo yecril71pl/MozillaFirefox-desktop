@@ -1,8 +1,41 @@
 -------------------------------------------------------------------
-Tue Aug 21 05:08:37 UTC 2012 - wr@rosenauer.org
+Sun Aug 26 13:48:04 UTC 2012 - wr@rosenauer.org
 
-- update to 15.0b5
+- update to 15.0 (bnc#777588)
+  * MFSA 2012-57/CVE-2012-1970
+    Miscellaneous memory safety hazards
+  * MFSA 2012-58/CVE-2012-1972/CVE-2012-1973/CVE-2012-1974/CVE-2012-1975
+    CVE-2012-1976/CVE-2012-3956/CVE-2012-3957/CVE-2012-3958/CVE-2012-3959
+    CVE-2012-3960/CVE-2012-3961/CVE-2012-3962/CVE-2012-3963/CVE-2012-3964
+    Use-after-free issues found using Address Sanitizer
+  * MFSA 2012-59/CVE-2012-1956 (bmo#756719)
+    Location object can be shadowed using Object.defineProperty
+  * MFSA 2012-60/CVE-2012-3965 (bmo#769108)
+    Escalation of privilege through about:newtab
+  * MFSA 2012-61/CVE-2012-3966 (bmo#775794, bmo#775793)
+    Memory corruption with bitmap format images with negative height
+  * MFSA 2012-62/CVE-2012-3967/CVE-2012-3968
+    WebGL use-after-free and memory corruption
+  * MFSA 2012-63/CVE-2012-3969/CVE-2012-3970
+    SVG buffer overflow and use-after-free issues
+  * MFSA 2012-64/CVE-2012-3971
+    Graphite 2 memory corruption
+  * MFSA 2012-65/CVE-2012-3972 (bmo#746855)
+    Out-of-bounds read in format-number in XSLT
+  * MFSA 2012-66/CVE-2012-3973 (bmo#757128)
+    HTTPMonitor extension allows for remote debugging without explicit
+    activation
+  * MFSA 2012-68/CVE-2012-3975 (bmo#770684)
+    DOMParser loads linked resources in extensions when parsing
+    text/html
+  * MFSA 2012-69/CVE-2012-3976 (bmo#768568)
+    Incorrect site SSL certificate data display
+  * MFSA 2012-70/CVE-2012-3978 (bmo#770429)
+    Location object security checks bypassed by chrome code
+  * MFSA 2012-72/CVE-2012-3980 (bmo#771859)
+    Web console eval capable of executing chrome-privileged code
 - fix HTML5 video crash with GStreamer enabled (bmo#761030)
+- fixed filelist
 
 -------------------------------------------------------------------
 Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org

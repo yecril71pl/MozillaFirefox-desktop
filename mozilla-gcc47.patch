@@ -1,0 +1,27 @@
+# HG changeset patch
+# Parent 99660507abe258fca89e10da3cb245bdb4282810
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+Bug 706724 - firefox-beta repository: file_util.cc:228:35: error: ‘ftruncate’ was not declared in this scope
+
+diff --git a/ipc/chromium/src/base/file_util.cc b/ipc/chromium/src/base/file_util.cc
+--- a/ipc/chromium/src/base/file_util.cc
++++ b/ipc/chromium/src/base/file_util.cc
+@@ -3,17 +3,17 @@
+ // found in the LICENSE file.
+ 
+ #include "base/file_util.h"
+ 
+ #if defined(OS_WIN)
+ #include <io.h>
+ #endif
+ #include <stdio.h>
+-#if defined(ANDROID)
++#if defined(ANDROID) || defined(OS_POSIX)
+ #include <unistd.h>
+ #endif
+ 
+ #include <fstream>
+ 
+ #include "base/file_path.h"
+ #include "base/logging.h"
+ #include "base/string_util.h"

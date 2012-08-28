@@ -2,8 +2,8 @@
 
 CHANNEL="esr10"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_10_0_6esr_RELEASE"
-VERSION="10.0.6"
+RELEASE_TAG="FIREFOX_10_0_7esr_RELEASE"
+VERSION="10.0.7"
 
 # mozilla
 hg clone -r $RELEASE_TAG http://hg.mozilla.org/$BRANCH mozilla

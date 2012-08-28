@@ -18,7 +18,7 @@
 
 
 %define major 10
-%define mainver %major.0.6
+%define mainver %major.0.7
 
 Name:           firefox-esr
 BuildRequires:  Mesa-devel
@@ -48,7 +48,7 @@ BuildRequires:  mozilla-nss-devel >= 3.13.5
 BuildRequires:  nss-shared-helper-devel
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012071300
+%define         releasedate 2012082500
 Provides:       web_browser
 Provides:       firefox-esr = %{mainver}
 # this is needed to match this package with the kde4 helper package without the main package
@@ -98,6 +98,7 @@ Patch13:        mozilla-a11y.patch
 Patch14:        mozilla-disable-neon-option.patch
 Patch15:        mozilla-bmo703534.patch
 Patch16:        mozilla-yarr-pcre.patch
+Patch17:        mozilla-gcc47.patch
 # Firefox/browser
 Patch31:        firefox-browser-css.patch
 Patch32:        firefox-cross-desktop.patch
@@ -236,6 +237,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 #
 %patch31 -p1
 %patch32 -p1

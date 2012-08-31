@@ -1,0 +1,29 @@
+# xulrunner/gecko patches
+toolkit-download-folder.patch
+mozilla-pkgconfig.patch
+mozilla-nongnome-proxies.patch
+mozilla-prefer_plugin_pref.patch
+mozilla-shared-nss-db.patch
+mozilla-kde.patch
+mozilla-preferences.patch
+#mozilla-gconf-backend.patch
+#gecko-lockdown.patch
+#toolkit-ui-lockdown.patch
+mozilla-language.patch
+mozilla-ntlm-full-path.patch
+mozilla-repo.patch
+mozilla-sle11.patch
+mozilla-arm-disable-edsp.patch
+mozilla-gstreamer.patch
+mozilla-gstreamer-760140.patch
+mozilla-ppc.patch
+#mozilla-disable-neon-option.patch
+
+# Firefox patches
+firefox-browser-css.patch
+firefox-kde.patch
+firefox-kde-114.patch
+#firefox-ui-lockdown.patch
+firefox-no-default-ualocale.patch
+firefox-multilocale-chrome.patch
+firefox-branded-icons.patch

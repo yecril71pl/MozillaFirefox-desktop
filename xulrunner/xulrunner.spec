@@ -42,14 +42,14 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.2
 BuildRequires:  mozilla-nss-devel >= 3.13.6
-Version:        15.98
+Version:        15.99
 Release:        0
-%define         releasedate 2012071800
-%define         version_internal 15.0
-%define         apiversion 15
-%define         uaweight 1500000
+%define         releasedate 2012082800
+%define         version_internal 16.0
+%define         apiversion 16
+%define         uaweight 1600000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -70,12 +70,13 @@ Source8:        source-stamp.txt
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch
+Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
-Patch13:        mozilla-gstreamer.patch
+Patch12:        mozilla-crashreporter-restart-args.patch
 Patch14:        mozilla-ppc.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
@@ -182,6 +183,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %setup -n mozilla -q -b 1 -b 9
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -189,7 +191,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version < 1120
 %patch9 -p1
 %endif
-%patch13 -p1
+%patch12 -p1
 %patch14 -p1
 
 %build
@@ -452,9 +454,7 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
-%{_libdir}/xulrunner-%{version_internal}/run-mozilla.sh
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
-%{_libdir}/xulrunner-%{version_internal}/xulrunner-bin
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub
 %{_libdir}/xulrunner-%{version_internal}/platform.ini
 %{_libdir}/xulrunner-%{version_internal}/omni.ja

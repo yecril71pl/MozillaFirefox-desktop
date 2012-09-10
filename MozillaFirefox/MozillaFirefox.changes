@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Sep 10 19:37:56 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 15.0.1
+  * Sites visited while in Private Browsing mode could be found
+    through manual browser cache inspection (bmo#787743)
+
+-------------------------------------------------------------------
 Sun Aug 26 13:47:43 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 15.0 (bnc#777588)

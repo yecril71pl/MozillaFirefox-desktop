@@ -18,7 +18,7 @@
 
 
 %define major 15
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
 
 Name:           MozillaFirefox
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012082500
+%define         releasedate 2012090600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

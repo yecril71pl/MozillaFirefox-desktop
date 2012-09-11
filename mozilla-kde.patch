@@ -2249,7 +2249,7 @@ new file mode 100644
 +#define KMOZILLAHELPER "/usr/lib/mozilla/kmozillahelper"
 +#endif
 +
-+#define KMOZILLAHELPER_VERSION 7
++#define KMOZILLAHELPER_VERSION 6
 +#define MAKE_STR2( n ) #n
 +#define MAKE_STR( n ) MAKE_STR2( n )
 +

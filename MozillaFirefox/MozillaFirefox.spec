@@ -61,7 +61,7 @@ Provides:       web_browser
 Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
-%define kde_helper_version 7
+%define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Summary:        Mozilla Firefox Web Browser
 License:        MPL-2.0

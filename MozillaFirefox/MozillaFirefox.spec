@@ -54,14 +54,14 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012082800
+%define         releasedate 2012090400
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
 Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
-%define kde_helper_version 6
+%define kde_helper_version 7
 Provides:       mozilla-kde4-version = %{kde_helper_version}
 Summary:        Mozilla Firefox Web Browser
 License:        MPL-2.0

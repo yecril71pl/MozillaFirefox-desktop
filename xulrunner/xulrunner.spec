@@ -87,7 +87,7 @@ Requires(preun): update-alternatives coreutils
 %define has_system_nss   1
 %define has_system_cairo 0
 %define localize 0
-%ifarch ppc ppc64 s390 s390x ia64
+%ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter    0
 %else
 %define crashreporter    1
@@ -207,8 +207,13 @@ export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
+export LDFLAGS=" -Wl,-rpath -Wl,${MOZ_APP_DIR}"
+%ifarch %arm
+# debug symbols require too much memory during build
+export CFLAGS="${CFLAGS/-g/}"
+LDFLAGS+="-Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
+%endif
 export CXXFLAGS="$CFLAGS"
-export LDFLAGS="-Wl,-rpath -Wl,${MOZ_APP_DIR}"
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
@@ -282,11 +287,12 @@ EOF
 # ARM
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
-%ifarch armv7l
+%ifarch armv7l armv7hl
 ac_add_options --with-arch=armv7-a
 ac_add_options --with-float-abi=hard
 ac_add_options --with-fpu=vfpv3-d16
 ac_add_options --with-thumb=yes
+ac_add_options --disable-debug
 %endif
 %ifarch armv5tel
 ac_add_options --with-arch=armv5te

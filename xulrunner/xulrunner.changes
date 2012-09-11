@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Sep 11 09:26:09 UTC 2012 - wr@rosenauer.org
+
+- update to 16.0b2
+
+-------------------------------------------------------------------
 Sun Aug 26 13:48:04 UTC 2012 - wr@rosenauer.org
 
 - update to 15.0 (bnc#777588)
@@ -36,6 +41,13 @@ Sun Aug 26 13:48:04 UTC 2012 - wr@rosenauer.org
     Web console eval capable of executing chrome-privileged code
 - fix HTML5 video crash with GStreamer enabled (bmo#761030)
 - fixed filelist
+
+-------------------------------------------------------------------
+Fri Aug 17 13:09:49 UTC 2012 - dmueller@suse.com
+
+- fix build on ARM:
+  * disable crashreporter, it does not build
+  * reduce debuginfo during built to avoid running out of memory
 
 -------------------------------------------------------------------
 Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org

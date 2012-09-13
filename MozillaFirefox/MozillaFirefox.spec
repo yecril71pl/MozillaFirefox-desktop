@@ -275,7 +275,7 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-ac_add_options --with-system-nspr
+#ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
@@ -363,7 +363,6 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
   	make -C browser/locales langpack-$locale
 	cp -rL dist/xpi-stage/locale-$locale \
 	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
-	rm $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/chrome/.mkdir.done
 	# remove prefs, profile defaults, and hyphenation from langpack
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
 	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
@@ -388,6 +387,8 @@ find $RPM_BUILD_ROOT%{progdir} \
      -name "*.txt" -o \
      -name "*.xml" -o \
      -name "*.css" | xargs chmod a-x
+# remove mkdir.done files from installed base
+find $RPM_BUILD_ROOT%{progdir} -name ".mkdir.done" | xargs rm
 # overwrite the mozilla start-script and link it to /usr/bin
 mkdir --parents $RPM_BUILD_ROOT/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g

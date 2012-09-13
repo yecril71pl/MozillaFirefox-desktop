@@ -4,7 +4,7 @@ Subject: pkgconfig tuning
 diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
 --- a/xulrunner/installer/Makefile.in
 +++ b/xulrunner/installer/Makefile.in
-@@ -69,16 +69,19 @@ ifndef MOZ_PLATFORM_MAEMO
+@@ -39,16 +39,19 @@ ifndef MOZ_PLATFORM_MAEMO
  GENERATE_CACHE = 1
  endif
  
@@ -14,7 +14,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  # Add pkg-config files to the install:: target
  
 +# the apilibdir always ends with 1.9 as every patch update will provide a link
-+apilibdir = $(dir $(installdir))xulrunner-16
++apilibdir = $(dir $(installdir))xulrunner-17
 +
  pkg_config_files = \
  	libxul.pc \
@@ -24,7 +24,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  	$(NULL)
  
  ifdef MOZ_NATIVE_NSPR
-@@ -106,16 +109,17 @@ pkg_config_files += mozilla-nss.pc
+@@ -76,16 +79,17 @@ pkg_config_files += mozilla-nss.pc
  endif
  
  %.pc: $(srcdir)/%.pc.in $(GLOBAL_DEPS)

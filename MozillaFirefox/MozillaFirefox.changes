@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
-Tue Sep 11 09:55:36 UTC 2012 - wr@rosenauer.org
+Thu Sep 13 19:35:29 UTC 2012 - wr@rosenauer.org
 
 - update to Aurora 17 (20120910)
+- use internal NSPR for now (bmo#776877)
 
 -------------------------------------------------------------------
 Tue Sep 11 06:16:38 UTC 2012 - wr@rosenauer.org
@@ -13,6 +14,13 @@ Tue Sep 11 06:16:38 UTC 2012 - wr@rosenauer.org
 - webapprt now included
 - use kmozillahelper's new REVEAL command (bnc#777415)
   (requires mozilla-kde4-integration >= 0.6.4)
+
+-------------------------------------------------------------------
+Mon Sep 10 19:37:56 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 15.0.1 (bnc#779936)
+  * Sites visited while in Private Browsing mode could be found
+      through manual browser cache inspection (bmo#787743)
 
 -------------------------------------------------------------------
 Sun Aug 26 13:47:43 UTC 2012 - wr@rosenauer.org

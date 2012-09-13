@@ -1,12 +1,12 @@
 # HG changeset patch
 # User Petr Cerny <pcerny@novell.com>
-# Parent 4f5fe2278cd5cff898ad762457312f60a7e82a67
+# Parent 7308e4a7c1f769f4bbbc90870b849cadd99495a6
 Bug 634334 - call to the ntlm_auth helper fails
 
 diff --git a/extensions/auth/nsAuthSambaNTLM.cpp b/extensions/auth/nsAuthSambaNTLM.cpp
 --- a/extensions/auth/nsAuthSambaNTLM.cpp
 +++ b/extensions/auth/nsAuthSambaNTLM.cpp
-@@ -168,17 +168,17 @@ static PRUint8* ExtractMessage(const nsA
+@@ -168,17 +168,17 @@ static uint8_t* ExtractMessage(const nsA
  nsresult
  nsAuthSambaNTLM::SpawnNTLMAuthHelper()
  {
@@ -20,7 +20,7 @@ diff --git a/extensions/auth/nsAuthSambaNTLM.cpp b/extensions/auth/nsAuthSambaNT
          "--helper-protocol", "ntlmssp-client-1",
          "--use-cached-creds",
          "--username", username,
-         nsnull
+         nullptr
      };
  
      bool isOK = SpawnIOChild(const_cast<char* const*>(args), &mChildPID, &mFromChildFD, &mToChildFD);

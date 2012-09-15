@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Tue Sep 11 06:16:38 UTC 2012 - wr@rosenauer.org
+Fri Sep 14 22:09:37 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 16.0b2
+- update to Firefox 16.0b3
 - requires NSPR 4.9.2
 - improve GStreamer integration (bmo#760140)
 - removed upstreamed mozilla-crashreporter-restart-args.patch

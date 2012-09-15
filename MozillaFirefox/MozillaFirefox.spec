@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012090400
+%define         releasedate 2012091100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -76,6 +76,7 @@ Source5:        source-stamp.txt
 Source6:        kde.js
 Source7:        l10n-%{version}.tar.bz2
 Source8:        firefox-mimeinfo.xml
+Source9:        firefox.js
 Source10:       compare-locales.tar.bz2
 Source11:       firefox.1
 Source12:       mozilla-get-app-id
@@ -340,6 +341,7 @@ mkdir -p $RPM_BUILD_ROOT%{progdir}/defaults/preferences/
 # install kde.js
 %if %suse_version >= 1110
 install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/kde.js
+install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \

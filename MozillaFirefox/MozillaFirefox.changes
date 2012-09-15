@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu Sep 13 19:35:29 UTC 2012 - wr@rosenauer.org
+Sat Sep 15 21:23:36 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 17 (20120910)
+- update to Aurora 17 (20120914)
 - use internal NSPR for now (bmo#776877)
 
 -------------------------------------------------------------------

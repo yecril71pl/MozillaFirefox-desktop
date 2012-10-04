@@ -1369,13 +1369,13 @@ diff --git a/browser/components/preferences/advanced.js b/browser/components/pre
 +
  #ifdef HAVE_SHELL_SERVICE
      this.updateSetDefaultBrowser();
- #endif
- #ifdef MOZ_UPDATER
-     this.updateReadPrefs();
- #endif
-     this.updateOfflineApps();
- #ifdef MOZ_CRASHREPORTER
-@@ -715,12 +721,23 @@ var gAdvancedPane = {
+ #ifdef XP_WIN
+     let shellSvc = getShellService();
+     // In Windows 8 we launch the control panel since it's the only
+     // way to get all file type association prefs. So we don't know
+     // when the user will select the default.  We refresh here periodically
+     // in case the default changes. 
+@@ -737,14 +743,25 @@ var gAdvancedPane = {
     * Set browser as the operating system default browser.
     */
    setDefaultBrowser: function()
@@ -1395,7 +1395,9 @@ diff --git a/browser/components/preferences/advanced.js b/browser/components/pre
 +          "BrowserApplication", "MozillaFirefox"];
 +      process.run(false, args, args.length);
 +    }
-     document.getElementById("setDefaultPane").selectedIndex = 1;
+     let selectedIndex =
+       shellSvc.isDefaultBrowser(false, true) ? 1 : 0;
+     document.getElementById("setDefaultPane").selectedIndex = selectedIndex;
    }
  #endif
  };

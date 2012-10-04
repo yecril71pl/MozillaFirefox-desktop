@@ -1,13 +1,13 @@
 -------------------------------------------------------------------
-Sat Sep 15 21:23:36 UTC 2012 - wr@rosenauer.org
+Thu Oct  4 04:51:23 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 17 (20120914)
+- update to Aurora 17 (20121003)
 - use internal NSPR for now (bmo#776877)
 
 -------------------------------------------------------------------
-Tue Sep 11 06:16:38 UTC 2012 - wr@rosenauer.org
+Thu Sep 27 18:20:18 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 16.0b2
+- update to Firefox 16.0b5
 - requires NSPR 4.9.2
 - improve GStreamer integration (bmo#760140)
 - removed upstreamed mozilla-crashreporter-restart-args.patch
@@ -20,7 +20,7 @@ Mon Sep 10 19:37:56 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 15.0.1 (bnc#779936)
   * Sites visited while in Private Browsing mode could be found
-      through manual browser cache inspection (bmo#787743)
+    through manual browser cache inspection (bmo#787743)
 
 -------------------------------------------------------------------
 Sun Aug 26 13:47:43 UTC 2012 - wr@rosenauer.org

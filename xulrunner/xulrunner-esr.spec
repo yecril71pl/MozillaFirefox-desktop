@@ -46,8 +46,8 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.5
 Version:        10.0.7
 Release:        0
-%define         releasedate 2012082500
-%define         version_internal 10.0.7
+%define         releasedate 2012100700
+%define         version_internal 10.0.8
 %define         apiversion 10
 %define         uaweight 1000007
 Summary:        Mozilla Runtime Environment ESR

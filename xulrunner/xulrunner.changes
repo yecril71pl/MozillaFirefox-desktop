@@ -1,7 +1,10 @@
 -------------------------------------------------------------------
-Fri Sep 28 06:49:40 UTC 2012 - wr@rosenauer.org
+Sun Oct  7 21:41:01 UTC 2012 - wr@rosenauer.org
 
-- update to 16.0b5
+- update to 16.0 (bnc#783533)
+- requires NSPR 4.9.2
+- removed upstreamed mozilla-crashreporter-restart-args.patch
+- updated translations-other with new languages
 
 -------------------------------------------------------------------
 Sun Aug 26 13:48:04 UTC 2012 - wr@rosenauer.org

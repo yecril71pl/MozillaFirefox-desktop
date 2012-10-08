@@ -17,9 +17,9 @@
 #
 
 
-%define major 15
-%define mainver %major.99
-%define update_channel beta
+%define major 16
+%define mainver %major.0
+%define update_channel release
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012092600
+%define         releasedate 2012100700
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -167,7 +167,7 @@ of MozillaFirefox.
 %package translations-other
 Summary:        Extra translations for MozillaFirefox
 Group:          System/Localization
-Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 

@@ -1,13 +1,14 @@
 -------------------------------------------------------------------
-Thu Sep 27 18:20:18 UTC 2012 - wr@rosenauer.org
+Sun Oct  7 21:40:14 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 16.0b5
+- update to Firefox 16.0 (bnc#783533)
 - requires NSPR 4.9.2
 - improve GStreamer integration (bmo#760140)
 - removed upstreamed mozilla-crashreporter-restart-args.patch
 - webapprt now included
 - use kmozillahelper's new REVEAL command (bnc#777415)
   (requires mozilla-kde4-integration >= 0.6.4)
+- updated translations-other with new languages
 
 -------------------------------------------------------------------
 Mon Sep 10 19:37:56 UTC 2012 - wr@rosenauer.org

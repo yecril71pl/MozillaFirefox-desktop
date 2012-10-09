@@ -30,6 +30,8 @@ Sun Oct  7 21:41:01 UTC 2012 - wr@rosenauer.org
   * MFSA 2012-86/CVE-2012-4185/CVE-2012-4186/CVE-2012-4187/
     CVE-2012-4188
     Heap memory corruption issues found using Address Sanitizer
+  * MFSA 2012-87/CVE-2012-3990 (bmo#787704)
+    Use-after-free in the IME State Manager
 - requires NSPR 4.9.2
 - removed upstreamed mozilla-crashreporter-restart-args.patch
 - updated translations-other with new languages

@@ -17,6 +17,7 @@ mozilla-arm-disable-edsp.patch
 mozilla-gstreamer.patch
 mozilla-gstreamer-760140.patch
 mozilla-ppc.patch
+mozilla-idldir.patch
 #mozilla-disable-neon-option.patch
 
 # Firefox patches

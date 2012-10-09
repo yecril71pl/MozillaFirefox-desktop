@@ -70,6 +70,7 @@ Source8:        source-stamp.txt
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-pkgconfig.patch
+Patch3:         mozilla-idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
@@ -181,6 +182,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %setup -n mozilla -q -b 1 -b 9
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1

@@ -2,6 +2,32 @@
 Sun Oct  7 19:25:49 UTC 2012 - wr@rosenauer.org
 
 - update to 10.0.8esr (bnc#783533)
+  * MFSA 2012-59/CVE-2012-1956 (bmo#756719)
+    Location object can be shadowed using Object.defineProperty
+  * MFSA 2012-74/CVE-2012-3982
+    Miscellaneous memory safety hazards
+  * MFSA 2012-77/CVE-2012-3986 (bmo#775868)
+    Some DOMWindowUtils methods bypass security checks
+  * MFSA 2012-79/CVE-2012-3988 (bmo#725770)
+    DOS and crash with full screen and history navigation
+  * MFSA 2012-81/CVE-2012-3991 (bmo#783260)
+    GetProperty function can bypass security checks
+  * MFSA 2012-82/CVE-2012-3994 (bmo#765527)
+    top object and location property accessible by plugins
+  * MFSA 2012-83/CVE-2012-3993/CVE-2012-4184 (bmo#768101, bmo#780370)
+    Chrome Object Wrapper (COW) does not disallow acces to privileged
+    functions or properties
+  * MFSA 2012-84/CVE-2012-3992 (bmo#775009)
+    Spoofing and script injection through location.hash
+  * MFSA 2012-85/CVE-2012-3995/CVE-2012-4179/CVE-2012-4180/
+    CVE-2012-4181/CVE-2012-4182/CVE-2012-4183
+    Use-after-free, buffer overflow, and out of bounds read issues
+    found using Address Sanitizer
+  * MFSA 2012-86/CVE-2012-4185/CVE-2012-4186/CVE-2012-4187/
+    CVE-2012-4188
+    Heap memory corruption issues found using Address Sanitizer
+  * MFSA 2012-87/CVE-2012-3990 (bmo#787704)
+    Use-after-free in the IME State Manager
 
 -------------------------------------------------------------------
 Sun Aug 26 13:56:33 UTC 2012 - wr@rosenauer.org

@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Oct 12 09:47:36 UTC 2012 - wr@rosenauer.org
+
+- update to 10.0.9esr (bnc#783533)
+  * MFSA 2012-89/CVE-2012-4192/CVE-2012-4193 (bmo#799952, bmo#720619)
+    defaultValue security checks not applied
+
+-------------------------------------------------------------------
 Sun Oct  7 19:25:49 UTC 2012 - wr@rosenauer.org
 
 - update to 10.0.8esr (bnc#783533)

@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Thu Oct 11 01:51:16 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 16.0.1 (bnc#783533)
+  * MFSA 2012-88/CVE-2012-4191 (bmo#798045)
+    Miscellaneous memory safety hazards
+  * MFSA 2012-89/CVE-2012-4192/CVE-2012-4193 (bmo#799952, bmo#720619)
+    defaultValue security checks not applied
+
+-------------------------------------------------------------------
 Sun Oct  7 21:40:14 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 16.0 (bnc#783533)

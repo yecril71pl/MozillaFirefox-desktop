@@ -18,8 +18,8 @@
 
 
 %define major 16
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012100300
+%define         releasedate 2012100900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -94,10 +94,10 @@ Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
-Patch13:        mozilla-arm-disable-edsp.patch
-Patch15:        mozilla-gstreamer.patch
-Patch16:        mozilla-ppc.patch
-Patch17:        mozilla-gstreamer-760140.patch
+Patch12:        mozilla-arm-disable-edsp.patch
+Patch13:        mozilla-gstreamer.patch
+Patch14:        mozilla-ppc.patch
+Patch15:        mozilla-gstreamer-760140.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -126,7 +126,7 @@ Recommends:     libcanberra0
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -223,10 +223,10 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %endif
 #%patch11 -p1
+%patch12 -p1
 %patch13 -p1
+%patch14 -p1
 %patch15 -p1
-%patch16 -p1
-%patch17 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

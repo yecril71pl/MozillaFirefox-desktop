@@ -44,9 +44,9 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.2
 BuildRequires:  mozilla-nss-devel >= 3.13.6
-Version:        16.98
+Version:        16.99
 Release:        0
-%define         releasedate 2012091000
+%define         releasedate 2012101100
 %define         version_internal 17.0
 %define         apiversion 17
 %define         uaweight 1700000
@@ -156,7 +156,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;kn;ku;lg;lij;lt;lv;mai;mk;ml;mn;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;sw;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other

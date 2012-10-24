@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Oct 24 06:25:36 UTC 2012 - wr@rosenauer.org
+
+- update to 17.0b3
+- rebased patches
+- use internal NSPR for now (bmo#776877)
+
+-------------------------------------------------------------------
 Thu Oct 11 01:50:19 UTC 2012 - wr@rosenauer.org
 
 - update to 16.0.1 (bnc#783533)

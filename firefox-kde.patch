@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1261 @@
+@@ -0,0 +1,1268 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -195,7 +195,7 @@ new file mode 100644
 +          <description id="social-activation-message" class="popup-notification-description"/>
 +          <spacer flex="1"/>
 +          <hbox pack="end" align="center" class="popup-notification-button-container">
-+#ifdef XP_UNIX
++#ifndef XP_UNIX
 +        <button id="social-undoactivation-button"
 +                label="&social.activated.undobutton.label;"
 +                accesskey="&social.activated.undobutton.accesskey;"
@@ -245,7 +245,7 @@ new file mode 100644
 +        </vbox>
 +      </row>
 +      <hbox id="unsharePopupBottomButtons" pack="end">
-+#ifdef XP_UNIX
++#ifndef XP_UNIX
 +        <button id="unsharePopupStopSharingButton"
 +                class="unsharePopupBottomButton"
 +                command="Social:UnsharePage"/>
@@ -272,9 +272,7 @@ new file mode 100644
 +           type="arrow"
 +           hidden="true"
 +           consumeoutsideclicks="true"
-+           noautofocus="true">
-+      <box id="social-notification-box" flex="1"></box>
-+    </panel>
++           noautofocus="true"/>
 +    <panel id="social-flyout-panel"
 +           class="social-panel"
 +           onpopupshown="SocialFlyout.onShown()"
@@ -678,21 +676,30 @@ new file mode 100644
 +                       class="toolbarbutton-1"
 +                       type="menu">
 +          <menupopup id="social-statusarea-popup">
-+            <hbox id="social-statusarea-user" pack="start" align="center"
++            <menuitem id="social-statusarea-user" pack="start" align="center" class="menuitem-iconic"
 +                  onclick="SocialUI.showProfile(); document.getElementById('social-statusarea-popup').hidePopup();">
 +              <image id="social-statusarea-user-portrait"/>
 +              <vbox>
-+                <button id="social-statusarea-notloggedin"
-+                        class="link" label="&social.notLoggedIn.label;"/>
-+                <button id="social-statusarea-username" class="link"/>
++                <label id="social-statusarea-notloggedin"
++                       value="&social.notLoggedIn.label;"/>
++                <label id="social-statusarea-username"/>
 +              </vbox>
-+            </hbox>
++            </menuitem>
++#ifndef XP_WIN
++            <menuseparator/>
++#endif
 +            <menuitem id="social-toggle-sidebar-menuitem"
 +                      type="checkbox"
 +                      autocheck="false"
 +                      command="Social:ToggleSidebar"
 +                      label="&social.toggleSidebar.label;"
 +                      accesskey="&social.toggleSidebar.accesskey;"/>
++            <menuitem id="social-toggle-notifications-menuitem"
++                      type="checkbox"
++                      autocheck="false"
++                      command="Social:ToggleNotifications"
++                      label="&social.toggleNotifications.label;"
++                      accesskey="&social.toggleNotifications.accesskey;"/>
 +          </menupopup>
 +        </toolbarbutton>
 +      </toolbaritem>
@@ -1367,12 +1374,12 @@ diff --git a/browser/components/preferences/advanced.js b/browser/components/pre
  #ifdef HAVE_SHELL_SERVICE
      this.updateSetDefaultBrowser();
  #ifdef XP_WIN
-     let shellSvc = getShellService();
      // In Windows 8 we launch the control panel since it's the only
      // way to get all file type association prefs. So we don't know
      // when the user will select the default.  We refresh here periodically
-     // in case the default changes. 
-@@ -737,14 +743,25 @@ var gAdvancedPane = {
+     // in case the default changes.  On other Windows OS's defaults can also
+     // be set while the prefs are open.
+@@ -725,14 +731,25 @@ var gAdvancedPane = {
     * Set browser as the operating system default browser.
     */
    setDefaultBrowser: function()
@@ -1834,7 +1841,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -559,18 +559,20 @@
+@@ -561,18 +561,20 @@
  @BINPATH@/@PREF_DIR@/services-sync.js
  #endif
  @BINPATH@/greprefs.js

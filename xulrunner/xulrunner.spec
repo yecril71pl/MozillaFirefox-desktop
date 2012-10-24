@@ -46,7 +46,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.2
 BuildRequires:  mozilla-nss-devel >= 3.13.6
 Version:        16.99
 Release:        0
-%define         releasedate 2012101100
+%define         releasedate 2012102300
 %define         version_internal 17.0
 %define         apiversion 17
 %define         uaweight 1700000

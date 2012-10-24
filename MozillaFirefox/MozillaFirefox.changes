@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Oct 24 08:27:29 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 16.0.2 (bnc#)
+- bring back Obsoletes for libproxy's mozjs plugin for distributions
+  before 12.2 to avoid crashes
+
+-------------------------------------------------------------------
 Thu Oct 11 01:51:16 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 16.0.1 (bnc#783533)

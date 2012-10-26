@@ -1,7 +1,10 @@
 -------------------------------------------------------------------
 Wed Oct 24 08:27:29 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 16.0.2 (bnc#)
+- update to Firefox 16.0.2 (bnc#786522)
+  * MFSA 2012-90/CVE-2012-4194/CVE-2012-4195/CVE-2012-4196
+    (bmo#800666, bmo#793121, bmo#802557)
+    Fixes for Location object issues
 - bring back Obsoletes for libproxy's mozjs plugin for distributions
   before 12.2 to avoid crashes
 

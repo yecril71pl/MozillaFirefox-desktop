@@ -4,7 +4,7 @@ Bug 760140 - Query the GstRegistry for the required demuxers/decoders from canPl
 diff --git a/content/base/src/nsContentUtils.cpp b/content/base/src/nsContentUtils.cpp
 --- a/content/base/src/nsContentUtils.cpp
 +++ b/content/base/src/nsContentUtils.cpp
-@@ -137,16 +137,19 @@ static NS_DEFINE_CID(kXTFServiceCID, NS_
+@@ -147,16 +147,19 @@ static NS_DEFINE_CID(kXTFServiceCID, NS_
  #include "xpcprivate.h" // nsXPConnect
  #include "nsScriptSecurityManager.h"
  #include "nsIChannelPolicy.h"
@@ -24,7 +24,7 @@ diff --git a/content/base/src/nsContentUtils.cpp b/content/base/src/nsContentUti
  #include "mozilla/Base64.h"
  #include "mozilla/Preferences.h"
  #include "nsDOMMutationObserver.h"
-@@ -6580,26 +6583,23 @@ nsContentUtils::FindInternalContentViewe
+@@ -6706,26 +6709,23 @@ nsContentUtils::FindInternalContentViewe
          }
          return docFactory.forget();
        }
@@ -60,7 +60,7 @@ diff --git a/content/base/src/nsContentUtils.cpp b/content/base/src/nsContentUti
 diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/content/public/nsHTMLMediaElement.h
 --- a/content/html/content/public/nsHTMLMediaElement.h
 +++ b/content/html/content/public/nsHTMLMediaElement.h
-@@ -256,17 +256,19 @@ public:
+@@ -263,17 +263,19 @@ public:
    void UpdateMediaSize(nsIntSize size);
  
    // Returns the CanPlayStatus indicating if we can handle this
@@ -81,7 +81,7 @@ diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/con
    // Returns true if we should handle this MIME type when it appears
    // as an <object> or as a toplevel page. If, in practice, our support
    // for the type is more limited than appears in the wild, we should return
-@@ -296,20 +298,17 @@ public:
+@@ -303,20 +305,17 @@ public:
  #ifdef MOZ_WEBM
    static bool IsWebMEnabled();
    static bool IsWebMType(const nsACString& aType);
@@ -97,21 +97,35 @@ diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/con
 +  static bool IsGStreamerEnabled();
  #endif
  
- #ifdef MOZ_MEDIA_PLUGINS
-   static bool IsMediaPluginsEnabled();
-   static bool IsMediaPluginsType(const nsACString& aType);
+ #ifdef MOZ_WIDGET_GONK
+   static bool IsOmxEnabled();
+   static bool IsOmxSupportedType(const nsACString& aType);
+   static const char gOmxTypes[5][16];
+   static char const *const gH264Codecs[7];
  #endif
- 
-   /**
 diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/content/src/nsHTMLMediaElement.cpp
 --- a/content/html/content/src/nsHTMLMediaElement.cpp
 +++ b/content/html/content/src/nsHTMLMediaElement.cpp
-@@ -2112,52 +2112,20 @@ nsHTMLMediaElement::IsWebMType(const nsA
+@@ -2128,55 +2128,32 @@ nsHTMLMediaElement::IsWebMType(const nsA
+       return true;
      }
    }
  
    return false;
  }
+ #endif
+ 
+-#if defined(MOZ_GSTREAMER) || defined(MOZ_WIDGET_GONK)
++#ifdef MOZ_WIDGET_GONK
+ char const *const nsHTMLMediaElement::gH264Codecs[7] = {
+   "avc1.42E01E",
+   "avc1.42001E",
+   "avc1.58A01E",
+   "avc1.4D401E",
+   "avc1.64001E",
+   "mp4a.40.2",
+   nullptr
+ };
  #endif
  
  #ifdef MOZ_GSTREAMER
@@ -121,19 +135,9 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
 -  "video/quicktime",
 -};
 -
--char const *const nsHTMLMediaElement::gH264Codecs[7] = {
--  "avc1.42E01E",
--  "avc1.42001E",
--  "avc1.58A01E",
--  "avc1.4D401E",
--  "avc1.64001E",
--  "mp4a.40.2",
--  nullptr
--};
--
- bool
+-bool
 -nsHTMLMediaElement::IsH264Enabled()
-+nsHTMLMediaElement::IsGStreamerEnabled()
++bool nsHTMLMediaElement::IsGStreamerEnabled()
  {
 -  return Preferences::GetBool("media.h264.enabled");
 -}
@@ -156,13 +160,13 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
  }
  #endif
  
- #ifdef MOZ_MEDIA_PLUGINS
- bool
- nsHTMLMediaElement::IsMediaPluginsEnabled()
- {
-   return Preferences::GetBool("media.plugins.enabled");
-@@ -2180,18 +2148,22 @@ nsHTMLMediaElement::IsMediaPluginsType(c
-   }
+ #ifdef MOZ_WIDGET_GONK
+ const char nsHTMLMediaElement::gOmxTypes[5][16] = {
+   "audio/mpeg",
+   "audio/mp4",
+   "video/mp4",
+@@ -2262,18 +2239,22 @@ nsHTMLMediaElement::IsDASHMPDType(const 
+ 
    return false;
  }
  #endif
@@ -185,9 +189,9 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
  #endif
  #ifdef MOZ_OGG
    if (IsOggType(nsDependentCString(aMIMEType))) {
-@@ -2208,20 +2180,22 @@ nsHTMLMediaElement::CanHandleMediaType(c
- #ifdef MOZ_WEBM
-   if (IsWebMType(nsDependentCString(aMIMEType))) {
+@@ -2297,20 +2278,22 @@ nsHTMLMediaElement::CanHandleMediaType(c
+   if (IsDASHMPDType(nsDependentCString(aMIMEType))) {
+     // DASH manifest uses WebM codecs only.
      *aCodecList = gWebMCodecs;
      return CANPLAY_YES;
    }
@@ -205,14 +209,14 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
 +  if (nsGStreamerDecoder::CanHandleMediaType(aMIMEType, aCodecs))
 +    return CANPLAY_YES;
  #endif
- #ifdef MOZ_MEDIA_PLUGINS
-   if (IsMediaPluginsEnabled() && GetMediaPluginHost()->FindDecoder(nsDependentCString(aMIMEType), aCodecList))
+ #ifdef MOZ_WIDGET_GONK
+   if (IsOmxSupportedType(nsDependentCString(aMIMEType))) {
+     *aCodecList = gH264Codecs;
      return CANPLAY_MAYBE;
+   }
  #endif
-   return CANPLAY_NO;
- }
- 
-@@ -2236,17 +2210,17 @@ bool nsHTMLMediaElement::ShouldHandleMed
+ #ifdef MOZ_MEDIA_PLUGINS
+@@ -2331,17 +2314,17 @@ bool nsHTMLMediaElement::ShouldHandleMed
    if (IsOggType(nsDependentCString(aMIMEType)))
      return true;
  #endif
@@ -225,13 +229,13 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
 +  if (nsGStreamerDecoder::CanHandleMediaType(aMIMEType, nullptr))
      return true;
  #endif
- #ifdef MOZ_MEDIA_PLUGINS
-   if (IsMediaPluginsEnabled() && GetMediaPluginHost()->FindDecoder(nsDependentCString(aMIMEType), NULL))
+ #ifdef MOZ_WIDGET_GONK
+   if (IsOmxSupportedType(nsDependentCString(aMIMEType))) {
      return true;
+   }
  #endif
-   // We should not return true for Wave types, since there are some
-   // Wave codecs actually in use in the wild that we don't support, and
-@@ -2272,26 +2246,31 @@ nsHTMLMediaElement::GetCanPlay(const nsA
+ #ifdef MOZ_MEDIA_PLUGINS
+@@ -2372,26 +2355,31 @@ nsHTMLMediaElement::GetCanPlay(const nsA
  {
    nsContentTypeParser parser(aType);
    nsAutoString mimeType;
@@ -268,8 +272,8 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
    // of the 'codecs' parameter
    nsCharSeparatedTokenizer tokenizer(codecs, ',');
    bool expectMoreTokens = false;
-@@ -2369,17 +2348,19 @@ nsHTMLMediaElement::CreateDecoder(const 
-     nsRefPtr<nsWebMDecoder> decoder = new nsWebMDecoder();
+@@ -2486,17 +2474,19 @@ nsHTMLMediaElement::CreateDecoder(const 
+     nsRefPtr<nsDASHDecoder> decoder = new nsDASHDecoder();
      if (decoder->Init(this)) {
        return decoder.forget();
      }
@@ -548,13 +552,13 @@ new file mode 100644
 diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
 --- a/modules/libpref/src/init/all.js
 +++ b/modules/libpref/src/init/all.js
-@@ -165,17 +165,17 @@ pref("media.opus.enabled", true);
- #endif
- #ifdef MOZ_WAVE
- pref("media.wave.enabled", true);
+@@ -164,17 +164,17 @@ pref("media.wave.enabled", true);
  #endif
  #ifdef MOZ_WEBM
  pref("media.webm.enabled", true);
+ #endif
+ #ifdef MOZ_DASH
+ pref("media.dash.enabled", true);
  #endif
  #ifdef MOZ_GSTREAMER
 -pref("media.h264.enabled", true);
@@ -562,8 +566,8 @@ diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
  #endif
  #ifdef MOZ_WEBRTC
  pref("media.navigator.enabled", false);
+ pref("media.peerconnection.enabled", false);
+ pref("media.navigator.permission.disabled", false);
  #else
  #ifdef ANDROID
  pref("media.navigator.enabled", true);
- #endif
- #endif

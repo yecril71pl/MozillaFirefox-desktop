@@ -1270,12 +1270,12 @@ new file mode 100644
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -35,16 +35,18 @@ browser.jar:
-         content/browser/abouthome/restore-large.png   (content/abouthome/restore-large.png)
-         content/browser/abouthome/mozilla.png         (content/abouthome/mozilla.png)
-         content/browser/abouthome/noise.png           (content/abouthome/noise.png)
+@@ -50,16 +50,18 @@ browser.jar:
+         content/browser/abouthome/mozilla@2x.png       (content/abouthome/mozilla@2x.png)
+ #endif
          content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)
+         content/browser/aboutSocialError.xhtml        (content/aboutSocialError.xhtml)
  *       content/browser/browser.css                   (content/browser.css)
  *       content/browser/browser.js                    (content/browser.js)
  *       content/browser/browser.xul                   (content/browser.xul)
@@ -1286,9 +1286,9 @@ diff --git a/browser/base/jar.mn b/browser/base/jar.mn
          content/browser/newtab/newTab.xul             (content/newtab/newTab.xul)
  *       content/browser/newtab/newTab.js              (content/newtab/newTab.js)
          content/browser/newtab/newTab.css             (content/newtab/newTab.css)
+         content/browser/newtab/preload.xhtml          (content/newtab/preload.xhtml)
  *       content/browser/pageinfo/pageInfo.xul         (content/pageinfo/pageInfo.xul)
  *       content/browser/pageinfo/pageInfo.js          (content/pageinfo/pageInfo.js)
-         content/browser/pageinfo/pageInfo.css         (content/pageinfo/pageInfo.css)
 diff --git a/browser/components/build/nsModule.cpp b/browser/components/build/nsModule.cpp
 --- a/browser/components/build/nsModule.cpp
 +++ b/browser/components/build/nsModule.cpp
@@ -1370,12 +1370,12 @@ diff --git a/browser/components/preferences/advanced.js b/browser/components/pre
  #ifdef HAVE_SHELL_SERVICE
      this.updateSetDefaultBrowser();
  #ifdef XP_WIN
-     let shellSvc = getShellService();
      // In Windows 8 we launch the control panel since it's the only
      // way to get all file type association prefs. So we don't know
      // when the user will select the default.  We refresh here periodically
-     // in case the default changes. 
-@@ -737,14 +743,25 @@ var gAdvancedPane = {
+     // in case the default changes.  On other Windows OS's defaults can also
+     // be set while the prefs are open.
+@@ -715,14 +721,25 @@ var gAdvancedPane = {
     * Set browser as the operating system default browser.
     */
    setDefaultBrowser: function()
@@ -1837,7 +1837,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -559,18 +559,20 @@
+@@ -572,18 +572,20 @@
  @BINPATH@/@PREF_DIR@/services-sync.js
  #endif
  @BINPATH@/greprefs.js

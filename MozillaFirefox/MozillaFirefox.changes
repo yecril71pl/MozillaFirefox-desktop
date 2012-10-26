@@ -1,12 +1,16 @@
 -------------------------------------------------------------------
-Mon Oct 15 14:15:53 UTC 2012 - wr@rosenauer.org
+Fri Oct 26 10:59:41 UTC 2012 - wr@rosenauer.org
 
-- update to Aurora 18 (20121015)
+- update to Aurora 18 (20121025)
+  * requires NSS 3.14
+- enable system NSPR
+- ported patches
 
 -------------------------------------------------------------------
-Mon Oct 15 14:07:12 UTC 2012 - wr@rosenauer.org
+Wed Oct 24 06:24:39 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 17.0b1
+- update to Firefox 17.0b3
+- rebased patches
 - use internal NSPR for now (bmo#776877)
 
 -------------------------------------------------------------------

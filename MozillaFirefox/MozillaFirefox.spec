@@ -44,8 +44,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.2
-BuildRequires:  mozilla-nss-devel >= 3.13.6
+BuildRequires:  mozilla-nspr-devel >= 4.9.3
+BuildRequires:  mozilla-nss-devel >= 3.14
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012101500
+%define         releasedate 2012102500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -98,6 +98,7 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
+Patch16:        mozilla-webrtc.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -231,6 +232,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110
@@ -280,7 +282,7 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-#ac_add_options --with-system-nspr
+ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally

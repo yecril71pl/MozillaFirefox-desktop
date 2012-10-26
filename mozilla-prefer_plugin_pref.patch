@@ -4,7 +4,7 @@ Subject: introduce a pref to prefer certain plugins for mime-types
 diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.cpp
 --- a/dom/plugins/base/nsPluginHost.cpp
 +++ b/dom/plugins/base/nsPluginHost.cpp
-@@ -1588,17 +1588,51 @@ nsPluginHost::FindPluginForType(const ch
+@@ -1543,17 +1543,51 @@ nsPluginHost::FindPluginForType(const ch
    if (!aMimeType) {
      return nullptr;
    }
@@ -14,7 +14,7 @@ diff --git a/dom/plugins/base/nsPluginHost.cpp b/dom/plugins/base/nsPluginHost.c
    InfallibleTArray<nsPluginTag*> matchingPlugins;
  
 +  char *preferredPluginPath = NULL;
-+  nsCAutoString mimetypePrefString ("modules.plugins.mimetype.");
++  nsAutoCString mimetypePrefString ("modules.plugins.mimetype.");
 +  mimetypePrefString.Append(aMimeType);
 +  const char *mimetypePrefChar = mimetypePrefString.get();
 +  nsAdoptingCString pluginPath = Preferences::GetCString(mimetypePrefChar);

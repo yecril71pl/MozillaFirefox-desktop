@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.0
 BuildRequires:  mozilla-nss-devel >= 3.13.5
-Version:        10.0.9
+Version:        10.0.10
 Release:        0
-%define         releasedate 2012100700
-%define         version_internal 10.0.9
+%define         releasedate 2012102400
+%define         version_internal 10.0.10
 %define         apiversion 10
-%define         uaweight 1000009
+%define         uaweight 1000010
 Summary:        Mozilla Runtime Environment ESR
 License:        MPL-1.1 or GPL-2.0+ or LGPL-2.1+
 Group:          Productivity/Other
@@ -75,6 +75,7 @@ Patch2:         mozilla-pkgconfig.patch
 Patch3:         idldir.patch
 Patch4:         mozilla-nongnome-proxies.patch
 Patch5:         mozilla-prefer_plugin_pref.patch
+Patch6:         mozilla-sqlite-nfs.patch
 Patch9:         mozilla-language.patch
 Patch11:        mozilla-ntlm-full-path.patch
 Patch12:        mozilla-dump_syms-static.patch
@@ -195,6 +196,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch9 -p1
 %patch11 -p1
 %patch12 -p1

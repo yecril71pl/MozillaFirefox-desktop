@@ -24,39 +24,6 @@ diff --git a/content/base/src/nsContentUtils.cpp b/content/base/src/nsContentUti
  #include "mozilla/Base64.h"
  #include "mozilla/Preferences.h"
  #include "nsDOMMutationObserver.h"
-@@ -6706,26 +6709,23 @@ nsContentUtils::FindInternalContentViewe
-         }
-         return docFactory.forget();
-       }
-     }
-   }
- #endif
- 
- #ifdef MOZ_GSTREAMER
--  if (nsHTMLMediaElement::IsH264Enabled()) {
--    for (unsigned int i = 0; i < ArrayLength(nsHTMLMediaElement::gH264Types); ++i) {
--      const char* type = nsHTMLMediaElement::gH264Types[i];
--      if (!strcmp(aType, type)) {
--        docFactory = do_GetService("@mozilla.org/content/document-loader-factory;1");
--        if (docFactory && aLoaderType) {
--          *aLoaderType = TYPE_CONTENT;
--        }
--        return docFactory.forget();
-+  if (nsHTMLMediaElement::IsGStreamerEnabled()) {
-+    if (nsGStreamerDecoder::CanHandleMediaType(aType, nullptr)) {
-+      docFactory = do_GetService("@mozilla.org/content/document-loader-factory;1");
-+      if (docFactory && aLoaderType) {
-+        *aLoaderType = TYPE_CONTENT;
-       }
-+      return docFactory.forget();
-     }
-   }
- #endif
- 
- #ifdef MOZ_MEDIA_PLUGINS
-   if (nsHTMLMediaElement::IsMediaPluginsEnabled() &&
-       nsHTMLMediaElement::IsMediaPluginsType(nsDependentCString(aType))) {
-     docFactory = do_GetService("@mozilla.org/content/document-loader-factory;1");
 diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/content/public/nsHTMLMediaElement.h
 --- a/content/html/content/public/nsHTMLMediaElement.h
 +++ b/content/html/content/public/nsHTMLMediaElement.h
@@ -81,20 +48,18 @@ diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/con
    // Returns true if we should handle this MIME type when it appears
    // as an <object> or as a toplevel page. If, in practice, our support
    // for the type is more limited than appears in the wild, we should return
-@@ -303,20 +305,17 @@ public:
- #ifdef MOZ_WEBM
-   static bool IsWebMEnabled();
+@@ -305,19 +307,16 @@ public:
    static bool IsWebMType(const nsACString& aType);
    static const char gWebMTypes[2][11];
    static char const *const gWebMCodecs[4];
  #endif
  
  #ifdef MOZ_GSTREAMER
--  static bool IsH264Enabled();
+   static bool IsGStreamerEnabled();
+   static bool IsGStreamerSupportedType(const nsACString& aType);
 -  static bool IsH264Type(const nsACString& aType);
 -  static const char gH264Types[3][16];
 -  static char const *const gH264Codecs[7];
-+  static bool IsGStreamerEnabled();
  #endif
  
  #ifdef MOZ_WIDGET_GONK
@@ -106,7 +71,7 @@ diff --git a/content/html/content/public/nsHTMLMediaElement.h b/content/html/con
 diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/content/src/nsHTMLMediaElement.cpp
 --- a/content/html/content/src/nsHTMLMediaElement.cpp
 +++ b/content/html/content/src/nsHTMLMediaElement.cpp
-@@ -2128,55 +2128,32 @@ nsHTMLMediaElement::IsWebMType(const nsA
+@@ -2128,51 +2128,34 @@ nsHTMLMediaElement::IsWebMType(const nsA
        return true;
      }
    }
@@ -135,29 +100,22 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
 -  "video/quicktime",
 -};
 -
--bool
--nsHTMLMediaElement::IsH264Enabled()
-+bool nsHTMLMediaElement::IsGStreamerEnabled()
+ bool
+ nsHTMLMediaElement::IsGStreamerEnabled()
  {
--  return Preferences::GetBool("media.h264.enabled");
--}
+   return Preferences::GetBool("media.gstreamer.enabled");
+ }
 -
 -bool
 -nsHTMLMediaElement::IsH264Type(const nsACString& aType)
 -{
--  if (!IsH264Enabled()) {
--    return false;
--  }
--
 -  for (uint32_t i = 0; i < ArrayLength(gH264Types); ++i) {
 -    if (aType.EqualsASCII(gH264Types[i])) {
 -      return true;
 -    }
 -  }
--
 -  return false;
-+  return Preferences::GetBool("media.gstreamer.enabled");
- }
+-}
  #endif
  
  #ifdef MOZ_WIDGET_GONK
@@ -165,7 +123,8 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
    "audio/mpeg",
    "audio/mp4",
    "video/mp4",
-@@ -2262,18 +2239,22 @@ nsHTMLMediaElement::IsDASHMPDType(const 
+   "video/3gpp",
+@@ -2257,18 +2240,22 @@ nsHTMLMediaElement::IsDASHMPDType(const 
  
    return false;
  }
@@ -189,7 +148,7 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
  #endif
  #ifdef MOZ_OGG
    if (IsOggType(nsDependentCString(aMIMEType))) {
-@@ -2297,20 +2278,22 @@ nsHTMLMediaElement::CanHandleMediaType(c
+@@ -2292,20 +2279,22 @@ nsHTMLMediaElement::CanHandleMediaType(c
    if (IsDASHMPDType(nsDependentCString(aMIMEType))) {
      // DASH manifest uses WebM codecs only.
      *aCodecList = gWebMCodecs;
@@ -216,7 +175,7 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
    }
  #endif
  #ifdef MOZ_MEDIA_PLUGINS
-@@ -2331,17 +2314,17 @@ bool nsHTMLMediaElement::ShouldHandleMed
+@@ -2326,17 +2315,17 @@ bool nsHTMLMediaElement::ShouldHandleMed
    if (IsOggType(nsDependentCString(aMIMEType)))
      return true;
  #endif
@@ -235,7 +194,7 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
    }
  #endif
  #ifdef MOZ_MEDIA_PLUGINS
-@@ -2372,26 +2355,31 @@ nsHTMLMediaElement::GetCanPlay(const nsA
+@@ -2367,26 +2356,31 @@ nsHTMLMediaElement::GetCanPlay(const nsA
  {
    nsContentTypeParser parser(aType);
    nsAutoString mimeType;
@@ -272,27 +231,99 @@ diff --git a/content/html/content/src/nsHTMLMediaElement.cpp b/content/html/cont
    // of the 'codecs' parameter
    nsCharSeparatedTokenizer tokenizer(codecs, ',');
    bool expectMoreTokens = false;
-@@ -2486,17 +2474,19 @@ nsHTMLMediaElement::CreateDecoder(const 
+@@ -2425,46 +2419,41 @@ nsHTMLMediaElement::CanPlayType(const ns
+ }
+ 
+ #ifdef MOZ_GSTREAMER
+ bool
+ nsHTMLMediaElement::IsGStreamerSupportedType(const nsACString& aMimeType)
+ {
+   if (!IsGStreamerEnabled())
+     return false;
+-  if (IsH264Type(aMimeType))
++
++  const char *type;
++  NS_CStringGetData(aMimeType, &type, nullptr);
++  if (nsGStreamerDecoder::CanHandleMediaType(type, nullptr))
+     return true;
+-  if (!Preferences::GetBool("media.prefer-gstreamer", false))
+-    return false;
+-#ifdef MOZ_WEBM
+-  if (IsWebMType(aMimeType))
+-    return true;
+-#endif
+-#ifdef MOZ_OGG
+-  if (IsOggType(aMimeType))
+-    return true;
+-#endif
++
+   return false;
+ }
+ #endif
+ 
+ already_AddRefed<nsMediaDecoder>
+ nsHTMLMediaElement::CreateDecoder(const nsACString& aType)
+ {
+ #ifdef MOZ_GSTREAMER
+   // When enabled, use GStreamer for H.264, but not for codecs handled by our
+   // bundled decoders, unless the "media.prefer-gstreamer" pref is set.
+-  if (IsGStreamerSupportedType(aType)) {
+-    nsRefPtr<nsGStreamerDecoder> decoder = new nsGStreamerDecoder();
+-    if (decoder->Init(this)) {
+-      return decoder.forget();
++  if (!Preferences::GetBool("media.prefer-gstreamer", false)) {
++    if (IsGStreamerSupportedType(aType)) {
++      nsRefPtr<nsGStreamerDecoder> decoder = new nsGStreamerDecoder();
++      if (decoder->Init(this)) {
++        return decoder.forget();
++      }
+     }
+   }
+ #endif
+-
+ #ifdef MOZ_RAW
+   if (IsRawType(aType)) {
+     nsRefPtr<nsRawDecoder> decoder = new nsRawDecoder();
+     if (decoder->Init(this)) {
+       return decoder.forget();
+     }
+   }
+ #endif
+@@ -2503,25 +2492,33 @@ nsHTMLMediaElement::CreateDecoder(const 
+ #ifdef MOZ_WEBM
+   if (IsWebMType(aType)) {
+     nsRefPtr<nsWebMDecoder> decoder = new nsWebMDecoder();
+     if (decoder->Init(this)) {
+       return decoder.forget();
+     }
+   }
+ #endif
+-
+ #ifdef MOZ_DASH
+   if (IsDASHMPDType(aType)) {
      nsRefPtr<nsDASHDecoder> decoder = new nsDASHDecoder();
      if (decoder->Init(this)) {
        return decoder.forget();
      }
    }
  #endif
++#ifdef MOZ_GSTREAMER
++  // use GStreamer as fallback if not preferred
++  if (IsGStreamerSupportedType(aType)) {
++    nsRefPtr<nsGStreamerDecoder> decoder = new nsGStreamerDecoder();
++    if (decoder->Init(this)) {
++      return decoder.forget();
++    }
++  }
++#endif
  
- #ifdef MOZ_GSTREAMER 
--  if (IsH264Type(aType)) {
-+  const char *type;
-+  NS_CStringGetData(aType, &type, NULL);
-+  if (nsGStreamerDecoder::CanHandleMediaType(type, NULL)) {
-     nsRefPtr<nsGStreamerDecoder> decoder = new nsGStreamerDecoder();
-     if (decoder->Init(this)) {
-       return decoder.forget();
-     }
-   }
- #endif
    return nullptr;
  }
+ 
+ nsresult nsHTMLMediaElement::InitializeDecoderAsClone(nsMediaDecoder* aOriginal)
+ {
+   NS_ASSERTION(mLoadingSrc, "mLoadingSrc must already be set");
+   NS_ASSERTION(mDecoder == nullptr, "Shouldn't have a decoder");
 diff --git a/content/media/gstreamer/Makefile.in b/content/media/gstreamer/Makefile.in
 --- a/content/media/gstreamer/Makefile.in
 +++ b/content/media/gstreamer/Makefile.in
@@ -371,11 +402,11 @@ new file mode 100644
 +#define ENTRY_FORMAT(entry) entry[0]
 +#define ENTRY_CAPS(entry) entry[1]
 +
-+nsGStreamerFormatHelper* nsGStreamerFormatHelper::gInstance = NULL;
++nsGStreamerFormatHelper* nsGStreamerFormatHelper::gInstance = nullptr;
 +
 +nsGStreamerFormatHelper *nsGStreamerFormatHelper::Instance() {
 +  if (!gInstance) {
-+    gst_init(NULL, NULL);
++    gst_init(nullptr, nullptr);
 +    gInstance = new nsGStreamerFormatHelper();
 +  }
 +
@@ -383,7 +414,7 @@ new file mode 100644
 +}
 +
 +nsGStreamerFormatHelper::nsGStreamerFormatHelper()
-+  : mFactories(NULL),
++  : mFactories(nullptr),
 +    mCookie(0)
 +{
 +  const char *containers[3][2] = {
@@ -428,7 +459,7 @@ new file mode 100644
 +  unsigned int i;
 +
 +  /* convert aMIMEType to gst container caps */
-+  const char *capsString = NULL;
++  const char *capsString = nullptr;
 +  for (i = 0; i < G_N_ELEMENTS(mContainers); i++) {
 +    if (!strcmp(ENTRY_FORMAT(mContainers[i]), aMIMEType)) {
 +      capsString = ENTRY_CAPS(mContainers[i]);
@@ -438,7 +469,7 @@ new file mode 100644
 +
 +  if (!capsString) {
 +    /* we couldn't find any matching caps */
-+    return NULL;
++    return nullptr;
 +  }
 +
 +  GstCaps *caps = gst_caps_from_string(capsString);
@@ -451,7 +482,7 @@ new file mode 100644
 +  nsCCharSeparatedTokenizer tokenizer(codecs, ',');
 +  while (tokenizer.hasMoreTokens()) {
 +    const nsCSubstring& codec = tokenizer.nextToken();
-+    capsString = NULL;
++    capsString = nullptr;
 +
 +    for (i = 0; i < G_N_ELEMENTS(mCodecs); i++) {
 +      if (codec.Equals(ENTRY_FORMAT(mCodecs[i]))) {
@@ -462,7 +493,7 @@ new file mode 100644
 +
 +    if (!capsString) {
 +      gst_caps_unref(caps);
-+      return NULL;
++      return nullptr;
 +    }
 +
 +    GstCaps *tmp = gst_caps_from_string(capsString);
@@ -483,7 +514,7 @@ new file mode 100644
 +   * structure */
 +  for (unsigned int i = 0; i < gst_caps_get_size(aCaps); i++) {
 +    GstStructure *s = gst_caps_get_structure(aCaps, i);
-+    GstCaps *caps = gst_caps_new_full(gst_structure_copy(s), NULL);
++    GstCaps *caps = gst_caps_new_full(gst_structure_copy(s), nullptr);
 +    list = gst_element_factory_list_filter (factories, caps, GST_PAD_SINK, FALSE);
 +    gst_caps_unref(caps);
 +    if (!list) {
@@ -549,25 +580,3 @@ new file mode 100644
 +};
 +
 +#endif
-diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
---- a/modules/libpref/src/init/all.js
-+++ b/modules/libpref/src/init/all.js
-@@ -164,17 +164,17 @@ pref("media.wave.enabled", true);
- #endif
- #ifdef MOZ_WEBM
- pref("media.webm.enabled", true);
- #endif
- #ifdef MOZ_DASH
- pref("media.dash.enabled", true);
- #endif
- #ifdef MOZ_GSTREAMER
--pref("media.h264.enabled", true);
-+pref("media.gstreamer.enabled", true);
- #endif
- #ifdef MOZ_WEBRTC
- pref("media.navigator.enabled", false);
- pref("media.peerconnection.enabled", false);
- pref("media.navigator.permission.disabled", false);
- #else
- #ifdef ANDROID
- pref("media.navigator.enabled", true);

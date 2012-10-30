@@ -95,7 +95,7 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
 Patch12:        mozilla-arm-disable-edsp.patch
-Patch13:        mozilla-gstreamer.patch
+Patch13:        mozilla-gstreamer-803287.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
 Patch16:        mozilla-webrtc.patch

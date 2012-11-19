@@ -1,9 +1,19 @@
 -------------------------------------------------------------------
-Wed Oct 24 06:24:39 UTC 2012 - wr@rosenauer.org
+Sat Nov 17 06:40:46 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 17.0b3
+- update to Firefox 17.0 (bnc#790140)
 - rebased patches
-- use internal NSPR for now (bmo#776877)
+- disabled WebRTC since build is broken (bmo#776877)
+
+-------------------------------------------------------------------
+Wed Oct 24 08:27:29 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 16.0.2 (bnc#786522)
+  * MFSA 2012-90/CVE-2012-4194/CVE-2012-4195/CVE-2012-4196
+    (bmo#800666, bmo#793121, bmo#802557)
+    Fixes for Location object issues
+- bring back Obsoletes for libproxy's mozjs plugin for distributions
+  before 12.2 to avoid crashes
 
 -------------------------------------------------------------------
 Thu Oct 11 01:51:16 UTC 2012 - wr@rosenauer.org

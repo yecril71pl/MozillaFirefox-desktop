@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1269 @@
+@@ -0,0 +1,1273 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -696,6 +696,9 @@ new file mode 100644
 +                      command="Social:ToggleNotifications"
 +                      label="&social.toggleNotifications.label;"
 +                      accesskey="&social.toggleNotifications.accesskey;"/>
++            <menuseparator/>
++            <menuitem id="social-remove-menuitem"
++                      oncommand="SocialUI.disableWithConfirmation();"/>
 +          </menupopup>
 +        </toolbarbutton>
 +      </toolbaritem>
@@ -1083,7 +1086,8 @@ new file mode 100644
 +              observes="socialSidebarBroadcaster"/>
 +    <vbox id="social-sidebar-box"
 +          class="chromeclass-extrachrome"
-+          observes="socialSidebarBroadcaster">
++          observes="socialSidebarBroadcaster"
++          persist="width">
 +      <browser id="social-sidebar-browser"
 +               type="content"
 +               disableglobalhistory="true"

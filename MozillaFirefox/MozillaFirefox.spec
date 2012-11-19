@@ -17,9 +17,9 @@
 #
 
 
-%define major 16
-%define mainver %major.99
-%define update_channel beta
+%define major 17
+%define mainver %major.0
+%define update_channel release
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012102300
+%define         releasedate 2012111600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -276,7 +276,7 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-#ac_add_options --with-system-nspr
+ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
@@ -289,6 +289,7 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
+ac_add_options --disable-webrtc   # webrtc build is broken for system NSPR
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

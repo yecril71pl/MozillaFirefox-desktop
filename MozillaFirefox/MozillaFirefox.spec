@@ -231,6 +231,12 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+# SLE patches
+%if %suse_version <= 1110
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%endif
 #
 %patch30 -p1
 %if %suse_version >= 1110
@@ -242,12 +248,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
-# SLE patches
-%if %suse_version <= 1110
-%patch401 -p1
-%patch402 -p1
-%patch403 -p1
-%endif
 
 %build
 # no need to add build time to binaries

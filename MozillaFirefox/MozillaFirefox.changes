@@ -44,6 +44,9 @@ Tue Nov 20 19:52:02 UTC 2012 - wr@rosenauer.org
 Tue Nov 20 15:42:55 UTC 2012 - pcerny@suse.com
 
 - build on SLE11
+  * mozilla-gcc43-enums.patch
+  * mozilla-gcc43-template_hacks.patch
+  * mozilla-gcc43-templates_instantiation.patch
 
 -------------------------------------------------------------------
 Wed Oct 24 08:27:29 UTC 2012 - wr@rosenauer.org

@@ -98,6 +98,10 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
+# SLE11 patches
+Patch20:        mozilla-gcc43-enums.patch
+Patch21:        mozilla-gcc43-template_hacks.patch
+Patch22:        mozilla-gcc43-templates_instantiation.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -238,6 +242,12 @@ cd $RPM_BUILD_DIR/mozilla
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+# SLE patches
+%if %suse_version <= 1110
+%patch401 -p1
+%patch402 -p1
+%patch403 -p1
+%endif
 
 %build
 # no need to add build time to binaries

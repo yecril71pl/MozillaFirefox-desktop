@@ -1,0 +1,26 @@
+# HG changeset patch
+# Parent 993c5b5a44ca18c5273b74c75704b418c2477d28
+bmo#783505 - bump gcc version required for building without template hacks
+
+diff --git a/js/src/jstypedarray.cpp b/js/src/jstypedarray.cpp
+--- a/js/src/jstypedarray.cpp
++++ b/js/src/jstypedarray.cpp
+@@ -1404,17 +1404,17 @@ class TypedArrayTemplate
+     // retrieves a given Value, probably from a slot on the object.
+     template<Value ValueGetter(JSObject *obj)>
+     static JSBool
+     Getter(JSContext *cx, unsigned argc, Value *vp)
+     {
+         CallArgs args = CallArgsFromVp(argc, vp);
+         // FIXME: Hack to keep us building with gcc 4.2. Remove this once we
+         // drop support for gcc 4.2. See bug 783505 for the details.
+-#if defined(__GNUC__) && __GNUC_MINOR__ <= 2
++#if defined(__GNUC__) && __GNUC_MINOR__ <= 3
+         return CallNonGenericMethod(cx, IsThisClass, GetterImpl<ValueGetter>, args);
+ #else
+         return CallNonGenericMethod<ThisTypeArray::IsThisClass,
+                                     ThisTypeArray::GetterImpl<ValueGetter> >(cx, args);
+ #endif
+     }
+ 
+     // Define an accessor for a read-only property that invokes a native getter

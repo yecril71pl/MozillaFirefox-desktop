@@ -1,0 +1,20 @@
+# HG changeset patch
+# Parent 2e78665a1ab70f4dc3884965428bda14da684ef6
+bmo#732340 - explicitly instantiate templates
+
+diff --git a/gfx/harfbuzz/src/hb-ot-layout.cc b/gfx/harfbuzz/src/hb-ot-layout.cc
+--- a/gfx/harfbuzz/src/hb-ot-layout.cc
++++ b/gfx/harfbuzz/src/hb-ot-layout.cc
+@@ -479,8 +479,12 @@ hb_ot_layout_position_lookup (hb_font_t 
+   return hb_ot_layout_from_face (font->face)->gpos->position_lookup (&c, lookup_index);
+ }
+ 
+ void
+ hb_ot_layout_position_finish (hb_font_t *font, hb_buffer_t *buffer, hb_bool_t zero_width_attached_marks)
+ {
+   GPOS::position_finish (font, buffer, zero_width_attached_marks);
+ }
++
++template int SortedArrayOf<Record<LangSys> >::search<unsigned int>(unsigned int const &) const;
++template int SortedArrayOf<Record<Script> >::search<unsigned int>(unsigned int const &) const;
++template int SortedArrayOf<IntType<unsigned short> >::search<unsigned int>(unsigned int const &) const;

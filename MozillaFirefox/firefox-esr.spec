@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox
+# spec file for package firefox-esr
 #
 # Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2012 Wolfgang Rosenauer
@@ -21,7 +21,7 @@
 %define mainver %major.0
 %define update_channel release
 
-Name:           MozillaFirefox
+Name:           firefox-esr
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -55,15 +55,22 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 Version:        %{mainver}
 Release:        0
 %define         releasedate 2012111600
-Provides:       firefox = %{mainver}
-Provides:       firefox = %{version}-%{release}
+Provides:       firefox-esr = %{mainver}
 Provides:       web_browser
 Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
-Summary:        Mozilla Firefox Web Browser
+Conflicts:      firefox
+# replace older MozillaFirefox packages for dists up to 11.2
+%if %suse_version < 1130
+Provides:       MozillaFirefox = %{version}
+Obsoletes:      MozillaFirefox < %{version}
+%else
+Conflicts:      MozillaFirefox
+%endif
+Summary:        Mozilla Firefox Web Browser ESR
 License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
 Url:            http://www.mozilla.org/
@@ -124,11 +131,7 @@ Recommends:     libcanberra0
 %define progname firefox
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
-%if %suse_version > 1130
 %define desktop_file_name firefox
-%else
-%define desktop_file_name %{name}
-%endif
 ### build options
 %define branding 1
 %define localize 1
@@ -158,33 +161,46 @@ Development files for Firefox to make packaging of addons easier.
 %if %localize
 
 %package translations-common
-Summary:        Common translations for MozillaFirefox
+Summary:        Common translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
+%if %suse_version < 1130
+Provides:       MozillaFirefox-translations-common = %{version}
+Obsoletes:      MozillaFirefox-translations-common < %{version}
+%else
+Conflicts:      MozillaFirefox-translations-common
+%endif
 
 %description translations-common
 This package contains several common languages for the user interface
 of MozillaFirefox.
 
 %package translations-other
-Summary:        Extra translations for MozillaFirefox
+Summary:        Extra translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
+%if %suse_version < 1130
+Provides:       MozillaFirefox-translations-other = %{version}
+Obsoletes:      MozillaFirefox-translations-other < %{version}
+%else
+Conflicts:      MozillaFirefox-translations-other
+%endif
 
 %description translations-other
 This package contains rarely used languages for the user interface
-of MozillaFirefox.
+of Firefox.
 %endif
 
 %package branding-upstream
-Summary:        Upstream branding for MozillaFirefox
+Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 5.0
 Conflicts:      otherproviders(%{name}-branding)
+Conflicts:      otherproviders(MozillaFirefox-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -
 #BRAND: /usr/lib/firefox/browserconfig.properties that contains the
@@ -197,7 +213,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
 
 %description branding-upstream
-This package provides upstream look and feel for MozillaFirefox.
+This package provides upstream look and feel for Firefox.
 
 
 %if %crashreporter
@@ -299,7 +315,7 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
-ac_add_options --disable-webrtc   # webrtc build is broken for system NSPR
+#ac_add_options --disable-webrtc   # webrtc build is broken for system NSPR
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

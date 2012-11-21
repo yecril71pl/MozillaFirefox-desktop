@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CHANNEL="release"
+CHANNEL="esr17"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_17_0_RELEASE"
+RELEASE_TAG="FIREFOX_17_0esr_RELEASE"
 VERSION="17.0"
 
 # mozilla

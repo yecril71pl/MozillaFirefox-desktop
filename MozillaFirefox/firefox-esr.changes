@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov 21 10:34:54 UTC 2012 - wr@rosenauer.org
+
+- rebrand package to firefox-esr
+
+-------------------------------------------------------------------
 Tue Nov 20 19:52:02 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 17.0 (bnc#790140)

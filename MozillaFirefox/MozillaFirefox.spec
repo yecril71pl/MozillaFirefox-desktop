@@ -18,8 +18,8 @@
 
 
 %define major 17
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012102500
+%define         releasedate 2012112100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -131,7 +131,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -159,7 +159,7 @@ Development files for Firefox to make packaging of addons easier.
 %if %localize
 
 %package translations-common
-Summary:        Common translations for MozillaFirefox
+Summary:        Common translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
@@ -167,10 +167,10 @@ Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-common
 This package contains several common languages for the user interface
-of MozillaFirefox.
+of Firefox.
 
 %package translations-other
-Summary:        Extra translations for MozillaFirefox
+Summary:        Extra translations for Firefox
 Group:          System/Localization
 Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
@@ -178,11 +178,11 @@ Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
 This package contains rarely used languages for the user interface
-of MozillaFirefox.
+of Firefox.
 %endif
 
 %package branding-upstream
-Summary:        Upstream branding for MozillaFirefox
+Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = 5.0
 Conflicts:      otherproviders(%{name}-branding)
@@ -198,7 +198,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
 
 %description branding-upstream
-This package provides upstream look and feel for MozillaFirefox.
+This package provides upstream look and feel for Firefox.
 
 
 %if %crashreporter

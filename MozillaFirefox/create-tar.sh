@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="aurora"
+CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
-VERSION="17.98"
+VERSION="17.99"
 
 # mozilla
 echo "cloning $BRANCH..."

@@ -1,5 +1,5 @@
 #
-# spec file for package xulrunner
+# spec file for package xulrunner-esr
 #
 # Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2012 Wolfgang Rosenauer
@@ -17,7 +17,7 @@
 #
 
 
-Name:           xulrunner
+Name:           xulrunner-esr
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -56,12 +56,14 @@ Group:          Productivity/Other
 Url:            http://www.mozilla.org/
 Provides:       gecko
 %ifarch %ix86
-Provides:       xulrunner-32bit = %{version}-%{release}
+Provides:       %{name}-32bit = %{version}-%{release}
 %endif
+# conflict with regular xulrunner
+Conflicts:      xulrunner
 Source:         xulrunner-%{version}-source.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
 Source2:        find-external-requires.sh
-Source3:        %{name}-rpmlintrc
+Source3:        xulrunner-rpmlintrc
 Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh
@@ -77,6 +79,10 @@ Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
 Patch14:        mozilla-ppc.patch
+# SLE11 patches
+Patch20:        mozilla-gcc43-enums.patch
+Patch21:        mozilla-gcc43-template_hacks.patch
+Patch22:        mozilla-gcc43-templates_instantiation.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -191,6 +197,12 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch9 -p1
 %endif
 %patch14 -p1
+# SLE patches
+%if %suse_version <= 1110
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%endif
 
 %build
 # no need to add build time to binaries

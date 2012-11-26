@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Nov 26 11:11:38 UTC 2012 - wr@rosenauer.org
+
+- fix KDE integration for file dialogs
+
+-------------------------------------------------------------------
 Tue Nov 20 19:52:02 UTC 2012 - wr@rosenauer.org
 
 - update to Firefox 17.0 (bnc#790140)

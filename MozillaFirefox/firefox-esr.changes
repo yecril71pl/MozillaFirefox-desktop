@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Nov 26 11:07:48 UTC 2012 - wr@rosenauer.org
+
+- fix KDE integration for file dialogs
+
+-------------------------------------------------------------------
 Wed Nov 21 10:34:54 UTC 2012 - wr@rosenauer.org
 
 - rebrand package to firefox-esr

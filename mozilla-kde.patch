@@ -45,7 +45,7 @@ diff --git a/modules/libpref/src/Preferences.cpp b/modules/libpref/src/Preferenc
  #include "prefapi.h"
  #include "prefread.h"
  #include "prefapi_private_data.h"
-@@ -896,16 +897,34 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+@@ -950,16 +951,34 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
  
  static nsresult pref_LoadPrefsInDirList(const char *listId)
  {
@@ -80,7 +80,7 @@ diff --git a/modules/libpref/src/Preferences.cpp b/modules/libpref/src/Preferenc
      return NS_OK;
  
    bool hasMore;
-@@ -921,17 +940,17 @@ static nsresult pref_LoadPrefsInDirList(
+@@ -975,17 +994,17 @@ static nsresult pref_LoadPrefsInDirList(
  
      nsAutoCString leaf;
      path->GetNativeLeafName(leaf);
@@ -99,7 +99,7 @@ diff --git a/modules/libpref/src/Preferences.cpp b/modules/libpref/src/Preferenc
  {
    nsZipItemPtr<char> manifest(jarReader, name, true);
    NS_ENSURE_TRUE(manifest.Buffer(), NS_ERROR_NOT_AVAILABLE);
-@@ -1025,28 +1044,40 @@ static nsresult pref_InitInitialObjects(
+@@ -1079,28 +1098,40 @@ static nsresult pref_InitInitialObjects(
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MACOSX)
@@ -3109,27 +3109,40 @@ diff --git a/widget/gtk2/nsFilePicker.cpp b/widget/gtk2/nsFilePicker.cpp
  
    mFilters.AppendElement(filter);
    mFilterNames.AppendElement(name);
-@@ -369,16 +373,19 @@ nsFilePicker::GetFiles(nsISimpleEnumerat
-   return NS_ERROR_FAILURE;
- }
+@@ -388,16 +392,32 @@ nsFilePicker::Show(int16_t *aReturn)
  
  NS_IMETHODIMP
- nsFilePicker::Show(int16_t *aReturn)
+ nsFilePicker::Open(nsIFilePickerShownCallback *aCallback)
  {
-   NS_ENSURE_ARG_POINTER(aReturn);
+   // Can't show two dialogs concurrently with the same filepicker
+   if (mRunning)
+     return NS_ERROR_NOT_AVAILABLE;
  
-+  if( nsKDEUtils::kdeSupport())
-+    return kdeFileDialog(aReturn);
++  // KDE file picker is not handled via callback
++  if( nsKDEUtils::kdeSupport()) {
++    int16_t result;
++    mCallback = aCallback;
++    mRunning = true;
++    kdeFileDialog(&result);
++    if (mCallback) {
++      mCallback->Done(result);
++      mCallback = nullptr;
++    } else {
++      mResult = result;
++    }
++    mRunning = false;
++    return NS_OK;
++  }
 +
-   nsresult rv = Open(nullptr);
-   if (NS_FAILED(rv))
-     return rv;
+   nsXPIDLCString title;
+   title.Adopt(ToNewUTF8String(mTitle));
  
-   while (mRunning) {
-     g_main_context_iteration(nullptr, TRUE);
-   }
+   GtkWindow *parent_widget = get_gtk_window_for_nsiwidget(mParentWidget);
  
-@@ -588,8 +595,235 @@ nsFilePicker::Done(GtkWidget* file_choos
+   GtkFileChooserAction action = GetGtkFileChooserAction(mMode);
+   const gchar *accept_button = (action == GTK_FILE_CHOOSER_ACTION_SAVE)
+                                ? GTK_STOCK_SAVE : GTK_STOCK_OPEN;
+@@ -588,8 +608,235 @@ nsFilePicker::Done(GtkWidget* file_choos
    if (mCallback) {
      mCallback->Done(result);
      mCallback = nullptr;

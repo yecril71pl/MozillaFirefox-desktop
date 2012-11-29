@@ -1,6 +1,10 @@
 -------------------------------------------------------------------
-Mon Nov 26 11:07:48 UTC 2012 - wr@rosenauer.org
+Thu Nov 29 20:13:39 UTC 2012 - wr@rosenauer.org
 
+- update to Firefox 17.0.1
+  * revert some useragent changes introduced in 17.0
+  * leaving private browsing with social enabled doesn't reset all
+    social components (bmo#815042)
 - fix KDE integration for file dialogs
 
 -------------------------------------------------------------------

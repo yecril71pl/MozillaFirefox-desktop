@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.2
 BuildRequires:  mozilla-nss-devel >= 3.13.6
-Version:        17.0
+Version:        17.0.1
 Release:        0
-%define         releasedate 2012111600
-%define         version_internal 17.0
+%define         releasedate 2012112800
+%define         version_internal 17.0.1
 %define         apiversion 17
-%define         uaweight 1700000
+%define         uaweight 1700001
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other

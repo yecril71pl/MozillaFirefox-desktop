@@ -315,7 +315,7 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
-#ac_add_options --disable-webrtc   # webrtc build is broken for system NSPR
+ac_add_options --disable-webrtc   # webrtc build is broken for system NSPR
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG

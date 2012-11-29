@@ -1,11 +1,20 @@
 -------------------------------------------------------------------
-Wed Nov 21 08:54:09 UTC 2012 - wr@rosenauer.org
+Thu Nov 29 20:22:22 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 18.0b1
+- update to Firefox 18.0b2
   * requires NSS 3.14
   * removed obsolete SLE11 patches (mozilla-gcc43*)
 - ported patches
 - reenable WebRTC
+
+-------------------------------------------------------------------
+Thu Nov 29 19:56:51 UTC 2012 - wr@rosenauer.org
+
+- update to Firefox 17.0.1
+  * revert some useragent changes introduced in 17.0
+  * leaving private browsing with social enabled doesn't reset all
+    social components (bmo#815042)
+- fix KDE integration for file dialogs
 
 -------------------------------------------------------------------
 Tue Nov 20 19:52:02 UTC 2012 - wr@rosenauer.org

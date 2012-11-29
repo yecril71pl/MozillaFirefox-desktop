@@ -1846,8 +1846,8 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -572,18 +572,20 @@
- @BINPATH@/@PREF_DIR@/services-sync.js
+@@ -579,18 +579,20 @@
+ @BINPATH@/@PREF_DIR@/healthreport-prefs.js
  #endif
  @BINPATH@/greprefs.js
  @BINPATH@/defaults/autoconfig/platform.js

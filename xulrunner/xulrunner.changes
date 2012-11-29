@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 29 20:04:34 UTC 2012 - wr@rosenauer.org
+
+- update to 17.0.1
+  * regression/compatibility fixes
+
+-------------------------------------------------------------------
 Tue Nov 20 20:15:23 UTC 2012 - wr@rosenauer.org
 
 - update to 17.0 (bnc#790140)

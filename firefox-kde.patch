@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1273 @@
+@@ -0,0 +1,1274 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -578,6 +578,7 @@ new file mode 100644
 +            <image id="password-notification-icon" class="notification-anchor-icon" role="button"/>
 +            <image id="webapps-notification-icon" class="notification-anchor-icon" role="button"/>
 +            <image id="plugins-notification-icon" class="notification-anchor-icon" role="button"/>
++            <image id="blocked-plugins-notification-icon" class="notification-anchor-icon" role="button"/>
 +          </box>
 +          <!-- Use onclick instead of normal popup= syntax since the popup
 +               code fires onmousedown, and hence eats our favicon drag events.

@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8099,16 +8099,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8108,16 +8108,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -42,11 +42,11 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
 --- a/security/manager/ssl/src/Makefile.in
 +++ b/security/manager/ssl/src/Makefile.in
-@@ -90,10 +90,13 @@ DEFINES += \
-   -DDLL_SUFFIX=\"$(DLL_SUFFIX)\" \
+@@ -93,10 +93,13 @@ DEFINES += \
    $(NULL)
  
  EXPORTS += \
+   CryptoTask.h \
    nsNSSShutDown.h \
    ScopedNSSTypes.h \
    $(NULL)
@@ -59,12 +59,14 @@ diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Mak
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
 --- a/security/manager/ssl/src/nsNSSComponent.cpp
 +++ b/security/manager/ssl/src/nsNSSComponent.cpp
-@@ -1,14 +1,21 @@
- /* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
-  *
+@@ -3,16 +3,23 @@
   * This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
   * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ #ifdef MOZ_LOGGING
+ #define FORCE_PR_LOG 1
+ #endif
  
 +#ifdef MOZ_ENABLE_NSSHELPER
 +#pragma GCC visibility push(default)
@@ -81,7 +83,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsNetUtil.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsDirectoryService.h"
-@@ -1730,18 +1737,34 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1735,18 +1742,34 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs

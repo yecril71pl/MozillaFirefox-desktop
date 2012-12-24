@@ -2114,7 +2114,7 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
                                            const int32_t      aPort,
                                            nsACString & aResult)
  {
-+  if( nsKDEUtils::kdeSupport()) {
++  if (nsKDEUtils::kdeSupport())
 +    return GetProxyFromKDE(aScheme, aHost, aPort, aResult);
 +
    if (mProxySettings) {

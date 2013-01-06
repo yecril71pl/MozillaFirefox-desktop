@@ -1,7 +1,12 @@
 -------------------------------------------------------------------
+Sat Jan  5 14:42:07 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 17.0.2esr (bnc#796895)
+
+-------------------------------------------------------------------
 Thu Nov 29 20:13:39 UTC 2012 - wr@rosenauer.org
 
-- update to Firefox 17.0.1
+- update to Firefox 17.0.1esr
   * revert some useragent changes introduced in 17.0
   * leaving private browsing with social enabled doesn't reset all
     social components (bmo#815042)

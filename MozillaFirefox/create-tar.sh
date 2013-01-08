@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="beta"
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_18_0b5_RELEASE"
-VERSION="17.99"
+RELEASE_TAG="FIREFOX_18_0_RELEASE"
+VERSION="18.0"
 
 # mozilla
 echo "cloning $BRANCH..."

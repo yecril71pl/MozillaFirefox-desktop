@@ -1,11 +1,13 @@
 -------------------------------------------------------------------
-Thu Nov 29 20:22:22 UTC 2012 - wr@rosenauer.org
+Sun Jan  6 21:54:18 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 18.0b2
-  * requires NSS 3.14
+- update to Firefox 18.0 (bnc#796895)
+  * requires NSS 3.14.1
   * removed obsolete SLE11 patches (mozilla-gcc43*)
 - ported patches
 - reenable WebRTC
+- added mozilla-libproxy-compat.patch for libproxy API compat
+  on openSUSE 11.2 and earlier
 
 -------------------------------------------------------------------
 Thu Nov 29 19:56:51 UTC 2012 - wr@rosenauer.org

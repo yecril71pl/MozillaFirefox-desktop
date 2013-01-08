@@ -17,9 +17,9 @@
 #
 
 
-%define major 17
-%define mainver %major.99
-%define update_channel beta
+%define major 18
+%define mainver %major.0
+%define update_channel release
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -45,7 +45,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.4
-BuildRequires:  mozilla-nss-devel >= 3.14
+BuildRequires:  mozilla-nss-devel >= 3.14.1
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2012122200
+%define         releasedate 2013010500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -99,6 +99,7 @@ Patch13:        mozilla-gstreamer-803287.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
 Patch16:        mozilla-webrtc.patch
+Patch17:        mozilla-libproxy-compat.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -233,6 +234,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

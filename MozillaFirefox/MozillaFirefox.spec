@@ -1,7 +1,7 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2012 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -100,6 +100,7 @@ Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
 Patch16:        mozilla-webrtc.patch
 Patch17:        mozilla-libproxy-compat.patch
+Patch18:        mozilla-backout-677092.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -235,6 +236,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

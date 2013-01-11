@@ -2,12 +2,52 @@
 Sun Jan  6 21:54:18 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 18.0 (bnc#796895)
-  * requires NSS 3.14.1
-  * removed obsolete SLE11 patches (mozilla-gcc43*)
-- ported patches
+  * MFSA 2013-01/CVE-2013-0749/CVE-2013-0769/CVE-2013-0770
+    Miscellaneous memory safety hazards
+  * MFSA 2013-02/CVE-2013-0760/CVE-2013-0762/CVE-2013-0766/CVE-2013-0767
+    CVE-2013-0761/CVE-2013-0763/CVE-2013-0771/CVE-2012-5829
+    Use-after-free and buffer overflow issues found using Address Sanitizer
+  * MFSA 2013-03/CVE-2013-0768 (bmo#815795)
+    Buffer Overflow in Canvas
+  * MFSA 2013-04/CVE-2012-0759 (bmo#802026)
+    URL spoofing in addressbar during page loads
+  * MFSA 2013-05/CVE-2013-0744 (bmo#814713)
+    Use-after-free when displaying table with many columns and column groups
+  * MFSA 2013-06/CVE-2013-0751 (bmo#790454)
+    Touch events are shared across iframes
+  * MFSA 2013-07/CVE-2013-0764 (bmo#804237)
+    Crash due to handling of SSL on threads
+  * MFSA 2013-08/CVE-2013-0745 (bmo#794158)
+    AutoWrapperChanger fails to keep objects alive during garbage collection
+  * MFSA 2013-09/CVE-2013-0746 (bmo#816842)
+    Compartment mismatch with quickstubs returned values
+  * MFSA 2013-10/CVE-2013-0747 (bmo#733305)
+    Event manipulation in plugin handler to bypass same-origin policy
+  * MFSA 2013-11/CVE-2013-0748 (bmo#806031)
+    Address space layout leaked in XBL objects
+  * MFSA 2013-12/CVE-2013-0750 (bmo#805121)
+    Buffer overflow in Javascript string concatenation
+  * MFSA 2013-13/CVE-2013-0752 (bmo#805024)
+    Memory corruption in XBL with XML bindings containing SVG
+  * MFSA 2013-14/CVE-2013-0757 (bmo#813901)
+    Chrome Object Wrapper (COW) bypass through changing prototype
+  * MFSA 2013-15/CVE-2013-0758 (bmo#813906)
+    Privilege escalation through plugin objects
+  * MFSA 2013-16/CVE-2013-0753 (bmo#814001)
+    Use-after-free in serializeToStream
+  * MFSA 2013-17/CVE-2013-0754 (bmo#814026)
+    Use-after-free in ListenerManager
+  * MFSA 2013-18/CVE-2013-0755 (bmo#814027)
+    Use-after-free in Vibrate
+  * MFSA 2013-19/CVE-2013-0756 (bmo#814029)
+    Use-after-free in Javascript Proxy objects
+- requires NSS 3.14.1 (MFSA 2013-20, CVE-2013-0743)
+- removed obsolete SLE11 patches (mozilla-gcc43*)
 - reenable WebRTC
 - added mozilla-libproxy-compat.patch for libproxy API compat
   on openSUSE 11.2 and earlier
+- backed out restartless language packs as it broke multi-locale
+  setup (bmo#677092, bmo#818468)
 
 -------------------------------------------------------------------
 Thu Nov 29 19:56:51 UTC 2012 - wr@rosenauer.org

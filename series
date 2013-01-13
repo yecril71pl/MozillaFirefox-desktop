@@ -21,6 +21,7 @@ mozilla-idldir.patch
 mozilla-webrtc.patch
 mozilla-libproxy-compat.patch
 mozilla-backout-677092.patch
+mozilla-webrtc-ppc.patch
 #mozilla-disable-neon-option.patch
 
 # Firefox patches

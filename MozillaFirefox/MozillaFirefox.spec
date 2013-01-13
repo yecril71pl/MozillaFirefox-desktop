@@ -101,6 +101,7 @@ Patch15:        mozilla-gstreamer-760140.patch
 Patch16:        mozilla-webrtc.patch
 Patch17:        mozilla-libproxy-compat.patch
 Patch18:        mozilla-backout-677092.patch
+Patch19:        mozilla-webrtc-ppc.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -237,6 +238,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

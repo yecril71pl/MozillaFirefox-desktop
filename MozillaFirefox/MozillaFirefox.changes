@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Jan 12 17:25:11 UTC 2013 - schwab@linux-m68k.org
+
+- Fix WebRTC to build on powerpc
+
+-------------------------------------------------------------------
 Sun Jan  6 21:54:18 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 18.0 (bnc#796895)

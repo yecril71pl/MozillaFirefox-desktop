@@ -14,11 +14,9 @@ mozilla-ntlm-full-path.patch
 mozilla-repo.patch
 mozilla-sle11.patch
 mozilla-arm-disable-edsp.patch
-mozilla-gstreamer-803287.patch
 mozilla-gstreamer-760140.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
-mozilla-webrtc.patch
 mozilla-libproxy-compat.patch
 mozilla-backout-677092.patch
 #mozilla-disable-neon-option.patch

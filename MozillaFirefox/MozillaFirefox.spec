@@ -18,8 +18,8 @@
 
 
 %define major 18
-%define mainver %major.0
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -95,10 +95,8 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
 Patch12:        mozilla-arm-disable-edsp.patch
-Patch13:        mozilla-gstreamer-803287.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
-Patch16:        mozilla-webrtc.patch
 Patch17:        mozilla-libproxy-compat.patch
 Patch18:        mozilla-backout-677092.patch
 # Firefox/browser
@@ -231,10 +229,8 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 #%patch11 -p1
 %patch12 -p1
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 %patch17 -p1
 %patch18 -p1
 #

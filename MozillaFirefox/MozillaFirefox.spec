@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013010500
+%define         releasedate 2013011600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -98,7 +98,7 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
 Patch17:        mozilla-libproxy-compat.patch
-Patch18:        mozilla-backout-677092.patch
+Patch18:        mozilla-webrtc-ppc.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch

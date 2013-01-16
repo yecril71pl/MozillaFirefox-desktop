@@ -1,0 +1,102 @@
+Submitted-by: schwab@@linux-m68k.org
+Subject: fix PPC build
+References: (not delivered with the patch but apparently mix of:)
+Bug 750869 - Support WebRTC for Android in our build system (TM:20)
+Bug 814693 - Build failure on Debian powerpc (TM:20)
+
+diff --git a/media/webrtc/shared_libs.mk b/media/webrtc/shared_libs.mk
+--- a/media/webrtc/shared_libs.mk
++++ b/media/webrtc/shared_libs.mk
+@@ -23,33 +23,39 @@ WEBRTC_LIBS = \
+   $(call EXPAND_LIBNAME_PATH,video_render_module,$(DEPTH)/media/webrtc/trunk/src/modules/modules_video_render_module) \
+   $(call EXPAND_LIBNAME_PATH,video_engine_core,$(DEPTH)/media/webrtc/trunk/src/video_engine/video_engine_video_engine_core) \
+   $(call EXPAND_LIBNAME_PATH,media_file,$(DEPTH)/media/webrtc/trunk/src/modules/modules_media_file) \
+   $(call EXPAND_LIBNAME_PATH,rtp_rtcp,$(DEPTH)/media/webrtc/trunk/src/modules/modules_rtp_rtcp) \
+   $(call EXPAND_LIBNAME_PATH,udp_transport,$(DEPTH)/media/webrtc/trunk/src/modules/modules_udp_transport) \
+   $(call EXPAND_LIBNAME_PATH,bitrate_controller,$(DEPTH)/media/webrtc/trunk/src/modules/modules_bitrate_controller) \
+   $(call EXPAND_LIBNAME_PATH,remote_bitrate_estimator,$(DEPTH)/media/webrtc/trunk/src/modules/modules_remote_bitrate_estimator) \
+   $(call EXPAND_LIBNAME_PATH,video_processing,$(DEPTH)/media/webrtc/trunk/src/modules/modules_video_processing) \
+-  $(call EXPAND_LIBNAME_PATH,video_processing_sse2,$(DEPTH)/media/webrtc/trunk/src/modules/modules_video_processing_sse2) \
+   $(call EXPAND_LIBNAME_PATH,voice_engine_core,$(DEPTH)/media/webrtc/trunk/src/voice_engine/voice_engine_voice_engine_core) \
+   $(call EXPAND_LIBNAME_PATH,audio_conference_mixer,$(DEPTH)/media/webrtc/trunk/src/modules/modules_audio_conference_mixer) \
+   $(call EXPAND_LIBNAME_PATH,audio_device,$(DEPTH)/media/webrtc/trunk/src/modules/modules_audio_device) \
+   $(call EXPAND_LIBNAME_PATH,audio_processing,$(DEPTH)/media/webrtc/trunk/src/modules/modules_audio_processing) \
+   $(call EXPAND_LIBNAME_PATH,aec,$(DEPTH)/media/webrtc/trunk/src/modules/modules_aec) \
+-  $(call EXPAND_LIBNAME_PATH,aec_sse2,$(DEPTH)/media/webrtc/trunk/src/modules/modules_aec_sse2) \
+   $(call EXPAND_LIBNAME_PATH,apm_util,$(DEPTH)/media/webrtc/trunk/src/modules/modules_apm_util) \
+   $(call EXPAND_LIBNAME_PATH,aecm,$(DEPTH)/media/webrtc/trunk/src/modules/modules_aecm) \
+   $(call EXPAND_LIBNAME_PATH,agc,$(DEPTH)/media/webrtc/trunk/src/modules/modules_agc) \
+   $(call EXPAND_LIBNAME_PATH,ns,$(DEPTH)/media/webrtc/trunk/src/modules/modules_ns) \
+   $(call EXPAND_LIBNAME_PATH,yuv,$(DEPTH)/media/webrtc/trunk/third_party/libyuv/libyuv_libyuv) \
+   $(call EXPAND_LIBNAME_PATH,webrtc_jpeg,$(DEPTH)/media/webrtc/trunk/src/common_video/common_video_webrtc_jpeg) \
+   $(call EXPAND_LIBNAME_PATH,nicer,$(DEPTH)/media/mtransport/third_party/nICEr/nicer_nicer) \
+   $(call EXPAND_LIBNAME_PATH,nrappkit,$(DEPTH)/media/mtransport/third_party/nrappkit/nrappkit_nrappkit) \
+   $(NULL)
+ 
++# if we're on an intel arch, we want SSE2 optimizations
++ifneq (,$(INTEL_ARCHITECTURE))
++WEBRTC_LIBS += \
++  $(call EXPAND_LIBNAME_PATH,video_processing_sse2,$(DEPTH)/media/webrtc/trunk/src/modules/modules_video_processing_sse2) \
++  $(call EXPAND_LIBNAME_PATH,aec_sse2,$(DEPTH)/media/webrtc/trunk/src/modules/modules_aec_sse2) \
++  $(NULL)
++endif
++
+ # If you enable one of these codecs in webrtc_config.gypi, you'll need to re-add the
+ # relevant library from this list:
+ #
+ #  $(call EXPAND_LIBNAME_PATH,G722,$(DEPTH)/media/webrtc/trunk/src/modules/modules_G722) \
+ #  $(call EXPAND_LIBNAME_PATH,iLBC,$(DEPTH)/media/webrtc/trunk/src/modules/modules_iLBC) \
+ #  $(call EXPAND_LIBNAME_PATH,iSAC,$(DEPTH)/media/webrtc/trunk/src/modules/modules_iSAC) \
+ #  $(call EXPAND_LIBNAME_PATH,iSACFix,$(DEPTH)/media/webrtc/trunk/src/modules/modules_iSACFix) \
+ #
+diff --git a/media/webrtc/trunk/src/modules/audio_coding/codecs/pcm16b/pcm16b.gypi b/media/webrtc/trunk/src/modules/audio_coding/codecs/pcm16b/pcm16b.gypi
+--- a/media/webrtc/trunk/src/modules/audio_coding/codecs/pcm16b/pcm16b.gypi
++++ b/media/webrtc/trunk/src/modules/audio_coding/codecs/pcm16b/pcm16b.gypi
+@@ -6,16 +6,19 @@
+ # in the file PATENTS.  All contributing project authors may
+ # be found in the AUTHORS file in the root of the source tree.
+ 
+ {
+   'targets': [
+     {
+       'target_name': 'PCM16B',
+       'type': '<(library)',
++      'dependencies': [
++        '<(webrtc_root)/common_audio/common_audio.gyp:signal_processing',
++      ],
+       'include_dirs': [
+         'include',
+       ],
+       'direct_dependent_settings': {
+         'include_dirs': [
+           'include',
+         ],
+       },
+diff --git a/media/webrtc/trunk/src/typedefs.h b/media/webrtc/trunk/src/typedefs.h
+--- a/media/webrtc/trunk/src/typedefs.h
++++ b/media/webrtc/trunk/src/typedefs.h
+@@ -52,16 +52,24 @@
+ //#define WEBRTC_ARCH_ARMEL
+ #define WEBRTC_ARCH_32_BITS
+ #define WEBRTC_ARCH_LITTLE_ENDIAN
+ #define WEBRTC_LITTLE_ENDIAN
+ #elif defined(__MIPSEL__)
+ #define WEBRTC_ARCH_32_BITS
+ #define WEBRTC_ARCH_LITTLE_ENDIAN
+ #define WEBRTC_LITTLE_ENDIAN
++#elif defined(__powerpc__)
++#if defined(__powerpc64__)
++#define WEBRTC_ARCH_64_BITS
++#else
++#define WEBRTC_ARCH_32_BITS
++#endif
++#define WEBRTC_ARCH_BIG_ENDIAN
++#define WEBRTC_BIG_ENDIAN
+ #else
+ #error Please add support for your architecture in typedefs.h
+ #endif
+ 
+ #if defined(__SSE2__) || defined(_MSC_VER)
+ #define WEBRTC_USE_SSE2
+ #endif
+ 

@@ -18,7 +18,7 @@ mozilla-gstreamer-760140.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
-mozilla-backout-677092.patch
+mozilla-webrtc-ppc.patch
 #mozilla-disable-neon-option.patch
 
 # Firefox patches

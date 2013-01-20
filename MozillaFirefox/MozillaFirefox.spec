@@ -18,7 +18,7 @@
 
 
 %define major 18
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
 
 Name:           MozillaFirefox

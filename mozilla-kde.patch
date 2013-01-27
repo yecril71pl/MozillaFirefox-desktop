@@ -2187,7 +2187,7 @@ diff --git a/toolkit/xre/nsKDEUtils.cpp b/toolkit/xre/nsKDEUtils.cpp
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/xre/nsKDEUtils.cpp
-@@ -0,0 +1,341 @@
+@@ -0,0 +1,339 @@
 +/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -2353,8 +2353,6 @@ new file mode 100644
 +
 +bool nsKDEUtils::command( nsIArray* command, nsIArray** output)
 +    {
-+    NS_ENSURE_ARG( command );
-+
 +    nsTArray<nsCString> in;
 +    PRUint32 length;
 +    command->GetLength( &length );
@@ -3168,7 +3166,7 @@ diff --git a/widget/gtk2/nsFilePicker.cpp b/widget/gtk2/nsFilePicker.cpp
 +
 +static PRInt32 windowToXid( nsIWidget* widget )
 +    {
-+    GtkWindow *parent_widget = get_gtk_window_for_nsiwidget( widget );
++    GtkWindow *parent_widget = GTK_WINDOW(widget->GetNativeData(NS_NATIVE_SHELLWIDGET));
 +    GdkWindow* gdk_window = gtk_widget_get_window( gtk_widget_get_toplevel( GTK_WIDGET( parent_widget )));
 +    return GDK_WINDOW_XID( gdk_window );
 +    }
@@ -3276,7 +3274,7 @@ diff --git a/widget/gtk2/nsFilePicker.cpp b/widget/gtk2/nsFilePicker.cpp
 +        }
 +
 +    nsTArray<nsCString> output;
-+    if( nsKDEUtils::commandBlockUi( command, get_gtk_window_for_nsiwidget( mParentWidget ), &output ))
++    if( nsKDEUtils::commandBlockUi( command, GTK_WINDOW(mParentWidget->GetNativeData(NS_NATIVE_SHELLWIDGET)), &output ))
 +        {
 +        *aReturn = nsIFilePicker::returnOK;
 +        mFiles.Clear();
@@ -3364,7 +3362,7 @@ diff --git a/widget/gtk2/nsFilePicker.cpp b/widget/gtk2/nsFilePicker.cpp
 +        }
 +
 +    nsTArray<nsCString> output;
-+    if( nsKDEUtils::commandBlockUi( command, get_gtk_window_for_nsiwidget( mParentWidget ), &output ))
++    if( nsKDEUtils::commandBlockUi( command, GTK_WINDOW(mParentWidget->GetNativeData(NS_NATIVE_SHELLWIDGET)), &output ))
 +        {
 +        *aReturn = nsIFilePicker::returnOK;
 +        mFileURL = output.Length() > 0 ? output[ 0 ] : nsCString();

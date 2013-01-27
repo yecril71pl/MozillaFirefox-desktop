@@ -1614,7 +1614,7 @@ new file mode 100644
 +
 +    cmdstr->SetData( NS_LITERAL_CSTRING( "RUN" ));
 +    command->AppendElement( cmdstr, false );
-+    nsCAutoString app;
++    nsAutoCString app;
 +    nsresult rv = aApplication->GetNativePath( app );
 +    NS_ENSURE_SUCCESS( rv, rv );
 +    appstr->SetData( app );
@@ -1653,7 +1653,7 @@ new file mode 100644
 +    if( !resstr )
 +        return NS_ERROR_FAILURE;
 +
-+    nsCAutoString path;
++    nsAutoCString path;
 +    resstr->GetData( path );
 +    if (path.IsEmpty())
 +        return NS_ERROR_FAILURE;

@@ -4,6 +4,7 @@ Wed Jan 16 20:51:55 UTC 2013 - wr@rosenauer.org
 - update to Firefox 18.0.1
   * blocklist updates
   * backed out bmo#677092 (removed patch)
+  * fixed problems involving HTTP proxy transactions
 
 -------------------------------------------------------------------
 Sat Jan 12 17:25:11 UTC 2013 - schwab@linux-m68k.org

@@ -2,7 +2,7 @@
 # spec file for package MozillaFirefox
 #
 # Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2012 Wolfgang Rosenauer
+#               2006-2013 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013011600
+%define         releasedate 2013012400
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

@@ -2,8 +2,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_18_0_RELEASE"
-VERSION="18.0"
+RELEASE_TAG="FIREFOX_18_0_2_RELEASE"
+VERSION="18.0.2"
 
 # mozilla
 echo "cloning $BRANCH..."

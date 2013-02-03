@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sat Feb  2 08:40:52 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 18.0.2
+  * blocklist and CTP updates
+  * fixes in JS engine
+
+-------------------------------------------------------------------
 Wed Jan 16 20:51:55 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 18.0.1

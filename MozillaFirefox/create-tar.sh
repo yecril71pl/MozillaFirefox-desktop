@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="beta"
+CHANNEL="aurora"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_19_0b4_RELEASE"
-VERSION="18.99"
+RELEASE_TAG="default"
+VERSION="19.98"
 
 # mozilla
 echo "cloning $BRANCH..."

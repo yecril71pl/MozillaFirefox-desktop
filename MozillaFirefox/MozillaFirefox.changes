@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Feb  8 06:49:08 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 19.0b5
+  * removed obsolete mozilla-webrtc.patch
+
+-------------------------------------------------------------------
 Sat Feb  2 08:40:52 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 18.0.2

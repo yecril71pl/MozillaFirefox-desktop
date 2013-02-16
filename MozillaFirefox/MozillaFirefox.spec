@@ -17,9 +17,9 @@
 #
 
 
-%define major 18
-%define mainver %major.99
-%define update_channel beta
+%define major 19
+%define mainver %major.0
+%define update_channel release
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013020700
+%define         releasedate 2013021500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

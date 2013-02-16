@@ -1,8 +1,10 @@
 -------------------------------------------------------------------
-Fri Feb  8 06:49:08 UTC 2013 - wr@rosenauer.org
+Sat Feb 16 07:08:55 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 19.0b5
-  * removed obsolete mozilla-webrtc.patch
+- update to Firefox 19.0
+  * removed obsolete patches
+    - mozilla-webrtc.patch
+    - mozilla-gstreamer-803287.patch
 
 -------------------------------------------------------------------
 Sat Feb  2 08:40:52 UTC 2013 - wr@rosenauer.org

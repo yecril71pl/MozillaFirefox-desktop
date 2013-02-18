@@ -28,3 +28,4 @@ firefox-kde-114.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
 firefox-branded-icons.patch
+firefox-712763.patch

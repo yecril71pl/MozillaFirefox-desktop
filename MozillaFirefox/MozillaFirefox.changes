@@ -5,6 +5,7 @@ Sat Feb 16 07:08:55 UTC 2013 - wr@rosenauer.org
   * removed obsolete patches
     - mozilla-webrtc.patch
     - mozilla-gstreamer-803287.patch
+- added patch to fix session restore window order (bmo#712763)
 
 -------------------------------------------------------------------
 Sat Feb  2 08:40:52 UTC 2013 - wr@rosenauer.org

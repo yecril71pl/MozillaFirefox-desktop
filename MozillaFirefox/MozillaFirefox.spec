@@ -106,6 +106,7 @@ Patch32:        firefox-kde-114.patch
 Patch33:        firefox-no-default-ualocale.patch
 Patch34:        firefox-multilocale-chrome.patch
 Patch35:        firefox-branded-icons.patch
+Patch36:        firefox-712763.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -244,6 +245,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+%patch36 -p1
 
 %build
 # no need to add build time to binaries

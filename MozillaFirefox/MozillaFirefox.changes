@@ -1,10 +1,28 @@
 -------------------------------------------------------------------
 Sat Feb 16 07:08:55 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 19.0
-  * removed obsolete patches
-    - mozilla-webrtc.patch
-    - mozilla-gstreamer-803287.patch
+- update to Firefox 19.0 (bnc#804248)
+  * MFSA 2013-21/CVE-2013-0783/2013-0784
+    Miscellaneous memory safety hazards
+  * MFSA 2013-22/CVE-2013-0772 (bmo#801366)
+    Out-of-bounds read in image rendering
+  * MFSA 2013-23/CVE-2013-0765 (bmo#830614)
+    Wrapped WebIDL objects can be wrapped again
+  * MFSA 2013-24/CVE-2013-0773 (bmo#809652)
+    Web content bypass of COW and SOW security wrappers
+  * MFSA 2013-25/CVE-2013-0774 (bmo#827193)
+    Privacy leak in JavaScript Workers
+  * MFSA 2013-26/CVE-2013-0775 (bmo#831095)
+    Use-after-free in nsImageLoadingContent
+  * MFSA 2013-27/CVE-2013-0776 (bmo#796475)
+    Phishing on HTTPS connection through malicious proxy
+  * MFSA 2013-28/CVE-2013-0780/CVE-2013-0782/CVE-2013-0777/
+    CVE-2013-0778/CVE-2013-0779/CVE-2013-0781
+    Use-after-free, out of bounds read, and buffer overflow issues
+    found using Address Sanitizer
+- removed obsolete patches
+  * mozilla-webrtc.patch
+  * mozilla-gstreamer-803287.patch
 - added patch to fix session restore window order (bmo#712763)
 
 -------------------------------------------------------------------

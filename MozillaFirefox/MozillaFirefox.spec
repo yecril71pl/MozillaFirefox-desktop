@@ -18,8 +18,8 @@
 
 
 %define major 19
-%define mainver %major.0
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
@@ -44,8 +44,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.4
-BuildRequires:  mozilla-nss-devel >= 3.14.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.5
+BuildRequires:  mozilla-nss-devel >= 3.14.2
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -95,10 +95,9 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-disable-neon-option.patch
 Patch12:        mozilla-arm-disable-edsp.patch
-Patch14:        mozilla-ppc.patch
-Patch15:        mozilla-gstreamer-760140.patch
-Patch17:        mozilla-libproxy-compat.patch
-Patch18:        mozilla-webrtc-ppc.patch
+Patch13:        mozilla-ppc.patch
+Patch14:        mozilla-gstreamer-760140.patch
+Patch15:        mozilla-libproxy-compat.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -230,10 +229,9 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 #%patch11 -p1
 %patch12 -p1
+%patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch17 -p1
-%patch18 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

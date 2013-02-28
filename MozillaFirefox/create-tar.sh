@@ -2,7 +2,7 @@
 
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="default"
+RELEASE_TAG="FIREFOX_20_0b2_RELEASE"
 VERSION="19.99"
 
 # mozilla

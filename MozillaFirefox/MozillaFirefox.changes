@@ -2,6 +2,7 @@
 Thu Feb 28 22:12:37 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 20.0b2
+- use GStreamer 1.0 starting with 12.3 (mozilla-gstreamer-1.patch)
 
 -------------------------------------------------------------------
 Thu Feb 28 22:06:36 UTC 2013 - wr@rosenauer.org

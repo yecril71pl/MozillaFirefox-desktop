@@ -98,6 +98,7 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-gstreamer-760140.patch
 Patch15:        mozilla-libproxy-compat.patch
+Patch16:        mozilla-gstreamer-1.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -232,6 +233,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110
@@ -302,10 +304,16 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
+%if %suse_version > 1220
+cat << EOF >> $MOZCONFIG
+ac_add_options --enable-gstreamer=1.0
+EOF
+%else
 %if %suse_version > 1140
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-gstreamer
 EOF
+%endif
 %endif
 %if %branding
 cat << EOF >> $MOZCONFIG

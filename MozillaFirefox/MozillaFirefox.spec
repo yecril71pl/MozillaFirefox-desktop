@@ -21,6 +21,12 @@
 %define mainver %major.99
 %define update_channel beta
 
+%if %suse_version > 1220
+%define gstreamer_ver 1.0
+%else
+%define gstreamer_ver 0.10
+%endif
+
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
@@ -48,9 +54,9 @@ BuildRequires:  mozilla-nspr-devel >= 4.9.5
 BuildRequires:  mozilla-nss-devel >= 3.14.2
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
-BuildRequires:  pkgconfig(gstreamer-0.10)
-BuildRequires:  pkgconfig(gstreamer-app-0.10)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
+BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
@@ -304,16 +310,10 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
-%if %suse_version > 1220
-cat << EOF >> $MOZCONFIG
-ac_add_options --enable-gstreamer=1.0
-EOF
-%else
 %if %suse_version > 1140
 cat << EOF >> $MOZCONFIG
-ac_add_options --enable-gstreamer
+ac_add_options --enable-gstreamer=%{gstreamer_ver}
 EOF
-%endif
 %endif
 %if %branding
 cat << EOF >> $MOZCONFIG

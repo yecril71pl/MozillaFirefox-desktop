@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent fb80f99ca86bacbcddaf203f7183e0456f194811
+# Parent 0559be6b60075e1a708ca90e874f922ff200c462
 # User Mike Gorse <mgorse@suse.com>
 
 Bug 806917 - support GStreamer 1.0
@@ -51,6 +51,31 @@ diff --git a/configure.in b/configure.in
         _SAVE_LDFLAGS=$LDFLAGS
         LDFLAGS="$LDFLAGS $GSTREAMER_LIBS -lgstvideo-$GST_API_VERSION"
         AC_TRY_LINK(,[return 0;],_HAVE_LIBGSTVIDEO=1,_HAVE_LIBGSTVIDEO=)
+diff --git a/content/media/gstreamer/GStreamerFormatHelper.cpp b/content/media/gstreamer/GStreamerFormatHelper.cpp
+--- a/content/media/gstreamer/GStreamerFormatHelper.cpp
++++ b/content/media/gstreamer/GStreamerFormatHelper.cpp
+@@ -141,17 +141,21 @@ bool GStreamerFormatHelper::HaveElements
+     }
+     g_list_free(list);
+   }
+ 
+   return true;
+ }
+ 
+ GList* GStreamerFormatHelper::GetFactories() {
++#if GST_VERSION_MAJOR == 1
++  uint32_t cookie = gst_registry_get_feature_list_cookie(gst_registry_get());
++#else
+   uint32_t cookie = gst_default_registry_get_feature_list_cookie ();
++#endif
+   if (cookie != mCookie) {
+     g_list_free(mFactories);
+     mFactories = gst_element_factory_list_get_elements
+         (GST_ELEMENT_FACTORY_TYPE_DEMUXER | GST_ELEMENT_FACTORY_TYPE_DECODER,
+          GST_RANK_MARGINAL);
+     mCookie = cookie;
+   }
+ 
 diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstreamer/GStreamerReader.cpp
 --- a/content/media/gstreamer/GStreamerReader.cpp
 +++ b/content/media/gstreamer/GStreamerReader.cpp

@@ -1,8 +1,15 @@
 -------------------------------------------------------------------
-Thu Feb 28 22:12:37 UTC 2013 - wr@rosenauer.org
+Sat Mar  9 10:20:56 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 20.0b2
+- update to Firefox 20.0b4
 - use GStreamer 1.0 starting with 12.3 (mozilla-gstreamer-1.patch)
+
+-------------------------------------------------------------------
+Thu Mar  7 19:03:32 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 19.0.2 (bnc#808243)
+  * MFSA 2013-29/CVE-2013-0787 (bmo#848644)
+    Use-after-free in HTML Editor
 
 -------------------------------------------------------------------
 Thu Feb 28 22:06:36 UTC 2013 - wr@rosenauer.org

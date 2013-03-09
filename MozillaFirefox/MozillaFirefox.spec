@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013022800
+%define         releasedate 2013030800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

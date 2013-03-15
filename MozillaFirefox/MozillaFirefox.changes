@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Tue Mar 12 23:08:15 UTC 2013 - dmueller@suse.com
+
+- build fixes for armv7hl:
+  * disable debug build as armv7hl does not have enough memory
+  * disable webrtc on armv7hl as it is non-compiling
+
+-------------------------------------------------------------------
+Thu Mar  7 19:03:32 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 19.0.2 (bnc#808243)
+  * MFSA 2013-29/CVE-2013-0787 (bmo#848644)
+    Use-after-free in HTML Editor
+
+-------------------------------------------------------------------
 Thu Feb 28 22:06:36 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 19.0.1

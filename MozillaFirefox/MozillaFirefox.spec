@@ -18,7 +18,7 @@
 
 
 %define major 19
-%define mainver %major.0.1
+%define mainver %major.0.2
 %define update_channel release
 
 Name:           MozillaFirefox
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013022700
+%define         releasedate 2013030600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -268,6 +268,9 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+%ifarch %arm
+export CFLAGS="${CFLAGS/-g/}"
+%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -328,6 +331,7 @@ EOF
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
+ac_add_options --disable-webrtc
 EOF
 %endif
 make -f client.mk build

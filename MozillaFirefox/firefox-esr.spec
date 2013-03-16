@@ -1,8 +1,8 @@
 #
 # spec file for package firefox-esr
 #
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2012 Wolfgang Rosenauer
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2013 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -18,7 +18,7 @@
 
 
 %define major 17
-%define mainver %major.0.2
+%define mainver %major.0.4
 %define update_channel release
 
 Name:           firefox-esr
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013010500
+%define         releasedate 2013030700
 Provides:       firefox-esr = %{mainver}
 Provides:       web_browser
 Provides:       browser(npapi)
@@ -105,6 +105,7 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-gstreamer.patch
 Patch14:        mozilla-ppc.patch
 Patch15:        mozilla-gstreamer-760140.patch
+Patch16:        mozilla-deoptimize.patch
 # SLE11 patches
 Patch20:        mozilla-gcc43-enums.patch
 Patch21:        mozilla-gcc43-template_hacks.patch
@@ -247,8 +248,13 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%if %suse_version == 1120
+%ifarch %x86
+%patch16 -p1
+%endif
+%endif
 # SLE patches
-%if %suse_version <= 1110
+%if %suse_version <= 1120
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -286,6 +292,11 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+%if %suse_version == 1120
+%ifarch %x86
+export CFLAGS="$RPM_OPT_FLAGS -O1 -fno-strict-aliasing"
+%endif
+%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif

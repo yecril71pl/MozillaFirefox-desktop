@@ -1,7 +1,70 @@
 -------------------------------------------------------------------
+Fri Mar  8 08:36:26 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 17.0.4 (bnc#808243)
+  * MFSA 2013-29/CVE-2013-0787 (bmo#848644)
+    Use-after-free in HTML Editor
+
+-------------------------------------------------------------------
+Sat Feb 16 17:16:35 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 17.0.3esr (bnc#804248)
+  * MFSA 2013-21/CVE-2013-0783
+    Miscellaneous memory safety hazards
+  * MFSA 2013-24/CVE-2013-0773 (bmo#809652)
+    Web content bypass of COW and SOW security wrappers
+  * MFSA 2013-25/CVE-2013-0774 (bmo#827193)
+    Privacy leak in JavaScript Workers
+  * MFSA 2013-26/CVE-2013-0775 (bmo#831095)
+    Use-after-free in nsImageLoadingContent
+  * MFSA 2013-27/CVE-2013-0776 (bmo#796475)
+    Phishing on HTTPS connection through malicious proxy
+  * MFSA 2013-28/CVE-2013-0780/CVE-2013-0782
+    Use-after-free, out of bounds read, and buffer overflow issues
+    found using Address Sanitizer
+
+-------------------------------------------------------------------
 Sat Jan  5 14:42:07 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 17.0.2esr (bnc#796895)
+  * MFSA 2013-01/CVE-2013-0749/CVE-2013-0769/CVE-2013-0770
+    Miscellaneous memory safety hazards
+  * MFSA 2013-02/CVE-2013-0760/CVE-2013-0762/CVE-2013-0766/CVE-2013-0767
+    CVE-2013-0761/CVE-2013-0763/CVE-2013-0771/CVE-2012-5829
+    Use-after-free and buffer overflow issues found using Address Sanitizer
+  * MFSA 2013-03/CVE-2013-0768 (bmo#815795)
+    Buffer Overflow in Canvas
+  * MFSA 2013-04/CVE-2012-0759 (bmo#802026)
+    URL spoofing in addressbar during page loads
+  * MFSA 2013-05/CVE-2013-0744 (bmo#814713)
+    Use-after-free when displaying table with many columns and column groups
+  * MFSA 2013-07/CVE-2013-0764 (bmo#804237)
+    Crash due to handling of SSL on threads
+  * MFSA 2013-08/CVE-2013-0745 (bmo#794158)
+    AutoWrapperChanger fails to keep objects alive during garbage collection
+  * MFSA 2013-09/CVE-2013-0746 (bmo#816842)
+    Compartment mismatch with quickstubs returned values
+  * MFSA 2013-10/CVE-2013-0747 (bmo#733305)
+    Event manipulation in plugin handler to bypass same-origin policy
+  * MFSA 2013-11/CVE-2013-0748 (bmo#806031)
+    Address space layout leaked in XBL objects
+  * MFSA 2013-12/CVE-2013-0750 (bmo#805121)
+    Buffer overflow in Javascript string concatenation
+  * MFSA 2013-13/CVE-2013-0752 (bmo#805024)
+    Memory corruption in XBL with XML bindings containing SVG
+  * MFSA 2013-14/CVE-2013-0757 (bmo#813901)
+    Chrome Object Wrapper (COW) bypass through changing prototype
+  * MFSA 2013-15/CVE-2013-0758 (bmo#813906)
+    Privilege escalation through plugin objects
+  * MFSA 2013-16/CVE-2013-0753 (bmo#814001)
+    Use-after-free in serializeToStream
+  * MFSA 2013-17/CVE-2013-0754 (bmo#814026)
+    Use-after-free in ListenerManager
+  * MFSA 2013-18/CVE-2013-0755 (bmo#814027)
+    Use-after-free in Vibrate
+  * MFSA 2013-19/CVE-2013-0756 (bmo#814029)
+    Use-after-free in Javascript Proxy objects
+- requires NSS 3.14.1 (MFSA 2013-20, CVE-2013-0743)
 
 -------------------------------------------------------------------
 Thu Nov 29 20:13:39 UTC 2012 - wr@rosenauer.org

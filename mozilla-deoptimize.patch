@@ -1,0 +1,46 @@
+Decrease optimization level for 11.2-i586 otherwise xpcshell is crashing during build
+
+diff --git a/configure.in b/configure.in
+--- a/configure.in
++++ b/configure.in
+@@ -2051,17 +2051,17 @@ ia64*-hpux*)
+     elif test "$GNU_CC" -o "$GNU_CXX"; then
+         GCC_VERSION=`$CC -v 2>&1 | awk '/^gcc version/ { print $3 }'`
+         case $GCC_VERSION in
+         4.1.*|4.2.*|4.5.*)
+             # -Os is broken on gcc 4.1.x 4.2.x, 4.5.x we need to tweak it to get good results.
+             MOZ_OPTIMIZE_SIZE_TWEAK="-finline-limit=50"
+         esac
+         MOZ_PGO_OPTIMIZE_FLAGS="-O3"
+-        MOZ_OPTIMIZE_FLAGS="-Os -freorder-blocks $MOZ_OPTIMIZE_SIZE_TWEAK"
++        MOZ_OPTIMIZE_FLAGS="-O1 -freorder-blocks $MOZ_OPTIMIZE_SIZE_TWEAK"
+         MOZ_DEBUG_FLAGS="-g"
+     fi
+ 
+     TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
+ 
+     MOZ_MEMORY=1
+ 
+     case "${target_cpu}" in
+diff --git a/js/src/configure.in b/js/src/configure.in
+--- a/js/src/configure.in
++++ b/js/src/configure.in
+@@ -1679,17 +1679,17 @@ ia64*-hpux*)
+     elif test "$GNU_CC" -o "$GNU_CXX"; then
+         GCC_VERSION=`$CC -v 2>&1 | awk '/^gcc version/ { print $3 }'`
+         case $GCC_VERSION in
+         4.1.*|4.2.*|4.5.*)
+             # -Os is broken on gcc 4.1.x 4.2.x, 4.5.x we need to tweak it to get good results.
+             MOZ_OPTIMIZE_SIZE_TWEAK="-finline-limit=50"
+         esac
+         MOZ_PGO_OPTIMIZE_FLAGS="-O3"
+-        MOZ_OPTIMIZE_FLAGS="-O3 -freorder-blocks $MOZ_OPTIMIZE_SIZE_TWEAK"
++        MOZ_OPTIMIZE_FLAGS="-O1 -freorder-blocks $MOZ_OPTIMIZE_SIZE_TWEAK"
+         MOZ_DEBUG_FLAGS="-g"
+     fi
+ 
+     TARGET_NSPR_MDCPUCFG='\"md/_linux.cfg\"'
+ 
+     case "${target_cpu}" in
+     alpha*)
+     	CFLAGS="$CFLAGS -mieee"

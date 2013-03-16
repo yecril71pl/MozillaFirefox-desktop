@@ -18,6 +18,7 @@ mozilla-gstreamer.patch
 mozilla-gstreamer-760140.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
+mozilla-deoptimize.patch
 mozilla-gcc43-enums.patch
 mozilla-gcc43-template_hacks.patch
 mozilla-gcc43-templates_instantiation.patch

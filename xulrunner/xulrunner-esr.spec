@@ -1,8 +1,8 @@
 #
 # spec file for package xulrunner-esr
 #
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2012 Wolfgang Rosenauer
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2013 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.4
 BuildRequires:  mozilla-nss-devel >= 3.14.1
-Version:        17.0.2
+Version:        17.0.4
 Release:        0
-%define         releasedate 2013010500
-%define         version_internal 17.0.2
+%define         releasedate 2013030700
+%define         version_internal 17.0.4
 %define         apiversion 17
-%define         uaweight 1700002
+%define         uaweight 1700004
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other

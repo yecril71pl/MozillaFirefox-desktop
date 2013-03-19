@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013030800
+%define         releasedate 2013031900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -274,6 +274,9 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+%ifarch %arm
+export CFLAGS="${CFLAGS/-g/}"
+%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -334,6 +337,7 @@ EOF
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
+ac_add_options --disable-webrtc
 EOF
 %endif
 make -f client.mk build

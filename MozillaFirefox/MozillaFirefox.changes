@@ -1,8 +1,16 @@
 -------------------------------------------------------------------
-Sat Mar  9 10:20:56 UTC 2013 - wr@rosenauer.org
+Fri Mar 15 23:09:22 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 20.0b4
+- update to Firefox 20.0b5
 - use GStreamer 1.0 starting with 12.3 (mozilla-gstreamer-1.patch)
+- require NSS 3.14.3
+
+-------------------------------------------------------------------
+Tue Mar 12 23:08:15 UTC 2013 - dmueller@suse.com
+
+- build fixes for armv7hl:
+  * disable debug build as armv7hl does not have enough memory
+  * disable webrtc on armv7hl as it is non-compiling
 
 -------------------------------------------------------------------
 Thu Mar  7 19:03:32 UTC 2013 - wr@rosenauer.org

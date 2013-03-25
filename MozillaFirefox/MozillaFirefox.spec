@@ -99,7 +99,6 @@ Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
-Patch11:        mozilla-disable-neon-option.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-gstreamer-760140.patch
@@ -112,11 +111,10 @@ Patch32:        firefox-kde-114.patch
 Patch33:        firefox-no-default-ualocale.patch
 Patch34:        firefox-multilocale-chrome.patch
 Patch35:        firefox-branded-icons.patch
-Patch36:        firefox-712763.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
-Requires:       %{name}-branding > 4.0
+Requires:       %{name}-branding > 20.0
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
@@ -234,7 +232,6 @@ cd $RPM_BUILD_DIR/mozilla
 %if %suse_version < 1120
 %patch10 -p1
 %endif
-#%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
@@ -249,9 +246,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch32 -p1
 %endif
 %patch33 -p1
-%patch34 -p1
+#%patch34 -p1
 %patch35 -p1
-%patch36 -p1
 
 %build
 # no need to add build time to binaries
@@ -268,6 +264,7 @@ fi
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export SOURCE_REPO=$REPO
+export source_repo=$REPO
 export MOZ_SOURCE_REPO=$REPO
 export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
@@ -349,17 +346,17 @@ export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
 make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
-grep amazondotcom dist/firefox/omni.ja
+#grep amazondotcom dist/firefox/omni.ja # FIXME
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
-mkdir -p $RPM_BUILD_ROOT/%{progdir}/distribution/extensions
-mkdir -p $RPM_BUILD_ROOT%{progdir}/searchplugins
-mkdir -p $RPM_BUILD_ROOT%{progdir}/defaults/preferences/
+mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/distribution/extensions
+mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/searchplugins
+mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
 # install kde.js
 %if %suse_version >= 1110
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/kde.js
-install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/defaults/preferences/firefox.js
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/kde.js
+install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/firefox.js
 %endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
@@ -382,17 +379,17 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
   	make -C browser/locales langpack-$locale
 	cp -rL dist/xpi-stage/locale-$locale \
-	       $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org
+	       $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs, profile defaults, and hyphenation from langpack
-	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/defaults
-	rm -rf $RPM_BUILD_ROOT%{progdir}/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
+	rm -rf $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/defaults
+	rm -rf $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
 	  [ "$_match" = "$locale" ] && _matched=1
 	done
 	[ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other
-  	echo %{progdir}/extensions/langpack-$locale@firefox.mozilla.org \
+  	echo %{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org \
 	  >> %{_tmppath}/translations.$_l10ntarget
   esac
 done
@@ -434,15 +431,15 @@ cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/extensions/%{firefox_appid}
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/mozilla/extensions/%{firefox_appid}
 mkdir -p $RPM_BUILD_ROOT/usr/share/pixmaps/
-ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}.png
-ln -sf %{progdir}/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
+ln -sf %{progdir}/browser/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}.png
+ln -sf %{progdir}/browser/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
 %if %branding
 for size in 16 22 24 32 48 256; do
 %else
 for size in 16 32 48; do
 %endif
   mkdir -p $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
-  ln -sf %{progdir}/chrome/icons/default/default$size.png \
+  ln -sf %{progdir}/browser/chrome/icons/default/default$size.png \
          $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
 %suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
@@ -549,23 +546,29 @@ exit 0
 %files
 %defattr(-,root,root)
 %dir %{progdir}
-%dir %{progdir}/chrome/
-%dir %{progdir}/distribution/
-%{progdir}/chrome/icons
+%dir %{progdir}/browser/
+%dir %{progdir}/browser/chrome/
+%dir %{progdir}/browser/extensions/
+%{progdir}/browser/components/
+%{progdir}/browser/defaults
+%{progdir}/browser/icons/
+%{progdir}/browser/chrome/icons
+%{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
+%{progdir}/browser/searchplugins/
+%{progdir}/browser/blocklist.xml
+%{progdir}/browser/chrome.manifest
+%{progdir}/browser/omni.ja
+%dir %{progdir}/browser/distribution/
+%{progdir}/browser/distribution/extensions/
 %{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
-%dir %{progdir}/extensions/
-%{progdir}/distribution/extensions/
-%{progdir}/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
-%{progdir}/icons/
-%{progdir}/searchplugins/
+%{progdir}/webapprt/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/firefox-bin
 %{progdir}/add-plugins.sh
 %{progdir}/application.ini
-%{progdir}/blocklist.xml
 %{progdir}/dependentlibs.list
 %{progdir}/*.so
 %{progdir}/mozilla-xremote-client
@@ -573,14 +576,13 @@ exit 0
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %{progdir}/webapprt-stub
-%{progdir}/webapprt/
+%{progdir}/chrome.manifest
 %if %crashreporter
-%{progdir}/crashreporter-override.ini
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini
 %{progdir}/Throbber-small.gif
+%{progdir}/browser/crashreporter-override.ini
 %endif
-%{progdir}/chrome.manifest
 %{_datadir}/applications/%{desktop_file_name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*
@@ -604,12 +606,12 @@ exit 0
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{progdir}
-%dir %{progdir}/extensions/
+%dir %{progdir}/browser/extensions/
 
 %files translations-other -f %{_tmppath}/translations.other
 %defattr(-,root,root)
 %dir %{progdir}
-%dir %{progdir}/extensions/
+%dir %{progdir}/browser/extensions/
 %endif
 
 # this package does not need to provide files but is needed to fulfill

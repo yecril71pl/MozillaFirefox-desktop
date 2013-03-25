@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 0559be6b60075e1a708ca90e874f922ff200c462
+# Parent bbef353e571ee80b20c52274c7660b49d01985ba
 # User Mike Gorse <mgorse@suse.com>
 
 Bug 806917 - support GStreamer 1.0
@@ -7,7 +7,7 @@ Bug 806917 - support GStreamer 1.0
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -5758,28 +5758,36 @@ fi
+@@ -5706,26 +5706,34 @@ fi
  
  AC_SUBST(MOZ_PULSEAUDIO)
  AC_SUBST(MOZ_PULSEAUDIO_CFLAGS)
@@ -35,13 +35,11 @@ diff --git a/configure.in b/configure.in
 -    # API version, eg 0.10, 1.0 etc
 -    GST_API_VERSION=0.10
      # core/base release number
-     # depend on >= 0.10.33 as that's when the playbin2 source-setup signal was
-     # introduced
--    GST_VERSION=0.10.33
+-    GST_VERSION=0.10.25
 +    if test "$GST_API_VERSION" = "1.0"; then
 +      GST_VERSION=1.0
 +    else
-+      GST_VERSION=0.10.33
++      GST_VERSION=0.10.25
 +    fi
      PKG_CHECK_MODULES(GSTREAMER,
                        gstreamer-$GST_API_VERSION >= $GST_VERSION
@@ -102,7 +100,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
  GStreamerReader::~GStreamerReader()
  {
    MOZ_COUNT_DTOR(GStreamerReader);
-@@ -120,19 +124,26 @@ nsresult GStreamerReader::Init(MediaDeco
+@@ -122,19 +126,26 @@ nsresult GStreamerReader::Init(MediaDeco
    mVideoSink = gst_parse_bin_from_description("capsfilter name=filter ! "
        "appsink name=videosink sync=true max-buffers=1 "
        "caps=video/x-raw-yuv,format=(fourcc)I420"
@@ -128,11 +126,11 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
  #ifdef MOZ_SAMPLE_TYPE_FLOAT32
          "appsink name=audiosink sync=true caps=audio/x-raw-float,"
  #ifdef IS_LITTLE_ENDIAN
-         "channels={1,2},rate=44100,width=32,endianness=1234", TRUE, NULL);
+         "channels={1,2},width=32,endianness=1234", TRUE, NULL);
  #else
-@@ -145,19 +156,25 @@ nsresult GStreamerReader::Init(MediaDeco
+@@ -147,19 +158,25 @@ nsresult GStreamerReader::Init(MediaDeco
  #else
-         "channels={1,2},rate=48000,width=16,endianness=4321", TRUE, NULL);
+         "channels={1,2},width=16,endianness=4321", TRUE, NULL);
  #endif
  #endif
    mAudioAppSink = GST_APP_SINK(gst_bin_get_by_name(GST_BIN(mAudioSink),
@@ -156,8 +154,8 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
        "audio-sink", mAudioSink,
        NULL);
  
-   g_object_connect(mPlayBin, "signal::source-setup",
-@@ -231,17 +248,17 @@ nsresult GStreamerReader::ReadMetadata(V
+   g_signal_connect(G_OBJECT(mPlayBin), "notify::source",
+@@ -236,17 +253,17 @@ nsresult GStreamerReader::ReadMetadata(V
        filter = gst_bin_get_by_name(GST_BIN(mAudioSink), "filter");
      else if (!(current_flags & GST_PLAY_FLAG_VIDEO))
        filter = gst_bin_get_by_name(GST_BIN(mVideoSink), "filter");
@@ -176,7 +174,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
      /* start the pipeline */
      gst_element_set_state(mPlayBin, GST_STATE_PAUSED);
  
-@@ -284,19 +301,24 @@ nsresult GStreamerReader::ReadMetadata(V
+@@ -289,19 +306,24 @@ nsresult GStreamerReader::ReadMetadata(V
        gst_element_set_state(mPlayBin, GST_STATE_NULL);
        gst_message_unref(message);
        return NS_ERROR_FAILURE;
@@ -201,7 +199,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
    }
  
    int n_video = 0, n_audio = 0;
-@@ -365,59 +387,87 @@ bool GStreamerReader::DecodeAudioData()
+@@ -370,59 +392,87 @@ bool GStreamerReader::DecodeAudioData()
  {
    NS_ASSERTION(mDecoder->OnDecodeThread(), "Should be on decode thread.");
  
@@ -289,7 +287,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
      {
        ReentrantMonitorAutoEnter mon(mGstThreadsMonitor);
        timestamp = gst_segment_to_stream_time(&mVideoSegment,
-@@ -431,62 +481,90 @@ bool GStreamerReader::DecodeVideoFrame(b
+@@ -436,62 +486,90 @@ bool GStreamerReader::DecodeVideoFrame(b
      else if (fpsNum && fpsDen)
        /* add 1-frame duration */
        nextTimestamp += gst_util_uint64_scale(GST_USECOND, fpsNum, fpsDen);
@@ -380,7 +378,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
                                   int64_t aStartTime,
                                   int64_t aEndTime,
                                   int64_t aCurrentTime)
-@@ -509,52 +587,62 @@ nsresult GStreamerReader::Seek(int64_t a
+@@ -514,52 +592,62 @@ nsresult GStreamerReader::Seek(int64_t a
  
  nsresult GStreamerReader::GetBuffered(nsTimeRanges* aBuffered,
                                          int64_t aStartTime)
@@ -446,7 +444,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
      aBuffered->Add(start, end);
    }
  
-@@ -563,48 +651,64 @@ nsresult GStreamerReader::GetBuffered(ns
+@@ -568,48 +656,64 @@ nsresult GStreamerReader::GetBuffered(ns
  
  void GStreamerReader::ReadAndPushData(guint aLength)
  {
@@ -512,7 +510,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
    }
  
    /*if (mDecoder->mDuration != -1 &&
-@@ -668,60 +772,95 @@ gboolean GStreamerReader::SeekData(GstAp
+@@ -673,60 +777,95 @@ gboolean GStreamerReader::SeekData(GstAp
    if (NS_SUCCEEDED(rv))
      mByteOffset = mLastReportedByteOffset = aOffset;
    else
@@ -608,7 +606,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
    GStreamerReader *reader = (GStreamerReader *) aUserData;
  
    if (aSink == reader->mVideoAppSink)
-@@ -730,18 +869,22 @@ GstFlowReturn GStreamerReader::NewPrerol
+@@ -735,18 +874,22 @@ GstFlowReturn GStreamerReader::NewPrerol
      reader->AudioPreroll();
    return GST_FLOW_OK;
  }
@@ -632,7 +630,7 @@ diff --git a/content/media/gstreamer/GStreamerReader.cpp b/content/media/gstream
    NS_ASSERTION(mInfo.mAudioChannels != 0, ("audio channels is zero"));
    NS_ASSERTION(mInfo.mAudioChannels > 0 && mInfo.mAudioChannels <= MAX_CHANNELS,
        "invalid audio channels number");
-@@ -749,19 +892,29 @@ void GStreamerReader::AudioPreroll()
+@@ -754,19 +897,29 @@ void GStreamerReader::AudioPreroll()
    gst_caps_unref(caps);
    gst_object_unref(sinkpad);
  }

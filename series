@@ -19,7 +19,6 @@ mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
 mozilla-gstreamer-1.patch
-#mozilla-disable-neon-option.patch
 
 # Firefox patches
 firefox-browser-css.patch
@@ -27,6 +26,5 @@ firefox-kde.patch
 firefox-kde-114.patch
 #firefox-ui-lockdown.patch
 firefox-no-default-ualocale.patch
-firefox-multilocale-chrome.patch
+#firefox-multilocale-chrome.patch
 firefox-branded-icons.patch
-firefox-712763.patch

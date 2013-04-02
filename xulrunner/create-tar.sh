@@ -2,8 +2,8 @@
 
 CHANNEL="esr17"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_17_0_3esr_RELEASE"
-VERSION="17.0.3"
+RELEASE_TAG="FIREFOX_17_0_5esr_RELEASE"
+VERSION="17.0.5"
 
 # mozilla
 echo "cloning $BRANCH..."

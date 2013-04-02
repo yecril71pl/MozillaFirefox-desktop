@@ -1,5 +1,5 @@
 #
-# spec file for package xulrunner-esr
+# spec file for package xulrunner
 #
 # Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2013 Wolfgang Rosenauer
@@ -17,7 +17,7 @@
 #
 
 
-Name:           xulrunner-esr
+Name:           xulrunner
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -56,14 +56,12 @@ Group:          Productivity/Other
 Url:            http://www.mozilla.org/
 Provides:       gecko
 %ifarch %ix86
-Provides:       %{name}-32bit = %{version}-%{release}
+Provides:       xulrunner-32bit = %{version}-%{release}
 %endif
-# conflict with regular xulrunner
-Conflicts:      xulrunner
 Source:         xulrunner-%{version}-source.tar.bz2
 Source1:        l10n-%{version}.tar.bz2
 Source2:        find-external-requires.sh
-Source3:        xulrunner-rpmlintrc
+Source3:        %{name}-rpmlintrc
 Source4:        xulrunner-openSUSE-prefs.js
 Source5:        add-plugins.sh.in
 Source6:        create-tar.sh

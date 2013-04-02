@@ -18,7 +18,7 @@
 
 
 %define major 17
-%define mainver %major.0.4
+%define mainver %major.0.5
 %define update_channel release
 
 Name:           firefox-esr
@@ -44,8 +44,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.4
-BuildRequires:  mozilla-nss-devel >= 3.14.1
+BuildRequires:  mozilla-nspr-devel >= 4.9.5
+BuildRequires:  mozilla-nss-devel >= 3.14.3
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013030700
+%define         releasedate 2013032900
 Provides:       firefox-esr = %{mainver}
 Provides:       web_browser
 Provides:       browser(npapi)
@@ -249,7 +249,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %if %suse_version == 1120
-%ifarch %x86
+%ifarch %ix86
 %patch16 -p1
 %endif
 %endif
@@ -293,7 +293,7 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %if %suse_version == 1120
-%ifarch %x86
+%ifarch %ix86
 export CFLAGS="$RPM_OPT_FLAGS -O1 -fno-strict-aliasing"
 %endif
 %endif

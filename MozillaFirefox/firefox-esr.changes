@@ -1,4 +1,22 @@
 -------------------------------------------------------------------
+Fri Mar 29 16:24:43 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 17.0.5esr (bnc#813026)
+  * requires NSPR 4.9.5 and NSS 3.14.3
+  * MFSA 2013-30/CVE-2013-0788
+    Miscellaneous memory safety hazards
+  * MFSA 2013-31/CVE-2013-0800 (bmo#825721)
+    Out-of-bounds write in Cairo library
+  * MFSA 2013-35/CVE-2013-0796 (bmo#827106)
+    WebGL crash with Mesa graphics driver on Linux
+  * MFSA 2013-36/CVE-2013-0795 (bmo#825697)
+    Bypass of SOW protections allows cloning of protected nodes
+  * MFSA 2013-37/CVE-2013-0794 (bmo#626775)
+    Bypass of tab-modal dialog origin disclosure
+  * MFSA 2013-38/CVE-2013-0793 (bmo#803870)
+    Cross-site scripting (XSS) using timed history navigations
+
+-------------------------------------------------------------------
 Fri Mar  8 08:36:26 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 17.0.4 (bnc#808243)

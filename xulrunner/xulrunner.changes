@@ -83,21 +83,16 @@ Sat Jan  5 14:46:06 UTC 2013 - wr@rosenauer.org
   * MFSA 2013-19/CVE-2013-0756 (bmo#814029)
     Use-after-free in Javascript Proxy objects
 - requires NSS 3.14.1 (MFSA 2013-20, CVE-2013-0743)
-
--------------------------------------------------------------------
-Thu Nov 29 20:15:37 UTC 2012 - wr@rosenauer.org
-
-- update to 17.0.1esr
-  * regression/compatibility fixes
-
--------------------------------------------------------------------
-Thu Nov 22 09:54:46 UTC 2012 - wr@rosenauer.org
-
-- rebrand to xulrunner-esr
 - build on SLE11
   * mozilla-gcc43-enums.patch
   * mozilla-gcc43-template_hacks.patch
   * mozilla-gcc43-templates_instantiation.patch
+
+-------------------------------------------------------------------
+Thu Nov 29 20:04:34 UTC 2012 - wr@rosenauer.org
+
+- update to 17.0.1
+  * regression/compatibility fixes
 
 -------------------------------------------------------------------
 Tue Nov 20 20:15:23 UTC 2012 - wr@rosenauer.org

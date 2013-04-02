@@ -17,9 +17,9 @@
 #
 
 
-%define major 19
-%define mainver %major.99
-%define update_channel beta
+%define major 20
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 1.0
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013031500
+%define         releasedate 2013032900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -117,6 +117,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
 Requires:       %{name}-branding > 4.0
+Conflicts:      %{name}-branding > %{version}
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0

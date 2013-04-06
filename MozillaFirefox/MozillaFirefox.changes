@@ -1,8 +1,15 @@
 -------------------------------------------------------------------
+Fri Apr  5 17:04:11 UTC 2013 - schwab@linux-m68k.org
+
+- Explicitly disable WebRTC support on non-x86, the configure script
+  disables it only half-heartedly
+
+-------------------------------------------------------------------
 Fri Mar 29 22:15:21 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 20.0 (bnc#813026)
   * requires NSPR 4.9.5 and NSS 3.14.3
+  * mozilla-webrtc-ppc.patch included upstream
   * MFSA 2013-30/CVE-2013-0788/CVE-2013-0789
     Miscellaneous memory safety hazards
   * MFSA 2013-31/CVE-2013-0800 (bmo#825721)

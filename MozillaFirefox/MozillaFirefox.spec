@@ -338,6 +338,10 @@ EOF
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
+EOF
+%endif
+%ifnarch %ix86 x86_64
+cat << EOF >> $MOZCONFIG
 ac_add_options --disable-webrtc
 EOF
 %endif

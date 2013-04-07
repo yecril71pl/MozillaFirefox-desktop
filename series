@@ -26,5 +26,5 @@ firefox-kde.patch
 firefox-kde-114.patch
 #firefox-ui-lockdown.patch
 firefox-no-default-ualocale.patch
-#firefox-multilocale-chrome.patch
+firefox-multilocale-chrome.patch
 firefox-branded-icons.patch

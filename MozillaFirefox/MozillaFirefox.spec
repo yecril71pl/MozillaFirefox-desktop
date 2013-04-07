@@ -18,8 +18,8 @@
 
 
 %define major 20
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 1.0
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013031900
+%define         releasedate 2013040100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -136,7 +136,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -246,7 +246,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch32 -p1
 %endif
 %patch33 -p1
-#%patch34 -p1
+%patch34 -p1
 %patch35 -p1
 
 %build
@@ -346,9 +346,9 @@ export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
 make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
-#grep amazondotcom dist/firefox/omni.ja # FIXME
+grep amazondotcom dist/firefox/browser/omni.ja
 # copy tree into RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{progdir}
+mkdir -p $RPM_BUILD_ROOT%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/searchplugins

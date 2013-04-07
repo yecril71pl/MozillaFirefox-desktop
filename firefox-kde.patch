@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1215 @@
+@@ -0,0 +1,1216 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -1104,6 +1104,7 @@ new file mode 100644
 +               type="content"
 +               context="contentAreaContextMenu"
 +               disableglobalhistory="true"
++	       tooltip="aHTMLTooltip"
 +               flex="1"
 +               style="min-width: 14em; width: 18em; max-width: 36em;"/>
 +    </vbox>

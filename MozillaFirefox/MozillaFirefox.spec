@@ -22,7 +22,7 @@
 %define update_channel beta
 
 %if %suse_version > 1220
-%define gstreamer_ver 1.0
+%define gstreamer_ver 0.10
 %else
 %define gstreamer_ver 0.10
 %endif
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013040100
+%define         releasedate 2013041300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -103,7 +103,6 @@ Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-gstreamer-760140.patch
 Patch15:        mozilla-libproxy-compat.patch
-Patch16:        mozilla-gstreamer-1.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -236,7 +235,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110
@@ -312,7 +310,7 @@ EOF
 %endif
 %if %suse_version > 1140
 cat << EOF >> $MOZCONFIG
-ac_add_options --enable-gstreamer=%{gstreamer_ver}
+ac_add_options --enable-gstreamer
 EOF
 %endif
 %if %branding

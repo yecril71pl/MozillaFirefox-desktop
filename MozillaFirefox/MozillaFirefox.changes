@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Sun Apr 14 09:28:05 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 21.0b2 
+
+-------------------------------------------------------------------
+Tue Apr  9 06:41:31 UTC 2013 - wr@rosenauer.org
+
+- revert to use GStreamer 0.10 on 12.3 (bnc#814101)
+  (remove mozilla-gstreamer-1.patch)
+
+-------------------------------------------------------------------
 Fri Apr  5 17:04:11 UTC 2013 - schwab@linux-m68k.org
 
 - Explicitly disable WebRTC support on non-x86, the configure script

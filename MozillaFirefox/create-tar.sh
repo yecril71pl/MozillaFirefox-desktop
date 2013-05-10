@@ -6,8 +6,26 @@ RELEASE_TAG="FIREFOX_21_0b2_RELEASE"
 VERSION="20.99"
 
 # mozilla
-echo "cloning $BRANCH..."
-hg clone http://hg.mozilla.org/$BRANCH mozilla
+if [ -d mozilla ]; then
+  pushd mozilla
+  _repourl=$(hg paths)
+  case "$_repourl" in
+    *$BRANCH*)
+      echo "updating previous tree"
+      hg pull
+      popd
+      ;;
+    * )
+      echo "removing obsolete tree"
+      popd
+      rm -rf mozilla
+      ;;
+  esac
+fi
+if [ ! -d mozilla ]; then
+  echo "cloning new $BRANCH..."
+  hg clone http://hg.mozilla.org/$BRANCH mozilla
+fi
 pushd mozilla
 [ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
 # get repo and source stamp

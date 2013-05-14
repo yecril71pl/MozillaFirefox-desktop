@@ -17,9 +17,9 @@
 #
 
 
-%define major 20
-%define mainver %major.99
-%define update_channel beta
+%define major 21
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013041300
+%define         releasedate 2013051000
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -352,7 +352,7 @@ grep amazondotcom dist/firefox/browser/omni.ja
 # copy tree into RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
-mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/distribution/extensions
+mkdir -p $RPM_BUILD_ROOT%{progdir}/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/searchplugins
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
 # install kde.js
@@ -560,8 +560,8 @@ exit 0
 %{progdir}/browser/blocklist.xml
 %{progdir}/browser/chrome.manifest
 %{progdir}/browser/omni.ja
-%dir %{progdir}/browser/distribution/
-%{progdir}/browser/distribution/extensions/
+%dir %{progdir}/distribution/
+%{progdir}/distribution/extensions/
 %{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/

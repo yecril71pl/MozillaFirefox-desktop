@@ -188,7 +188,7 @@ of Firefox.
 %package branding-upstream
 Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
-Provides:       %{name}-branding = 5.0
+Provides:       %{name}-branding = %{version}
 Conflicts:      otherproviders(%{name}-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -

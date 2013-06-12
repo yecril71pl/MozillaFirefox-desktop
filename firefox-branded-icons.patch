@@ -1,10 +1,10 @@
 # HG changeset patch
-# Parent ad0e2fcaa00769bc56cc2b58d1264209f8c32623
+# Parent c2eac57908647987ed11893ad45262a32122dff4
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
 +++ b/browser/app/Makefile.in
-@@ -132,16 +132,21 @@ GARBAGE += $(addprefix $(FINAL_TARGET)/d
+@@ -134,16 +134,21 @@ GARBAGE += $(addprefix $(FINAL_TARGET)/d
  endif
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),gtk2)
@@ -29,7 +29,7 @@ diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/Makefile.in
 --- a/browser/branding/official/Makefile.in
 +++ b/browser/branding/official/Makefile.in
-@@ -47,18 +47,21 @@ BRANDING_FILES := \
+@@ -42,18 +42,21 @@ BRANDING_FILES := \
  	document.icns \
  	dsstore \
  	$(NULL)
@@ -54,13 +54,13 @@ diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/M
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -558,18 +558,21 @@
- @BINPATH@/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/icon.png
- #ifdef SHIP_FEEDBACK
+@@ -572,18 +572,21 @@
  @BINPATH@/browser/distribution/extensions/testpilot@labs.mozilla.com.xpi
  #endif
  @BINPATH@/chrome/toolkit@JAREXT@
  @BINPATH@/chrome/toolkit.manifest
+ @BINPATH@/chrome/recording.manifest
+ @BINPATH@/chrome/recording/*
  #ifdef MOZ_GTK2
  @BINPATH@/browser/chrome/icons/default/default16.png
 +@BINPATH@/browser/chrome/icons/default/default22.png

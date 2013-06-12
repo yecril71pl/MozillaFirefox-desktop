@@ -1,4 +1,17 @@
 -------------------------------------------------------------------
+Wed Jun 12 19:12:39 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 22.0b4
+  * removed obsolete patches
+    + mozilla-qcms-ppc.patch
+    + mozilla-gstreamer-760140.patch
+
+-------------------------------------------------------------------
+Tue Jun 11 21:06:58 UTC 2013 - dvaleev@suse.com
+
+- Fix qcms altivec include (mozilla-qcms-ppc.patch)
+
+-------------------------------------------------------------------
 Fri May 10 05:25:39 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 21.0 (bnc#819204)

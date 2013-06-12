@@ -18,8 +18,8 @@
 
 
 %define major 21
-%define mainver %major.0
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013051000
+%define         releasedate 2013061100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -101,8 +101,7 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
-Patch14:        mozilla-gstreamer-760140.patch
-Patch15:        mozilla-libproxy-compat.patch
+Patch14:        mozilla-libproxy-compat.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -234,7 +233,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110
@@ -555,6 +553,7 @@ exit 0
 %{progdir}/browser/defaults
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
+%{progdir}/browser/distribution/
 %{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/browser/searchplugins/
 %{progdir}/browser/blocklist.xml

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Wed Jun 12 19:12:39 UTC 2013 - wr@rosenauer.org
+Sun Jun 16 21:54:10 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 22.0b4
+- update to Firefox 22.0b5
   * removed obsolete patches
     + mozilla-qcms-ppc.patch
     + mozilla-gstreamer-760140.patch

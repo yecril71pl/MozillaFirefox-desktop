@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8303,16 +8303,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8309,16 +8309,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -42,24 +42,18 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
 --- a/security/manager/ssl/src/Makefile.in
 +++ b/security/manager/ssl/src/Makefile.in
-@@ -93,16 +93,19 @@ DEFINES += \
+@@ -87,10 +87,13 @@ endif
+ CSRCS += md4.c
  
- EXPORTS += \
-   CryptoTask.h \
-   nsNSSShutDown.h \
-   ScopedNSSTypes.h \
-   nsRandomGenerator.h \
+ DEFINES += \
+   -DNSS_ENABLE_ECC \
+   -DDLL_PREFIX=\"$(DLL_PREFIX)\" \
+   -DDLL_SUFFIX=\"$(DLL_SUFFIX)\" \
    $(NULL)
  
 +LOCAL_INCLUDES += $(NSSHELPER_CFLAGS)
 +EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
 +
- EXPORTS_NAMESPACES = mozilla
- 
- EXPORTS_mozilla += \
-   PublicSSL.h \
-   $(NULL)
- 
  include $(topsrcdir)/config/rules.mk
  
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
@@ -82,14 +76,14 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 +#endif
 +
  #include "nsNSSComponent.h"
+ 
+ #include "CertVerifier.h"
  #include "nsNSSCallbacks.h"
  #include "nsNSSIOLayer.h"
  #include "nsCertVerificationThread.h"
  
  #include "nsNetUtil.h"
- #include "nsAppDirectoryServiceDefs.h"
- #include "nsDirectoryService.h"
-@@ -1682,18 +1689,34 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1721,18 +1728,34 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -129,7 +123,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -501,17 +501,17 @@ EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
+@@ -510,17 +510,17 @@ EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
  endif
  endif
  endif

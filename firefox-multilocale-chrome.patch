@@ -1,12 +1,12 @@
 # HG changeset patch
-# Parent cd1ec2efff2b6c41550ce2b5b9b8ba8182eb9836
+# Parent 020e09bf3fc6f17b3041ecf70f1376da37db8645
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -342,16 +342,20 @@ pref("browser.download.panel.shown", fal
+@@ -340,16 +340,20 @@ pref("browser.download.panel.shown", fal
  pref("browser.download.panel.firstSessionCompleted", false);
  
  // search engines URL
@@ -55,7 +55,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  DIST_SUBDIRS = browser metro
  else
  DIST_SUBDIRS = $(DIST_SUBDIR)
-@@ -142,20 +144,44 @@ install:: $(addprefix generic/profile/,$
+@@ -131,20 +133,44 @@ install:: $(addprefix generic/profile/,$
  
  install:: $(call MERGE_FILES,$(addprefix profile/chrome/,$(PROFILE_CHROME)))
  	$(SYSINSTALL) $(IFLAGS1) $^ $(DESTDIR)$(mozappdir)/defaults/profile/chrome
@@ -71,17 +71,17 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +
 +searchplugins-jar:: $(SEARCHPLUGINS)
 +	for SEARCHPLUGIN in $^; do \
-+	  $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
-+	  $$SEARCHPLUGIN > $$SEARCHPLUGIN-new ; \
-+	  mv $$SEARCHPLUGIN-new $$SEARCHPLUGIN ; \
++	 $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
++	 $$SEARCHPLUGIN > $$SEARCHPLUGIN-new ; \
++	 mv $$SEARCHPLUGIN-new $$SEARCHPLUGIN ; \
 +	done
 +
 +searchplugins-jar:: tmp-search.jar.mn
 +	$(PYTHON) $(MOZILLA_DIR)/config/JarMaker.py \
-+	  $(QUIET) -j $(FINAL_TARGET)/chrome \
-+	  -s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
-+	  -s $(LOCALE_SRCDIR)/searchplugins \
-+	  $(MAKE_JARS_FLAGS) tmp-search.jar.mn
++	 $(QUIET) -j $(FINAL_TARGET)/chrome \
++	 -s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
++	 -s $(LOCALE_SRCDIR)/searchplugins \
++	 $(MAKE_JARS_FLAGS) tmp-search.jar.mn
 +
 +libs:: searchplugins-jar
 +
@@ -92,19 +92,19 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  	@$(MAKE) -C ../../toolkit/locales libs-$*
  	@$(MAKE) -C ../../services/sync/locales AB_CD=$* XPI_NAME=locale-$*
 +	@$(MAKE) -B searchplugins-jar AB_CD=$* XPI_NAME=locale-$*
+ ifdef MOZ_WEBAPP_RUNTIME
+ 	@$(MAKE) -C ../../webapprt/locales AB_CD=$* XPI_NAME=locale-$*
+ endif
  	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$*
  	@$(MAKE) -C ../../intl/locales AB_CD=$* XPI_NAME=locale-$*
  	@$(MAKE) libs AB_CD=$* XPI_NAME=locale-$* PREF_DIR=$(PREF_DIR)
  ifdef MOZ_METRO
  	@$(MAKE) -C ../metro/locales AB_CD=$* XPI_NAME=locale-$*
- endif
- 	@$(MAKE) -C $(DEPTH)/$(MOZ_BRANDING_DIRECTORY)/locales AB_CD=$* XPI_NAME=locale-$*
- 
 diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en-US/searchplugins/google.xml
 --- a/browser/locales/en-US/searchplugins/google.xml
 +++ b/browser/locales/en-US/searchplugins/google.xml
 @@ -9,24 +9,16 @@
- <Image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACuUlEQVRYw8VX60sUURSffybWv6MloxeV0Jug+hJB0YMoCCII1E3LnlYKlVkkUZKaRFEGFlgfMntYhlopVpaP1HXuPPbOzOmcOw/XZbed3ZndvXBYlr17zu+8fudcaWmlLKEsQWlFmUOBAsucY4tsSmQ8gjJTBMOpQjYjkoMGSiStUpHCnknmpXz+uLdJgY5eDsN/TJA1C9KdkUkTjraoWXXlBGDNaQZd/VwoP3xHhbVnGOxvVuHLL1MY5QZArEODbfUMllX70+kbACl8N2qAxgE2XmCLfltZI8O3CRtEXLVg00Xm2ynfAOoeacLA2+9G2t8P3lK98Lf3JsIH8OmH7eEzTEGmO6NT9p3JuBU+ADUB/40ASdsb+5KiFxAAw6pfHkt/p/G5Lu6MTZvhAyDP3VPdrqW90/zSRnmjWw8fwLG7C0VGOV5/dnGll2OXfEVeoFpZcUoOHwBJ0wvdA0FtdwS5YF0dg93XFHg1ZMDrYQNW17KcSC1nJtx3U4XH77nwdui3CaZDhAM/TSiP5c6qUhAu33qJeRFp6UnkpSMQgC1JAKZlC3Y1KsUFQEJ5dw/1/8kHWuEARKtk2HNdgctPdTENewYN0fPJxypUG1Zh74/PWsDQS2K8E/c12NmgQMU5BhXYksT/yaehSw8PgEuxn7HSUydhKkjuZIQ+N5xnwQEcv2cTkIGR3uxjzNY81LwoVLZpwQF0D3ChjCad33RRqujQchIYgDuG/2KbRX0CcDckP22ZFUBnH/dCWtuZ3SMqygTmv3/MCKcIt19RvFHMTbu6M1Eu7Yh9IwbMMEt0SGhdcOi2ClPzC9vvLBp48oELMLSq1SMv0HfakD+i5zuuKuHzwCqccmSMph6NY1pOqdWoNgbHTcEDB3AvjOZBxSV/mJT8aVZWwsdpmeQ8zyNOJOJFMBx3bJFN6R++on7RvMlpZAAAAABJRU5ErkJggg==</Image>
+ <Image width="16" height="16">data:image/x-icon;base64,AAABAAIAEBAAAAAAAAB9AQAAJgAAACAgAAAAAAAA8gIAAKMBAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAFESURBVDjLpZNJSwNBEIXnt4lE4kHxovgT9BDwJHqPy0HEEOJBiAuCRg+KUdC4QS4KrpC4gCBGE3NQ48JsnZ6eZ3UOM6gjaePhQU93v6+qq2q0pqgeJj2S8EdJT1hr0OxBtKCD5iEd8QxDYpvhvOBAuMDKURX9C9aPu4GA1GEVkzvMg10UBfYveWAWgYAP00V01fa+R9M2bA51wJvhIn3qR+ybt3D3JNQBE5sMjCIOLFpoHzOwdsLRO22qA6R6kiZiWwxUvy/PUQZIhYZ1vFM9cvcOOsYNdcBgysISdSJBnZjJMlR0Fw8vAp0xoz5gao/h+NZBy4i/10XGwrPA+hmvDyhVRG2Avu/LwcrkFADZa16L1h330w1RNgc3DiJzCpPYRm1bpveXX11clQR28xwblHpk1vq1iP/5mcoS0CoXDZiL0vsJ+dzfl+3T/VYAAAAASUVORK5CYIKJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAK5SURBVFjDxVfrSxRRFJ9/Jta/oyWjF5XQm6D6EkHRgygIIgjUTcueVgqVWSRRkppEUQYWWB8ye1iGWilWlo/Ude489s7M6Zw7D9dlt53dmd29cFiWvXvO77x+51xpaaUsoSxBaUWZQ4ECy5xji2xKZDyCMlMEw6lCNiOSgwZKJK1SkcKeSealfP64t0mBjl4Ow39MkDUL0p2RSROOtqhZdeUEYM1pBl39XCg/fEeFtWcY7G9W4csvUxjlBkCsQ4Nt9QyWVfvT6RsAKXw3aoDGATZeYIt+W1kjw7cJG0RctWDTRebbKd8A6h5pwsDb70ba3w/eUr3wt/cmwgfw6Yft4TNMQaY7o1P2ncm4FT4ANQH/jQBJ2xv7kqIXEADDql8eS3+n8bku7oxNm+EDIM/dU92upb3T/NJGeaNbDx/AsbsLRUY5Xn92caWXY5d8RV6gWllxSg4fAEnTC90DQW13BLlgXR2D3dcUeDVkwOthA1bXspxILWcm3HdThcfvufB26LcJpkOEAz9NKI/lzqpSEC7feol5EWnpSeSlIxCALUkApmULdjUqxQVAQnl3D/X/yQda4QBEq2TYc12By091MQ17Bg3R88nHKlQbVmHvj89awNBLYrwT9zXY2aBAxTkGFdiSxP/Jp6FLDw+AS7GfsdJTJ2EqSO5khD43nGfBARy/ZxOQgZHe7GPM1jzUvChUtmnBAXQPcKGMJp3fdFGq6NByEhiAO4b/YptFfQJwNyQ/bZkVQGcf90Ja25ndIyrKBOa/f8wIpwi3X1G8UcxNu7ozUS7tiH0jBswwS3RIaF1w6LYKU/ML2+8sGnjygQswtKrVIy/Qd9qQP6LnO64q4fPAKpxyZIymHo1jWk6p1ag2BsdNwQMHcC+M5kHFJX+YlPxpVlbCx2mZ5DzPI04k4kUwHHdskU3pH76iftG8yWlkAAAAAElFTkSuQmCC</Image>
  <Url type="application/x-suggestions+json" method="GET" template="https://www.google.com/complete/search?client=firefox&amp;q={searchTerms}"/>
  <Url type="text/html" method="GET" template="https://www.google.com/search">
    <Param name="q" value="{searchTerms}"/>
@@ -131,7 +131,7 @@ diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -116,16 +116,17 @@
+@@ -119,14 +119,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/
@@ -144,8 +144,6 @@ diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
  % override chrome://global/locale/netError.dtd chrome://browser/locale/netError.dtd
  % override chrome://global/locale/appstrings.properties chrome://browser/locale/appstrings.properties
  % override chrome://mozapps/locale/downloads/settingsChange.dtd chrome://browser/locale/downloads/settingsChange.dtd
- % locale testpilot @AB_CD@ %locale/feedback/
-     locale/feedback/main.dtd                       (%feedback/main.dtd)
-     locale/feedback/main.properties                (%feedback/main.properties)
  % locale pdf.js @AB_CD@ %locale/pdfviewer/
      locale/pdfviewer/viewer.properties             (%pdfviewer/viewer.properties)
+     locale/pdfviewer/chrome.properties             (%pdfviewer/chrome.properties)

@@ -17,9 +17,9 @@
 #
 
 
-%define major 21
-%define mainver %major.99
-%define update_channel beta
+%define major 22
+%define mainver %major.98
+%define update_channel aurora
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -50,8 +50,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.6
-BuildRequires:  mozilla-nss-devel >= 3.14.3
+BuildRequires:  mozilla-nspr-devel >= 4.10
+BuildRequires:  mozilla-nss-devel >= 3.15
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013061100
+%define         releasedate 2013061600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -134,7 +134,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -553,7 +553,6 @@ exit 0
 %{progdir}/browser/defaults
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
-%{progdir}/browser/distribution/
 %{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/browser/searchplugins/
 %{progdir}/browser/blocklist.xml

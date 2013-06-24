@@ -1,10 +1,12 @@
 -------------------------------------------------------------------
-Sun Jun 16 21:54:10 UTC 2013 - wr@rosenauer.org
+Sat Jun 22 17:48:06 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 22.0b5
+- update to Firefox 22.0 (bnc#825935)
   * removed obsolete patches
     + mozilla-qcms-ppc.patch
     + mozilla-gstreamer-760140.patch
+  * GStreamer support does not build on 12.1 anymore (build only
+    on 12.2 and later)
 
 -------------------------------------------------------------------
 Tue Jun 11 21:06:58 UTC 2013 - dvaleev@suse.com

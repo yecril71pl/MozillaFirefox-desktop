@@ -17,9 +17,9 @@
 #
 
 
-%define major 21
-%define mainver %major.99
-%define update_channel beta
+%define major 22
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -53,14 +53,14 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.9.6
 BuildRequires:  mozilla-nss-devel >= 3.14.3
 BuildRequires:  nss-shared-helper-devel
-%if %suse_version > 1140
+%if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013061500
+%define         releasedate 2013062200
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -306,7 +306,7 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
-%if %suse_version > 1140
+%if %suse_version > 1210
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-gstreamer
 EOF
@@ -553,7 +553,7 @@ exit 0
 %{progdir}/browser/defaults
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
-%{progdir}/browser/distribution/
+#%{progdir}/browser/distribution/
 %{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
 %{progdir}/browser/searchplugins/
 %{progdir}/browser/blocklist.xml

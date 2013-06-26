@@ -18,8 +18,8 @@
 
 
 %define major 22
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -53,14 +53,14 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.10
 BuildRequires:  mozilla-nss-devel >= 3.15
 BuildRequires:  nss-shared-helper-devel
-%if %suse_version > 1140
+%if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013061600
+%define         releasedate 2013062600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -134,7 +134,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -306,7 +306,7 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
-%if %suse_version > 1140
+%if %suse_version > 1210
 cat << EOF >> $MOZCONFIG
 ac_add_options --enable-gstreamer
 EOF

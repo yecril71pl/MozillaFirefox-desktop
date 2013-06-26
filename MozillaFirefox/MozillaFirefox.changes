@@ -1,16 +1,46 @@
 -------------------------------------------------------------------
-Mon Jun 17 20:56:08 UTC 2013 - wr@rosenauer.org
+Wed Jun 26 08:42:37 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 23.0pre (20130616)
+- update to Firefox 23.0b1 (20130626)
 - requires NSPR 4.10 and NSS 3.15
 
 -------------------------------------------------------------------
-Sun Jun 16 21:54:10 UTC 2013 - wr@rosenauer.org
+Sat Jun 22 17:48:06 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 22.0b5
+- update to Firefox 22.0 (bnc#825935)
   * removed obsolete patches
     + mozilla-qcms-ppc.patch
     + mozilla-gstreamer-760140.patch
+  * GStreamer support does not build on 12.1 anymore (build only
+    on 12.2 and later)
+  * MFSA 2013-49/CVE-2013-1682/CVE-2013-1683
+    Miscellaneous memory safety hazards
+  * MFSA 2013-50/CVE-2013-1684/CVE-2013-1685/CVE-2013-1686
+    Memory corruption found using Address Sanitizer
+  * MFSA 2013-51/CVE-2013-1687 (bmo#863933, bmo#866823)
+    Privileged content access and execution via XBL
+  * MFSA 2013-52/CVE-2013-1688 (bmo#873966)
+    Arbitrary code execution within Profiler
+  * MFSA 2013-53/CVE-2013-1690 (bmo#857883)
+    Execution of unmapped memory through onreadystatechange event
+  * MFSA 2013-54/CVE-2013-1692 (bmo#866915)
+    Data in the body of XHR HEAD requests leads to CSRF attacks
+  * MFSA 2013-55/CVE-2013-1693 (bmo#711043)
+    SVG filters can lead to information disclosure
+  * MFSA 2013-56/CVE-2013-1694 (bmo#848535)
+    PreserveWrapper has inconsistent behavior
+  * MFSA 2013-57/CVE-2013-1695 (bmo#849791)
+    Sandbox restrictions not applied to nested frame elements
+  * MFSA 2013-58/CVE-2013-1696 (bmo#761667)
+    X-Frame-Options ignored when using server push with multi-part
+    responses
+  * MFSA 2013-59/CVE-2013-1697 (bmo#858101)
+    XrayWrappers can be bypassed to run user defined methods in a
+    privileged context
+  * MFSA 2013-60/CVE-2013-1698 (bmo#876044)
+    getUserMedia permission dialog incorrectly displays location
+  * MFSA 2013-61/CVE-2013-1699 (bmo#840882)
+    Homograph domain spoofing in .com, .net and .name
 
 -------------------------------------------------------------------
 Tue Jun 11 21:06:58 UTC 2013 - dvaleev@suse.com

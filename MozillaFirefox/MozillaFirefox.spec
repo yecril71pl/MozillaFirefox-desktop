@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013062600
+%define         releasedate 2013070800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -268,7 +268,7 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch %arm
-export CFLAGS="${CFLAGS/-g/}"
+export CFLAGS="${CFLAGS/-g / }"
 %endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"

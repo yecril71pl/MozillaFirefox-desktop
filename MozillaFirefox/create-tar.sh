@@ -3,7 +3,7 @@
 CHANNEL="aurora"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
-VERSION="22.98"
+VERSION="23.98"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -27,6 +27,7 @@ if [ ! -d mozilla ]; then
   hg clone http://hg.mozilla.org/$BRANCH mozilla
 fi
 pushd mozilla
+hg update --check
 [ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
 # get repo and source stamp
 echo -n "REV=" > ../source-stamp.txt

@@ -17,7 +17,7 @@
 #
 
 
-%define major 22
+%define major 23
 %define mainver %major.98
 %define update_channel aurora
 
@@ -53,14 +53,14 @@ BuildRequires:  wireless-tools
 BuildRequires:  mozilla-nspr-devel >= 4.10
 BuildRequires:  mozilla-nss-devel >= 3.15
 BuildRequires:  nss-shared-helper-devel
-%if %suse_version > 1140
+%if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013061600
+%define         releasedate 2013071300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -88,6 +88,7 @@ Source11:       firefox.1
 Source12:       mozilla-get-app-id
 Source13:       add-plugins.sh.in
 Source14:       create-tar.sh
+Source15:       gecko.js
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -268,7 +269,7 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch %arm
-export CFLAGS="${CFLAGS/-g/}"
+export CFLAGS="${CFLAGS/-g / }"
 %endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
@@ -306,9 +307,9 @@ ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 EOF
 %endif
-%if %suse_version > 1140
+%if %suse_version < 1220
 cat << EOF >> $MOZCONFIG
-ac_add_options --enable-gstreamer
+ac_add_options --disable-gstreamer
 EOF
 %endif
 %if %branding
@@ -358,6 +359,9 @@ mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
 install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/kde.js
 install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/firefox.js
 %endif
+# core configuration (e.g. temporary gstreamer pref)
+# this is expected to be just temporary and therefore not handled in openSUSE branding
+install -m 644 %{SOURCE15} $RPM_BUILD_ROOT%{progdir}/defaults/pref/gecko.js
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
   %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh
@@ -368,7 +372,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US)
+   ja-JP-mac|en-US|mn|ta-LK)
 	;;
    *)
    	pushd $RPM_BUILD_DIR/compare-locales

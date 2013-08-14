@@ -1,9 +1,35 @@
 -------------------------------------------------------------------
-Sat Jul 13 20:53:28 UTC 2013 - wr@rosenauer.org
+Wed Aug 14 16:59:25 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 24.0pre (20130713)
-- requires NSPR 4.10 and NSS 3.15
+- update to Firefox 24.0beta2
 - enable gstreamer via pref
+
+-------------------------------------------------------------------
+Sun Aug  4 18:30:11 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 23.0 (bnc#833389)
+  * MFSA 2013-63/CVE-2013-1701/CVE-2013-1702
+    Miscellaneous memory safety hazards
+  * MFSA 2013-64/CVE-2013-1704 (bmo#883313)
+    Use after free mutating DOM during SetBody
+  * MFSA 2013-65/CVE-2013-1705 (bmo#882865)
+    Buffer underflow when generating CRMF requests
+  * MFSA 2013-67/CVE-2013-1708 (bmo#879924)
+    Crash during WAV audio file decoding
+  * MFSA 2013-68/CVE-2013-1709 (bmo#838253)
+    Document URI misrepresentation and masquerading
+  * MFSA 2013-69/CVE-2013-1710 (bmo#871368)
+    CRMF requests allow for code execution and XSS attacks
+  * MFSA 2013-70/CVE-2013-1711 (bmo#843829)
+    Bypass of XrayWrappers using XBL Scopes
+  * MFSA 2013-72/CVE-2013-1713 (bmo#887098)
+    Wrong principal used for validating URI for some Javascript
+    components
+  * MFSA 2013-73/CVE-2013-1714 (bmo#879787)
+    Same-origin bypass with web workers and XMLHttpRequest
+  * MFSA 2013-75/CVE-2013-1717 (bmo#406541, bmo#738397)
+    Local Java applets may read contents of local file system
+- requires NSPR 4.10 and NSS 3.15
 
 -------------------------------------------------------------------
 Wed Jul  3 17:14:35 UTC 2013 - dmueller@suse.com

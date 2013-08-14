@@ -18,8 +18,8 @@
 
 
 %define major 23
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -135,7 +135,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -372,7 +372,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|mn|ta-LK)
+   ja-JP-mac|en-US)
 	;;
    *)
    	pushd $RPM_BUILD_DIR/compare-locales

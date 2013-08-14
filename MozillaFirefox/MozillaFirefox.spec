@@ -17,9 +17,9 @@
 #
 
 
-%define major 22
-%define mainver %major.99
-%define update_channel beta
+%define major 23
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013070800
+%define         releasedate 2013080200
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

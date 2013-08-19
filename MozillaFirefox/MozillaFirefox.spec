@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10
-BuildRequires:  mozilla-nss-devel >= 3.15
+BuildRequires:  mozilla-nss-devel >= 3.15.1
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)

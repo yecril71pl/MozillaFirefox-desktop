@@ -1,9 +1,16 @@
 -------------------------------------------------------------------
-Wed Aug 14 16:59:25 UTC 2013 - wr@rosenauer.org
+Sat Sep 14 14:39:58 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 24.0beta2
+- update to Firefox 24.0 (bnc#)
 - enable gstreamer via pref
 - require NSS 3.15.1
+
+-------------------------------------------------------------------
+Mon Aug 26 07:35:36 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 23.0.1
+  * Audio static/"burble"/breakup in Firefox to Firefox WebRTC calls
+    (bmo#901527)
 
 -------------------------------------------------------------------
 Sun Aug  4 18:30:11 UTC 2013 - wr@rosenauer.org

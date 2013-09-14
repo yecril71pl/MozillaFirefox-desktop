@@ -18,7 +18,7 @@
 
 
 %define major 17
-%define mainver %major.0.7
+%define mainver %major.0.9
 %define update_channel release
 
 Name:           firefox-esr
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013061900
+%define         releasedate 2013091000
 Provides:       firefox-esr = %{mainver}
 Provides:       web_browser
 Provides:       browser(npapi)

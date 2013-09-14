@@ -22,6 +22,7 @@ mozilla-deoptimize.patch
 mozilla-gcc43-enums.patch
 mozilla-gcc43-template_hacks.patch
 mozilla-gcc43-templates_instantiation.patch
+ppc-xpcshell.patch
 #mozilla-disable-neon-option.patch
 
 # Firefox patches

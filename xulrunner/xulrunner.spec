@@ -44,12 +44,12 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.5
 BuildRequires:  mozilla-nss-devel >= 3.14.3
-Version:        17.0.7
+Version:        17.0.9
 Release:        0
-%define         releasedate 2013062000
-%define         version_internal 17.0.7
+%define         releasedate 2013091000
+%define         version_internal 17.0.9
 %define         apiversion 17
-%define         uaweight 1700007
+%define         uaweight 1700009
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -81,6 +81,7 @@ Patch14:        mozilla-ppc.patch
 Patch20:        mozilla-gcc43-enums.patch
 Patch21:        mozilla-gcc43-template_hacks.patch
 Patch22:        mozilla-gcc43-templates_instantiation.patch
+Patch23:        ppc-xpcshell.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -201,6 +202,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch21 -p1
 %patch22 -p1
 %endif
+%patch23 -p1
 
 %build
 # no need to add build time to binaries

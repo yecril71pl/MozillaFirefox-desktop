@@ -1,8 +1,13 @@
 -------------------------------------------------------------------
+Mon Sep 16 11:59:18 UTC 2013 - lnussel@suse.de
+
+- move greek to the translations-common package (bnc#840551)
+
+-------------------------------------------------------------------
 Sat Sep 14 14:39:58 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 24.0 (bnc#)
-- enable gstreamer via pref
+- update to Firefox 24.0 (bnc#840485)
+- enable gstreamer via pref (gecko.js)
 - require NSS 3.15.1
 
 -------------------------------------------------------------------

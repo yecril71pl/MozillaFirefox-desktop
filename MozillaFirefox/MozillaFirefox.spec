@@ -300,44 +300,30 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
-EOF
 %if %suse_version > 1130
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
-EOF
 %endif
 %if %suse_version < 1220
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gstreamer
-EOF
 %endif
 %if %branding
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
-EOF
 %endif
 %if %suse_version > 1110
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
-EOF
 %endif
 %if ! %crashreporter
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
-EOF
 %endif
 # Disable neon for arm as it does not build correctly
 %ifarch %arm
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
-EOF
 %endif
 %ifnarch %ix86 x86_64
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-webrtc
-EOF
 %endif
+EOF
 make -f client.mk build
 
 %install

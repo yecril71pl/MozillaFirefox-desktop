@@ -17,9 +17,9 @@
 #
 
 
-%define major 23
-%define mainver %major.98
-%define update_channel aurora
+%define major 24
+%define mainver %major.0.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10
-BuildRequires:  mozilla-nss-devel >= 3.15
+BuildRequires:  mozilla-nss-devel >= 3.15.1
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
@@ -60,7 +60,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013071300
+%define         releasedate 2013091200
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -135,7 +135,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter 0
@@ -165,7 +165,7 @@ Development files for Firefox to make packaging of addons easier.
 %package translations-common
 Summary:        Common translations for Firefox
 Group:          System/Localization
-Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
+Provides:       locale(%{name}:ar;ca;cs;da;de;el;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -176,7 +176,7 @@ of Firefox.
 %package translations-other
 Summary:        Extra translations for Firefox
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -300,44 +300,30 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
-EOF
 %if %suse_version > 1130
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
-EOF
 %endif
 %if %suse_version < 1220
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gstreamer
-EOF
 %endif
 %if %branding
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
-EOF
 %endif
 %if %suse_version > 1110
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
-EOF
 %endif
 %if ! %crashreporter
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
-EOF
 %endif
 # Disable neon for arm as it does not build correctly
 %ifarch %arm
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
-EOF
 %endif
 %ifnarch %ix86 x86_64
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-webrtc
-EOF
 %endif
+EOF
 make -f client.mk build
 
 %install
@@ -372,7 +358,7 @@ rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
 for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
   case $locale in
-   ja-JP-mac|en-US|mn|ta-LK)
+   ja-JP-mac|en-US)
 	;;
    *)
    	pushd $RPM_BUILD_DIR/compare-locales
@@ -389,7 +375,7 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	rm -rf $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
-	for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
+	for _match in ar ca cs da de el en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
 	  [ "$_match" = "$locale" ] && _matched=1
 	done
 	[ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other

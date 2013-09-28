@@ -1,9 +1,74 @@
 -------------------------------------------------------------------
-Sat Jul 13 20:53:28 UTC 2013 - wr@rosenauer.org
+Mon Sep 16 11:59:18 UTC 2013 - lnussel@suse.de
 
-- update to Firefox 24.0pre (20130713)
+- move greek to the translations-common package (bnc#840551)
+
+-------------------------------------------------------------------
+Sat Sep 14 14:39:58 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 24.0 (bnc#840485)
+  * MFSA 2013-76/CVE-2013-1718/CVE-2013-1719
+    Miscellaneous memory safety hazards
+  * MFSA 2013-77/CVE-2013-1720 (bmo#888820)
+    Improper state in HTML5 Tree Builder with templates
+  * MFSA 2013-78/CVE-2013-1721 (bmo#890277)
+    Integer overflow in ANGLE library
+  * MFSA 2013-79/CVE-2013-1722 (bmo#893308)
+    Use-after-free in Animation Manager during stylesheet cloning
+  * MFSA 2013-80/CVE-2013-1723 (bmo#891292)
+    NativeKey continues handling key messages after widget is destroyed
+  * MFSA 2013-81/CVE-2013-1724 (bmo#894137)
+    Use-after-free with select element
+  * MFSA 2013-82/CVE-2013-1725 (bmo#876762)
+    Calling scope for new Javascript objects can lead to memory corruption
+  * MFSA 2013-85/CVE-2013-1728 (bmo#883686)
+    Uninitialized data in IonMonkey
+  * MFSA 2013-88/CVE-2013-1730 (bmo#851353)
+    Compartment mismatch re-attaching XBL-backed nodes
+  * MFSA 2013-89/CVE-2013-1732 (bmo#883514)
+    Buffer overflow with multi-column, lists, and floats
+  * MFSA 2013-90/CVE-2013-1735/CVE-2013-1736 (bmo#898871, bmo#906301)
+    Memory corruption involving scrolling
+  * MFSA 2013-91/CVE-2013-1737 (bmo#907727)
+    User-defined properties on DOM proxies get the wrong "this" object
+  * MFSA 2013-92/CVE-2013-1738 (bmo#887334, bmo#882897)
+    GC hazard with default compartments and frame chain restoration
+- enable gstreamer explicitely via pref (gecko.js)
+- require NSS 3.15.1
+
+-------------------------------------------------------------------
+Mon Aug 26 07:35:36 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 23.0.1
+  * Audio static/"burble"/breakup in Firefox to Firefox WebRTC calls
+    (bmo#901527)
+
+-------------------------------------------------------------------
+Sun Aug  4 18:30:11 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 23.0 (bnc#833389)
+  * MFSA 2013-63/CVE-2013-1701/CVE-2013-1702
+    Miscellaneous memory safety hazards
+  * MFSA 2013-64/CVE-2013-1704 (bmo#883313)
+    Use after free mutating DOM during SetBody
+  * MFSA 2013-65/CVE-2013-1705 (bmo#882865)
+    Buffer underflow when generating CRMF requests
+  * MFSA 2013-67/CVE-2013-1708 (bmo#879924)
+    Crash during WAV audio file decoding
+  * MFSA 2013-68/CVE-2013-1709 (bmo#838253)
+    Document URI misrepresentation and masquerading
+  * MFSA 2013-69/CVE-2013-1710 (bmo#871368)
+    CRMF requests allow for code execution and XSS attacks
+  * MFSA 2013-70/CVE-2013-1711 (bmo#843829)
+    Bypass of XrayWrappers using XBL Scopes
+  * MFSA 2013-72/CVE-2013-1713 (bmo#887098)
+    Wrong principal used for validating URI for some Javascript
+    components
+  * MFSA 2013-73/CVE-2013-1714 (bmo#879787)
+    Same-origin bypass with web workers and XMLHttpRequest
+  * MFSA 2013-75/CVE-2013-1717 (bmo#406541, bmo#738397)
+    Local Java applets may read contents of local file system
 - requires NSPR 4.10 and NSS 3.15
-- enable gstreamer via pref
 
 -------------------------------------------------------------------
 Wed Jul  3 17:14:35 UTC 2013 - dmueller@suse.com

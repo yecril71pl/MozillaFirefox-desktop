@@ -1,14 +1,33 @@
 #!/bin/bash
 
-CHANNEL="beta"
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_18_0b2_RELEASE"
-VERSION="17.99"
+RELEASE_TAG="FIREFOX_24_0_RELEASE"
+VERSION="24.0"
 
 # mozilla
-echo "cloning $BRANCH..."
-hg clone http://hg.mozilla.org/$BRANCH mozilla
+if [ -d mozilla ]; then
+  pushd mozilla
+  _repourl=$(hg paths)
+  case "$_repourl" in
+    *$BRANCH*)
+      echo "updating previous tree"
+      hg pull
+      popd
+      ;;
+    * )
+      echo "removing obsolete tree"
+      popd
+      rm -rf mozilla
+      ;;
+  esac
+fi
+if [ ! -d mozilla ]; then
+  echo "cloning new $BRANCH..."
+  hg clone http://hg.mozilla.org/$BRANCH mozilla
+fi
 pushd mozilla
+hg update --check
 [ "$RELEASE_TAG" == "default" ] || hg update -r $RELEASE_TAG
 # get repo and source stamp
 echo -n "REV=" > ../source-stamp.txt

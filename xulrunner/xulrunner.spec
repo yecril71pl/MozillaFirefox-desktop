@@ -1,8 +1,8 @@
 #
 # spec file for package xulrunner
 #
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2012 Wolfgang Rosenauer
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2013 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -16,6 +16,11 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+%if %suse_version > 1220
+%define gstreamer_ver 0.10
+%else
+%define gstreamer_ver 0.10
+%endif
 
 Name:           xulrunner
 BuildRequires:  Mesa-devel
@@ -42,14 +47,19 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.9.2
-BuildRequires:  mozilla-nss-devel >= 3.14
-Version:        17.99
+BuildRequires:  mozilla-nspr-devel >= 4.10
+BuildRequires:  mozilla-nss-devel >= 3.15.1
+%if %suse_version > 1210
+BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
+BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
+%endif
+Version:        24.0
 Release:        0
-%define         releasedate 2012112800
-%define         version_internal 18.0
-%define         apiversion 18
-%define         uaweight 1800000
+%define         releasedate 2013091000
+%define         version_internal 24.0
+%define         apiversion 24
+%define         uaweight 2400000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -76,16 +86,19 @@ Patch5:         mozilla-prefer_plugin_pref.patch
 Patch6:         mozilla-language.patch
 Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
-Patch14:        mozilla-ppc.patch
+Patch10:        mozilla-ppc.patch
+Patch11:        mozilla-libproxy-compat.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
+Provides:       xulrunner-esr = %{version}
+Obsoletes:      xulrunner-esr < 24.0
 ### build configuration ###
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 0
+%define localize 1
 %ifarch ppc ppc64 s390 s390x ia64 %arm
 %define crashreporter    0
 %else
@@ -140,7 +153,7 @@ Software Development Kit to embed XUL or Gecko into other applications.
 Summary:        Common translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
+Provides:       locale(%{name}:ar;ca;cs;da;de;el;en_GB;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-common
@@ -156,7 +169,7 @@ delivered in the main package.
 Summary:        Extra translations for XULRunner
 Group:          System/Localization
 Requires:       %{name} = %{version}
-Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;el;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
@@ -190,7 +203,8 @@ symbols meant for upload to Mozilla's crash collector database.
 %if %suse_version < 1120
 %patch9 -p1
 %endif
-%patch14 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 # no need to add build time to binaries
@@ -243,13 +257,17 @@ ac_add_options --disable-javaxpcom
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-startup-notification
 ac_add_options --enable-shared-js
-ac_add_options --disable-webrtc   # does not build with system NSPR
 #ac_add_options --enable-debug
 EOF
 %if %suse_version > 1130
 cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
+EOF
+%endif
+%if %suse_version < 1220
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-gstreamer
 EOF
 %endif
 %if %has_system_nspr
@@ -277,27 +295,15 @@ cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
 EOF
 %endif
-# S/390
-%ifarch s390 s390x
-cat << EOF >> $MOZCONFIG
-ac_add_options --disable-jemalloc
-EOF
-%endif
 # ARM
 %ifarch %arm
 cat << EOF >> $MOZCONFIG
-%ifarch armv7l armv7hl
-ac_add_options --with-arch=armv7-a
-ac_add_options --with-float-abi=hard
-ac_add_options --with-fpu=vfpv3-d16
-ac_add_options --with-thumb=yes
-ac_add_options --disable-debug
+ac_add_options --disable-neon
+EOF
 %endif
-%ifarch armv5tel
-ac_add_options --with-arch=armv5te
-ac_add_options --with-float-abi=soft
-ac_add_options --with-thumb=no
-%endif
+%ifnarch %ix86 x86_64
+cat << EOF >> $MOZCONFIG
+ac_add_options --disable-webrtc
 EOF
 %endif
 make -f client.mk build
@@ -315,13 +321,11 @@ find $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal} \
 find $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/ \
      -name "*.js" -o -name "*.xpm" -o -name "*.png" | xargs chmod a-x
 # remove mkdir.done files from installed base
-find $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal} -name ".mkdir.done" | xargs rm
+#find $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal} -name ".mkdir.done" | xargs rm
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions
 # fixing SDK dynamic libs (symlink instead of copy)
 rm $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/*.so
 ln -sf ../../../xulrunner-%{version_internal}/libmozjs.so \
-       $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
-ln -sf ../../../xulrunner-%{version_internal}/libxpcom.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
 ln -sf ../../../xulrunner-%{version_internal}/libxul.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
@@ -331,7 +335,7 @@ pushd ..
 # this list has been compiled by trial and error for prism
 tar --exclude=*.cpp --exclude=*.mm \
    -cvjf $RPM_BUILD_ROOT%{_datadir}/xulrunner-%{version_internal}/mozilla-src.tar.bz2 \
-    mozilla/configure.in mozilla/Makefile.in mozilla/client.py mozilla/allmakefiles.sh \
+    mozilla/configure.in mozilla/Makefile.in mozilla/client.py \
     mozilla/config mozilla/client.mk mozilla/aclocal.m4 mozilla/build mozilla/js/src/* \
     mozilla/testing mozilla/toolkit/mozapps/installer mozilla/probes mozilla/memory \
     mozilla/toolkit/xre mozilla/nsprpub/config mozilla/tools mozilla/xpcom/build
@@ -364,7 +368,7 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
       rm -rf $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions/langpack-$locale@firefox.mozilla.org/defaults
       # check against the fixed common list and sort into the right filelist
       _matched=0
-      for _match in ar ca cs da de en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
+      for _match in ar ca cs da de el en-GB es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
         [ "$_match" = "$locale" ] && _matched=1
       done
       [ $_matched -eq 1 ] && _l10ntarget=common || _l10ntarget=other
@@ -453,7 +457,6 @@ exit 0
 %dir %{_libdir}/xulrunner-%{version_internal}/extensions/
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
-%{_libdir}/xulrunner-%{version_internal}/plugins/
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
@@ -493,6 +496,7 @@ exit 0
 %files devel
 %defattr(-,root,root)
 %{_libdir}/xulrunner-devel-%{version_internal}/
+%{_libdir}/xulrunner-%{version_internal}/js-gdb.py
 # FIXME symlink dynamic libs below sdk/lib
 %attr(644,root,root) %{_libdir}/pkgconfig/*
 %{_includedir}/xulrunner-%{version_internal}/

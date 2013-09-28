@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 2c9bf1336fd0811e0112953334df4c81c717e6ff
+# Parent 21d0e194954e451f0f1935d0ed68ee9eae432ddf
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Bug 746112 - RegExp hang on ppc64 in execute.
 Bug 750620 - Make double-conversion portable to exotic architectures. TM: mozilla15
@@ -7,7 +7,7 @@ Bug 750620 - Make double-conversion portable to exotic architectures. TM: mozill
 diff --git a/js/src/yarr/YarrInterpreter.h b/js/src/yarr/YarrInterpreter.h
 --- a/js/src/yarr/YarrInterpreter.h
 +++ b/js/src/yarr/YarrInterpreter.h
-@@ -159,17 +159,17 @@ struct ByteTerm {
+@@ -162,17 +162,17 @@ struct ByteTerm {
          , m_invert(invert)
      {
          atom.characterClass = characterClass;
@@ -26,7 +26,7 @@ diff --git a/js/src/yarr/YarrInterpreter.h b/js/src/yarr/YarrInterpreter.h
          atom.parenthesesDisjunction = parenthesesInfo;
          atom.quantityType = QuantifierFixedCount;
          atom.quantityCount = 1;
-@@ -180,17 +180,17 @@ struct ByteTerm {
+@@ -183,17 +183,17 @@ struct ByteTerm {
          : type(type)
          , m_capture(false)
          , m_invert(invert)
@@ -48,7 +48,7 @@ diff --git a/js/src/yarr/YarrInterpreter.h b/js/src/yarr/YarrInterpreter.h
 diff --git a/js/src/yarr/YarrPattern.h b/js/src/yarr/YarrPattern.h
 --- a/js/src/yarr/YarrPattern.h
 +++ b/js/src/yarr/YarrPattern.h
-@@ -179,17 +179,17 @@ struct PatternTerm {
+@@ -180,17 +180,17 @@ struct PatternTerm {
          , m_capture(false)
          , m_invert(invert)
      {
@@ -70,7 +70,7 @@ diff --git a/js/src/yarr/YarrPattern.h b/js/src/yarr/YarrPattern.h
 diff --git a/memory/mozjemalloc/jemalloc.c b/memory/mozjemalloc/jemalloc.c
 --- a/memory/mozjemalloc/jemalloc.c
 +++ b/memory/mozjemalloc/jemalloc.c
-@@ -1099,17 +1099,19 @@ struct arena_s {
+@@ -1099,17 +1099,17 @@ struct arena_s {
  static unsigned		ncpus;
  #endif
  
@@ -79,17 +79,16 @@ diff --git a/memory/mozjemalloc/jemalloc.c b/memory/mozjemalloc/jemalloc.c
   * controlling the malloc behavior are defined as compile-time constants
   * for best performance and cannot be altered at runtime.
   */
-+#if !(defined(__powerpc__))
+-#if !defined(__ia64__) && !defined(__sparc__) && !defined(__mips__)
++#if !defined(__ia64__) && !defined(__sparc__) && !defined(__mips__) && !(defined(__powerpc__))
  #define MALLOC_STATIC_SIZES 1
-+#endif
+ #endif
  
  #ifdef MALLOC_STATIC_SIZES
  
  /*
   * VM page size. It must divide the runtime CPU page size or the code
   * will abort.
-  * Platform specific page size conditions copied from js/public/HeapAPI.h
-  */
 diff --git a/mfbt/double-conversion/utils.h b/mfbt/double-conversion/utils.h
 --- a/mfbt/double-conversion/utils.h
 +++ b/mfbt/double-conversion/utils.h

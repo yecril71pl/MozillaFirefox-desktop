@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Oct  5 20:37:57 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 25.0b4
+
+-------------------------------------------------------------------
 Tue Sep 24 07:31:30 UTC 2013 - wr@rosenauer.org
 
 - as GStreamer is not automatically required anymore but loaded

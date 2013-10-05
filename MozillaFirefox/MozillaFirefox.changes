@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Tue Sep 24 07:31:30 UTC 2013 - wr@rosenauer.org
+
+- as GStreamer is not automatically required anymore but loaded
+  dynamically if available, require it explicitely
+- recommend optional GStreamer plugins for comprehensive media
+  support
+
+-------------------------------------------------------------------
 Mon Sep 16 11:59:18 UTC 2013 - lnussel@suse.de
 
 - move greek to the translations-common package (bnc#840551)

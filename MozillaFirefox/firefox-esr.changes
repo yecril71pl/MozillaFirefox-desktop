@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sat Oct  5 18:10:39 UTC 2013 - wr@rosenauer.org
+
+- renamed package to firefox-esr
+  (by branching off from MozillaFirefox-24.0)
+  * switched to mozilla-esr24 branch
+
+-------------------------------------------------------------------
 Tue Sep 24 07:31:30 UTC 2013 - wr@rosenauer.org
 
 - as GStreamer is not automatically required anymore but loaded

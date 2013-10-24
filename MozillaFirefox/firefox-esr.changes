@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Oct 24 16:46:31 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 24.1.0esr (bnc#)
+  * requires NSS 3.15.2 or above
+
+-------------------------------------------------------------------
 Sat Oct  5 18:10:39 UTC 2013 - wr@rosenauer.org
 
 - renamed package to firefox-esr

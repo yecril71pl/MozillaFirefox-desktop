@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="release"
+CHANNEL="esr24"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_24_0_RELEASE"
-VERSION="24.0"
+RELEASE_TAG="FIREFOX_24_1_0esr_RELEASE"
+VERSION="24.1.0"
 
 # mozilla
 if [ -d mozilla ]; then

@@ -18,7 +18,7 @@
 
 
 %define major 24
-%define mainver %major.0.99
+%define mainver %major.99
 %define update_channel beta
 
 %if %suse_version > 1220
@@ -63,7 +63,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013100400
+%define         releasedate 2013101400
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

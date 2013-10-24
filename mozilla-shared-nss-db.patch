@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8330,16 +8330,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8289,16 +8289,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -83,7 +83,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsComponentManagerUtils.h"
  #include "nsDirectoryServiceDefs.h"
  #include "nsICertOverrideService.h"
-@@ -1132,18 +1139,34 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1144,18 +1151,34 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -123,14 +123,14 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -490,17 +490,17 @@ EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
+@@ -490,17 +490,17 @@ ifneq (,$(or $(filter 1400,$(_MSC_VER)),
+ ifdef MOZ_DEBUG
+ EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
  endif
  endif
  endif
  
  EXTRA_DSO_LDOPTS += $(LIBS_DIR)
- 
- DEFINES += -DIMPL_XREAPI
  
 -EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB)
 +EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB) $(NSSHELPER_LIBS)

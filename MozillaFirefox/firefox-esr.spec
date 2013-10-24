@@ -18,7 +18,7 @@
 
 
 %define major 17
-%define mainver %major.0.9
+%define mainver %major.0.10
 %define update_channel release
 
 Name:           firefox-esr
@@ -45,7 +45,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.9.5
-BuildRequires:  mozilla-nss-devel >= 3.14.3
+BuildRequires:  mozilla-nss-devel >= 3.14.4
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1140
 BuildRequires:  pkgconfig(gstreamer-0.10)
@@ -54,7 +54,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013091000
+%define         releasedate 2013102400
 Provides:       firefox-esr = %{mainver}
 Provides:       web_browser
 Provides:       browser(npapi)

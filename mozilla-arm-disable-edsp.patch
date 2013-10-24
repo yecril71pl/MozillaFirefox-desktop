@@ -1,13 +1,13 @@
 # HG changeset patch
 # User Adrian Schröter <adrian@suse.de>
-# Parent 5b26dbfe65bd4986ea3792f02bc025fec293b51f
+# Parent b945e0c3b145b6b2245f42bab52f911c2d1f6759
 disable ESDP support (no BNC or BMO reference yet :-()
 
-diff --git a/xpcom/glue/arm.h b/xpcom/glue/arm.h
---- a/xpcom/glue/arm.h
-+++ b/xpcom/glue/arm.h
-@@ -143,17 +143,17 @@ namespace mozilla {
-     extern bool NS_COM_GLUE neon_enabled;
+diff --git a/mozglue/build/arm.h b/mozglue/build/arm.h
+--- a/mozglue/build/arm.h
++++ b/mozglue/build/arm.h
+@@ -116,17 +116,17 @@ namespace mozilla {
+     extern bool MFBT_DATA neon_enabled;
  #endif
  #endif
    }

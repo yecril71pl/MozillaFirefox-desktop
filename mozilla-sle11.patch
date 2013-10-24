@@ -2,9 +2,9 @@ Subject: Patches needed to build on SLE11/11.1
 References:
 https://bugzilla.mozilla.org/show_bug.cgi?id=513422
 
-diff --git a/xpcom/glue/SSE.cpp b/xpcom/glue/SSE.cpp
---- a/xpcom/glue/SSE.cpp
-+++ b/xpcom/glue/SSE.cpp
+diff --git a/mozglue/build/SSE.cpp b/mozglue/build/SSE.cpp
+--- a/mozglue/build/SSE.cpp
++++ b/mozglue/build/SSE.cpp
 @@ -12,26 +12,77 @@ namespace {
  // SSE.h has parallel #ifs which declare MOZILLA_SSE_HAVE_CPUID_DETECTION.
  // We can't declare these functions in the header file, however, because

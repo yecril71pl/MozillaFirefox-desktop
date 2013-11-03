@@ -1,8 +1,22 @@
 -------------------------------------------------------------------
 Thu Oct 24 16:40:37 UTC 2013 - wr@rosenauer.org
 
-- update to 17.0.10esr (bnc#)
+- update to 17.0.10esr (bnc#847708)
   * require NSS 3.14.4 or above
+  * MFSA 2013-93/CVE-2013-5590/CVE-2013-5591/CVE-2013-5592
+    Miscellaneous memory safety hazards
+  * MFSA 2013-95/CVE-2013-5604 (bmo#914017)
+    Access violation with XSLT and uninitialized data
+  * MFSA 2013-96/CVE-2013-5595 (bmo#916580)
+    Improperly initialized memory and overflows in some JavaScript
+    functions
+  * MFSA 2013-98/CVE-2013-5597 (bmo#918864)
+    Use-after-free when updating offline cache
+  * MFSA 2013-100/CVE-2013-5599/CVE-2013-5600/CVE-2013-5601
+    (bmo#915210, bmo#915576, bmo#916685)
+    Miscellaneous use-after-free issues found through ASAN fuzzing
+  * MFSA 2013-101/CVE-2013-5602 (bmo#897678)
+    Memory corruption in workers
 
 -------------------------------------------------------------------
 Thu Sep 12 10:06:08 UTC 2013 - wr@rosenauer.org

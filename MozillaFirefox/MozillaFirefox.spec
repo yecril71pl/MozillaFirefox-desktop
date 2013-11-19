@@ -17,7 +17,7 @@
 #
 
 
-%define major 24
+%define major 25
 %define mainver %major.99
 %define update_channel beta
 
@@ -50,8 +50,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.1
-BuildRequires:  mozilla-nss-devel >= 3.15.1
+BuildRequires:  mozilla-nspr-devel >= 4.10.2
+BuildRequires:  mozilla-nss-devel >= 3.15.3
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
@@ -63,7 +63,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013101400
+%define         releasedate 2013111800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -91,7 +91,6 @@ Source11:       firefox.1
 Source12:       mozilla-get-app-id
 Source13:       add-plugins.sh.in
 Source14:       create-tar.sh
-Source15:       gecko.js
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -362,9 +361,6 @@ mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
 install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/kde.js
 install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/firefox.js
 %endif
-# core configuration (e.g. temporary gstreamer pref)
-# this is expected to be just temporary and therefore not handled in openSUSE branding
-install -m 644 %{SOURCE15} $RPM_BUILD_ROOT%{progdir}/defaults/pref/gecko.js
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
   %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh

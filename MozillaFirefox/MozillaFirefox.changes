@@ -1,8 +1,40 @@
 -------------------------------------------------------------------
-Mon Oct 14 22:03:34 UTC 2013 - wr@rosenauer.org
+Mon Nov 18 13:50:16 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 25.0b5
+- update to Firefox 26.0b5
   * rebased patches
+  * requires NSPR 4.10.2 and NSS 3.15.3
+- removed gecko.js preference file as GStreamer is enabled by
+  default now
+
+-------------------------------------------------------------------
+Thu Oct 24 18:16:19 UTC 2013 - wr@rosenauer.org
+
+- update to Firefox 25.0 (bnc#847708)
+  * rebased patches
+  * requires NSS 3.15.2 or above
+  * MFSA 2013-93/CVE-2013-5590/CVE-2013-5591/CVE-2013-5592
+    Miscellaneous memory safety hazards
+  * MFSA 2013-94/CVE-2013-5593 (bmo#868327)
+    Spoofing addressbar through SELECT element
+  * MFSA 2013-95/CVE-2013-5604 (bmo#914017)
+    Access violation with XSLT and uninitialized data
+  * MFSA 2013-96/CVE-2013-5595 (bmo#916580)
+    Improperly initialized memory and overflows in some JavaScript
+    functions
+  * MFSA 2013-97/CVE-2013-5596 (bmo#910881)
+    Writing to cycle collected object during image decoding
+  * MFSA 2013-98/CVE-2013-5597 (bmo#918864)
+    Use-after-free when updating offline cache
+  * MFSA 2013-99/CVE-2013-5598 (bmo#920515)
+    Security bypass of PDF.js checks using iframes
+  * MFSA 2013-100/CVE-2013-5599/CVE-2013-5600/CVE-2013-5601
+    (bmo#915210, bmo#915576, bmo#916685)
+    Miscellaneous use-after-free issues found through ASAN fuzzing
+  * MFSA 2013-101/CVE-2013-5602 (bmo#897678)
+    Memory corruption in workers
+  * MFSA 2013-102/CVE-2013-5603 (bmo#916404)
+    Use-after-free in HTML document templates
 
 -------------------------------------------------------------------
 Tue Sep 24 07:31:30 UTC 2013 - wr@rosenauer.org

@@ -4,9 +4,9 @@ Subject: pkgconfig tuning
 diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
 --- a/xulrunner/installer/Makefile.in
 +++ b/xulrunner/installer/Makefile.in
-@@ -39,16 +39,19 @@ ifndef MOZ_PLATFORM_MAEMO
- GENERATE_CACHE = 1
- endif
+@@ -31,16 +31,19 @@ include $(topsrcdir)/config/rules.mk
+ 
+ INSTALL_SDK = 1
  
  include $(topsrcdir)/toolkit/mozapps/installer/signing.mk
  include $(topsrcdir)/toolkit/mozapps/installer/packager.mk
@@ -24,7 +24,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  	$(NULL)
  
  ifdef MOZ_NATIVE_NSPR
-@@ -76,16 +79,17 @@ pkg_config_files += mozilla-nss.pc
+@@ -68,16 +71,17 @@ pkg_config_files += mozilla-nss.pc
  endif
  
  %.pc: $(srcdir)/%.pc.in $(GLOBAL_DEPS)

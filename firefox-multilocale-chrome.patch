@@ -1,13 +1,13 @@
 # HG changeset patch
-# Parent 020e09bf3fc6f17b3041ecf70f1376da37db8645
+# Parent 596aaeb7e5417f1f97eab2116503013bc68c0c3a
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -340,16 +340,20 @@ pref("browser.download.panel.shown", fal
- pref("browser.download.panel.firstSessionCompleted", false);
+@@ -351,16 +351,20 @@ pref("browser.helperApps.deleteTempFileO
+ #endif
  
  // search engines URL
  pref("browser.search.searchEnginesURL",      "https://addons.mozilla.org/%LOCALE%/firefox/search-engines/");
@@ -30,7 +30,7 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -71,20 +71,22 @@ UNINSTALLER_PACKAGE_HOOK = $(RM) -r $(ST
+@@ -63,20 +63,22 @@ UNINSTALLER_PACKAGE_HOOK = $(RM) -r $(ST
  
  STUB_HOOK = $(NSINSTALL) -D "$(_ABS_DIST)/$(PKG_INST_PATH)"; \
      $(RM) "$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe"; \
@@ -55,7 +55,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  DIST_SUBDIRS = browser metro
  else
  DIST_SUBDIRS = $(DIST_SUBDIR)
-@@ -131,20 +133,44 @@ install:: $(addprefix generic/profile/,$
+@@ -123,20 +125,44 @@ install:: $(addprefix generic/profile/,$
  
  install:: $(call MERGE_FILES,$(addprefix profile/chrome/,$(PROFILE_CHROME)))
  	$(SYSINSTALL) $(IFLAGS1) $^ $(DESTDIR)$(mozappdir)/defaults/profile/chrome
@@ -131,7 +131,7 @@ diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -119,14 +119,15 @@
+@@ -122,14 +122,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/

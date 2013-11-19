@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8289,16 +8289,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -8162,16 +8162,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -42,20 +42,18 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
 --- a/security/manager/ssl/src/Makefile.in
 +++ b/security/manager/ssl/src/Makefile.in
-@@ -18,10 +18,13 @@ LIBXUL_LIBRARY	= 1
- CSRCS += md4.c
+@@ -5,8 +5,11 @@
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
+ EXPORT_LIBRARY	= 1
  DEFINES += \
    -DNSS_ENABLE_ECC \
    -DDLL_PREFIX=\"$(DLL_PREFIX)\" \
    -DDLL_SUFFIX=\"$(DLL_SUFFIX)\" \
    $(NULL)
- 
++
 +LOCAL_INCLUDES += $(NSSHELPER_CFLAGS)
 +EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
-+
- include $(topsrcdir)/config/rules.mk
- 
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
 --- a/security/manager/ssl/src/nsNSSComponent.cpp
 +++ b/security/manager/ssl/src/nsNSSComponent.cpp
@@ -83,7 +81,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsComponentManagerUtils.h"
  #include "nsDirectoryServiceDefs.h"
  #include "nsICertOverrideService.h"
-@@ -1144,18 +1151,34 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1136,18 +1143,35 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -94,6 +92,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
      uint32_t init_flags = NSS_INIT_NOROOTINIT | NSS_INIT_OPTIMIZESPACE;
 -    SECStatus init_rv = ::NSS_Initialize(profileStr.get(), "", "",
 -                                         SECMOD_DB, init_flags);
++
 +    SECStatus init_rv = SECFailure;
 +#ifdef MOZ_ENABLE_NSSHELPER
 +    if (PR_GetEnv("MOZ_XRE_NO_NSSHELPER")) {
@@ -116,18 +115,18 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
      if (init_rv != SECSuccess) {
        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS r/w in %s\n", profileStr.get()));
  
-       if (supress_warning_preference) {
+       if (suppressWarningPref) {
          which_nss_problem = problem_none;
        }
        else {
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -490,17 +490,17 @@ ifneq (,$(or $(filter 1400,$(_MSC_VER)),
- ifdef MOZ_DEBUG
- EXTRA_DSO_LDOPTS += -INCREMENTAL:NO
- endif
- endif
+@@ -473,17 +473,17 @@ LOCAL_INCLUDES += -I$(topsrcdir)/intl/un
+ ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
+ SDK_LIBRARY = $(IMPORT_LIBRARY)
+ else
+ SDK_LIBRARY = $(SHARED_LIBRARY)
  endif
  
  EXTRA_DSO_LDOPTS += $(LIBS_DIR)

@@ -1,8 +1,29 @@
 +-------------------------------------------------------------------
 Sat Dec  7 17:30:18 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 24.2.0esr (bnc#)
+- update to Firefox 24.2.0esr (bnc#854367, bnc#854370)
   * requires NSPR 4.10.2 and NSS 3.15.3.1 or higher
+  * MFSA 2013-104/CVE-2013-5609/CVE-2013-5610
+    Miscellaneous memory safety hazards
+  * MFSA 2013-108/CVE-2013-5616 (bmo#938341)
+    Use-after-free in event listeners
+  * MFSA 2013-109/CVE-2013-5618 (bmo#926361)
+    Use-after-free during Table Editing
+  * MFSA 2013-111/CVE-2013-6671 (bmo#930281)
+    Segmentation violation when replacing ordered list elements
+  * MFSA 2013-113/CVE-2013-6673 (bmo#970380)
+    Trust settings for built-in roots ignored during EV certificate
+    validation
+  * MFSA 2013-114/CVE-2013-5613 (bmo#930381, bmo#932449)
+    Use-after-free in synthetic mouse movement
+  * MFSA 2013-115/CVE-2013-5615 (bmo#929261)
+    GetElementIC typed array stubs can be generated outside observed
+    typesets
+  * MFSA 2013-116/CVE-2013-6629/CVE-2013-6630 (bmo#891693)
+    JPEG information leak
+  * MFSA 2013-117 (bmo#946351)
+    Mis-issued ANSSI/DCSSI certificate
+    (fixed via NSS 3.15.3.1)
 
 -------------------------------------------------------------------
 Thu Oct 24 16:46:31 UTC 2013 - wr@rosenauer.org

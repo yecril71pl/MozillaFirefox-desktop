@@ -1,9 +1,40 @@
 -------------------------------------------------------------------
 Sun Dec  8 20:26:23 UTC 2013 - wr@rosenauer.org
 
-- update to Firefox 26.0 (bnc#854367, bnc#854368)
+- update to Firefox 26.0 (bnc#854367, bnc#854370)
   * rebased patches
   * requires NSPR 4.10.2 and NSS 3.15.3.1
+  * MFSA 2013-104/CVE-2013-5609/CVE-2013-5610
+    Miscellaneous memory safety hazards
+  * MFSA 2013-105/CVE-2013-5611 (bmo#771294)
+    Application Installation doorhanger persists on navigation
+  * MFSA 2013-106/CVE-2013-5612 (bmo#871161)
+    Character encoding cross-origin XSS attack
+  * MFSA 2013-107/CVE-2013-5614 (bmo#886262)
+    Sandbox restrictions not applied to nested object elements
+  * MFSA 2013-108/CVE-2013-5616 (bmo#938341)
+    Use-after-free in event listeners
+  * MFSA 2013-109/CVE-2013-5618 (bmo#926361)
+    Use-after-free during Table Editing
+  * MFSA 2013-110/CVE-2013-5619 (bmo#917841)
+    Potential overflow in JavaScript binary search algorithms
+  * MFSA 2013-111/CVE-2013-6671 (bmo#930281)
+    Segmentation violation when replacing ordered list elements
+  * MFSA 2013-112/CVE-2013-6672 (bmo#894736)
+    Linux clipboard information disclosure though selection paste
+  * MFSA 2013-113/CVE-2013-6673 (bmo#970380)
+    Trust settings for built-in roots ignored during EV certificate
+    validation
+  * MFSA 2013-114/CVE-2013-5613 (bmo#930381, bmo#932449)
+    Use-after-free in synthetic mouse movement
+  * MFSA 2013-115/CVE-2013-5615 (bmo#929261)
+    GetElementIC typed array stubs can be generated outside observed
+    typesets
+  * MFSA 2013-116/CVE-2013-6629/CVE-2013-6630 (bmo#891693)
+    JPEG information leak
+  * MFSA 2013-117 (bmo#946351)
+    Mis-issued ANSSI/DCSSI certificate
+    (fixed via NSS 3.15.3.1)
 - removed gecko.js preference file as GStreamer is enabled by
   default now
 

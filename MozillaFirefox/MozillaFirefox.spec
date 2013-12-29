@@ -18,8 +18,8 @@
 
 
 %define major 26
-%define mainver %major.0
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.2
-BuildRequires:  mozilla-nss-devel >= 3.15.3.1
+BuildRequires:  mozilla-nss-devel >= 3.15.4
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
@@ -63,7 +63,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013120700
+%define         releasedate 2013122800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -105,6 +105,7 @@ Patch10:        mozilla-sle11.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-libproxy-compat.patch
+Patch15:        mozilla-system-nspr.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -236,6 +237,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

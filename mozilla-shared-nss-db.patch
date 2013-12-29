@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8162,16 +8162,31 @@ AC_SUBST(QCMS_LIBS)
+@@ -7999,16 +7999,31 @@ AC_SUBST(QCMS_LIBS)
  
  dnl ========================================================
  dnl HarfBuzz
@@ -42,10 +42,10 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
 --- a/security/manager/ssl/src/Makefile.in
 +++ b/security/manager/ssl/src/Makefile.in
-@@ -5,8 +5,11 @@
+@@ -4,8 +4,11 @@
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
  # file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
- EXPORT_LIBRARY	= 1
  DEFINES += \
    -DNSS_ENABLE_ECC \
    -DDLL_PREFIX=\"$(DLL_PREFIX)\" \
@@ -81,7 +81,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsComponentManagerUtils.h"
  #include "nsDirectoryServiceDefs.h"
  #include "nsICertOverrideService.h"
-@@ -1136,18 +1143,35 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1254,18 +1261,35 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
@@ -122,7 +122,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -473,17 +473,17 @@ LOCAL_INCLUDES += -I$(topsrcdir)/intl/un
+@@ -484,17 +484,17 @@ LOCAL_INCLUDES += -I$(topsrcdir)/intl/un
  ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
  SDK_LIBRARY = $(IMPORT_LIBRARY)
  else

@@ -1,0 +1,48 @@
+# HG changeset patch
+# Parent 59d243709baef41e90fe91254a620c4f5215bb1e
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+
+diff --git a/content/media/Latency.cpp b/content/media/Latency.cpp
+--- a/content/media/Latency.cpp
++++ b/content/media/Latency.cpp
+@@ -4,17 +4,17 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ // We want this available in opt builds
+ #define FORCE_PR_LOG
+ 
+ #include "Latency.h"
+ #include "nsThreadUtils.h"
+-#include <prlog.h>
++#include "prlog.h"
+ #include <cmath>
+ #include <algorithm>
+ 
+ #include <mozilla/Services.h>
+ #include <mozilla/StaticPtr.h>
+ #include "nsContentUtils.h"
+ 
+ using namespace mozilla;
+diff --git a/content/media/Latency.h b/content/media/Latency.h
+--- a/content/media/Latency.h
++++ b/content/media/Latency.h
+@@ -3,17 +3,17 @@
+ /* This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ #ifndef MOZILLA_LATENCY_H
+ #define MOZILLA_LATENCY_H
+ 
+ #include "mozilla/TimeStamp.h"
+-#include "nspr/prlog.h"
++#include "prlog.h"
+ #include "nsCOMPtr.h"
+ #include "nsIThread.h"
+ #include "mozilla/Monitor.h"
+ #include "nsISupportsImpl.h"
+ #include "nsObserverService.h"
+ 
+ class AsyncLatencyLogger;
+ class LogEvent;

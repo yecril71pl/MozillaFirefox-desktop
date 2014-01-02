@@ -143,7 +143,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 ### build options
 %define branding 1
 %define localize 1
-%ifarch ppc ppc64 s390 s390x ia64 %arm
+%ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0
 %else
 %define crashreporter 1
@@ -281,7 +281,7 @@ export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
 %endif
-%ifarch ppc64
+%ifarch ppc64 ppc64le
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
 export CXXFLAGS="$CFLAGS"

@@ -1,0 +1,26 @@
+# HG changeset patch
+# User Steve Singer <steve@ssinger.info>
+# Parent 23c23b472a4f73cef13cbd0c9a160402e840b456
+Bug 929439 - Include string.h for memcpy. r=bgirard
+
+diff --git a/gfx/layers/BufferUnrotate.cpp b/gfx/layers/BufferUnrotate.cpp
+--- a/gfx/layers/BufferUnrotate.cpp
++++ b/gfx/layers/BufferUnrotate.cpp
+@@ -3,16 +3,17 @@
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ #include <algorithm> // min & max
+ #include <cstdlib>
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ 
+ void BufferUnrotate(uint8_t* aBuffer, int aByteWidth, int aHeight,
+                     int aByteStride, int aXBoundary, int aYBoundary)
+ {
+   if (aXBoundary != 0) {
+     uint8_t* line = new uint8_t[aByteWidth];
+     uint32_t smallStart = 0;
+     uint32_t smallLen = aXBoundary;

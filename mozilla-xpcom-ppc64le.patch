@@ -1,0 +1,407 @@
+# HG changeset patch
+# Parent eaf8cf90f24bed087b8dc3900e57dc481c62e2a8
+# User Ulrich Weigand <uweigand@de.ibm.com>
+PPC64 LE support for XPCOM
+
+diff --git a/xpcom/reflect/xptcall/src/md/unix/Makefile.in b/xpcom/reflect/xptcall/src/md/unix/Makefile.in
+--- a/xpcom/reflect/xptcall/src/md/unix/Makefile.in
++++ b/xpcom/reflect/xptcall/src/md/unix/Makefile.in
+@@ -161,17 +161,17 @@ endif
+ ifneq (,$(filter Linuxpowerpc FreeBSDpowerpc,$(OS_ARCH)$(OS_TEST)))
+ ASFILES		:= xptcinvoke_asm_ppc_linux.s xptcstubs_asm_ppc_linux.s
+ AS		:= $(CC) -c -x assembler-with-cpp
+ endif
+ 
+ #
+ # Linux/PPC64
+ #
+-ifneq (,$(filter Linuxpowerpc64 FreeBSDpowerpc64,$(OS_ARCH)$(OS_TEST)))
++ifneq (,$(filter Linuxpowerpc64 Linuxpowerpc64le FreeBSDpowerpc64,$(OS_ARCH)$(OS_TEST)))
+ ASFILES                := xptcinvoke_asm_ppc64_linux.s xptcstubs_asm_ppc64_linux.s
+ AS             := $(CC) -c -x assembler-with-cpp
+ endif
+ 
+ #
+ # NetBSD/PPC
+ #
+ ifneq (,$(filter NetBSDmacppc NetBSDbebox NetBSDofppc NetBSDprep NetBSDamigappc,$(OS_ARCH)$(OS_TEST)))                           
+diff --git a/xpcom/reflect/xptcall/src/md/unix/moz.build b/xpcom/reflect/xptcall/src/md/unix/moz.build
+--- a/xpcom/reflect/xptcall/src/md/unix/moz.build
++++ b/xpcom/reflect/xptcall/src/md/unix/moz.build
+@@ -193,16 +193,23 @@ if CONFIG['OS_TEST'] == 'powerpc':
+ 
+ if CONFIG['OS_TEST'] == 'powerpc64':
+     if CONFIG['OS_ARCH'] in ('Linux', 'FreeBSD'):
+           CPP_SOURCES += [
+               'xptcinvoke_ppc64_linux.cpp',
+               'xptcstubs_ppc64_linux.cpp',
+           ]
+ 
++if CONFIG['OS_TEST'] == 'powerpc64le':
++    if CONFIG['OS_ARCH'] == 'Linux':
++          CPP_SOURCES += [
++              'xptcinvoke_ppc64_linux.cpp',
++              'xptcstubs_ppc64_linux.cpp',
++          ]
++
+ if CONFIG['OS_TEST'] in ('macppc', 'bebox', 'ofppc', 'prep', 'amigappc'):
+     if CONFIG['OS_ARCH'] == 'NetBSD':
+         CPP_SOURCES += [
+             'xptcinvoke_ppc_netbsd.cpp',
+             'xptcstubs_ppc_netbsd.cpp',
+         ]
+ 
+ if CONFIG['OS_ARCH'] == 'OpenBSD' and CONFIG['OS_TEST'] == 'powerpc':
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
+--- a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
+@@ -12,33 +12,51 @@
+ .set f0,0; .set f1,1; .set f2,2; .set f3,3; .set f4,4
+ .set f5,5; .set f6,6; .set f7,7; .set f8,8; .set f9,9
+ .set f10,10; .set f11,11; .set f12,12; .set f13,13; .set f14,14
+ .set f15,15; .set f16,16; .set f17,17; .set f18,18; .set f19,19
+ .set f20,20; .set f21,21; .set f22,22; .set f23,23; .set f24,24
+ .set f25,25; .set f26,26; .set f27,27; .set f28,28; .set f29,29
+ .set f30,30; .set f31,31
+ 
++#if _CALL_ELF == 2
++#define STACK_TOC      28
++#define STACK_PARAMS   96
++#else
++#define STACK_TOC      40
++#define STACK_PARAMS   112
++#endif
+ 
+ #
+ # NS_InvokeByIndex(nsISupports* that, uint32_t methodIndex,
+ #                    uint32_t paramCount, nsXPTCVariant* params)
+ #
+ 
++#if _CALL_ELF == 2
++        .section ".text"
++        .type   NS_InvokeByIndex,@function
++        .globl  NS_InvokeByIndex
++        .align 2
++NS_InvokeByIndex:
++0:      addis 2,12,(.TOC.-0b)@ha
++        addi 2,2,(.TOC.-0b)@l
++        .localentry NS_InvokeByIndex,.-NS_InvokeByIndex
++#else
+         .section ".toc","aw"
+         .section ".text"
+         .align 2
+         .globl  NS_InvokeByIndex
+         .section ".opd","aw"
+         .align 3
+ NS_InvokeByIndex:
+         .quad   .NS_InvokeByIndex,.TOC.@tocbase
+         .previous
+         .type   NS_InvokeByIndex,@function
+ .NS_InvokeByIndex:
++#endif
+         mflr    0
+         std     0,16(r1)
+ 
+         std     r29,-24(r1)
+         std     r30,-16(r1)
+         std     r31,-8(r1)
+ 
+         mr      r29,r3                  # Save 'that' in r29
+@@ -51,51 +69,55 @@ NS_InvokeByIndex:
+         # that the stack remains 16-byte aligned.
+         #
+         #  | ..128-byte stack frame.. |     | 7 GP | 13 FP | 3 NV |
+         #  |               |(params)........| regs | regs  | regs |
+         # (r1)...........(+112)....(+128)
+         #                               (-23*8).(-16*8).(-3*8)..(r31)
+ 
+         # +stack frame, -unused stack params, +regs storage, +1 for alignment
+-        addi    r7,r5,((112/8)-7+7+13+3+1)
++        addi    r7,r5,((STACK_PARAMS/8)-7+7+13+3+1)
+         rldicr  r7,r7,3,59              # multiply by 8 and mask with ~15
+         neg     r7,r7
+         stdux   r1,r1,r7
+ 
+ 
+         # Call invoke_copy_to_stack(uint64_t* gpregs, double* fpregs,
+         #                           uint32_t paramCount, nsXPTCVariant* s, 
+         #                           uint64_t* d))
+ 
+         # r5, r6 are passed through intact (paramCount, params)
+         # r7 (d) has to be r1+112 -- where parameters are passed on the stack.
+         # r3, r4 are above that, easier to address from r31 than from r1
+ 
+         subi    r3,r31,(23*8)           # r3 --> GPRS
+         subi    r4,r31,(16*8)           # r4 --> FPRS
+-        addi    r7,r1,112               # r7 --> params
++        addi    r7,r1,STACK_PARAMS      # r7 --> params
+         bl      invoke_copy_to_stack
+         nop
+ 
+         # Set up to invoke function
+ 
+         ld      r9,0(r29)               # vtable (r29 is 'that')
+         mr      r3,r29                  # self is first arg, obviously
+ 
+         sldi    r30,r30,3               # Find function descriptor 
+         add     r9,r9,r30
+-        ld      r9,0(r9)
++        ld      r12,0(r9)
+ 
+-        ld      r0,0(r9)                # Actual address from fd.
+-        std     r2,40(r1)               # Save r2 (TOC pointer)
++        std     r2,STACK_TOC(r1)        # Save r2 (TOC pointer)
+ 
++#if _CALL_ELF == 2
++        mtctr   r12
++#else
++        ld      r0,0(r12)               # Actual address from fd.
+         mtctr   0
+-        ld      r11,16(r9)              # Environment pointer from fd.
+-        ld      r2,8(r9)                # TOC pointer from fd.
++        ld      r11,16(r12)             # Environment pointer from fd.
++        ld      r2,8(r12)               # TOC pointer from fd.
++#endif
+ 
+         # Load FP and GP registers as required
+         ld      r4, -(23*8)(r31) 
+         ld      r5, -(22*8)(r31) 
+         ld      r6, -(21*8)(r31) 
+         ld      r7, -(20*8)(r31) 
+         ld      r8, -(19*8)(r31) 
+         ld      r9, -(18*8)(r31) 
+@@ -112,21 +134,25 @@ NS_InvokeByIndex:
+         lfd     f9, -(8*8)(r31)
+         lfd     f10, -(7*8)(r31)
+         lfd     f11, -(6*8)(r31)
+         lfd     f12, -(5*8)(r31)
+         lfd     f13, -(4*8)(r31)
+ 
+         bctrl                           # Do it
+ 
+-        ld      r2,40(r1)               # Load our own TOC pointer
++        ld      r2,STACK_TOC(r1)        # Load our own TOC pointer
+         ld      r1,0(r1)                # Revert stack frame
+         ld      0,16(r1)                # Reload lr
+         ld      29,-24(r1)              # Restore NVGPRS
+         ld      30,-16(r1)
+         ld      31,-8(r1)
+         mtlr    0
+         blr
+ 
++#if _CALL_ELF == 2
++        .size   NS_InvokeByIndex,.-NS_InvokeByIndex
++#else
+         .size   NS_InvokeByIndex,.-.NS_InvokeByIndex
++#endif
+ 
+         # Magic indicating no need for an executable stack
+         .section .note.GNU-stack, "", @progbits ; .previous
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
+--- a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
+@@ -69,17 +69,19 @@ invoke_copy_to_stack(uint64_t* gpregs,
+             else
+                 *(double *)d = s->val.d;
+         }
+         else if (!s->IsPtrData() && s->type == nsXPTType::T_FLOAT) {
+             if (i < FPR_COUNT) {
+                 fpregs[i]   = s->val.f; // if passed in registers, floats are promoted to doubles
+             } else {
+                 float *p = (float *)d;
++#ifndef __LITTLE_ENDIAN__
+                 p++;
++#endif
+                 *p = s->val.f;
+             }
+         }
+         else {
+             if (i < GPR_COUNT)
+                 gpregs[i] = tempu64;
+             else
+                 *d = tempu64;
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
+--- a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
+@@ -12,28 +12,50 @@
+ .set f0,0; .set f1,1; .set f2,2; .set f3,3; .set f4,4
+ .set f5,5; .set f6,6; .set f7,7; .set f8,8; .set f9,9
+ .set f10,10; .set f11,11; .set f12,12; .set f13,13; .set f14,14
+ .set f15,15; .set f16,16; .set f17,17; .set f18,18; .set f19,19
+ .set f20,20; .set f21,21; .set f22,22; .set f23,23; .set f24,24
+ .set f25,25; .set f26,26; .set f27,27; .set f28,28; .set f29,29
+ .set f30,30; .set f31,31
+ 
++#if _CALL_ELF == 2
++#define STACK_PARAMS   96
++#else
++#define STACK_PARAMS   112
++#endif
++
++#if _CALL_ELF == 2
++        .section ".text"
++        .type   SharedStub,@function
++        .globl  SharedStub
++        # Make the symbol hidden so that the branch from the stub does
++        # not go via a PLT.  This is not only better for performance,
++        # but may be necessary to avoid linker errors since there is
++        # no place to restore the TOC register in a sibling call.
++        .hidden SharedStub
++        .align 2
++SharedStub:
++0:      addis 2,12,(.TOC.-0b)@ha
++        addi 2,2,(.TOC.-0b)@l
++        .localentry SharedStub,.-SharedStub
++#else
+         .section ".text"
+         .align 2
+         .globl SharedStub
+         .section ".opd","aw"
+         .align 3
+ 
+ SharedStub:
+         .quad   .SharedStub,.TOC.@tocbase
+         .previous
+         .type   SharedStub,@function
+ 
+ .SharedStub:
++#endif
+         mflr    r0
+ 
+         std     r4, -56(r1)                     # Save all GPRS
+         std     r5, -48(r1)
+         std     r6, -40(r1)
+         std     r7, -32(r1)
+         std     r8, -24(r1)
+         std     r9, -16(r1)
+@@ -50,17 +72,17 @@ SharedStub:
+         stfd    f5, -128(r1)
+         stfd    f4, -136(r1)
+         stfd    f3, -144(r1)
+         stfd    f2, -152(r1)
+         stfd    f1, -160(r1)
+ 
+         subi    r6,r1,56                        # r6 --> gprData
+         subi    r7,r1,160                       # r7 --> fprData
+-        addi    r5,r1,112                       # r5 --> extra stack args
++        addi    r5,r1,STACK_PARAMS              # r5 --> extra stack args
+ 
+         std     r0, 16(r1)
+ 	
+         stdu    r1,-288(r1)
+                                                 # r3 has the 'self' pointer
+                                                 # already
+ 
+         mr      r4,r11                          # r4 is methodIndex selector,
+@@ -70,12 +92,16 @@ SharedStub:
+         bl      PrepareAndDispatch
+         nop
+ 
+         ld      1,0(r1)                         # restore stack
+         ld      r0,16(r1)                       # restore LR
+         mtlr    r0
+         blr
+ 
++#if _CALL_ELF == 2
++        .size   SharedStub,.-SharedStub
++#else
+         .size   SharedStub,.-.SharedStub
++#endif
+ 
+         # Magic indicating no need for an executable stack
+         .section .note.GNU-stack, "", @progbits ; .previous
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
+--- a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
+@@ -78,17 +78,19 @@ PrepareAndDispatch(nsXPTCStubBase* self,
+                 dp->val.d = fprData[i];
+             else
+                 dp->val.d = *(double*) ap;
+         } else if (!param.IsOut() && type == nsXPTType::T_FLOAT) {
+             if (i < FPR_COUNT)
+                 dp->val.f = (float) fprData[i]; // in registers floats are passed as doubles
+             else {
+                 float *p = (float *)ap;
++#ifndef __LITTLE_ENDIAN__
+                 p++;
++#endif
+                 dp->val.f = *p;
+             }
+         } else { /* integer type or pointer */
+             if (i < GPR_COUNT)
+                 tempu64 = gprData[i];
+             else
+                 tempu64 = *ap;
+ 
+@@ -148,16 +150,53 @@ PrepareAndDispatch(nsXPTCStubBase* self,
+ // Create names would be like:
+ // _ZN14nsXPTCStubBase5Stub1Ev
+ // _ZN14nsXPTCStubBase6Stub12Ev
+ // _ZN14nsXPTCStubBase7Stub123Ev
+ // _ZN14nsXPTCStubBase8Stub1234Ev
+ // etc.
+ // Use assembler directives to get the names right...
+ 
++#if _CALL_ELF == 2
++# define STUB_ENTRY(n)                                                  \
++__asm__ (                                                               \
++        ".section \".text\" \n\t"                                       \
++        ".align 2 \n\t"                                                 \
++        ".if "#n" < 10 \n\t"                                            \
++        ".globl _ZN14nsXPTCStubBase5Stub"#n"Ev \n\t"                    \
++        ".type  _ZN14nsXPTCStubBase5Stub"#n"Ev,@function \n\n"          \
++"_ZN14nsXPTCStubBase5Stub"#n"Ev: \n\t"                                  \
++        "0: addis 2,12,.TOC.-0b@ha \n\t"                                \
++        "addi     2,2,.TOC.-0b@l \n\t"                                  \
++        ".localentry _ZN14nsXPTCStubBase5Stub"#n"Ev,.-_ZN14nsXPTCStubBase5Stub"#n"Ev \n\t" \
++                                                                        \
++        ".elseif "#n" < 100 \n\t"                                       \
++        ".globl _ZN14nsXPTCStubBase6Stub"#n"Ev \n\t"                    \
++        ".type  _ZN14nsXPTCStubBase6Stub"#n"Ev,@function \n\n"          \
++"_ZN14nsXPTCStubBase6Stub"#n"Ev: \n\t"                                  \
++        "0: addis 2,12,.TOC.-0b@ha \n\t"                                \
++        "addi     2,2,.TOC.-0b@l \n\t"                                  \
++        ".localentry _ZN14nsXPTCStubBase6Stub"#n"Ev,.-_ZN14nsXPTCStubBase6Stub"#n"Ev \n\t" \
++                                                                        \
++        ".elseif "#n" < 1000 \n\t"                                      \
++        ".globl _ZN14nsXPTCStubBase7Stub"#n"Ev \n\t"                    \
++        ".type  _ZN14nsXPTCStubBase7Stub"#n"Ev,@function \n\n"          \
++"_ZN14nsXPTCStubBase7Stub"#n"Ev: \n\t"                                  \
++        "0: addis 2,12,.TOC.-0b@ha \n\t"                                \
++        "addi     2,2,.TOC.-0b@l \n\t"                                  \
++        ".localentry _ZN14nsXPTCStubBase7Stub"#n"Ev,.-_ZN14nsXPTCStubBase7Stub"#n"Ev \n\t" \
++                                                                        \
++        ".else  \n\t"                                                   \
++        ".err   \"stub number "#n" >= 1000 not yet supported\"\n"       \
++        ".endif \n\t"                                                   \
++                                                                        \
++        "li     11,"#n" \n\t"                                           \
++        "b      SharedStub \n"                                          \
++);
++#else
+ # define STUB_ENTRY(n)                                                  \
+ __asm__ (                                                               \
+         ".section \".toc\",\"aw\" \n\t"                                 \
+         ".section \".text\" \n\t"                                       \
+         ".align 2 \n\t"                                                 \
+         ".if "#n" < 10 \n\t"                                            \
+         ".globl _ZN14nsXPTCStubBase5Stub"#n"Ev \n\t"                    \
+         ".section \".opd\",\"aw\" \n\t"                                 \
+@@ -190,16 +229,17 @@ PrepareAndDispatch(nsXPTCStubBase* self,
+                                                                         \
+         ".else  \n\t"                                                   \
+         ".err   \"stub number "#n" >= 1000 not yet supported\"\n"       \
+         ".endif \n\t"                                                   \
+                                                                         \
+         "li     11,"#n" \n\t"                                           \
+         "b      SharedStub \n"                                          \
+ );
++#endif
+ 
+ #define SENTINEL_ENTRY(n)                                               \
+ nsresult nsXPTCStubBase::Sentinel##n()                                  \
+ {                                                                       \
+     NS_ERROR("nsXPTCStubBase::Sentinel called");                  \
+     return NS_ERROR_NOT_IMPLEMENTED;                                    \
+ }
+ 

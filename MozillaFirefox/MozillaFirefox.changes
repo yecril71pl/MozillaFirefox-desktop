@@ -8,6 +8,14 @@ Sat Dec 28 20:10:57 UTC 2013 - wr@rosenauer.org
   (bmo#953130)
 
 -------------------------------------------------------------------
+Thu Dec 12 21:19:54 UTC 2013 - uweigand@de.ibm.com
+
+- Add support for powerpc64le-linux.
+  * mozilla-ppc64le.patch: general support
+  * mozilla-libffi-ppc64le.patch: libffi backport
+  * mozilla-xpcom-ppc64le.patch: port xpcom
+
+-------------------------------------------------------------------
 Sun Dec  8 20:26:23 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 26.0 (bnc#854367, bnc#854370)

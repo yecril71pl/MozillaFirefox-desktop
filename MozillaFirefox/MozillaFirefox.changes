@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Thu Dec 12 21:19:54 UTC 2013 - uweigand@de.ibm.com
+
+- Add support for powerpc64le-linux.
+  * mozilla-ppc64le.patch: general support
+  * mozilla-libffi-ppc64le.patch: libffi backport
+  * mozilla-xpcom-ppc64le.patch: port xpcom
+- Add build fix from mainline.
+  * mozilla-bug929439.patch
+
+-------------------------------------------------------------------
 Sun Dec  8 20:26:23 UTC 2013 - wr@rosenauer.org
 
 - update to Firefox 26.0 (bnc#854367, bnc#854370)

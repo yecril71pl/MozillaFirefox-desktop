@@ -17,7 +17,6 @@ mozilla-arm-disable-edsp.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
-mozilla-system-nspr.patch
 mozilla-ppc64le.patch
 mozilla-libffi-ppc64le.patch
 mozilla-xpcom-ppc64le.patch

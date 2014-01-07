@@ -1,11 +1,9 @@
 -------------------------------------------------------------------
-Sat Dec 28 20:10:57 UTC 2013 - wr@rosenauer.org
+Tue Jan  7 08:51:56 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 27.0b2
+- update to Firefox 27.0b4
 - requires NSS 3.15.4 or higher
 - rebased/reworked patches
-- added mozilla-system-nspr.patch to allow system NSPR builds
-  (bmo#953130)
 
 -------------------------------------------------------------------
 Thu Dec 12 21:19:54 UTC 2013 - uweigand@de.ibm.com

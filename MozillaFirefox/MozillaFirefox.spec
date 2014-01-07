@@ -105,10 +105,9 @@ Patch10:        mozilla-sle11.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-libproxy-compat.patch
-Patch15:        mozilla-system-nspr.patch
-Patch16:        mozilla-ppc64le.patch
-Patch17:        mozilla-libffi-ppc64le.patch
-Patch18:        mozilla-xpcom-ppc64le.patch
+Patch15:        mozilla-ppc64le.patch
+Patch16:        mozilla-libffi-ppc64le.patch
+Patch17:        mozilla-xpcom-ppc64le.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -243,7 +242,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
 #
 %patch30 -p1
 %if %suse_version >= 1110

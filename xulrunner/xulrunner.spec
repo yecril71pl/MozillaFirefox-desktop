@@ -1,8 +1,8 @@
 #
 # spec file for package xulrunner
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2013 Wolfgang Rosenauer
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2014 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -47,19 +47,19 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10
-BuildRequires:  mozilla-nss-devel >= 3.15.2
+BuildRequires:  mozilla-nspr-devel >= 4.10.2
+BuildRequires:  mozilla-nss-devel >= 3.15.3.1
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
-Version:        24.1.0
+Version:        24.2.0
 Release:        0
-%define         releasedate 2013102400
-%define         version_internal 24.1.0
+%define         releasedate 2013120700
+%define         version_internal 24.2.0
 %define         apiversion 24
-%define         uaweight 2401000
+%define         uaweight 2402000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -88,6 +88,9 @@ Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
 Patch10:        mozilla-ppc.patch
 Patch11:        mozilla-libproxy-compat.patch
+Patch12:        libffi-ppc64le.patch
+Patch13:        xpcom-ppc64le.patch
+Patch14:        ppc64le-support.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -98,8 +101,8 @@ Obsoletes:      xulrunner-esr < 24.0
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 1
-%ifarch ppc ppc64 s390 s390x ia64 %arm
+%define localize 0
+%ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm aarch64
 %define crashreporter    0
 %else
 %define crashreporter    1
@@ -205,6 +208,9 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch10 -p1
 %patch11 -p1
+#%patch12 -p1
+#%patch13 -p1
+#%patch14 -p1
 
 %build
 # no need to add build time to binaries
@@ -216,7 +222,7 @@ find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIM
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
-%ifarch ppc64
+%ifarch ppc64 ppc64le
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
 export LDFLAGS=" -Wl,-rpath -Wl,${MOZ_APP_DIR}"

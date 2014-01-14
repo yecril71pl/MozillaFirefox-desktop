@@ -1,11 +1,59 @@
 -------------------------------------------------------------------
-Thu Oct 24 17:07:51 UTC 2013 - wr@rosenauer.org
+Mon Jan 13 15:51:35 UTC 2014 - wr@rosenauer.org
 
-- update to 24.1.0esr (bnc#)
-  * requires NSS 3.15.2 or above
+- removed obsolete mozilla-use-recommended-freetype-include.patch
 
 -------------------------------------------------------------------
-Wed Sep 18 14:39:34 UTC 2013 - wr@rosenauer.org
+Mon Jan 13 15:37:53 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 24.2.0esr (bnc#854367, bnc#854370)
+  * requires NSPR 4.10.2 and NSS 3.15.3.1 or higher
+  * MFSA 2013-104/CVE-2013-5609/CVE-2013-5610
+    Miscellaneous memory safety hazards
+  * MFSA 2013-108/CVE-2013-5616 (bmo#938341)
+    Use-after-free in event listeners
+  * MFSA 2013-109/CVE-2013-5618 (bmo#926361)
+    Use-after-free during Table Editing
+  * MFSA 2013-111/CVE-2013-6671 (bmo#930281)
+    Segmentation violation when replacing ordered list elements
+  * MFSA 2013-113/CVE-2013-6673 (bmo#970380)
+    Trust settings for built-in roots ignored during EV certificate
+    validation
+  * MFSA 2013-114/CVE-2013-5613 (bmo#930381, bmo#932449)
+    Use-after-free in synthetic mouse movement
+  * MFSA 2013-115/CVE-2013-5615 (bmo#929261)
+    GetElementIC typed array stubs can be generated outside observed
+    typesets
+  * MFSA 2013-116/CVE-2013-6629/CVE-2013-6630 (bmo#891693)
+    JPEG information leak
+  * MFSA 2013-117 (bmo#946351)
+    Mis-issued ANSSI/DCSSI certificate
+    (fixed via NSS 3.15.3.1)
+
+- update to Firefox 24.1.0esr (bnc#847708)
+  * requires NSS 3.15.2 or above
+  * MFSA 2013-93/CVE-2013-5590/CVE-2013-5591/CVE-2013-5592
+    Miscellaneous memory safety hazards
+  * MFSA 2013-94/CVE-2013-5593 (bmo#868327)
+    Spoofing addressbar through SELECT element
+  * MFSA 2013-95/CVE-2013-5604 (bmo#914017)
+    Access violation with XSLT and uninitialized data
+  * MFSA 2013-96/CVE-2013-5595 (bmo#916580)
+    Improperly initialized memory and overflows in some JavaScript
+    functions
+  * MFSA 2013-97/CVE-2013-5596 (bmo#910881)
+    Writing to cycle collected object during image decoding
+  * MFSA 2013-98/CVE-2013-5597 (bmo#918864)
+    Use-after-free when updating offline cache
+  * MFSA 2013-99/CVE-2013-5598 (bmo#920515)
+    Security bypass of PDF.js checks using iframes
+  * MFSA 2013-100/CVE-2013-5599/CVE-2013-5600/CVE-2013-5601
+    (bmo#915210, bmo#915576, bmo#916685)
+    Miscellaneous use-after-free issues found through ASAN fuzzing
+  * MFSA 2013-101/CVE-2013-5602 (bmo#897678)
+    Memory corruption in workers
+  * MFSA 2013-102/CVE-2013-5603 (bmo#916404)
+    Use-after-free in HTML document templates
 
 - update to 24.0 (bnc#840485)
   * MFSA 2013-76/CVE-2013-1718/CVE-2013-1719
@@ -35,6 +83,75 @@ Wed Sep 18 14:39:34 UTC 2013 - wr@rosenauer.org
   * MFSA 2013-92/CVE-2013-1738 (bmo#887334, bmo#882897)
     GC hazard with default compartments and frame chain restoration
 - require NSPR 4.10 and NSS 3.15.1
+
+-------------------------------------------------------------------
+Sat Dec 14 17:42:53 UTC 2013 - hrvoje.senjan@gmail.com
+
+- Added mozilla-use-recommended-freetype-include.patch:
+  Freetype upstream recommends using their macros together with
+  ft2build include. Positive sideeffect is that this patch makes it
+  build with both freetype2 2.5.1, and older versions
+
+-------------------------------------------------------------------
+Thu Dec 12 05:46:02 UTC 2013 - uweigand@de.ibm.com
+
+- Add xpcom patch and general support for ppc64le
+- added patches:
+  * ppc64le-support.patch
+  * xpcom-ppc64le.patch
+
+-------------------------------------------------------------------
+Tue Dec 10 10:01:45 UTC 2013 - dvaleev@suse.com
+
+- Add libffi patch for ppc64le
+- added patches:
+  * libffi-ppc64le.patch
+
+-------------------------------------------------------------------
+Wed Oct 30 10:03:20 UTC 2013 - schwab@suse.de
+
+- mozilla-aarch64.patch: Add support for aarch64
+
+-------------------------------------------------------------------
+Thu Oct 24 16:40:37 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.10esr (bnc#847708)
+  * require NSS 3.14.4 or above
+  * MFSA 2013-93/CVE-2013-5590/CVE-2013-5591/CVE-2013-5592
+    Miscellaneous memory safety hazards
+  * MFSA 2013-95/CVE-2013-5604 (bmo#914017)
+    Access violation with XSLT and uninitialized data
+  * MFSA 2013-96/CVE-2013-5595 (bmo#916580)
+    Improperly initialized memory and overflows in some JavaScript
+    functions
+  * MFSA 2013-98/CVE-2013-5597 (bmo#918864)
+    Use-after-free when updating offline cache
+  * MFSA 2013-100/CVE-2013-5599/CVE-2013-5600/CVE-2013-5601
+    (bmo#915210, bmo#915576, bmo#916685)
+    Miscellaneous use-after-free issues found through ASAN fuzzing
+  * MFSA 2013-101/CVE-2013-5602 (bmo#897678)
+    Memory corruption in workers
+
+-------------------------------------------------------------------
+Thu Sep 12 10:06:08 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.9esr (bnc#840485)
+  * MFSA 2013-65/CVE-2013-1705 (bmo#882865)
+    Buffer underflow when generating CRMF requests
+  * MFSA 2013-76/CVE-2013-1718
+    Miscellaneous memory safety hazards
+  * MFSA 2013-79/CVE-2013-1722 (bmo#893308)
+    Use-after-free in Animation Manager during stylesheet cloning
+  * MFSA 2013-82/CVE-2013-1725 (bmo#876762)
+    Calling scope for new Javascript objects can lead to memory corruption
+  * MFSA 2013-88/CVE-2013-1730 (bmo#851353)
+    Compartment mismatch re-attaching XBL-backed nodes
+  * MFSA 2013-89/CVE-2013-1732 (bmo#883514)
+    Buffer overflow with multi-column, lists, and floats
+  * MFSA 2013-90/CVE-2013-1735/CVE-2013-1736 (bmo#898871, bmo#906301)
+    Memory corruption involving scrolling
+  * MFSA 2013-91/CVE-2013-1737 (bmo#907727)
+    User-defined properties on DOM proxies get the wrong "this" object
 
 -------------------------------------------------------------------
 Fri Aug  2 10:56:43 UTC 2013 - wr@rosenauer.org

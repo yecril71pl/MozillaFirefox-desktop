@@ -1,0 +1,3734 @@
+--- mozilla/js/src/ctypes/libffi/src/powerpc/aix.S	2013-10-24 09:56:51.844587814 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/aix.S	2013-11-29 17:23:26.000000000 +0100
+@@ -1,5 +1,5 @@
+ /* -----------------------------------------------------------------------
+-   aix.S - Copyright (c) 2002,2009 Free Software Foundation, Inc.
++   aix.S - Copyright (c) 2002, 2009 Free Software Foundation, Inc.
+    based on darwin.S by John Hornkvist
+ 
+    PowerPC Assembly glue.
+@@ -79,6 +79,8 @@
+ 	.set f20,20
+ 	.set f21,21
+ 
++	.extern .ffi_prep_args
++
+ #define LIBFFI_ASM
+ #include <fficonfig.h>
+ #include <ffi.h>
+@@ -125,6 +127,7 @@ ffi_call_AIX:
+ 	/* Call ffi_prep_args.  */
+ 	mr	r4, r1
+ 	bl	.ffi_prep_args
++	nop
+ 
+ 	/* Now do the call.  */
+ 	ld	r0, 0(r29)
+@@ -226,6 +229,7 @@ L(float_return_value):
+ 	/* Call ffi_prep_args.  */
+ 	mr	r4, r1
+ 	bl	.ffi_prep_args
++	nop
+ 
+ 	/* Now do the call.  */
+ 	lwz	r0, 0(r29)
+--- mozilla/js/src/ctypes/libffi/src/powerpc/ffi.c	2013-10-24 09:56:51.846587814 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/ffi.c	2013-11-29 17:23:26.000000000 +0100
+@@ -1,7 +1,9 @@
+ /* -----------------------------------------------------------------------
+-   ffi.c - Copyright (c) 1998 Geoffrey Keating
+-   Copyright (C) 2007, 2008 Free Software Foundation, Inc
+-   Copyright (C) 2008 Red Hat, Inc
++   ffi.c - Copyright (C) 2011 Anthony Green
++           Copyright (C) 2011 Kyle Moffett
++           Copyright (C) 2008 Red Hat, Inc
++           Copyright (C) 2007, 2008 Free Software Foundation, Inc
++	   Copyright (c) 1998 Geoffrey Keating
+ 
+    PowerPC Foreign Function Interface
+ 
+@@ -39,32 +41,29 @@ enum {
+   /* The assembly depends on these exact flags.  */
+   FLAG_RETURNS_SMST	= 1 << (31-31), /* Used for FFI_SYSV small structs.  */
+   FLAG_RETURNS_NOTHING  = 1 << (31-30), /* These go in cr7 */
++#ifndef __NO_FPRS__
+   FLAG_RETURNS_FP       = 1 << (31-29),
++#endif
+   FLAG_RETURNS_64BITS   = 1 << (31-28),
+ 
+   FLAG_RETURNS_128BITS  = 1 << (31-27), /* cr6  */
+-  FLAG_SYSV_SMST_R4     = 1 << (31-26), /* use r4 for FFI_SYSV 8 byte
+-					   structs.  */
+-  FLAG_SYSV_SMST_R3     = 1 << (31-25), /* use r3 for FFI_SYSV 4 byte
+-					   structs.  */
+-  /* Bits (31-24) through (31-19) store shift value for SMST */
+ 
+   FLAG_ARG_NEEDS_COPY   = 1 << (31- 7),
++  FLAG_ARG_NEEDS_PSAVE  = FLAG_ARG_NEEDS_COPY, /* Used by ELFv2 */
++#ifndef __NO_FPRS__
+   FLAG_FP_ARGUMENTS     = 1 << (31- 6), /* cr1.eq; specified by ABI */
++#endif
+   FLAG_4_GPR_ARGUMENTS  = 1 << (31- 5),
+   FLAG_RETVAL_REFERENCE = 1 << (31- 4)
+ };
+ 
+ /* About the SYSV ABI.  */
+-unsigned int NUM_GPR_ARG_REGISTERS = 8;
++#define ASM_NEEDS_REGISTERS 4
++#define NUM_GPR_ARG_REGISTERS 8
+ #ifndef __NO_FPRS__
+-unsigned int NUM_FPR_ARG_REGISTERS = 8;
+-#else
+-unsigned int NUM_FPR_ARG_REGISTERS = 0;
++# define NUM_FPR_ARG_REGISTERS 8
+ #endif
+ 
+-enum { ASM_NEEDS_REGISTERS = 4 };
+-
+ /* ffi_prep_args_SYSV is called by the assembly routine once stack space
+    has been allocated for the function's arguments.
+ 
+@@ -113,10 +112,12 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+   valp gpr_base;
+   int intarg_count;
+ 
++#ifndef __NO_FPRS__
+   /* 'fpr_base' points at the space for fpr1, and grows upwards as
+      we use FPR registers.  */
+   valp fpr_base;
+   int fparg_count;
++#endif
+ 
+   /* 'copy_space' grows down as we put structures in it.  It should
+      stay 16-byte aligned.  */
+@@ -125,9 +126,11 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+   /* 'next_arg' grows up as we put parameters in it.  */
+   valp next_arg;
+ 
+-  int i, ii MAYBE_UNUSED;
++  int i;
+   ffi_type **ptr;
++#ifndef __NO_FPRS__
+   double double_tmp;
++#endif
+   union {
+     void **v;
+     char **c;
+@@ -143,21 +146,22 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+   size_t struct_copy_size;
+   unsigned gprvalue;
+ 
+-  if (ecif->cif->abi == FFI_LINUX_SOFT_FLOAT)
+-    NUM_FPR_ARG_REGISTERS = 0;
+-
+   stacktop.c = (char *) stack + bytes;
+   gpr_base.u = stacktop.u - ASM_NEEDS_REGISTERS - NUM_GPR_ARG_REGISTERS;
+   intarg_count = 0;
++#ifndef __NO_FPRS__
+   fpr_base.d = gpr_base.d - NUM_FPR_ARG_REGISTERS;
+   fparg_count = 0;
+   copy_space.c = ((flags & FLAG_FP_ARGUMENTS) ? fpr_base.c : gpr_base.c);
++#else
++  copy_space.c = gpr_base.c;
++#endif
+   next_arg.u = stack + 2;
+ 
+   /* Check that everything starts aligned properly.  */
+-  FFI_ASSERT (((unsigned) (char *) stack & 0xF) == 0);
+-  FFI_ASSERT (((unsigned) copy_space.c & 0xF) == 0);
+-  FFI_ASSERT (((unsigned) stacktop.c & 0xF) == 0);
++  FFI_ASSERT (((unsigned long) (char *) stack & 0xF) == 0);
++  FFI_ASSERT (((unsigned long) copy_space.c & 0xF) == 0);
++  FFI_ASSERT (((unsigned long) stacktop.c & 0xF) == 0);
+   FFI_ASSERT ((bytes & 0xF) == 0);
+   FFI_ASSERT (copy_space.c >= next_arg.c);
+ 
+@@ -174,12 +178,28 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+        i > 0;
+        i--, ptr++, p_argv.v++)
+     {
+-      switch ((*ptr)->type)
+-	{
++      unsigned short typenum = (*ptr)->type;
++
++      /* We may need to handle some values depending on ABI */
++      if (ecif->cif->abi == FFI_LINUX_SOFT_FLOAT) {
++		if (typenum == FFI_TYPE_FLOAT)
++			typenum = FFI_TYPE_UINT32;
++		if (typenum == FFI_TYPE_DOUBLE)
++			typenum = FFI_TYPE_UINT64;
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_UINT128;
++      } else if (ecif->cif->abi != FFI_LINUX) {
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_STRUCT;
++#endif
++      }
++
++      /* Now test the translated value */
++      switch (typenum) {
++#ifndef __NO_FPRS__
+ 	case FFI_TYPE_FLOAT:
+ 	  /* With FFI_LINUX_SOFT_FLOAT floats are handled like UINT32.  */
+-	  if (ecif->cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    goto soft_float_prep;
+ 	  double_tmp = **p_argv.f;
+ 	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+ 	    {
+@@ -195,8 +215,6 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 
+ 	case FFI_TYPE_DOUBLE:
+ 	  /* With FFI_LINUX_SOFT_FLOAT doubles are handled like UINT64.  */
+-	  if (ecif->cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    goto soft_double_prep;
+ 	  double_tmp = **p_argv.d;
+ 
+ 	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+@@ -218,43 +236,6 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 	case FFI_TYPE_LONGDOUBLE:
+-	  if ((ecif->cif->abi != FFI_LINUX)
+-		&& (ecif->cif->abi != FFI_LINUX_SOFT_FLOAT))
+-	    goto do_struct;
+-	  /* The soft float ABI for long doubles works like this,
+-	     a long double is passed in four consecutive gprs if available.
+-	     A maximum of 2 long doubles can be passed in gprs.
+-	     If we do not have 4 gprs left, the long double is passed on the
+-	     stack, 4-byte aligned.  */
+-	  if (ecif->cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    {
+-	      unsigned int int_tmp = (*p_argv.ui)[0];
+-	      if (intarg_count >= NUM_GPR_ARG_REGISTERS - 3)
+-		{
+-		  if (intarg_count < NUM_GPR_ARG_REGISTERS)
+-		    intarg_count += NUM_GPR_ARG_REGISTERS - intarg_count;
+-		  *next_arg.u = int_tmp;
+-		  next_arg.u++;
+-		  for (ii = 1; ii < 4; ii++)
+-		    {
+-		      int_tmp = (*p_argv.ui)[ii];
+-		      *next_arg.u = int_tmp;
+-		      next_arg.u++;
+-		    }
+-		}
+-	      else
+-		{
+-		  *gpr_base.u++ = int_tmp;
+-		  for (ii = 1; ii < 4; ii++)
+-		    {
+-		      int_tmp = (*p_argv.ui)[ii];
+-		      *gpr_base.u++ = int_tmp;
+-		    }
+-		}
+-	      intarg_count +=4;
+-	    }
+-	  else
+-	    {
+ 	      double_tmp = (*p_argv.d)[0];
+ 
+ 	      if (fparg_count >= NUM_FPR_ARG_REGISTERS - 1)
+@@ -280,13 +261,40 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 
+ 	      fparg_count += 2;
+ 	      FFI_ASSERT (flags & FLAG_FP_ARGUMENTS);
+-	    }
+ 	  break;
+ #endif
++#endif /* have FPRs */
++
++	/*
++	 * The soft float ABI for long doubles works like this, a long double
++	 * is passed in four consecutive GPRs if available.  A maximum of 2
++	 * long doubles can be passed in gprs.  If we do not have 4 GPRs
++	 * left, the long double is passed on the stack, 4-byte aligned.
++	 */
++	case FFI_TYPE_UINT128: {
++		unsigned int int_tmp = (*p_argv.ui)[0];
++		unsigned int ii;
++		if (intarg_count >= NUM_GPR_ARG_REGISTERS - 3) {
++			if (intarg_count < NUM_GPR_ARG_REGISTERS)
++				intarg_count += NUM_GPR_ARG_REGISTERS - intarg_count;
++			*(next_arg.u++) = int_tmp;
++			for (ii = 1; ii < 4; ii++) {
++				int_tmp = (*p_argv.ui)[ii];
++				*(next_arg.u++) = int_tmp;
++			}
++		} else {
++			*(gpr_base.u++) = int_tmp;
++			for (ii = 1; ii < 4; ii++) {
++				int_tmp = (*p_argv.ui)[ii];
++				*(gpr_base.u++) = int_tmp;
++			}
++		}
++		intarg_count += 4;
++		break;
++	}
+ 
+ 	case FFI_TYPE_UINT64:
+ 	case FFI_TYPE_SINT64:
+-	soft_double_prep:
+ 	  if (intarg_count == NUM_GPR_ARG_REGISTERS-1)
+ 	    intarg_count++;
+ 	  if (intarg_count >= NUM_GPR_ARG_REGISTERS)
+@@ -319,9 +327,6 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 	  break;
+ 
+ 	case FFI_TYPE_STRUCT:
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-	do_struct:
+-#endif
+ 	  struct_copy_size = ((*ptr)->size + 15) & ~0xF;
+ 	  copy_space.c -= struct_copy_size;
+ 	  memcpy (copy_space.c, *p_argv.c, (*ptr)->size);
+@@ -349,7 +354,6 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 	case FFI_TYPE_UINT32:
+ 	case FFI_TYPE_SINT32:
+ 	case FFI_TYPE_POINTER:
+-	soft_float_prep:
+ 
+ 	  gprvalue = **p_argv.ui;
+ 
+@@ -366,8 +370,16 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+   /* Check that we didn't overrun the stack...  */
+   FFI_ASSERT (copy_space.c >= next_arg.c);
+   FFI_ASSERT (gpr_base.u <= stacktop.u - ASM_NEEDS_REGISTERS);
++  /* The assert below is testing that the number of integer arguments agrees
++     with the number found in ffi_prep_cif_machdep().  However, intarg_count
++     is incremented whenever we place an FP arg on the stack, so account for
++     that before our assert test.  */
++#ifndef __NO_FPRS__
++  if (fparg_count > NUM_FPR_ARG_REGISTERS)
++    intarg_count -= fparg_count - NUM_FPR_ARG_REGISTERS;
+   FFI_ASSERT (fpr_base.u
+ 	      <= stacktop.u - ASM_NEEDS_REGISTERS - NUM_GPR_ARG_REGISTERS);
++#endif
+   FFI_ASSERT (flags & FLAG_4_GPR_ARGUMENTS || intarg_count <= 4);
+ }
+ 
+@@ -378,6 +390,45 @@ enum {
+ };
+ enum { ASM_NEEDS_REGISTERS64 = 4 };
+ 
++#if _CALL_ELF == 2
++static unsigned int
++discover_homogeneous_aggregate (const ffi_type *t, unsigned int *elnum)
++{
++  switch (t->type)
++    {
++    case FFI_TYPE_FLOAT:
++    case FFI_TYPE_DOUBLE:
++      *elnum = 1;
++      return (int) t->type;
++
++    case FFI_TYPE_STRUCT:;
++      {
++	unsigned int base_elt = 0, total_elnum = 0;
++	ffi_type **el = t->elements;
++	while (*el)
++	  {
++	    unsigned int el_elt, el_elnum = 0;
++	    el_elt = discover_homogeneous_aggregate (*el, &el_elnum);
++	    if (el_elt == 0
++		|| (base_elt && base_elt != el_elt))
++	      return 0;
++	    base_elt = el_elt;
++	    total_elnum += el_elnum;
++	    if (total_elnum > 8)
++	      return 0;
++	    el++;
++	  }
++	*elnum = total_elnum;
++	return base_elt;
++      }
++
++    default:
++      return 0;
++    }
++}
++#endif
++
++
+ /* ffi_prep_args64 is called by the assembly routine once stack space
+    has been allocated for the function's arguments.
+ 
+@@ -423,6 +474,7 @@ ffi_prep_args64 (extended_cif *ecif, uns
+     unsigned long *ul;
+     float *f;
+     double *d;
++    size_t p;
+   } valp;
+ 
+   /* 'stacktop' points at the previous backchain pointer.  */
+@@ -438,9 +490,9 @@ ffi_prep_args64 (extended_cif *ecif, uns
+   /* 'fpr_base' points at the space for fpr3, and grows upwards as
+      we use FPR registers.  */
+   valp fpr_base;
+-  int fparg_count;
++  unsigned int fparg_count;
+ 
+-  int i, words;
++  unsigned int i, words, nargs, nfixedargs;
+   ffi_type **ptr;
+   double double_tmp;
+   union {
+@@ -457,11 +509,18 @@ ffi_prep_args64 (extended_cif *ecif, uns
+     double **d;
+   } p_argv;
+   unsigned long gprvalue;
++#ifdef __STRUCT_PARM_ALIGN__
++  unsigned long align;
++#endif
+ 
+   stacktop.c = (char *) stack + bytes;
+   gpr_base.ul = stacktop.ul - ASM_NEEDS_REGISTERS64 - NUM_GPR_ARG_REGISTERS64;
+   gpr_end.ul = gpr_base.ul + NUM_GPR_ARG_REGISTERS64;
++#if _CALL_ELF == 2
++  rest.ul = stack + 4 + NUM_GPR_ARG_REGISTERS64;
++#else
+   rest.ul = stack + 6 + NUM_GPR_ARG_REGISTERS64;
++#endif
+   fpr_base.d = gpr_base.d - NUM_FPR_ARG_REGISTERS64;
+   fparg_count = 0;
+   next_arg.ul = gpr_base.ul;
+@@ -477,30 +536,36 @@ ffi_prep_args64 (extended_cif *ecif, uns
+ 
+   /* Now for the arguments.  */
+   p_argv.v = ecif->avalue;
+-  for (ptr = ecif->cif->arg_types, i = ecif->cif->nargs;
+-       i > 0;
+-       i--, ptr++, p_argv.v++)
++  nargs = ecif->cif->nargs;
++  nfixedargs = ecif->cif->nfixedargs;
++  for (ptr = ecif->cif->arg_types, i = 0;
++       i < nargs;
++       i++, ptr++, p_argv.v++)
+     {
++      unsigned int elt, elnum;
++
+       switch ((*ptr)->type)
+ 	{
+ 	case FFI_TYPE_FLOAT:
+ 	  double_tmp = **p_argv.f;
+-	  *next_arg.f = (float) double_tmp;
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS64 && i < nfixedargs)
++	    *fpr_base.d++ = double_tmp;
++	  else
++	    *next_arg.f = (float) double_tmp;
+ 	  if (++next_arg.ul == gpr_end.ul)
+ 	    next_arg.ul = rest.ul;
+-	  if (fparg_count < NUM_FPR_ARG_REGISTERS64)
+-	    *fpr_base.d++ = double_tmp;
+ 	  fparg_count++;
+ 	  FFI_ASSERT (flags & FLAG_FP_ARGUMENTS);
+ 	  break;
+ 
+ 	case FFI_TYPE_DOUBLE:
+ 	  double_tmp = **p_argv.d;
+-	  *next_arg.d = double_tmp;
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS64 && i < nfixedargs)
++	    *fpr_base.d++ = double_tmp;
++	  else
++	    *next_arg.d = double_tmp;
+ 	  if (++next_arg.ul == gpr_end.ul)
+ 	    next_arg.ul = rest.ul;
+-	  if (fparg_count < NUM_FPR_ARG_REGISTERS64)
+-	    *fpr_base.d++ = double_tmp;
+ 	  fparg_count++;
+ 	  FFI_ASSERT (flags & FLAG_FP_ARGUMENTS);
+ 	  break;
+@@ -508,18 +573,20 @@ ffi_prep_args64 (extended_cif *ecif, uns
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 	case FFI_TYPE_LONGDOUBLE:
+ 	  double_tmp = (*p_argv.d)[0];
+-	  *next_arg.d = double_tmp;
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS64 && i < nfixedargs)
++	    *fpr_base.d++ = double_tmp;
++	  else
++	    *next_arg.d = double_tmp;
+ 	  if (++next_arg.ul == gpr_end.ul)
+ 	    next_arg.ul = rest.ul;
+-	  if (fparg_count < NUM_FPR_ARG_REGISTERS64)
+-	    *fpr_base.d++ = double_tmp;
+ 	  fparg_count++;
+ 	  double_tmp = (*p_argv.d)[1];
+-	  *next_arg.d = double_tmp;
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS64 && i < nfixedargs)
++	    *fpr_base.d++ = double_tmp;
++	  else
++	    *next_arg.d = double_tmp;
+ 	  if (++next_arg.ul == gpr_end.ul)
+ 	    next_arg.ul = rest.ul;
+-	  if (fparg_count < NUM_FPR_ARG_REGISTERS64)
+-	    *fpr_base.d++ = double_tmp;
+ 	  fparg_count++;
+ 	  FFI_ASSERT (__LDBL_MANT_DIG__ == 106);
+ 	  FFI_ASSERT (flags & FLAG_FP_ARGUMENTS);
+@@ -527,27 +594,86 @@ ffi_prep_args64 (extended_cif *ecif, uns
+ #endif
+ 
+ 	case FFI_TYPE_STRUCT:
+-	  words = ((*ptr)->size + 7) / 8;
+-	  if (next_arg.ul >= gpr_base.ul && next_arg.ul + words > gpr_end.ul)
++#ifdef __STRUCT_PARM_ALIGN__
++	  align = (*ptr)->alignment;
++	  if (align > __STRUCT_PARM_ALIGN__)
++	    align = __STRUCT_PARM_ALIGN__;
++	  if (align > 1)
++	    next_arg.p = ALIGN (next_arg.p, align);
++#endif
++	  elt = 0;
++#if _CALL_ELF == 2
++	  elt = discover_homogeneous_aggregate (*ptr, &elnum);
++#endif
++	  if (elt)
+ 	    {
+-	      size_t first = gpr_end.c - next_arg.c;
+-	      memcpy (next_arg.c, *p_argv.c, first);
+-	      memcpy (rest.c, *p_argv.c + first, (*ptr)->size - first);
+-	      next_arg.c = rest.c + words * 8 - first;
++	      union {
++		void *v;
++		float *f;
++		double *d;
++	      } arg;
++
++	      arg.v = *p_argv.v;
++	      if (elt == FFI_TYPE_FLOAT)
++		{
++		  do
++		    {
++		      double_tmp = *arg.f++;
++		      if (fparg_count < NUM_FPR_ARG_REGISTERS64
++			  && i < nfixedargs)
++			*fpr_base.d++ = double_tmp;
++		      else
++			*next_arg.f = (float) double_tmp;
++		      if (++next_arg.f == gpr_end.f)
++			next_arg.f = rest.f;
++		      fparg_count++;
++		    }
++		  while (--elnum != 0);
++		  if ((next_arg.p & 3) != 0)
++		    {
++		      if (++next_arg.f == gpr_end.f)
++			next_arg.f = rest.f;
++		    }
++		}
++	      else
++		do
++		  {
++		    double_tmp = *arg.d++;
++		    if (fparg_count < NUM_FPR_ARG_REGISTERS64 && i < nfixedargs)
++		      *fpr_base.d++ = double_tmp;
++		    else
++		      *next_arg.d = double_tmp;
++		    if (++next_arg.d == gpr_end.d)
++		      next_arg.d = rest.d;
++		    fparg_count++;
++		  }
++		while (--elnum != 0);
+ 	    }
+ 	  else
+ 	    {
+-	      char *where = next_arg.c;
+-
+-	      /* Structures with size less than eight bytes are passed
+-		 left-padded.  */
+-	      if ((*ptr)->size < 8)
+-		where += 8 - (*ptr)->size;
++	      words = ((*ptr)->size + 7) / 8;
++	      if (next_arg.ul >= gpr_base.ul && next_arg.ul + words > gpr_end.ul)
++		{
++		  size_t first = gpr_end.c - next_arg.c;
++		  memcpy (next_arg.c, *p_argv.c, first);
++		  memcpy (rest.c, *p_argv.c + first, (*ptr)->size - first);
++		  next_arg.c = rest.c + words * 8 - first;
++		}
++	      else
++		{
++		  char *where = next_arg.c;
+ 
+-	      memcpy (where, *p_argv.c, (*ptr)->size);
+-	      next_arg.ul += words;
+-	      if (next_arg.ul == gpr_end.ul)
+-		next_arg.ul = rest.ul;
++#ifndef __LITTLE_ENDIAN__
++		  /* Structures with size less than eight bytes are passed
++		     left-padded.  */
++		  if ((*ptr)->size < 8)
++		    where += 8 - (*ptr)->size;
++#endif
++		  memcpy (where, *p_argv.c, (*ptr)->size);
++		  next_arg.ul += words;
++		  if (next_arg.ul == gpr_end.ul)
++		    next_arg.ul = rest.ul;
++		}
+ 	    }
+ 	  break;
+ 
+@@ -591,27 +717,22 @@ ffi_prep_args64 (extended_cif *ecif, uns
+ 
+ 
+ /* Perform machine dependent cif processing */
+-ffi_status
+-ffi_prep_cif_machdep (ffi_cif *cif)
++static ffi_status
++ffi_prep_cif_machdep_core (ffi_cif *cif)
+ {
+   /* All this is for the SYSV and LINUX64 ABI.  */
+-  int i;
+   ffi_type **ptr;
+   unsigned bytes;
+-  int fparg_count = 0, intarg_count = 0;
+-  unsigned flags = 0;
++  unsigned i, fparg_count = 0, intarg_count = 0;
++  unsigned flags = cif->flags;
+   unsigned struct_copy_size = 0;
+   unsigned type = cif->rtype->type;
+   unsigned size = cif->rtype->size;
+ 
+-  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-    NUM_FPR_ARG_REGISTERS = 0;
+-
++  /* The machine-independent calculation of cif->bytes doesn't work
++     for us.  Redo the calculation.  */
+   if (cif->abi != FFI_LINUX64)
+     {
+-      /* All the machine-independent calculation of cif->bytes will be wrong.
+-	 Redo the calculation for SYSV.  */
+-
+       /* Space for the frame pointer, callee's LR, and the asm's temp regs.  */
+       bytes = (2 + ASM_NEEDS_REGISTERS) * sizeof (int);
+ 
+@@ -621,13 +742,20 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+   else
+     {
+       /* 64-bit ABI.  */
++#if _CALL_ELF == 2
++      /* Space for backchain, CR, LR, TOC and the asm's temp regs.  */
++      bytes = (4 + ASM_NEEDS_REGISTERS64) * sizeof (long);
+ 
++      /* Space for the general registers.  */
++      bytes += NUM_GPR_ARG_REGISTERS64 * sizeof (long);
++#else
+       /* Space for backchain, CR, LR, cc/ld doubleword, TOC and the asm's temp
+ 	 regs.  */
+       bytes = (6 + ASM_NEEDS_REGISTERS64) * sizeof (long);
+ 
+       /* Space for the mandatory parm save area and general registers.  */
+       bytes += 2 * NUM_GPR_ARG_REGISTERS64 * sizeof (long);
++#endif
+     }
+ 
+   /* Return value handling.  The rules for SYSV are as follows:
+@@ -646,13 +774,30 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+      - Single/double FP values in fpr1, long double in fpr1,fpr2.
+      - soft-float float/doubles are treated as UINT32/UINT64 respectivley.
+      - soft-float long doubles are returned in gpr3-gpr6.  */
++  /* First translate for softfloat/nonlinux */
++  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
++    {
++      if (type == FFI_TYPE_FLOAT)
++	type = FFI_TYPE_UINT32;
++      if (type == FFI_TYPE_DOUBLE)
++	type = FFI_TYPE_UINT64;
++      if (type == FFI_TYPE_LONGDOUBLE)
++	type = FFI_TYPE_UINT128;
++    }
++  else if (cif->abi != FFI_LINUX
++	   && cif->abi != FFI_LINUX64)
++    {
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++      if (type == FFI_TYPE_LONGDOUBLE)
++	type = FFI_TYPE_STRUCT;
++#endif
++    }
++
+   switch (type)
+     {
++#ifndef __NO_FPRS__
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+     case FFI_TYPE_LONGDOUBLE:
+-      if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX64
+-	&& cif->abi != FFI_LINUX_SOFT_FLOAT)
+-	goto byref;
+       flags |= FLAG_RETURNS_128BITS;
+       /* Fall through.  */
+ #endif
+@@ -660,47 +805,52 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+       flags |= FLAG_RETURNS_64BITS;
+       /* Fall through.  */
+     case FFI_TYPE_FLOAT:
+-      /* With FFI_LINUX_SOFT_FLOAT no fp registers are used.  */
+-      if (cif->abi != FFI_LINUX_SOFT_FLOAT)
+-	flags |= FLAG_RETURNS_FP;
++      flags |= FLAG_RETURNS_FP;
+       break;
++#endif
+ 
++    case FFI_TYPE_UINT128:
++      flags |= FLAG_RETURNS_128BITS;
++      /* Fall through.  */
+     case FFI_TYPE_UINT64:
+     case FFI_TYPE_SINT64:
+       flags |= FLAG_RETURNS_64BITS;
+       break;
+ 
+     case FFI_TYPE_STRUCT:
+-      if (cif->abi == FFI_SYSV)
++      /*
++       * The final SYSV ABI says that structures smaller or equal 8 bytes
++       * are returned in r3/r4.  The FFI_GCC_SYSV ABI instead returns them
++       * in memory.
++       *
++       * NOTE: The assembly code can safely assume that it just needs to
++       *       store both r3 and r4 into a 8-byte word-aligned buffer, as
++       *       we allocate a temporary buffer in ffi_call() if this flag is
++       *       set.
++       */
++      if (cif->abi == FFI_SYSV && size <= 8)
+ 	{
+-	  /* The final SYSV ABI says that structures smaller or equal 8 bytes
+-	     are returned in r3/r4. The FFI_GCC_SYSV ABI instead returns them
+-	     in memory.  */
+-
+-	  /* Treat structs with size <= 8 bytes.  */
+-	  if (size <= 8)
++	  flags |= FLAG_RETURNS_SMST;
++	  break;
++	}
++#if _CALL_ELF == 2
++      if (cif->abi == FFI_LINUX64)
++	{
++	  unsigned int elt, elnum;
++	  elt = discover_homogeneous_aggregate (cif->rtype, &elnum);
++	  if (elt)
++	    {
++	      if (elt == FFI_TYPE_DOUBLE)
++		flags |= FLAG_RETURNS_64BITS;
++	      flags |= FLAG_RETURNS_FP | FLAG_RETURNS_SMST;
++	      break;
++	    }
++	  if (size <= 16)
+ 	    {
+ 	      flags |= FLAG_RETURNS_SMST;
+-	      /* These structs are returned in r3. We pack the type and the
+-		 precalculated shift value (needed in the sysv.S) into flags.
+-		 The same applies for the structs returned in r3/r4.  */
+-	      if (size <= 4)
+-		{
+-		  flags |= FLAG_SYSV_SMST_R3;
+-		  flags |= 8 * (4 - size) << 8;
+-		  break;
+-		}
+-	      /* These structs are returned in r3 and r4. See above.   */
+-	      if  (size <= 8)
+-		{
+-		  flags |= FLAG_SYSV_SMST_R3 | FLAG_SYSV_SMST_R4;
+-		  flags |= 8 * (8 - size) << 8;
+-		  break;
+-		}
++	      break;
+ 	    }
+ 	}
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-    byref:
+ #endif
+       intarg_count++;
+       flags |= FLAG_RETVAL_REFERENCE;
+@@ -722,39 +872,36 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+        Stuff on the stack needs to keep proper alignment.  */
+     for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
+       {
+-	switch ((*ptr)->type)
+-	  {
++	unsigned short typenum = (*ptr)->type;
++
++	/* We may need to handle some values depending on ABI */
++	if (cif->abi == FFI_LINUX_SOFT_FLOAT) {
++		if (typenum == FFI_TYPE_FLOAT)
++			typenum = FFI_TYPE_UINT32;
++		if (typenum == FFI_TYPE_DOUBLE)
++			typenum = FFI_TYPE_UINT64;
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_UINT128;
++	} else if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX64) {
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_STRUCT;
++#endif
++	}
++
++	switch (typenum) {
++#ifndef __NO_FPRS__
+ 	  case FFI_TYPE_FLOAT:
+-	    /* With FFI_LINUX_SOFT_FLOAT floats are handled like UINT32.  */
+-	    if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	      goto soft_float_cif;
+ 	    fparg_count++;
+ 	    /* floating singles are not 8-aligned on stack */
+ 	    break;
+ 
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 	  case FFI_TYPE_LONGDOUBLE:
+-	    if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX_SOFT_FLOAT)
+-	      goto do_struct;
+-	    if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	      {
+-		if (intarg_count >= NUM_GPR_ARG_REGISTERS - 3
+-		  || intarg_count < NUM_GPR_ARG_REGISTERS)
+-		  /* A long double in FFI_LINUX_SOFT_FLOAT can use only
+-		     a set of four consecutive gprs. If we have not enough,
+-		     we have to adjust the intarg_count value.  */
+-		  intarg_count += NUM_GPR_ARG_REGISTERS - intarg_count;
+-		intarg_count += 4;
+-		break;
+-	      }
+-	    else
+-	      fparg_count++;
++	    fparg_count++;
+ 	    /* Fall thru */
+ #endif
+ 	  case FFI_TYPE_DOUBLE:
+-	    /* With FFI_LINUX_SOFT_FLOAT doubles are handled like UINT64.  */
+-	    if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	      goto soft_double_cif;
+ 	    fparg_count++;
+ 	    /* If this FP arg is going on the stack, it must be
+ 	       8-byte-aligned.  */
+@@ -763,10 +910,21 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 		&& intarg_count % 2 != 0)
+ 	      intarg_count++;
+ 	    break;
++#endif
++	  case FFI_TYPE_UINT128:
++		/*
++		 * A long double in FFI_LINUX_SOFT_FLOAT can use only a set
++		 * of four consecutive gprs. If we do not have enough, we
++		 * have to adjust the intarg_count value.
++		 */
++		if (intarg_count >= NUM_GPR_ARG_REGISTERS - 3
++				&& intarg_count < NUM_GPR_ARG_REGISTERS)
++			intarg_count = NUM_GPR_ARG_REGISTERS;
++		intarg_count += 4;
++		break;
+ 
+ 	  case FFI_TYPE_UINT64:
+ 	  case FFI_TYPE_SINT64:
+-	  soft_double_cif:
+ 	    /* 'long long' arguments are passed as two words, but
+ 	       either both words must fit in registers or both go
+ 	       on the stack.  If they go on the stack, they must
+@@ -783,9 +941,6 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 	    break;
+ 
+ 	  case FFI_TYPE_STRUCT:
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-	  do_struct:
+-#endif
+ 	    /* We must allocate space for a copy of these to enforce
+ 	       pass-by-value.  Pad the space up to a multiple of 16
+ 	       bytes (the maximum alignment required for anything under
+@@ -793,50 +948,100 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 	    struct_copy_size += ((*ptr)->size + 15) & ~0xF;
+ 	    /* Fall through (allocate space for the pointer).  */
+ 
+-	  default:
+-	  soft_float_cif:
++	  case FFI_TYPE_POINTER:
++	  case FFI_TYPE_INT:
++	  case FFI_TYPE_UINT32:
++	  case FFI_TYPE_SINT32:
++	  case FFI_TYPE_UINT16:
++	  case FFI_TYPE_SINT16:
++	  case FFI_TYPE_UINT8:
++	  case FFI_TYPE_SINT8:
+ 	    /* Everything else is passed as a 4-byte word in a GPR, either
+ 	       the object itself or a pointer to it.  */
+ 	    intarg_count++;
+ 	    break;
++	  default:
++		FFI_ASSERT (0);
+ 	  }
+       }
+   else
+     for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
+       {
++	unsigned int elt, elnum;
++#ifdef __STRUCT_PARM_ALIGN__
++	unsigned int align;
++#endif
++
+ 	switch ((*ptr)->type)
+ 	  {
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 	  case FFI_TYPE_LONGDOUBLE:
+-	    if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	      intarg_count += 4;
+-	    else
+-	      {
+-		fparg_count += 2;
+-		intarg_count += 2;
+-	      }
++	    fparg_count += 2;
++	    intarg_count += 2;
++	    if (fparg_count > NUM_FPR_ARG_REGISTERS)
++	      flags |= FLAG_ARG_NEEDS_PSAVE;
+ 	    break;
+ #endif
+ 	  case FFI_TYPE_FLOAT:
+ 	  case FFI_TYPE_DOUBLE:
+ 	    fparg_count++;
+ 	    intarg_count++;
++	    if (fparg_count > NUM_FPR_ARG_REGISTERS)
++	      flags |= FLAG_ARG_NEEDS_PSAVE;
+ 	    break;
+ 
+ 	  case FFI_TYPE_STRUCT:
++#ifdef __STRUCT_PARM_ALIGN__
++	    align = (*ptr)->alignment;
++	    if (align > __STRUCT_PARM_ALIGN__)
++	      align = __STRUCT_PARM_ALIGN__;
++	    align = align / 8;
++	    if (align > 1)
++	      intarg_count = ALIGN (intarg_count, align);
++#endif
+ 	    intarg_count += ((*ptr)->size + 7) / 8;
++	    elt = 0;
++#if _CALL_ELF == 2
++	    elt = discover_homogeneous_aggregate (*ptr, &elnum);
++#endif
++	    if (elt)
++	      {
++		fparg_count += elnum;
++		if (fparg_count > NUM_FPR_ARG_REGISTERS)
++		  flags |= FLAG_ARG_NEEDS_PSAVE;
++	      }
++	    else
++	      {
++		if (intarg_count > NUM_GPR_ARG_REGISTERS)
++		  flags |= FLAG_ARG_NEEDS_PSAVE;
++	      }
+ 	    break;
+ 
+-	  default:
++	  case FFI_TYPE_POINTER:
++	  case FFI_TYPE_UINT64:
++	  case FFI_TYPE_SINT64:
++	  case FFI_TYPE_INT:
++	  case FFI_TYPE_UINT32:
++	  case FFI_TYPE_SINT32:
++	  case FFI_TYPE_UINT16:
++	  case FFI_TYPE_SINT16:
++	  case FFI_TYPE_UINT8:
++	  case FFI_TYPE_SINT8:
+ 	    /* Everything else is passed as a 8-byte word in a GPR, either
+ 	       the object itself or a pointer to it.  */
+ 	    intarg_count++;
++	    if (intarg_count > NUM_GPR_ARG_REGISTERS)
++	      flags |= FLAG_ARG_NEEDS_PSAVE;
+ 	    break;
++	  default:
++	    FFI_ASSERT (0);
+ 	  }
+       }
+ 
++#ifndef __NO_FPRS__
+   if (fparg_count != 0)
+     flags |= FLAG_FP_ARGUMENTS;
++#endif
+   if (intarg_count > 4)
+     flags |= FLAG_4_GPR_ARGUMENTS;
+   if (struct_copy_size != 0)
+@@ -844,25 +1049,36 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 
+   if (cif->abi != FFI_LINUX64)
+     {
++#ifndef __NO_FPRS__
+       /* Space for the FPR registers, if needed.  */
+       if (fparg_count != 0)
+ 	bytes += NUM_FPR_ARG_REGISTERS * sizeof (double);
++#endif
+ 
+       /* Stack space.  */
+       if (intarg_count > NUM_GPR_ARG_REGISTERS)
+ 	bytes += (intarg_count - NUM_GPR_ARG_REGISTERS) * sizeof (int);
++#ifndef __NO_FPRS__
+       if (fparg_count > NUM_FPR_ARG_REGISTERS)
+ 	bytes += (fparg_count - NUM_FPR_ARG_REGISTERS) * sizeof (double);
++#endif
+     }
+   else
+     {
++#ifndef __NO_FPRS__
+       /* Space for the FPR registers, if needed.  */
+       if (fparg_count != 0)
+ 	bytes += NUM_FPR_ARG_REGISTERS64 * sizeof (double);
++#endif
+ 
+       /* Stack space.  */
++#if _CALL_ELF == 2
++      if ((flags & FLAG_ARG_NEEDS_PSAVE) != 0)
++	bytes += intarg_count * sizeof (long);
++#else
+       if (intarg_count > NUM_GPR_ARG_REGISTERS64)
+ 	bytes += (intarg_count - NUM_GPR_ARG_REGISTERS64) * sizeof (long);
++#endif
+     }
+ 
+   /* The stack space allocated needs to be a multiple of 16 bytes.  */
+@@ -877,6 +1093,26 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+   return FFI_OK;
+ }
+ 
++ffi_status
++ffi_prep_cif_machdep (ffi_cif *cif)
++{
++  cif->nfixedargs = cif->nargs;
++  return ffi_prep_cif_machdep_core (cif);
++}
++
++ffi_status
++ffi_prep_cif_machdep_var (ffi_cif *cif,
++			  unsigned int nfixedargs,
++			  unsigned int ntotalargs MAYBE_UNUSED)
++{
++  cif->nfixedargs = nfixedargs;
++#if _CALL_ELF == 2
++  if (cif->abi == FFI_LINUX64)
++    cif->flags |= FLAG_ARG_NEEDS_PSAVE;
++#endif
++  return ffi_prep_cif_machdep_core (cif);
++}
++
+ extern void ffi_call_SYSV(extended_cif *, unsigned, unsigned, unsigned *,
+ 			  void (*fn)(void));
+ extern void FFI_HIDDEN ffi_call_LINUX64(extended_cif *, unsigned long,
+@@ -886,28 +1122,39 @@ extern void FFI_HIDDEN ffi_call_LINUX64(
+ void
+ ffi_call(ffi_cif *cif, void (*fn)(void), void *rvalue, void **avalue)
+ {
++  /*
++   * The final SYSV ABI says that structures smaller or equal 8 bytes
++   * are returned in r3/r4.  The FFI_GCC_SYSV ABI instead returns them
++   * in memory.
++   *
++   * We bounce-buffer SYSV small struct return values so that sysv.S
++   * can write r3 and r4 to memory without worrying about struct size.
++   *
++   * For ELFv2 ABI, use a bounce buffer for homogeneous structs too,
++   * for similar reasons.
++   */
++  unsigned long smst_buffer[8];
+   extended_cif ecif;
+ 
+   ecif.cif = cif;
+   ecif.avalue = avalue;
+ 
+-  /* If the return value is a struct and we don't have a return	*/
+-  /* value address then we need to make one		        */
+-
+-  if ((rvalue == NULL) && (cif->rtype->type == FFI_TYPE_STRUCT))
+-    {
+-      ecif.rvalue = alloca(cif->rtype->size);
+-    }
+-  else
+-    ecif.rvalue = rvalue;
+-
++  ecif.rvalue = rvalue;
++  if ((cif->flags & FLAG_RETURNS_SMST) != 0)
++    ecif.rvalue = smst_buffer;
++  /* Ensure that we have a valid struct return value.
++     FIXME: Isn't this just papering over a user problem?  */
++  else if (!rvalue && cif->rtype->type == FFI_TYPE_STRUCT)
++    ecif.rvalue = alloca (cif->rtype->size);
+ 
+   switch (cif->abi)
+     {
+ #ifndef POWERPC64
++# ifndef __NO_FPRS__
+     case FFI_SYSV:
+     case FFI_GCC_SYSV:
+     case FFI_LINUX:
++# endif
+     case FFI_LINUX_SOFT_FLOAT:
+       ffi_call_SYSV (&ecif, -cif->bytes, cif->flags, ecif.rvalue, fn);
+       break;
+@@ -920,10 +1167,29 @@ ffi_call(ffi_cif *cif, void (*fn)(void),
+       FFI_ASSERT (0);
+       break;
+     }
++
++  /* Check for a bounce-buffered return value */
++  if (rvalue && ecif.rvalue == smst_buffer)
++    {
++      unsigned int rsize = cif->rtype->size;
++#ifndef __LITTLE_ENDIAN__
++      /* The SYSV ABI returns a structure of up to 4 bytes in size
++	 left-padded in r3.  */
++      if (cif->abi == FFI_SYSV && rsize <= 4)
++	memcpy (rvalue, (char *) smst_buffer + 4 - rsize, rsize);
++      /* The SYSV ABI returns a structure of up to 8 bytes in size
++	 left-padded in r3/r4, and the ELFv2 ABI similarly returns a
++	 structure of up to 8 bytes in size left-padded in r3.  */
++      else if (rsize <= 8)
++	memcpy (rvalue, (char *) smst_buffer + 8 - rsize, rsize);
++      else
++#endif
++	memcpy (rvalue, smst_buffer, rsize);
++    }
+ }
+ 
+ 
+-#ifndef POWERPC64
++#if !defined POWERPC64 || _CALL_ELF == 2
+ #define MIN_CACHE_LINE_SIZE 8
+ 
+ static void
+@@ -947,16 +1213,38 @@ ffi_prep_closure_loc (ffi_closure *closu
+ 		      void *codeloc)
+ {
+ #ifdef POWERPC64
++# if _CALL_ELF == 2
++  unsigned int *tramp = (unsigned int *) &closure->tramp[0];
++
++  if (cif->abi != FFI_LINUX64)
++    return FFI_BAD_ABI;
++
++  tramp[0] = 0xe96c0018;	/* 0:	ld	11,2f-0b(12)	*/
++  tramp[1] = 0xe98c0010;	/*	ld	12,1f-0b(12)	*/
++  tramp[2] = 0x7d8903a6;	/*	mtctr	12		*/
++  tramp[3] = 0x4e800420;	/*	bctr			*/
++				/* 1:	.quad	function_addr	*/
++				/* 2:	.quad	context		*/
++  *(void **) &tramp[4] = (void *) ffi_closure_LINUX64;
++  *(void **) &tramp[6] = codeloc;
++  flush_icache ((char *)tramp, (char *)codeloc, FFI_TRAMPOLINE_SIZE);
++# else
+   void **tramp = (void **) &closure->tramp[0];
+ 
+-  FFI_ASSERT (cif->abi == FFI_LINUX64);
++  if (cif->abi != FFI_LINUX64)
++    return FFI_BAD_ABI;
+   /* Copy function address and TOC from ffi_closure_LINUX64.  */
+   memcpy (tramp, (char *) ffi_closure_LINUX64, 16);
+   tramp[2] = codeloc;
++# endif
+ #else
+   unsigned int *tramp;
+ 
+-  FFI_ASSERT (cif->abi == FFI_GCC_SYSV || cif->abi == FFI_SYSV);
++  if (! (cif->abi == FFI_GCC_SYSV 
++	 || cif->abi == FFI_SYSV
++	 || cif->abi == FFI_LINUX
++	 || cif->abi == FFI_LINUX_SOFT_FLOAT))
++    return FFI_BAD_ABI;
+ 
+   tramp = (unsigned int *) &closure->tramp[0];
+   tramp[0] = 0x7c0802a6;  /*   mflr    r0 */
+@@ -1011,32 +1299,38 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+   void **          avalue;
+   ffi_type **      arg_types;
+   long             i, avn;
+-  long             nf;   /* number of floating registers already used */
+-  long             ng;   /* number of general registers already used */
+-  ffi_cif *        cif;
+-  double           temp;
+-  unsigned         size;
++#ifndef __NO_FPRS__
++  long             nf = 0;   /* number of floating registers already used */
++#endif
++  long             ng = 0;   /* number of general registers already used */
++
++  ffi_cif *cif = closure->cif;
++  unsigned       size     = cif->rtype->size;
++  unsigned short rtypenum = cif->rtype->type;
+ 
+-  cif = closure->cif;
+   avalue = alloca (cif->nargs * sizeof (void *));
+-  size = cif->rtype->size;
+ 
+-  nf = 0;
+-  ng = 0;
++  /* First translate for softfloat/nonlinux */
++  if (cif->abi == FFI_LINUX_SOFT_FLOAT) {
++	if (rtypenum == FFI_TYPE_FLOAT)
++		rtypenum = FFI_TYPE_UINT32;
++	if (rtypenum == FFI_TYPE_DOUBLE)
++		rtypenum = FFI_TYPE_UINT64;
++	if (rtypenum == FFI_TYPE_LONGDOUBLE)
++		rtypenum = FFI_TYPE_UINT128;
++  } else if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX64) {
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++	if (rtypenum == FFI_TYPE_LONGDOUBLE)
++		rtypenum = FFI_TYPE_STRUCT;
++#endif
++  }
++
+ 
+   /* Copy the caller's structure return value address so that the closure
+      returns the data directly to the caller.
+      For FFI_SYSV the result is passed in r3/r4 if the struct size is less
+      or equal 8 bytes.  */
+-
+-  if ((cif->rtype->type == FFI_TYPE_STRUCT
+-       && !((cif->abi == FFI_SYSV) && (size <= 8)))
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-      || (cif->rtype->type == FFI_TYPE_LONGDOUBLE
+-	  && cif->abi != FFI_LINUX && cif->abi != FFI_LINUX_SOFT_FLOAT)
+-#endif
+-      )
+-    {
++  if (rtypenum == FFI_TYPE_STRUCT && ((cif->abi != FFI_SYSV) || (size > 8))) {
+       rvalue = (void *) *pgr;
+       ng++;
+       pgr++;
+@@ -1047,12 +1341,112 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+   arg_types = cif->arg_types;
+ 
+   /* Grab the addresses of the arguments from the stack frame.  */
+-  while (i < avn)
+-    {
+-      switch (arg_types[i]->type)
+-	{
++  while (i < avn) {
++      unsigned short typenum = arg_types[i]->type;
++
++      /* We may need to handle some values depending on ABI */
++      if (cif->abi == FFI_LINUX_SOFT_FLOAT) {
++		if (typenum == FFI_TYPE_FLOAT)
++			typenum = FFI_TYPE_UINT32;
++		if (typenum == FFI_TYPE_DOUBLE)
++			typenum = FFI_TYPE_UINT64;
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_UINT128;
++      } else if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX64) {
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++		if (typenum == FFI_TYPE_LONGDOUBLE)
++			typenum = FFI_TYPE_STRUCT;
++#endif
++      }
++
++      switch (typenum) {
++#ifndef __NO_FPRS__
++	case FFI_TYPE_FLOAT:
++	  /* unfortunately float values are stored as doubles
++	   * in the ffi_closure_SYSV code (since we don't check
++	   * the type in that routine).
++	   */
++
++	  /* there are 8 64bit floating point registers */
++
++	  if (nf < 8)
++	    {
++	      double temp = pfr->d;
++	      pfr->f = (float) temp;
++	      avalue[i] = pfr;
++	      nf++;
++	      pfr++;
++	    }
++	  else
++	    {
++	      /* FIXME? here we are really changing the values
++	       * stored in the original calling routines outgoing
++	       * parameter stack.  This is probably a really
++	       * naughty thing to do but...
++	       */
++	      avalue[i] = pst;
++	      pst += 1;
++	    }
++	  break;
++
++	case FFI_TYPE_DOUBLE:
++	  /* On the outgoing stack all values are aligned to 8 */
++	  /* there are 8 64bit floating point registers */
++
++	  if (nf < 8)
++	    {
++	      avalue[i] = pfr;
++	      nf++;
++	      pfr++;
++	    }
++	  else
++	    {
++	      if (((long) pst) & 4)
++		pst++;
++	      avalue[i] = pst;
++	      pst += 2;
++	    }
++	  break;
++
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++	case FFI_TYPE_LONGDOUBLE:
++	  if (nf < 7)
++	    {
++	      avalue[i] = pfr;
++	      pfr += 2;
++	      nf += 2;
++	    }
++	  else
++	    {
++	      if (((long) pst) & 4)
++		pst++;
++	      avalue[i] = pst;
++	      pst += 4;
++	      nf = 8;
++	    }
++	  break;
++#endif
++#endif /* have FPRS */
++
++	case FFI_TYPE_UINT128:
++		/*
++		 * Test if for the whole long double, 4 gprs are available.
++		 * otherwise the stuff ends up on the stack.
++		 */
++		if (ng < 5) {
++			avalue[i] = pgr;
++			pgr += 4;
++			ng += 4;
++		} else {
++			avalue[i] = pst;
++			pst += 4;
++			ng = 8+4;
++		}
++		break;
++
+ 	case FFI_TYPE_SINT8:
+ 	case FFI_TYPE_UINT8:
++#ifndef __LITTLE_ENDIAN__
+ 	  /* there are 8 gpr registers used to pass values */
+ 	  if (ng < 8)
+ 	    {
+@@ -1066,9 +1460,11 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+ 	      pst++;
+ 	    }
+ 	  break;
++#endif
+ 
+ 	case FFI_TYPE_SINT16:
+ 	case FFI_TYPE_UINT16:
++#ifndef __LITTLE_ENDIAN__
+ 	  /* there are 8 gpr registers used to pass values */
+ 	  if (ng < 8)
+ 	    {
+@@ -1082,11 +1478,11 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+ 	      pst++;
+ 	    }
+ 	  break;
++#endif
+ 
+ 	case FFI_TYPE_SINT32:
+ 	case FFI_TYPE_UINT32:
+ 	case FFI_TYPE_POINTER:
+-	soft_float_closure:
+ 	  /* there are 8 gpr registers used to pass values */
+ 	  if (ng < 8)
+ 	    {
+@@ -1102,9 +1498,6 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+ 	  break;
+ 
+ 	case FFI_TYPE_STRUCT:
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-	do_struct:
+-#endif
+ 	  /* Structs are passed by reference. The address will appear in a
+ 	     gpr if it is one of the first 8 arguments.  */
+ 	  if (ng < 8)
+@@ -1122,7 +1515,6 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+ 
+ 	case FFI_TYPE_SINT64:
+ 	case FFI_TYPE_UINT64:
+-	soft_double_closure:
+ 	  /* passing long long ints are complex, they must
+ 	   * be passed in suitable register pairs such as
+ 	   * (r3,r4) or (r5,r6) or (r6,r7), or (r7,r8) or (r9,r10)
+@@ -1154,99 +1546,8 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+ 	    }
+ 	  break;
+ 
+-	case FFI_TYPE_FLOAT:
+-	  /* With FFI_LINUX_SOFT_FLOAT floats are handled like UINT32.  */
+-	  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    goto soft_float_closure;
+-	  /* unfortunately float values are stored as doubles
+-	   * in the ffi_closure_SYSV code (since we don't check
+-	   * the type in that routine).
+-	   */
+-
+-	  /* there are 8 64bit floating point registers */
+-
+-	  if (nf < 8)
+-	    {
+-	      temp = pfr->d;
+-	      pfr->f = (float) temp;
+-	      avalue[i] = pfr;
+-	      nf++;
+-	      pfr++;
+-	    }
+-	  else
+-	    {
+-	      /* FIXME? here we are really changing the values
+-	       * stored in the original calling routines outgoing
+-	       * parameter stack.  This is probably a really
+-	       * naughty thing to do but...
+-	       */
+-	      avalue[i] = pst;
+-	      pst += 1;
+-	    }
+-	  break;
+-
+-	case FFI_TYPE_DOUBLE:
+-	  /* With FFI_LINUX_SOFT_FLOAT doubles are handled like UINT64.  */
+-	  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    goto soft_double_closure;
+-	  /* On the outgoing stack all values are aligned to 8 */
+-	  /* there are 8 64bit floating point registers */
+-
+-	  if (nf < 8)
+-	    {
+-	      avalue[i] = pfr;
+-	      nf++;
+-	      pfr++;
+-	    }
+-	  else
+-	    {
+-	      if (((long) pst) & 4)
+-		pst++;
+-	      avalue[i] = pst;
+-	      pst += 2;
+-	    }
+-	  break;
+-
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-	case FFI_TYPE_LONGDOUBLE:
+-	  if (cif->abi != FFI_LINUX && cif->abi != FFI_LINUX_SOFT_FLOAT)
+-	    goto do_struct;
+-	  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-	    { /* Test if for the whole long double, 4 gprs are available.
+-		 otherwise the stuff ends up on the stack.  */
+-	      if (ng < 5)
+-		{
+-		  avalue[i] = pgr;
+-		  pgr += 4;
+-		  ng += 4;
+-		}
+-	      else
+-		{
+-		  avalue[i] = pst;
+-		  pst += 4;
+-		  ng = 8;
+-		}
+-	      break;
+-	    }
+-	  if (nf < 7)
+-	    {
+-	      avalue[i] = pfr;
+-	      pfr += 2;
+-	      nf += 2;
+-	    }
+-	  else
+-	    {
+-	      if (((long) pst) & 4)
+-		pst++;
+-	      avalue[i] = pst;
+-	      pst += 4;
+-	      nf = 8;
+-	    }
+-	  break;
+-#endif
+-
+ 	default:
+-	  FFI_ASSERT (0);
++		FFI_ASSERT (0);
+ 	}
+ 
+       i++;
+@@ -1263,39 +1564,9 @@ ffi_closure_helper_SYSV (ffi_closure *cl
+      already used and we never have a struct with size zero. That is the reason
+      for the subtraction of 1. See the comment in ffitarget.h about ordering.
+   */
+-  if (cif->abi == FFI_SYSV && cif->rtype->type == FFI_TYPE_STRUCT
+-      && size <= 8)
++  if (cif->abi == FFI_SYSV && rtypenum == FFI_TYPE_STRUCT && size <= 8)
+     return (FFI_SYSV_TYPE_SMALL_STRUCT - 1) + size;
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-  else if (cif->rtype->type == FFI_TYPE_LONGDOUBLE
+-	   && cif->abi != FFI_LINUX && cif->abi != FFI_LINUX_SOFT_FLOAT)
+-    return FFI_TYPE_STRUCT;
+-#endif
+-  /* With FFI_LINUX_SOFT_FLOAT floats and doubles are handled like UINT32
+-     respectivley UINT64.  */
+-  if (cif->abi == FFI_LINUX_SOFT_FLOAT)
+-    {
+-      switch (cif->rtype->type)
+-	{
+-	case FFI_TYPE_FLOAT:
+-	  return FFI_TYPE_UINT32;
+-	  break;
+-	case FFI_TYPE_DOUBLE:
+-	  return FFI_TYPE_UINT64;
+-	  break;
+-#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-	case FFI_TYPE_LONGDOUBLE:
+-	  return FFI_TYPE_UINT128;
+-	  break;
+-#endif
+-	default:
+-	  return cif->rtype->type;
+-	}
+-    }
+-  else
+-    {
+-      return cif->rtype->type;
+-    }
++  return rtypenum;
+ }
+ 
+ int FFI_HIDDEN ffi_closure_helper_LINUX64 (ffi_closure *, void *,
+@@ -1312,16 +1583,20 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 
+   void **avalue;
+   ffi_type **arg_types;
+-  long i, avn;
++  unsigned long i, avn, nfixedargs;
+   ffi_cif *cif;
+   ffi_dblfl *end_pfr = pfr + NUM_FPR_ARG_REGISTERS64;
++#ifdef __STRUCT_PARM_ALIGN__
++  unsigned long align;
++#endif
+ 
+   cif = closure->cif;
+   avalue = alloca (cif->nargs * sizeof (void *));
+ 
+-  /* Copy the caller's structure return value address so that the closure
+-     returns the data directly to the caller.  */
+-  if (cif->rtype->type == FFI_TYPE_STRUCT)
++  /* Copy the caller's structure return value address so that the
++     closure returns the data directly to the caller.  */
++  if (cif->rtype->type == FFI_TYPE_STRUCT
++      && (cif->flags & FLAG_RETURNS_SMST) == 0)
+     {
+       rvalue = (void *) *pst;
+       pst++;
+@@ -1329,30 +1604,39 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 
+   i = 0;
+   avn = cif->nargs;
++  nfixedargs = cif->nfixedargs;
+   arg_types = cif->arg_types;
+ 
+   /* Grab the addresses of the arguments from the stack frame.  */
+   while (i < avn)
+     {
++      unsigned int elt, elnum;
++
+       switch (arg_types[i]->type)
+ 	{
+ 	case FFI_TYPE_SINT8:
+ 	case FFI_TYPE_UINT8:
++#ifndef __LITTLE_ENDIAN__
+ 	  avalue[i] = (char *) pst + 7;
+ 	  pst++;
+ 	  break;
++#endif
+ 
+ 	case FFI_TYPE_SINT16:
+ 	case FFI_TYPE_UINT16:
++#ifndef __LITTLE_ENDIAN__
+ 	  avalue[i] = (char *) pst + 6;
+ 	  pst++;
+ 	  break;
++#endif
+ 
+ 	case FFI_TYPE_SINT32:
+ 	case FFI_TYPE_UINT32:
++#ifndef __LITTLE_ENDIAN__
+ 	  avalue[i] = (char *) pst + 4;
+ 	  pst++;
+ 	  break;
++#endif
+ 
+ 	case FFI_TYPE_SINT64:
+ 	case FFI_TYPE_UINT64:
+@@ -1362,12 +1646,82 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 	  break;
+ 
+ 	case FFI_TYPE_STRUCT:
+-	  /* Structures with size less than eight bytes are passed
+-	     left-padded.  */
+-	  if (arg_types[i]->size < 8)
+-	    avalue[i] = (char *) pst + 8 - arg_types[i]->size;
++#ifdef __STRUCT_PARM_ALIGN__
++	  align = arg_types[i]->alignment;
++	  if (align > __STRUCT_PARM_ALIGN__)
++	    align = __STRUCT_PARM_ALIGN__;
++	  if (align > 1)
++	    pst = (unsigned long *) ALIGN ((size_t) pst, align);
++#endif
++	  elt = 0;
++#if _CALL_ELF == 2
++	  elt = discover_homogeneous_aggregate (arg_types[i], &elnum);
++#endif
++	  if (elt)
++	    {
++	      union {
++		void *v;
++		unsigned long *ul;
++		float *f;
++		double *d;
++		size_t p;
++	      } to, from;
++
++	      /* Repackage the aggregate from its parts.  The
++		 aggregate size is not greater than the space taken by
++		 the registers so store back to the register/parameter
++		 save arrays.  */
++	      if (pfr + elnum <= end_pfr)
++		to.v = pfr;
++	      else
++		to.v = pst;
++
++	      avalue[i] = to.v;
++	      from.ul = pst;
++	      if (elt == FFI_TYPE_FLOAT)
++		{
++		  do
++		    {
++		      if (pfr < end_pfr && i < nfixedargs)
++			{
++			  *to.f = (float) pfr->d;
++			  pfr++;
++			}
++		      else
++			*to.f = *from.f;
++		      to.f++;
++		      from.f++;
++		    }
++		  while (--elnum != 0);
++		}
++	      else
++		{
++		  do
++		    {
++		      if (pfr < end_pfr && i < nfixedargs)
++			{
++			  *to.d = pfr->d;
++			  pfr++;
++			}
++		      else
++			*to.d = *from.d;
++		      to.d++;
++		      from.d++;
++		    }
++		  while (--elnum != 0);
++		}
++	    }
+ 	  else
+-	    avalue[i] = pst;
++	    {
++#ifndef __LITTLE_ENDIAN__
++	      /* Structures with size less than eight bytes are passed
++		 left-padded.  */
++	      if (arg_types[i]->size < 8)
++		avalue[i] = (char *) pst + 8 - arg_types[i]->size;
++	      else
++#endif
++		avalue[i] = pst;
++	    }
+ 	  pst += (arg_types[i]->size + 7) / 8;
+ 	  break;
+ 
+@@ -1379,7 +1733,7 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 
+ 	  /* there are 13 64bit floating point registers */
+ 
+-	  if (pfr < end_pfr)
++	  if (pfr < end_pfr && i < nfixedargs)
+ 	    {
+ 	      double temp = pfr->d;
+ 	      pfr->f = (float) temp;
+@@ -1395,7 +1749,7 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 	  /* On the outgoing stack all values are aligned to 8 */
+ 	  /* there are 13 64bit floating point registers */
+ 
+-	  if (pfr < end_pfr)
++	  if (pfr < end_pfr && i < nfixedargs)
+ 	    {
+ 	      avalue[i] = pfr;
+ 	      pfr++;
+@@ -1407,14 +1761,14 @@ ffi_closure_helper_LINUX64 (ffi_closure
+ 
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 	case FFI_TYPE_LONGDOUBLE:
+-	  if (pfr + 1 < end_pfr)
++	  if (pfr + 1 < end_pfr && i + 1 < nfixedargs)
+ 	    {
+ 	      avalue[i] = pfr;
+ 	      pfr += 2;
+ 	    }
+ 	  else
+ 	    {
+-	      if (pfr < end_pfr)
++	      if (pfr < end_pfr && i < nfixedargs)
+ 		{
+ 		  /* Passed partly in f13 and partly on the stack.
+ 		     Move it all to the stack.  */
+@@ -1438,5 +1792,14 @@ ffi_closure_helper_LINUX64 (ffi_closure
+   (closure->fun) (cif, rvalue, avalue, closure->user_data);
+ 
+   /* Tell ffi_closure_LINUX64 how to perform return type promotions.  */
++  if ((cif->flags & FLAG_RETURNS_SMST) != 0)
++    {
++      if ((cif->flags & FLAG_RETURNS_FP) == 0)
++	return FFI_V2_TYPE_SMALL_STRUCT + cif->rtype->size - 1;
++      else if ((cif->flags & FLAG_RETURNS_64BITS) != 0)
++	return FFI_V2_TYPE_DOUBLE_HOMOG;
++      else
++	return FFI_V2_TYPE_FLOAT_HOMOG;
++    }
+   return cif->rtype->type;
+ }
+--- mozilla/js/src/ctypes/libffi/src/powerpc/ffi_darwin.c	2013-10-24 09:56:51.846587814 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/ffi_darwin.c	2013-11-29 17:23:26.000000000 +0100
+@@ -3,7 +3,7 @@
+ 
+    Copyright (C) 1998 Geoffrey Keating
+    Copyright (C) 2001 John Hornkvist
+-   Copyright (C) 2002, 2006, 2007, 2009 Free Software Foundation, Inc.
++   Copyright (C) 2002, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+ 
+    FFI support for Darwin and AIX.
+    
+@@ -35,11 +35,17 @@
+ extern void ffi_closure_ASM (void);
+ 
+ enum {
+-  /* The assembly depends on these exact flags.  */
+-  FLAG_RETURNS_NOTHING  = 1 << (31-30), /* These go in cr7  */
+-  FLAG_RETURNS_FP       = 1 << (31-29),
+-  FLAG_RETURNS_64BITS   = 1 << (31-28),
+-  FLAG_RETURNS_128BITS  = 1 << (31-31),
++  /* The assembly depends on these exact flags.  
++     For Darwin64 (when FLAG_RETURNS_STRUCT is set):
++       FLAG_RETURNS_FP indicates that the structure embeds FP data.
++       FLAG_RETURNS_128BITS signals a special struct size that is not
++       expanded for float content.  */
++  FLAG_RETURNS_128BITS	= 1 << (31-31), /* These go in cr7  */
++  FLAG_RETURNS_NOTHING	= 1 << (31-30),
++  FLAG_RETURNS_FP	= 1 << (31-29),
++  FLAG_RETURNS_64BITS	= 1 << (31-28),
++
++  FLAG_RETURNS_STRUCT	= 1 << (31-27), /* This goes in cr6  */
+ 
+   FLAG_ARG_NEEDS_COPY   = 1 << (31- 7),
+   FLAG_FP_ARGUMENTS     = 1 << (31- 6), /* cr1.eq; specified by ABI  */
+@@ -50,43 +56,61 @@ enum {
+ /* About the DARWIN ABI.  */
+ enum {
+   NUM_GPR_ARG_REGISTERS = 8,
+-  NUM_FPR_ARG_REGISTERS = 13
++  NUM_FPR_ARG_REGISTERS = 13,
++  LINKAGE_AREA_GPRS = 6
+ };
+-enum { ASM_NEEDS_REGISTERS = 4 };
++
++enum { ASM_NEEDS_REGISTERS = 4 }; /* r28-r31 */
+ 
+ /* ffi_prep_args is called by the assembly routine once stack space
+    has been allocated for the function's arguments.
++   
++   m32/m64
+ 
+    The stack layout we want looks like this:
+ 
+    |   Return address from ffi_call_DARWIN      |	higher addresses
+    |--------------------------------------------|
+-   |   Previous backchain pointer	4	|	stack pointer here
++   |   Previous backchain pointer	4/8	|	stack pointer here
+    |--------------------------------------------|<+ <<<	on entry to
+-   |   Saved r28-r31			4*4	| |	ffi_call_DARWIN
++   |   ASM_NEEDS_REGISTERS=r28-r31   4*(4/8)	| |	ffi_call_DARWIN
+    |--------------------------------------------| |
+-   |   Parameters             (at least 8*4=32) | |
++   |   When we have any FP activity... the	| |
++   |   FPRs occupy NUM_FPR_ARG_REGISTERS slots	| |
++   |   here fp13 .. fp1 from high to low addr.	| |
++   ~						~ ~
++   |   Parameters      (at least 8*4/8=32/64)	| | NUM_GPR_ARG_REGISTERS
+    |--------------------------------------------| |
+-   |   Space for GPR2                   4       | |
++   |   TOC=R2 (AIX) Reserved (Darwin)   4/8	| |
+    |--------------------------------------------| |	stack	|
+-   |   Reserved                       2*4       | |	grows	|
++   |   Reserved                       2*4/8	| |	grows	|
+    |--------------------------------------------| |	down	V
+-   |   Space for callee's LR		4	| |
++   |   Space for callee's LR		4/8	| |
+    |--------------------------------------------| |	lower addresses
+-   |   Saved CR                         4       | |
++   |   Saved CR [low word for m64]      4/8	| |
+    |--------------------------------------------| |     stack pointer here
+-   |   Current backchain pointer	4	|-/	during
++   |   Current backchain pointer	4/8	|-/	during
+    |--------------------------------------------|   <<<	ffi_call_DARWIN
+ 
+    */
+ 
++#if defined(POWERPC_DARWIN64)
++static void
++darwin64_pass_struct_by_value 
++  (ffi_type *, char *, unsigned, unsigned *, double **, unsigned long **);
++#endif
++
++/* This depends on GPR_SIZE = sizeof (unsigned long) */
++
+ void
+ ffi_prep_args (extended_cif *ecif, unsigned long *const stack)
+ {
+   const unsigned bytes = ecif->cif->bytes;
+   const unsigned flags = ecif->cif->flags;
+   const unsigned nargs = ecif->cif->nargs;
++#if !defined(POWERPC_DARWIN64) 
+   const ffi_abi abi = ecif->cif->abi;
++#endif
+ 
+   /* 'stacktop' points at the previous backchain pointer.  */
+   unsigned long *const stacktop = stack + (bytes / sizeof(unsigned long));
+@@ -94,18 +118,19 @@ ffi_prep_args (extended_cif *ecif, unsig
+   /* 'fpr_base' points at the space for fpr1, and grows upwards as
+      we use FPR registers.  */
+   double *fpr_base = (double *) (stacktop - ASM_NEEDS_REGISTERS) - NUM_FPR_ARG_REGISTERS;
+-  int fparg_count = 0;
+-
++  int gp_count = 0, fparg_count = 0;
+ 
+   /* 'next_arg' grows up as we put parameters in it.  */
+-  unsigned long *next_arg = stack + 6; /* 6 reserved positions.  */
++  unsigned long *next_arg = stack + LINKAGE_AREA_GPRS; /* 6 reserved positions.  */
+ 
+   int i;
+   double double_tmp;
+   void **p_argv = ecif->avalue;
+   unsigned long gprvalue;
+   ffi_type** ptr = ecif->cif->arg_types;
++#if !defined(POWERPC_DARWIN64) 
+   char *dest_cpy;
++#endif
+   unsigned size_al = 0;
+ 
+   /* Check that everything starts aligned properly.  */
+@@ -130,25 +155,30 @@ ffi_prep_args (extended_cif *ecif, unsig
+ 	   the size of the floating-point parameter are skipped.  */
+ 	case FFI_TYPE_FLOAT:
+ 	  double_tmp = *(float *) *p_argv;
+-	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+-	    *(double *)next_arg = double_tmp;
+-	  else
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS)
+ 	    *fpr_base++ = double_tmp;
++#if defined(POWERPC_DARWIN)
++	  *(float *)next_arg = *(float *) *p_argv;
++#else
++	  *(double *)next_arg = double_tmp;
++#endif
+ 	  next_arg++;
++	  gp_count++;
+ 	  fparg_count++;
+ 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
+ 	  break;
+ 
+ 	case FFI_TYPE_DOUBLE:
+ 	  double_tmp = *(double *) *p_argv;
+-	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
+-	    *(double *)next_arg = double_tmp;
+-	  else
++	  if (fparg_count < NUM_FPR_ARG_REGISTERS)
+ 	    *fpr_base++ = double_tmp;
++	  *(double *)next_arg = double_tmp;
+ #ifdef POWERPC64
+ 	  next_arg++;
++	  gp_count++;
+ #else
+ 	  next_arg += 2;
++	  gp_count += 2;
+ #endif
+ 	  fparg_count++;
+ 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
+@@ -157,30 +187,41 @@ ffi_prep_args (extended_cif *ecif, unsig
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ 
+ 	case FFI_TYPE_LONGDOUBLE:
+-#ifdef POWERPC64
++#  if defined(POWERPC64) && !defined(POWERPC_DARWIN64)
++	  /* ??? This will exceed the regs count when the value starts at fp13
++	     and it will not put the extra bit on the stack.  */
+ 	  if (fparg_count < NUM_FPR_ARG_REGISTERS)
+ 	    *(long double *) fpr_base++ = *(long double *) *p_argv;
+ 	  else
+ 	    *(long double *) next_arg = *(long double *) *p_argv;
+ 	  next_arg += 2;
+ 	  fparg_count += 2;
+-#else
++#  else
+ 	  double_tmp = ((double *) *p_argv)[0];
+ 	  if (fparg_count < NUM_FPR_ARG_REGISTERS)
+ 	    *fpr_base++ = double_tmp;
+-	  else
+-	    *(double *) next_arg = double_tmp;
++	  *(double *) next_arg = double_tmp;
++#    if defined(POWERPC_DARWIN64)
++	  next_arg++;
++	  gp_count++;
++#    else
+ 	  next_arg += 2;
++	  gp_count += 2;
++#    endif
+ 	  fparg_count++;
+-
+ 	  double_tmp = ((double *) *p_argv)[1];
+ 	  if (fparg_count < NUM_FPR_ARG_REGISTERS)
+ 	    *fpr_base++ = double_tmp;
+-	  else
+-	    *(double *) next_arg = double_tmp;
++	  *(double *) next_arg = double_tmp;
++#    if defined(POWERPC_DARWIN64)
++	  next_arg++;
++	  gp_count++;
++#    else
+ 	  next_arg += 2;
++	  gp_count += 2;
++#    endif
+ 	  fparg_count++;
+-#endif
++#  endif
+ 	  FFI_ASSERT(flags & FLAG_FP_ARGUMENTS);
+ 	  break;
+ #endif
+@@ -192,6 +233,7 @@ ffi_prep_args (extended_cif *ecif, unsig
+ #else
+ 	  *(long long *) next_arg = *(long long *) *p_argv;
+ 	  next_arg += 2;
++	  gp_count += 2;
+ #endif
+ 	  break;
+ 	case FFI_TYPE_POINTER:
+@@ -211,32 +253,35 @@ ffi_prep_args (extended_cif *ecif, unsig
+ 	  goto putgpr;
+ 
+ 	case FFI_TYPE_STRUCT:
+-#ifdef POWERPC64
+-	  dest_cpy = (char *) next_arg;
+ 	  size_al = (*ptr)->size;
+-	  if ((*ptr)->elements[0]->type == 3)
++#if defined(POWERPC_DARWIN64)
++	  next_arg = (unsigned long *)ALIGN((char *)next_arg, (*ptr)->alignment);
++	  darwin64_pass_struct_by_value (*ptr, (char *) *p_argv, 
++					 (unsigned) size_al,
++					 (unsigned int *) &fparg_count,
++					 &fpr_base, &next_arg);
++#else
++	  dest_cpy = (char *) next_arg;
++
++	  /* If the first member of the struct is a double, then include enough
++	     padding in the struct size to align it to double-word.  */
++	  if ((*ptr)->elements[0]->type == FFI_TYPE_DOUBLE)
+ 	    size_al = ALIGN((*ptr)->size, 8);
+-	  if (size_al < 3 && abi == FFI_DARWIN)
+-	    dest_cpy += 4 - size_al;
+ 
++#  if defined(POWERPC64) 
++	  FFI_ASSERT (abi != FFI_DARWIN);
+ 	  memcpy ((char *) dest_cpy, (char *) *p_argv, size_al);
+ 	  next_arg += (size_al + 7) / 8;
+-#else
+-	  dest_cpy = (char *) next_arg;
+-
++#  else
+ 	  /* Structures that match the basic modes (QI 1 byte, HI 2 bytes,
+ 	     SI 4 bytes) are aligned as if they were those modes.
+ 	     Structures with 3 byte in size are padded upwards.  */
+-	  size_al = (*ptr)->size;
+-	  /* If the first member of the struct is a double, then align
+-	     the struct to double-word.  */
+-	  if ((*ptr)->elements[0]->type == FFI_TYPE_DOUBLE)
+-	    size_al = ALIGN((*ptr)->size, 8);
+ 	  if (size_al < 3 && abi == FFI_DARWIN)
+ 	    dest_cpy += 4 - size_al;
+ 
+ 	  memcpy((char *) dest_cpy, (char *) *p_argv, size_al);
+ 	  next_arg += (size_al + 3) / 4;
++#  endif
+ #endif
+ 	  break;
+ 
+@@ -249,6 +294,7 @@ ffi_prep_args (extended_cif *ecif, unsig
+ 	  gprvalue = *(unsigned int *) *p_argv;
+ 	putgpr:
+ 	  *next_arg++ = gprvalue;
++	  gp_count++;
+ 	  break;
+ 	default:
+ 	  break;
+@@ -262,8 +308,269 @@ ffi_prep_args (extended_cif *ecif, unsig
+   //FFI_ASSERT(flags & FLAG_4_GPR_ARGUMENTS || intarg_count <= 4);
+ }
+ 
++#if defined(POWERPC_DARWIN64)
++
++/* See if we can put some of the struct into fprs.
++   This should not be called for structures of size 16 bytes, since these are not
++   broken out this way.  */
++static void
++darwin64_scan_struct_for_floats (ffi_type *s, unsigned *nfpr)
++{
++  int i;
++
++  FFI_ASSERT (s->type == FFI_TYPE_STRUCT)
++
++  for (i = 0; s->elements[i] != NULL; i++)
++    {
++      ffi_type *p = s->elements[i];
++      switch (p->type)
++	{
++	  case FFI_TYPE_STRUCT:
++	    darwin64_scan_struct_for_floats (p, nfpr);
++	    break;
++	  case FFI_TYPE_LONGDOUBLE:
++	    (*nfpr) += 2;
++	    break;
++	  case FFI_TYPE_DOUBLE:
++	  case FFI_TYPE_FLOAT:
++	    (*nfpr) += 1;
++	    break;
++	  default:
++	    break;    
++	}
++    }
++}
++
++static int
++darwin64_struct_size_exceeds_gprs_p (ffi_type *s, char *src, unsigned *nfpr)
++{
++  unsigned struct_offset=0, i;
++
++  for (i = 0; s->elements[i] != NULL; i++)
++    {
++      char *item_base;
++      ffi_type *p = s->elements[i];
++      /* Find the start of this item (0 for the first one).  */
++      if (i > 0)
++        struct_offset = ALIGN(struct_offset, p->alignment);
++
++      item_base = src + struct_offset;
++
++      switch (p->type)
++	{
++	  case FFI_TYPE_STRUCT:
++	    if (darwin64_struct_size_exceeds_gprs_p (p, item_base, nfpr))
++	      return 1;
++	    break;
++	  case FFI_TYPE_LONGDOUBLE:
++	    if (*nfpr >= NUM_FPR_ARG_REGISTERS)
++	      return 1;
++	    (*nfpr) += 1;
++	    item_base += 8;
++	  /* FALL THROUGH */
++	  case FFI_TYPE_DOUBLE:
++	    if (*nfpr >= NUM_FPR_ARG_REGISTERS)
++	      return 1;
++	    (*nfpr) += 1;
++	    break;
++	  case FFI_TYPE_FLOAT:
++	    if (*nfpr >= NUM_FPR_ARG_REGISTERS)
++	      return 1;
++	    (*nfpr) += 1;
++	    break;
++	  default:
++	    /* If we try and place any item, that is non-float, once we've
++	       exceeded the 8 GPR mark, then we can't fit the struct.  */
++	    if ((unsigned long)item_base >= 8*8) 
++	      return 1;
++	    break;    
++	}
++      /* now count the size of what we just used.  */
++      struct_offset += p->size;
++    }
++  return 0;
++}
++
++/* Can this struct be returned by value?  */
++int 
++darwin64_struct_ret_by_value_p (ffi_type *s)
++{
++  unsigned nfp = 0;
++
++  FFI_ASSERT (s && s->type == FFI_TYPE_STRUCT);
++  
++  /* The largest structure we can return is 8long + 13 doubles.  */
++  if (s->size > 168)
++    return 0;
++  
++  /* We can't pass more than 13 floats.  */
++  darwin64_scan_struct_for_floats (s, &nfp);
++  if (nfp > 13)
++    return 0;
++  
++  /* If there are not too many floats, and the struct is
++     small enough to accommodate in the GPRs, then it must be OK.  */
++  if (s->size <= 64)
++    return 1;
++  
++  /* Well, we have to look harder.  */
++  nfp = 0;
++  if (darwin64_struct_size_exceeds_gprs_p (s, NULL, &nfp))
++    return 0;
++  
++  return 1;
++}
++
++void
++darwin64_pass_struct_floats (ffi_type *s, char *src, 
++			     unsigned *nfpr, double **fprs)
++{
++  int i;
++  double *fpr_base = *fprs;
++  unsigned struct_offset = 0;
++
++  /* We don't assume anything about the alignment of the source.  */
++  for (i = 0; s->elements[i] != NULL; i++)
++    {
++      char *item_base;
++      ffi_type *p = s->elements[i];
++      /* Find the start of this item (0 for the first one).  */
++      if (i > 0)
++        struct_offset = ALIGN(struct_offset, p->alignment);
++      item_base = src + struct_offset;
++
++      switch (p->type)
++	{
++	  case FFI_TYPE_STRUCT:
++	    darwin64_pass_struct_floats (p, item_base, nfpr,
++					   &fpr_base);
++	    break;
++	  case FFI_TYPE_LONGDOUBLE:
++	    if (*nfpr < NUM_FPR_ARG_REGISTERS)
++	      *fpr_base++ = *(double *)item_base;
++	    (*nfpr) += 1;
++	    item_base += 8;
++	  /* FALL THROUGH */
++	  case FFI_TYPE_DOUBLE:
++	    if (*nfpr < NUM_FPR_ARG_REGISTERS)
++	      *fpr_base++ = *(double *)item_base;
++	    (*nfpr) += 1;
++	    break;
++	  case FFI_TYPE_FLOAT:
++	    if (*nfpr < NUM_FPR_ARG_REGISTERS)
++	      *fpr_base++ = (double) *(float *)item_base;
++	    (*nfpr) += 1;
++	    break;
++	  default:
++	    break;    
++	}
++      /* now count the size of what we just used.  */
++      struct_offset += p->size;
++    }
++  /* Update the scores.  */
++  *fprs = fpr_base;
++}
++
++/* Darwin64 special rules.
++   Break out a struct into params and float registers.  */
++static void
++darwin64_pass_struct_by_value (ffi_type *s, char *src, unsigned size,
++			       unsigned *nfpr, double **fprs, unsigned long **arg)
++{
++  unsigned long *next_arg = *arg;
++  char *dest_cpy = (char *)next_arg;
++
++  FFI_ASSERT (s->type == FFI_TYPE_STRUCT)
++
++  if (!size)
++    return;
++
++  /* First... special cases.  */
++  if (size < 3
++      || (size == 4 
++	  && s->elements[0] 
++	  && s->elements[0]->type != FFI_TYPE_FLOAT))
++    {
++      /* Must be at least one GPR, padding is unspecified in value, 
++	 let's make it zero.  */
++      *next_arg = 0UL; 
++      dest_cpy += 8 - size;
++      memcpy ((char *) dest_cpy, src, size);
++      next_arg++;
++    }
++  else if (size == 16)
++    {
++      memcpy ((char *) dest_cpy, src, size);
++      next_arg += 2;
++    }
++  else
++    {
++      /* now the general case, we consider embedded floats.  */
++      memcpy ((char *) dest_cpy, src, size);
++      darwin64_pass_struct_floats (s, src, nfpr, fprs);
++      next_arg += (size+7)/8;
++    }
++    
++  *arg = next_arg;
++}
++
++double *
++darwin64_struct_floats_to_mem (ffi_type *s, char *dest, double *fprs, unsigned *nf)
++{
++  int i;
++  unsigned struct_offset = 0;
++
++  /* We don't assume anything about the alignment of the source.  */
++  for (i = 0; s->elements[i] != NULL; i++)
++    {
++      char *item_base;
++      ffi_type *p = s->elements[i];
++      /* Find the start of this item (0 for the first one).  */
++      if (i > 0)
++        struct_offset = ALIGN(struct_offset, p->alignment);
++      item_base = dest + struct_offset;
++
++      switch (p->type)
++	{
++	  case FFI_TYPE_STRUCT:
++	    fprs = darwin64_struct_floats_to_mem (p, item_base, fprs, nf);
++	    break;
++	  case FFI_TYPE_LONGDOUBLE:
++	    if (*nf < NUM_FPR_ARG_REGISTERS)
++	      {
++		*(double *)item_base = *fprs++ ;
++		(*nf) += 1;
++	      }
++	    item_base += 8;
++	  /* FALL THROUGH */
++	  case FFI_TYPE_DOUBLE:
++	    if (*nf < NUM_FPR_ARG_REGISTERS)
++	      {
++		*(double *)item_base = *fprs++ ;
++		(*nf) += 1;
++	      }
++	    break;
++	  case FFI_TYPE_FLOAT:
++	    if (*nf < NUM_FPR_ARG_REGISTERS)
++	      {
++		*(float *)item_base = (float) *fprs++ ;
++		(*nf) += 1;
++	      }
++	    break;
++	  default:
++	    break;    
++	}
++      /* now count the size of what we just used.  */
++      struct_offset += p->size;
++    }
++  return fprs;
++}
++
++#endif
++
+ /* Adjust the size of S to be correct for Darwin.
+-   On Darwin, the first field of a structure has natural alignment.  */
++   On Darwin m32, the first field of a structure has natural alignment.  
++   On Darwin m64, all fields have natural alignment.  */
+ 
+ static void
+ darwin_adjust_aggregate_sizes (ffi_type *s)
+@@ -280,22 +587,29 @@ darwin_adjust_aggregate_sizes (ffi_type
+       int align;
+       
+       p = s->elements[i];
+-      darwin_adjust_aggregate_sizes (p);
+-      if (i == 0
+-	  && (p->type == FFI_TYPE_UINT64
+-	      || p->type == FFI_TYPE_SINT64
+-	      || p->type == FFI_TYPE_DOUBLE
+-	      || p->alignment == 8))
+-	align = 8;
++      if (p->type == FFI_TYPE_STRUCT)
++	darwin_adjust_aggregate_sizes (p);
++#if defined(POWERPC_DARWIN64)
++      /* Natural alignment for all items.  */
++      align = p->alignment;
++#else
++      /* Natrual alignment for the first item... */
++      if (i == 0)
++	align = p->alignment;
+       else if (p->alignment == 16 || p->alignment < 4)
++	/* .. subsequent items with vector or align < 4 have natural align.  */
+ 	align = p->alignment;
+       else
++	/* .. or align is 4.  */
+ 	align = 4;
++#endif
++      /* Pad, if necessary, before adding the current item.  */
+       s->size = ALIGN(s->size, align) + p->size;
+     }
+   
+   s->size = ALIGN(s->size, s->alignment);
+   
++  /* This should not be necessary on m64, but harmless.  */
+   if (s->elements[0]->type == FFI_TYPE_UINT64
+       || s->elements[0]->type == FFI_TYPE_SINT64
+       || s->elements[0]->type == FFI_TYPE_DOUBLE
+@@ -347,7 +661,7 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+   unsigned i;
+   ffi_type **ptr;
+   unsigned bytes;
+-  int fparg_count = 0, intarg_count = 0;
++  unsigned fparg_count = 0, intarg_count = 0;
+   unsigned flags = 0;
+   unsigned size_al = 0;
+ 
+@@ -372,16 +686,25 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+   /* Space for the frame pointer, callee's LR, CR, etc, and for
+      the asm's temp regs.  */
+ 
+-  bytes = (6 + ASM_NEEDS_REGISTERS) * sizeof(long);
++  bytes = (LINKAGE_AREA_GPRS + ASM_NEEDS_REGISTERS) * sizeof(unsigned long);
+ 
+-  /* Return value handling.  The rules are as follows:
++  /* Return value handling.  
++    The rules m32 are as follows:
+      - 32-bit (or less) integer values are returned in gpr3;
+-     - Structures of size <= 4 bytes also returned in gpr3;
+-     - 64-bit integer values and structures between 5 and 8 bytes are returned
+-       in gpr3 and gpr4;
++     - structures of size <= 4 bytes also returned in gpr3;
++     - 64-bit integer values [??? and structures between 5 and 8 bytes] are
++       returned in gpr3 and gpr4;
+      - Single/double FP values are returned in fpr1;
+      - Long double FP (if not equivalent to double) values are returned in
+        fpr1 and fpr2;
++     m64:
++     - 64-bit or smaller integral values are returned in GPR3
++     - Single/double FP values are returned in fpr1;
++     - Long double FP values are returned in fpr1 and fpr2;
++     m64 Structures:
++     - If the structure could be accommodated in registers were it to be the
++       first argument to a routine, then it is returned in those registers.
++     m32/m64 structures otherwise:
+      - Larger structures values are allocated space and a pointer is passed
+        as the first argument.  */
+   switch (cif->rtype->type)
+@@ -410,9 +733,42 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+       break;
+ 
+     case FFI_TYPE_STRUCT:
++#if defined(POWERPC_DARWIN64)
++      {
++	/* Can we fit the struct into regs?  */
++	if (darwin64_struct_ret_by_value_p (cif->rtype))
++	  {
++	    unsigned nfpr = 0;
++	    flags |= FLAG_RETURNS_STRUCT;
++	    if (cif->rtype->size != 16)
++	      darwin64_scan_struct_for_floats (cif->rtype, &nfpr) ;
++	    else
++	      flags |= FLAG_RETURNS_128BITS;
++	    /* Will be 0 for 16byte struct.  */
++	    if (nfpr)
++	      flags |= FLAG_RETURNS_FP;
++	  }
++	else /* By ref. */
++	  {
++	    flags |= FLAG_RETVAL_REFERENCE;
++	    flags |= FLAG_RETURNS_NOTHING;
++	    intarg_count++;
++	  }
++      }
++#elif defined(DARWIN_PPC)
++      if (cif->rtype->size <= 4)
++	flags |= FLAG_RETURNS_STRUCT;
++      else /* else by reference.  */
++	{
++	  flags |= FLAG_RETVAL_REFERENCE;
++	  flags |= FLAG_RETURNS_NOTHING;
++	  intarg_count++;
++	}
++#else /* assume we pass by ref.  */
+       flags |= FLAG_RETVAL_REFERENCE;
+       flags |= FLAG_RETURNS_NOTHING;
+       intarg_count++;
++#endif
+       break;
+     case FFI_TYPE_VOID:
+       flags |= FLAG_RETURNS_NOTHING;
+@@ -425,57 +781,83 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 
+   /* The first NUM_GPR_ARG_REGISTERS words of integer arguments, and the
+      first NUM_FPR_ARG_REGISTERS fp arguments, go in registers; the rest
+-     goes on the stack.  Structures are passed as a pointer to a copy of
+-     the structure. Stuff on the stack needs to keep proper alignment.  */
++     goes on the stack.  
++     ??? Structures are passed as a pointer to a copy of the structure. 
++     Stuff on the stack needs to keep proper alignment.  
++     For m64 the count is effectively of half-GPRs.  */
+   for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
+     {
++      unsigned align_words;
+       switch ((*ptr)->type)
+ 	{
+ 	case FFI_TYPE_FLOAT:
+ 	case FFI_TYPE_DOUBLE:
+ 	  fparg_count++;
++#if !defined(POWERPC_DARWIN64)
+ 	  /* If this FP arg is going on the stack, it must be
+ 	     8-byte-aligned.  */
+ 	  if (fparg_count > NUM_FPR_ARG_REGISTERS
+-	      && intarg_count%2 != 0)
++	      && (intarg_count & 0x01) != 0)
+ 	    intarg_count++;
++#endif
+ 	  break;
+ 
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+-
+ 	case FFI_TYPE_LONGDOUBLE:
+ 	  fparg_count += 2;
+ 	  /* If this FP arg is going on the stack, it must be
+-	     8-byte-aligned.  */
+-	  if (fparg_count > NUM_FPR_ARG_REGISTERS
+-	      && intarg_count%2 != 0)
+-	    intarg_count++;
+-	  intarg_count +=2;
++	     16-byte-aligned.  */
++	  if (fparg_count >= NUM_FPR_ARG_REGISTERS)
++#if defined (POWERPC64)
++	    intarg_count = ALIGN(intarg_count, 2);
++#else
++	    intarg_count = ALIGN(intarg_count, 4);
++#endif
+ 	  break;
+ #endif
+ 
+ 	case FFI_TYPE_UINT64:
+ 	case FFI_TYPE_SINT64:
++#if defined(POWERPC64)
++	  intarg_count++;
++#else
+ 	  /* 'long long' arguments are passed as two words, but
+ 	     either both words must fit in registers or both go
+ 	     on the stack.  If they go on the stack, they must
+ 	     be 8-byte-aligned.  */
+ 	  if (intarg_count == NUM_GPR_ARG_REGISTERS-1
+-	      || (intarg_count >= NUM_GPR_ARG_REGISTERS && intarg_count%2 != 0))
++	      || (intarg_count >= NUM_GPR_ARG_REGISTERS 
++	          && (intarg_count & 0x01) != 0))
+ 	    intarg_count++;
+ 	  intarg_count += 2;
++#endif
+ 	  break;
+ 
+ 	case FFI_TYPE_STRUCT:
+ 	  size_al = (*ptr)->size;
++#if defined(POWERPC_DARWIN64)
++	  align_words = (*ptr)->alignment >> 3;
++	  if (align_words)
++	    intarg_count = ALIGN(intarg_count, align_words);
++	  /* Base size of the struct.  */
++	  intarg_count += (size_al + 7) / 8;
++	  /* If 16 bytes then don't worry about floats.  */
++	  if (size_al != 16)
++	    /* Scan through for floats to be placed in regs.  */
++	    darwin64_scan_struct_for_floats (*ptr, &fparg_count) ;
++#else
++	  align_words = (*ptr)->alignment >> 2;
++	  if (align_words)
++	    intarg_count = ALIGN(intarg_count, align_words);
+ 	  /* If the first member of the struct is a double, then align
+-	     the struct to double-word.  */
++	     the struct to double-word. 
+ 	  if ((*ptr)->elements[0]->type == FFI_TYPE_DOUBLE)
+-	    size_al = ALIGN((*ptr)->size, 8);
+-#ifdef POWERPC64
++	    size_al = ALIGN((*ptr)->size, 8); */
++#  ifdef POWERPC64
+ 	  intarg_count += (size_al + 7) / 8;
+-#else
++#  else
+ 	  intarg_count += (size_al + 3) / 4;
++#  endif
+ #endif
+ 	  break;
+ 
+@@ -490,9 +872,18 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+   if (fparg_count != 0)
+     flags |= FLAG_FP_ARGUMENTS;
+ 
++#if defined(POWERPC_DARWIN64)
++  /* Space to image the FPR registers, if needed - which includes when they might be
++     used in a struct return.  */
++  if (fparg_count != 0 
++      || ((flags & FLAG_RETURNS_STRUCT)
++	   && (flags & FLAG_RETURNS_FP)))
++    bytes += NUM_FPR_ARG_REGISTERS * sizeof(double);
++#else
+   /* Space for the FPR registers, if needed.  */
+   if (fparg_count != 0)
+     bytes += NUM_FPR_ARG_REGISTERS * sizeof(double);
++#endif
+ 
+   /* Stack space.  */
+ #ifdef POWERPC64
+@@ -506,7 +897,7 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+     bytes += NUM_GPR_ARG_REGISTERS * sizeof(long);
+ 
+   /* The stack space allocated needs to be a multiple of 16 bytes.  */
+-  bytes = (bytes + 15) & ~0xF;
++  bytes = ALIGN(bytes, 16) ;
+ 
+   cif->flags = flags;
+   cif->bytes = bytes;
+@@ -516,8 +907,9 @@ ffi_prep_cif_machdep (ffi_cif *cif)
+ 
+ extern void ffi_call_AIX(extended_cif *, long, unsigned, unsigned *,
+ 			 void (*fn)(void), void (*fn2)(void));
++
+ extern void ffi_call_DARWIN(extended_cif *, long, unsigned, unsigned *,
+-			    void (*fn)(void), void (*fn2)(void));
++			    void (*fn)(void), void (*fn2)(void), ffi_type*);
+ 
+ void
+ ffi_call (ffi_cif *cif, void (*fn)(void), void *rvalue, void **avalue)
+@@ -546,7 +938,7 @@ ffi_call (ffi_cif *cif, void (*fn)(void)
+       break;
+     case FFI_DARWIN:
+       ffi_call_DARWIN(&ecif, -(long)cif->bytes, cif->flags, ecif.rvalue, fn,
+-		      FFI_FN(ffi_prep_args));
++		      FFI_FN(ffi_prep_args), cif->rtype);
+       break;
+     default:
+       FFI_ASSERT(0);
+@@ -566,58 +958,48 @@ typedef struct aix_fd_struct {
+ } aix_fd;
+ 
+ /* here I'd like to add the stack frame layout we use in darwin_closure.S
+-   and aix_clsoure.S
++   and aix_closure.S
++
++   m32/m64
+ 
+-   SP previous -> +---------------------------------------+ <--- child frame
+-		  | back chain to caller 4                |
+-		  +---------------------------------------+ 4
+-		  | saved CR 4                            |
+-		  +---------------------------------------+ 8
+-		  | saved LR 4                            |
+-		  +---------------------------------------+ 12
+-		  | reserved for compilers 4              |
+-		  +---------------------------------------+ 16
+-		  | reserved for binders 4                |
+-		  +---------------------------------------+ 20
+-		  | saved TOC pointer 4                   |
+-		  +---------------------------------------+ 24
+-		  | always reserved 8*4=32 (previous GPRs)|
+-		  | according to the linkage convention   |
+-		  | from AIX                              |
+-		  +---------------------------------------+ 56
+-		  | our FPR area 13*8=104                 |
+-		  | f1                                    |
+-		  | .                                     |
+-		  | f13                                   |
+-		  +---------------------------------------+ 160
+-		  | result area 8                         |
+-		  +---------------------------------------+ 168
+-		  | alignement to the next multiple of 16 |
+-SP current -->    +---------------------------------------+ 176 <- parent frame
+-		  | back chain to caller 4                |
+-		  +---------------------------------------+ 180
+-		  | saved CR 4                            |
+-		  +---------------------------------------+ 184
+-		  | saved LR 4                            |
+-		  +---------------------------------------+ 188
+-		  | reserved for compilers 4              |
+-		  +---------------------------------------+ 192
+-		  | reserved for binders 4                |
+-		  +---------------------------------------+ 196
+-		  | saved TOC pointer 4                   |
+-		  +---------------------------------------+ 200
+-		  | always reserved 8*4=32  we store our  |
+-		  | GPRs here                             |
+-		  | r3                                    |
+-		  | .                                     |
+-		  | r10                                   |
+-		  +---------------------------------------+ 232
+-		  | overflow part                         |
+-		  +---------------------------------------+ xxx
+-		  | ????                                  |
+-		  +---------------------------------------+ xxx
++   The stack layout looks like this:
++
++   |   Additional params...			| |     Higher address
++   ~						~ ~
++   |   Parameters      (at least 8*4/8=32/64)	| | NUM_GPR_ARG_REGISTERS
++   |--------------------------------------------| |
++   |   TOC=R2 (AIX) Reserved (Darwin)   4/8	| |
++   |--------------------------------------------| |
++   |   Reserved                       2*4/8	| |
++   |--------------------------------------------| |
++   |   Space for callee's LR		4/8	| |
++   |--------------------------------------------| |
++   |   Saved CR [low word for m64]      4/8	| |
++   |--------------------------------------------| |
++   |   Current backchain pointer	4/8	|-/ Parent's frame.
++   |--------------------------------------------| <+ <<< on entry to ffi_closure_ASM
++   |   Result Bytes			16	| |
++   |--------------------------------------------| |
++   ~   padding to 16-byte alignment		~ ~
++   |--------------------------------------------| |
++   |   NUM_FPR_ARG_REGISTERS slots		| |
++   |   here fp13 .. fp1		       13*8	| |
++   |--------------------------------------------| |
++   |   R3..R10			  8*4/8=32/64	| | NUM_GPR_ARG_REGISTERS
++   |--------------------------------------------| |
++   |   TOC=R2 (AIX) Reserved (Darwin)   4/8	| |
++   |--------------------------------------------| |	stack	|
++   |   Reserved [compiler,binder]     2*4/8	| |	grows	|
++   |--------------------------------------------| |	down	V
++   |   Space for callee's LR		4/8	| |
++   |--------------------------------------------| |	lower addresses
++   |   Saved CR [low word for m64]      4/8	| |
++   |--------------------------------------------| |     stack pointer here
++   |   Current backchain pointer	4/8	|-/	during
++   |--------------------------------------------|   <<<	ffi_closure_ASM.
+ 
+ */
++
+ ffi_status
+ ffi_prep_closure_loc (ffi_closure* closure,
+ 		      ffi_cif* cif,
+@@ -631,30 +1013,44 @@ ffi_prep_closure_loc (ffi_closure* closu
+ 
+   switch (cif->abi)
+     {
+-    case FFI_DARWIN:
++      case FFI_DARWIN:
+ 
+-      FFI_ASSERT (cif->abi == FFI_DARWIN);
++	FFI_ASSERT (cif->abi == FFI_DARWIN);
+ 
+-      tramp = (unsigned int *) &closure->tramp[0];
+-      tramp[0] = 0x7c0802a6;  /*   mflr    r0  */
+-      tramp[1] = 0x429f000d;  /*   bcl-    20,4*cr7+so,0x10  */
+-      tramp[4] = 0x7d6802a6;  /*   mflr    r11  */
+-      tramp[5] = 0x818b0000;  /*   lwz     r12,0(r11) function address  */
+-      tramp[6] = 0x7c0803a6;  /*   mtlr    r0   */
+-      tramp[7] = 0x7d8903a6;  /*   mtctr   r12  */
+-      tramp[8] = 0x816b0004;  /*   lwz     r11,4(r11) static chain  */
+-      tramp[9] = 0x4e800420;  /*   bctr  */
+-      tramp[2] = (unsigned long) ffi_closure_ASM; /* function  */
+-      tramp[3] = (unsigned long) codeloc; /* context  */
++	tramp = (unsigned int *) &closure->tramp[0];
++#if defined(POWERPC_DARWIN64)
++	tramp[0] = 0x7c0802a6;  /*   mflr    r0  */
++	tramp[1] = 0x429f0015;  /*   bcl-    20,4*cr7+so,  +0x18 (L1)  */
++	/* We put the addresses here.  */
++	tramp[6] = 0x7d6802a6;  /*L1:   mflr    r11  */
++	tramp[7] = 0xe98b0000;  /*   ld     r12,0(r11) function address  */
++	tramp[8] = 0x7c0803a6;  /*   mtlr    r0   */
++	tramp[9] = 0x7d8903a6;  /*   mtctr   r12  */
++	tramp[10] = 0xe96b0008;  /*   lwz     r11,8(r11) static chain  */
++	tramp[11] = 0x4e800420;  /*   bctr  */
+ 
+-      closure->cif = cif;
+-      closure->fun = fun;
+-      closure->user_data = user_data;
++	*((unsigned long *)&tramp[2]) = (unsigned long) ffi_closure_ASM; /* function  */
++	*((unsigned long *)&tramp[4]) = (unsigned long) codeloc; /* context  */
++#else
++	tramp[0] = 0x7c0802a6;  /*   mflr    r0  */
++	tramp[1] = 0x429f000d;  /*   bcl-    20,4*cr7+so,0x10  */
++	tramp[4] = 0x7d6802a6;  /*   mflr    r11  */
++	tramp[5] = 0x818b0000;  /*   lwz     r12,0(r11) function address  */
++	tramp[6] = 0x7c0803a6;  /*   mtlr    r0   */
++	tramp[7] = 0x7d8903a6;  /*   mtctr   r12  */
++	tramp[8] = 0x816b0004;  /*   lwz     r11,4(r11) static chain  */
++	tramp[9] = 0x4e800420;  /*   bctr  */
++	tramp[2] = (unsigned long) ffi_closure_ASM; /* function  */
++	tramp[3] = (unsigned long) codeloc; /* context  */
++#endif
++	closure->cif = cif;
++	closure->fun = fun;
++	closure->user_data = user_data;
+ 
+-      /* Flush the icache. Only necessary on Darwin.  */
+-      flush_range(codeloc, FFI_TRAMPOLINE_SIZE);
++	/* Flush the icache. Only necessary on Darwin.  */
++	flush_range(codeloc, FFI_TRAMPOLINE_SIZE);
+ 
+-      break;
++	break;
+ 
+     case FFI_AIX:
+ 
+@@ -669,10 +1065,10 @@ ffi_prep_closure_loc (ffi_closure* closu
+       closure->cif = cif;
+       closure->fun = fun;
+       closure->user_data = user_data;
++      break;
+ 
+     default:
+-
+-      FFI_ASSERT(0);
++      return FFI_BAD_ABI;
+       break;
+     }
+   return FFI_OK;
+@@ -708,7 +1104,7 @@ typedef union
+   double d;
+ } ffi_dblfl;
+ 
+-int
++ffi_type *
+ ffi_closure_helper_DARWIN (ffi_closure *, void *,
+ 			   unsigned long *, ffi_dblfl *);
+ 
+@@ -719,7 +1115,7 @@ ffi_closure_helper_DARWIN (ffi_closure *
+    up space for a return value, ffi_closure_ASM invokes the
+    following helper function to do most of the work.  */
+ 
+-int
++ffi_type *
+ ffi_closure_helper_DARWIN (ffi_closure *closure, void *rvalue,
+ 			   unsigned long *pgr, ffi_dblfl *pfr)
+ {
+@@ -741,16 +1137,32 @@ ffi_closure_helper_DARWIN (ffi_closure *
+   ffi_cif *        cif;
+   ffi_dblfl *      end_pfr = pfr + NUM_FPR_ARG_REGISTERS;
+   unsigned         size_al;
++#if defined(POWERPC_DARWIN64)
++  unsigned 	   fpsused = 0;
++#endif
+ 
+   cif = closure->cif;
+   avalue = alloca (cif->nargs * sizeof(void *));
+ 
+-  /* Copy the caller's structure return value address so that the closure
+-     returns the data directly to the caller.  */
+   if (cif->rtype->type == FFI_TYPE_STRUCT)
+     {
++#if defined(POWERPC_DARWIN64)
++      if (!darwin64_struct_ret_by_value_p (cif->rtype))
++	{
++    	  /* Won't fit into the regs - return by ref.  */
++	  rvalue = (void *) *pgr;
++	  pgr++;
++	}
++#elif defined(DARWIN_PPC)
++      if (cif->rtype->size > 4)
++	{
++	  rvalue = (void *) *pgr;
++	  pgr++;
++	}
++#else /* assume we return by ref.  */
+       rvalue = (void *) *pgr;
+       pgr++;
++#endif
+     }
+ 
+   i = 0;
+@@ -764,7 +1176,7 @@ ffi_closure_helper_DARWIN (ffi_closure *
+ 	{
+ 	case FFI_TYPE_SINT8:
+ 	case FFI_TYPE_UINT8:
+-#ifdef POWERPC64
++#if  defined(POWERPC64)
+ 	  avalue[i] = (char *) pgr + 7;
+ #else
+ 	  avalue[i] = (char *) pgr + 3;
+@@ -774,7 +1186,7 @@ ffi_closure_helper_DARWIN (ffi_closure *
+ 
+ 	case FFI_TYPE_SINT16:
+ 	case FFI_TYPE_UINT16:
+-#ifdef POWERPC64
++#if  defined(POWERPC64)
+ 	  avalue[i] = (char *) pgr + 6;
+ #else
+ 	  avalue[i] = (char *) pgr + 2;
+@@ -784,7 +1196,7 @@ ffi_closure_helper_DARWIN (ffi_closure *
+ 
+ 	case FFI_TYPE_SINT32:
+ 	case FFI_TYPE_UINT32:
+-#ifdef POWERPC64
++#if  defined(POWERPC64)
+ 	  avalue[i] = (char *) pgr + 4;
+ #else
+ 	case FFI_TYPE_POINTER:
+@@ -794,34 +1206,53 @@ ffi_closure_helper_DARWIN (ffi_closure *
+ 	  break;
+ 
+ 	case FFI_TYPE_STRUCT:
+-#ifdef POWERPC64
+ 	  size_al = arg_types[i]->size;
+-	  if (arg_types[i]->elements[0]->type == FFI_TYPE_DOUBLE)
+-	    size_al = ALIGN (arg_types[i]->size, 8);
+-	  if (size_al < 3 && cif->abi == FFI_DARWIN)
+-	    avalue[i] = (char *) pgr + 8 - size_al;
+-	  else
+-	    avalue[i] = pgr;
++#if defined(POWERPC_DARWIN64)
++	  pgr = (unsigned long *)ALIGN((char *)pgr, arg_types[i]->alignment);
++	  if (size_al < 3 || size_al == 4)
++	    {
++	      avalue[i] = ((char *)pgr)+8-size_al;
++	      if (arg_types[i]->elements[0]->type == FFI_TYPE_FLOAT
++		  && fpsused < NUM_FPR_ARG_REGISTERS)
++		{
++		  *(float *)pgr = (float) *(double *)pfr;
++		  pfr++;
++		  fpsused++;
++		}
++	    }
++	  else 
++	    {
++	      if (size_al != 16)
++		pfr = (ffi_dblfl *) 
++		    darwin64_struct_floats_to_mem (arg_types[i], (char *)pgr,
++						   (double *)pfr, &fpsused);
++	      avalue[i] = pgr;
++	    }
+ 	  pgr += (size_al + 7) / 8;
+ #else
+-	  /* Structures that match the basic modes (QI 1 byte, HI 2 bytes,
+-	     SI 4 bytes) are aligned as if they were those modes.  */
+-	  size_al = arg_types[i]->size;
+ 	  /* If the first member of the struct is a double, then align
+ 	     the struct to double-word.  */
+ 	  if (arg_types[i]->elements[0]->type == FFI_TYPE_DOUBLE)
+ 	    size_al = ALIGN(arg_types[i]->size, 8);
++#  if defined(POWERPC64)
++	  FFI_ASSERT (cif->abi != FFI_DARWIN);
++	  avalue[i] = pgr;
++	  pgr += (size_al + 7) / 8;
++#  else
++	  /* Structures that match the basic modes (QI 1 byte, HI 2 bytes,
++	     SI 4 bytes) are aligned as if they were those modes.  */
+ 	  if (size_al < 3 && cif->abi == FFI_DARWIN)
+ 	    avalue[i] = (char*) pgr + 4 - size_al;
+ 	  else
+ 	    avalue[i] = pgr;
+ 	  pgr += (size_al + 3) / 4;
++#  endif
+ #endif
+ 	  break;
+ 
+ 	case FFI_TYPE_SINT64:
+ 	case FFI_TYPE_UINT64:
+-#ifdef POWERPC64
++#if  defined(POWERPC64)
+ 	case FFI_TYPE_POINTER:
+ 	  avalue[i] = pgr;
+ 	  pgr++;
+@@ -924,5 +1355,5 @@ ffi_closure_helper_DARWIN (ffi_closure *
+   (closure->fun) (cif, rvalue, avalue, closure->user_data);
+ 
+   /* Tell ffi_closure_ASM to perform return type promotions.  */
+-  return cif->rtype->type;
++  return cif->rtype;
+ }
+--- mozilla/js/src/ctypes/libffi/src/powerpc/ffitarget.h	2013-10-24 09:56:51.847587813 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/ffitarget.h	2013-11-29 17:23:26.000000000 +0100
+@@ -1,6 +1,8 @@
+ /* -----------------------------------------------------------------*-C-*-
+-   ffitarget.h - Copyright (c) 1996-2003  Red Hat, Inc.
+-   Copyright (C) 2007, 2008 Free Software Foundation, Inc
++   ffitarget.h - Copyright (c) 2012  Anthony Green
++                 Copyright (C) 2007, 2008, 2010 Free Software Foundation, Inc
++                 Copyright (c) 1996-2003  Red Hat, Inc.
++
+    Target configuration macros for PowerPC.
+ 
+    Permission is hereby granted, free of charge, to any person obtaining
+@@ -28,16 +30,23 @@
+ #ifndef LIBFFI_TARGET_H
+ #define LIBFFI_TARGET_H
+ 
++#ifndef LIBFFI_H
++#error "Please do not include ffitarget.h directly into your source.  Use ffi.h instead."
++#endif
++
+ /* ---- System specific configurations ----------------------------------- */
+ 
+ #if defined (POWERPC) && defined (__powerpc64__)	/* linux64 */
+ #ifndef POWERPC64
+ #define POWERPC64
+ #endif
+-#elif defined (POWERPC_DARWIN) && defined (__ppc64__)	/* Darwin */
++#elif defined (POWERPC_DARWIN) && defined (__ppc64__)	/* Darwin64 */
+ #ifndef POWERPC64
+ #define POWERPC64
+ #endif
++#ifndef POWERPC_DARWIN64
++#define POWERPC_DARWIN64
++#endif
+ #elif defined (POWERPC_AIX) && defined (__64BIT__)	/* AIX64 */
+ #ifndef POWERPC64
+ #define POWERPC64
+@@ -57,18 +66,14 @@ typedef enum ffi_abi {
+   FFI_LINUX64,
+   FFI_LINUX,
+   FFI_LINUX_SOFT_FLOAT,
+-# ifdef POWERPC64
++# if defined(POWERPC64)
+   FFI_DEFAULT_ABI = FFI_LINUX64,
+-# else
+-#  if (!defined(__NO_FPRS__) && (__LDBL_MANT_DIG__ == 106))
+-  FFI_DEFAULT_ABI = FFI_LINUX,
+-#  else
+-#   ifdef __NO_FPRS__
++# elif defined(__NO_FPRS__)
+   FFI_DEFAULT_ABI = FFI_LINUX_SOFT_FLOAT,
+-#   else
++# elif (__LDBL_MANT_DIG__ == 106)
++  FFI_DEFAULT_ABI = FFI_LINUX,
++# else
+   FFI_DEFAULT_ABI = FFI_GCC_SYSV,
+-#   endif
+-#  endif
+ # endif
+ #endif
+ 
+@@ -101,6 +106,10 @@ typedef enum ffi_abi {
+ 
+ #define FFI_CLOSURES 1
+ #define FFI_NATIVE_RAW_API 0
++#if defined (POWERPC) || defined (POWERPC_FREEBSD)
++# define FFI_TARGET_SPECIFIC_VARIADIC 1
++# define FFI_EXTRA_CIF_FIELDS unsigned nfixedargs
++#endif
+ 
+ /* For additional types like the below, take care about the order in
+    ppc_closures.S. They must follow after the FFI_TYPE_LAST.  */
+@@ -113,10 +122,23 @@ typedef enum ffi_abi {
+    defined in ffi.c, to determine the exact return type and its size.  */
+ #define FFI_SYSV_TYPE_SMALL_STRUCT (FFI_TYPE_LAST + 2)
+ 
+-#if defined(POWERPC64) || defined(POWERPC_AIX)
+-#define FFI_TRAMPOLINE_SIZE 24
+-#else /* POWERPC || POWERPC_AIX */
+-#define FFI_TRAMPOLINE_SIZE 40
++/* Used by ELFv2 for homogenous structure returns.  */
++#define FFI_V2_TYPE_FLOAT_HOMOG		(FFI_TYPE_LAST + 1)
++#define FFI_V2_TYPE_DOUBLE_HOMOG	(FFI_TYPE_LAST + 2)
++#define FFI_V2_TYPE_SMALL_STRUCT	(FFI_TYPE_LAST + 3)
++
++#if _CALL_ELF == 2
++# define FFI_TRAMPOLINE_SIZE 32
++#else
++# if defined(POWERPC64) || defined(POWERPC_AIX)
++#  if defined(POWERPC_DARWIN64)
++#    define FFI_TRAMPOLINE_SIZE 48
++#  else
++#    define FFI_TRAMPOLINE_SIZE 24
++#  endif
++# else /* POWERPC || POWERPC_AIX */
++#  define FFI_TRAMPOLINE_SIZE 40
++# endif
+ #endif
+ 
+ #ifndef LIBFFI_ASM
+--- mozilla/js/src/ctypes/libffi/src/powerpc/linux64_closure.S	2013-10-24 09:56:51.847587813 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/linux64_closure.S	2013-11-29 17:23:26.000000000 +0100
+@@ -32,66 +32,127 @@
+ 
+ #ifdef __powerpc64__
+ 	FFI_HIDDEN (ffi_closure_LINUX64)
+-	FFI_HIDDEN (.ffi_closure_LINUX64)
+-	.globl  ffi_closure_LINUX64, .ffi_closure_LINUX64
++	.globl  ffi_closure_LINUX64
++# if _CALL_ELF == 2
++	.text
++ffi_closure_LINUX64:
++	addis	%r2, %r12, .TOC.-ffi_closure_LINUX64@ha
++	addi	%r2, %r2, .TOC.-ffi_closure_LINUX64@l
++	.localentry ffi_closure_LINUX64, . - ffi_closure_LINUX64
++# else
+ 	.section        ".opd","aw"
+ 	.align  3
+ ffi_closure_LINUX64:
++#  ifdef _CALL_LINUX
++	.quad   .L.ffi_closure_LINUX64,.TOC.@tocbase,0
++	.type   ffi_closure_LINUX64,@function
++	.text
++.L.ffi_closure_LINUX64:
++#  else
++	FFI_HIDDEN (.ffi_closure_LINUX64)
++	.globl  .ffi_closure_LINUX64
+ 	.quad   .ffi_closure_LINUX64,.TOC.@tocbase,0
+ 	.size   ffi_closure_LINUX64,24
+ 	.type   .ffi_closure_LINUX64,@function
+ 	.text
+ .ffi_closure_LINUX64:
++#  endif
++# endif
++
++# if _CALL_ELF == 2
++#  32 byte special reg save area + 64 byte parm save area and retval
++#  + 13*8 fpr save area + round to 16
++#  define STACKFRAME 208
++#  define PARMSAVE 32
++#  No parameter save area is needed for the call to ffi_closure_helper_LINUX64,
++#  so return value can start there.
++#  define RETVAL PARMSAVE
++# else
++#  48 bytes special reg save area + 64 bytes parm save area
++#  + 16 bytes retval area + 13*8 bytes fpr save area + round to 16
++#  define STACKFRAME 240
++#  define PARMSAVE 48
++#  define RETVAL PARMSAVE+64
++# endif
++
+ .LFB1:
+-	# save general regs into parm save area
+-	std	%r3, 48(%r1)
+-	std	%r4, 56(%r1)
+-	std	%r5, 64(%r1)
+-	std	%r6, 72(%r1)
++# if _CALL_ELF == 2
++	ld	%r12, FFI_TRAMPOLINE_SIZE(%r11)		# closure->cif
++	mflr	%r0
++	lwz	%r12, 28(%r12)				# cif->flags
++	mtcrf	0x40, %r12
++	addi	%r12, %r1, PARMSAVE
++	bt	7, .Lparmsave
++	# Our caller has not allocated a parameter save area.
++	# We need to allocate one here and use it to pass gprs to
++	# ffi_closure_helper_LINUX64.  The return value area will do.
++	addi	%r12, %r1, -STACKFRAME+RETVAL
++.Lparmsave:
++	std	%r0, 16(%r1)
++	# Save general regs into parm save area
++	std	%r3, 0(%r12)
++	std	%r4, 8(%r12)
++	std	%r5, 16(%r12)
++	std	%r6, 24(%r12)
++	std	%r7, 32(%r12)
++	std	%r8, 40(%r12)
++	std	%r9, 48(%r12)
++	std	%r10, 56(%r12)
++
++	# load up the pointer to the parm save area
++	mr	%r5, %r12
++# else
+ 	mflr	%r0
++	# Save general regs into parm save area
++	# This is the parameter save area set up by our caller.
++	std	%r3, PARMSAVE+0(%r1)
++	std	%r4, PARMSAVE+8(%r1)
++	std	%r5, PARMSAVE+16(%r1)
++	std	%r6, PARMSAVE+24(%r1)
++	std	%r7, PARMSAVE+32(%r1)
++	std	%r8, PARMSAVE+40(%r1)
++	std	%r9, PARMSAVE+48(%r1)
++	std	%r10, PARMSAVE+56(%r1)
+ 
+-	std	%r7, 80(%r1)
+-	std	%r8, 88(%r1)
+-	std	%r9, 96(%r1)
+-	std	%r10, 104(%r1)
+ 	std	%r0, 16(%r1)
+ 
+-	# mandatory 48 bytes special reg save area + 64 bytes parm save area
+-	# + 16 bytes retval area + 13*8 bytes fpr save area + round to 16
+-	stdu	%r1, -240(%r1)
+-.LCFI0:
++	# load up the pointer to the parm save area
++	addi	%r5, %r1, PARMSAVE
++# endif
+ 
+ 	# next save fpr 1 to fpr 13
+-	stfd  %f1, 128+(0*8)(%r1)
+-	stfd  %f2, 128+(1*8)(%r1)
+-	stfd  %f3, 128+(2*8)(%r1)
+-	stfd  %f4, 128+(3*8)(%r1)
+-	stfd  %f5, 128+(4*8)(%r1)
+-	stfd  %f6, 128+(5*8)(%r1)
+-	stfd  %f7, 128+(6*8)(%r1)
+-	stfd  %f8, 128+(7*8)(%r1)
+-	stfd  %f9, 128+(8*8)(%r1)
+-	stfd  %f10, 128+(9*8)(%r1)
+-	stfd  %f11, 128+(10*8)(%r1)
+-	stfd  %f12, 128+(11*8)(%r1)
+-	stfd  %f13, 128+(12*8)(%r1)
++	stfd	%f1, -104+(0*8)(%r1)
++	stfd	%f2, -104+(1*8)(%r1)
++	stfd	%f3, -104+(2*8)(%r1)
++	stfd	%f4, -104+(3*8)(%r1)
++	stfd	%f5, -104+(4*8)(%r1)
++	stfd	%f6, -104+(5*8)(%r1)
++	stfd	%f7, -104+(6*8)(%r1)
++	stfd	%f8, -104+(7*8)(%r1)
++	stfd	%f9, -104+(8*8)(%r1)
++	stfd	%f10, -104+(9*8)(%r1)
++	stfd	%f11, -104+(10*8)(%r1)
++	stfd	%f12, -104+(11*8)(%r1)
++	stfd	%f13, -104+(12*8)(%r1)
+ 
+-	# set up registers for the routine that actually does the work
+-	# get the context pointer from the trampoline
+-	mr %r3, %r11
++	# load up the pointer to the saved fpr registers */
++	addi	%r6, %r1, -104
+ 
+-	# now load up the pointer to the result storage
+-	addi %r4, %r1, 112
++	# load up the pointer to the result storage
++	addi	%r4, %r1, -STACKFRAME+RETVAL
+ 
+-	# now load up the pointer to the parameter save area
+-	# in the previous frame
+-	addi %r5, %r1, 240 + 48
++	stdu	%r1, -STACKFRAME(%r1)
++.LCFI0:
+ 
+-	# now load up the pointer to the saved fpr registers */
+-	addi %r6, %r1, 128
++	# get the context pointer from the trampoline
++	mr	%r3, %r11
+ 
+ 	# make the call
++# if defined _CALL_LINUX || _CALL_ELF == 2
++	bl ffi_closure_helper_LINUX64
++# else
+ 	bl .ffi_closure_helper_LINUX64
++# endif
+ .Lret:
+ 
+ 	# now r3 contains the return type
+@@ -100,10 +161,12 @@ ffi_closure_LINUX64:
+ 
+ 	# look up the proper starting point in table
+ 	# by using return type as offset
++	ld %r0, STACKFRAME+16(%r1)
++	cmpldi %r3, FFI_V2_TYPE_SMALL_STRUCT
++	bge .Lsmall
+ 	mflr %r4		# move address of .Lret to r4
+ 	sldi %r3, %r3, 4	# now multiply return type by 16
+ 	addi %r4, %r4, .Lret_type0 - .Lret
+-	ld %r0, 240+16(%r1)
+ 	add %r3, %r3, %r4	# add contents of table to table address
+ 	mtctr %r3
+ 	bctr			# jump to it
+@@ -116,85 +179,175 @@ ffi_closure_LINUX64:
+ .Lret_type0:
+ # case FFI_TYPE_VOID
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ 	nop
+ # case FFI_TYPE_INT
+-	lwa %r3, 112+4(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lwa %r3, RETVAL+0(%r1)
++# else
++	lwa %r3, RETVAL+4(%r1)
++# endif
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_FLOAT
+-	lfs %f1, 112+0(%r1)
++	lfs %f1, RETVAL+0(%r1)
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_DOUBLE
+-	lfd %f1, 112+0(%r1)
++	lfd %f1, RETVAL+0(%r1)
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_LONGDOUBLE
+-	lfd %f1, 112+0(%r1)
++	lfd %f1, RETVAL+0(%r1)
+ 	mtlr %r0
+-	lfd %f2, 112+8(%r1)
++	lfd %f2, RETVAL+8(%r1)
+ 	b .Lfinish
+ # case FFI_TYPE_UINT8
+-	lbz %r3, 112+7(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lbz %r3, RETVAL+0(%r1)
++# else
++	lbz %r3, RETVAL+7(%r1)
++# endif
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_SINT8
+-	lbz %r3, 112+7(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lbz %r3, RETVAL+0(%r1)
++# else
++	lbz %r3, RETVAL+7(%r1)
++# endif
+ 	extsb %r3,%r3
+ 	mtlr %r0
+ 	b .Lfinish
+ # case FFI_TYPE_UINT16
+-	lhz %r3, 112+6(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lhz %r3, RETVAL+0(%r1)
++# else
++	lhz %r3, RETVAL+6(%r1)
++# endif
+ 	mtlr %r0
+ .Lfinish:
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_SINT16
+-	lha %r3, 112+6(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lha %r3, RETVAL+0(%r1)
++# else
++	lha %r3, RETVAL+6(%r1)
++# endif
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_UINT32
+-	lwz %r3, 112+4(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lwz %r3, RETVAL+0(%r1)
++# else
++	lwz %r3, RETVAL+4(%r1)
++# endif
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_SINT32
+-	lwa %r3, 112+4(%r1)
++# ifdef __LITTLE_ENDIAN__
++	lwa %r3, RETVAL+0(%r1)
++# else
++	lwa %r3, RETVAL+4(%r1)
++# endif
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_UINT64
+-	ld %r3, 112+0(%r1)
++	ld %r3, RETVAL+0(%r1)
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_SINT64
+-	ld %r3, 112+0(%r1)
++	ld %r3, RETVAL+0(%r1)
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ # case FFI_TYPE_STRUCT
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
+ 	blr
+ 	nop
+ # case FFI_TYPE_POINTER
+-	ld %r3, 112+0(%r1)
++	ld %r3, RETVAL+0(%r1)
+ 	mtlr %r0
+-	addi %r1, %r1, 240
++	addi %r1, %r1, STACKFRAME
++	blr
++# case FFI_V2_TYPE_FLOAT_HOMOG
++	lfs %f1, RETVAL+0(%r1)
++	lfs %f2, RETVAL+4(%r1)
++	lfs %f3, RETVAL+8(%r1)
++	b .Lmorefloat
++# case FFI_V2_TYPE_DOUBLE_HOMOG
++	lfd %f1, RETVAL+0(%r1)
++	lfd %f2, RETVAL+8(%r1)
++	lfd %f3, RETVAL+16(%r1)
++	lfd %f4, RETVAL+24(%r1)
++	mtlr %r0
++	lfd %f5, RETVAL+32(%r1)
++	lfd %f6, RETVAL+40(%r1)
++	lfd %f7, RETVAL+48(%r1)
++	lfd %f8, RETVAL+56(%r1)
++	addi %r1, %r1, STACKFRAME
++	blr
++.Lmorefloat:
++	lfs %f4, RETVAL+12(%r1)
++	mtlr %r0
++	lfs %f5, RETVAL+16(%r1)
++	lfs %f6, RETVAL+20(%r1)
++	lfs %f7, RETVAL+24(%r1)
++	lfs %f8, RETVAL+28(%r1)
++	addi %r1, %r1, STACKFRAME
++	blr
++.Lsmall:
++# ifdef __LITTLE_ENDIAN__
++	ld %r3,RETVAL+0(%r1)
++	mtlr %r0
++	ld %r4,RETVAL+8(%r1)
++	addi %r1, %r1, STACKFRAME
++	blr
++# else
++	# A struct smaller than a dword is returned in the low bits of r3
++	# ie. right justified.  Larger structs are passed left justified
++	# in r3 and r4.  The return value area on the stack will have
++	# the structs as they are usually stored in memory.
++	cmpldi %r3, FFI_V2_TYPE_SMALL_STRUCT + 7 # size 8 bytes?
++	neg %r5, %r3
++	ld %r3,RETVAL+0(%r1)
++	blt .Lsmalldown
++	mtlr %r0
++	ld %r4,RETVAL+8(%r1)
++	addi %r1, %r1, STACKFRAME
++	blr
++.Lsmalldown:
++	addi %r5, %r5, FFI_V2_TYPE_SMALL_STRUCT + 7
++	mtlr %r0
++	sldi %r5, %r5, 3
++	addi %r1, %r1, STACKFRAME
++	srd %r3, %r3, %r5
+ 	blr
+-# esac
++# endif
++
+ .LFE1:
+ 	.long	0
+ 	.byte	0,12,0,1,128,0,0,0
++# if _CALL_ELF == 2
++	.size	ffi_closure_LINUX64,.-ffi_closure_LINUX64
++# else
++#  ifdef _CALL_LINUX
++	.size	ffi_closure_LINUX64,.-.L.ffi_closure_LINUX64
++#  else
+ 	.size	.ffi_closure_LINUX64,.-.ffi_closure_LINUX64
++#  endif
++# endif
+ 
+ 	.section	.eh_frame,EH_FRAME_FLAGS,@progbits
+ .Lframe1:
+@@ -223,14 +376,14 @@ ffi_closure_LINUX64:
+ 	.byte	0x2	 # DW_CFA_advance_loc1
+ 	.byte	.LCFI0-.LFB1
+ 	.byte	0xe	 # DW_CFA_def_cfa_offset
+-	.uleb128 240
++	.uleb128 STACKFRAME
+ 	.byte	0x11	 # DW_CFA_offset_extended_sf
+ 	.uleb128 0x41
+ 	.sleb128 -2
+ 	.align 3
+ .LEFDE1:
+-#endif
+ 
+-#if defined __ELF__ && defined __linux__
++# if defined __ELF__ && defined __linux__
+ 	.section	.note.GNU-stack,"",@progbits
++# endif
+ #endif
+--- mozilla/js/src/ctypes/libffi/src/powerpc/linux64.S	2013-10-24 09:56:51.847587813 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/linux64.S	2013-11-29 17:23:26.000000000 +0100
+@@ -30,16 +30,33 @@
+ #include <ffi.h>
+ 
+ #ifdef __powerpc64__
+-	.hidden	ffi_call_LINUX64, .ffi_call_LINUX64
+-	.globl	ffi_call_LINUX64, .ffi_call_LINUX64
++	.hidden	ffi_call_LINUX64
++	.globl	ffi_call_LINUX64
++# if _CALL_ELF == 2
++	.text
++ffi_call_LINUX64:
++	addis	%r2, %r12, .TOC.-ffi_call_LINUX64@ha
++	addi	%r2, %r2, .TOC.-ffi_call_LINUX64@l
++	.localentry ffi_call_LINUX64, . - ffi_call_LINUX64
++# else
+ 	.section	".opd","aw"
+ 	.align	3
+ ffi_call_LINUX64:
++#  ifdef _CALL_LINUX
++	.quad	.L.ffi_call_LINUX64,.TOC.@tocbase,0
++	.type	ffi_call_LINUX64,@function
++	.text
++.L.ffi_call_LINUX64:
++#  else
++	.hidden	.ffi_call_LINUX64
++	.globl	.ffi_call_LINUX64
+ 	.quad	.ffi_call_LINUX64,.TOC.@tocbase,0
+ 	.size	ffi_call_LINUX64,24
+ 	.type	.ffi_call_LINUX64,@function
+ 	.text
+ .ffi_call_LINUX64:
++#  endif
++# endif
+ .LFB1:
+ 	mflr	%r0
+ 	std	%r28, -32(%r1)
+@@ -54,22 +71,35 @@ ffi_call_LINUX64:
+ 	mr	%r31, %r5	/* flags, */
+ 	mr	%r30, %r6	/* rvalue, */
+ 	mr	%r29, %r7	/* function address.  */
++/* Save toc pointer, not for the ffi_prep_args64 call, but for the later
++   bctrl function call.  */
++# if _CALL_ELF == 2
++	std	%r2, 24(%r1)
++# else
+ 	std	%r2, 40(%r1)
++# endif
+ 
+ 	/* Call ffi_prep_args64.  */
+ 	mr	%r4, %r1
++# if defined _CALL_LINUX || _CALL_ELF == 2
++	bl	ffi_prep_args64
++# else
+ 	bl	.ffi_prep_args64
++# endif
+ 
+-	ld	%r0, 0(%r29)
++# if _CALL_ELF == 2
++	mr	%r12, %r29
++# else
++	ld	%r12, 0(%r29)
+ 	ld	%r2, 8(%r29)
+ 	ld	%r11, 16(%r29)
+-
++# endif
+ 	/* Now do the call.  */
+ 	/* Set up cr1 with bits 4-7 of the flags.  */
+ 	mtcrf	0x40, %r31
+ 
+ 	/* Get the address to call into CTR.  */
+-	mtctr	%r0
++	mtctr	%r12
+ 	/* Load all those argument registers.  */
+ 	ld	%r3, -32-(8*8)(%r28)
+ 	ld	%r4, -32-(7*8)(%r28)
+@@ -104,12 +134,17 @@ ffi_call_LINUX64:
+ 
+ 	/* This must follow the call immediately, the unwinder
+ 	   uses this to find out if r2 has been saved or not.  */
++# if _CALL_ELF == 2
++	ld	%r2, 24(%r1)
++# else
+ 	ld	%r2, 40(%r1)
++# endif
+ 
+ 	/* Now, deal with the return value.  */
+ 	mtcrf	0x01, %r31
+-	bt-	30, .Ldone_return_value
+-	bt-	29, .Lfp_return_value
++	bt	31, .Lstruct_return_value
++	bt	30, .Ldone_return_value
++	bt	29, .Lfp_return_value
+ 	std	%r3, 0(%r30)
+ 	/* Fall through...  */
+ 
+@@ -117,7 +152,7 @@ ffi_call_LINUX64:
+ 	/* Restore the registers we used and return.  */
+ 	mr	%r1, %r28
+ 	ld	%r0, 16(%r28)
+-	ld	%r28, -32(%r1)
++	ld	%r28, -32(%r28)
+ 	mtlr	%r0
+ 	ld	%r29, -24(%r1)
+ 	ld	%r30, -16(%r1)
+@@ -134,10 +169,48 @@ ffi_call_LINUX64:
+ .Lfloat_return_value:
+ 	stfs	%f1, 0(%r30)
+ 	b	.Ldone_return_value
++
++.Lstruct_return_value:
++	bf	29, .Lsmall_struct
++	bf	28, .Lfloat_homog_return_value
++	stfd	%f1, 0(%r30)
++	stfd	%f2, 8(%r30)
++	stfd	%f3, 16(%r30)
++	stfd	%f4, 24(%r30)
++	stfd	%f5, 32(%r30)
++	stfd	%f6, 40(%r30)
++	stfd	%f7, 48(%r30)
++	stfd	%f8, 56(%r30)
++	b	.Ldone_return_value
++
++.Lfloat_homog_return_value:
++	stfs	%f1, 0(%r30)
++	stfs	%f2, 4(%r30)
++	stfs	%f3, 8(%r30)
++	stfs	%f4, 12(%r30)
++	stfs	%f5, 16(%r30)
++	stfs	%f6, 20(%r30)
++	stfs	%f7, 24(%r30)
++	stfs	%f8, 28(%r30)
++	b	.Ldone_return_value
++
++.Lsmall_struct:
++	std	%r3, 0(%r30)
++	std	%r4, 8(%r30)
++	b	.Ldone_return_value
++
+ .LFE1:
+ 	.long	0
+ 	.byte	0,12,0,1,128,4,0,0
++# if _CALL_ELF == 2
++	.size	ffi_call_LINUX64,.-ffi_call_LINUX64
++# else
++#  ifdef _CALL_LINUX
++	.size	ffi_call_LINUX64,.-.L.ffi_call_LINUX64
++#  else
+ 	.size	.ffi_call_LINUX64,.-.ffi_call_LINUX64
++#  endif
++# endif
+ 
+ 	.section	.eh_frame,EH_FRAME_FLAGS,@progbits
+ .Lframe1:
+@@ -180,8 +253,8 @@ ffi_call_LINUX64:
+ 	.uleb128 0x4
+ 	.align 3
+ .LEFDE1:
+-#endif
+ 
+-#if defined __ELF__ && defined __linux__
++# if (defined __ELF__ && defined __linux__) || _CALL_ELF == 2
+ 	.section	.note.GNU-stack,"",@progbits
++# endif
+ #endif
+--- mozilla/js/src/ctypes/libffi/src/powerpc/ppc_closure.S	2013-10-24 09:56:51.847587813 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/ppc_closure.S	2013-11-29 17:23:26.000000000 +0100
+@@ -122,43 +122,78 @@ ENTRY(ffi_closure_SYSV)
+ 	blr
+ 
+ # case FFI_TYPE_FLOAT
++#ifndef __NO_FPRS__
+ 	lfs %f1,112+0(%r1)
+ 	mtlr %r0
+ 	addi %r1,%r1,144
++#else
++	nop
++	nop
++	nop
++#endif
+ 	blr
+ 
+ # case FFI_TYPE_DOUBLE
++#ifndef __NO_FPRS__
+ 	lfd %f1,112+0(%r1)
+ 	mtlr %r0
+ 	addi %r1,%r1,144
++#else
++	nop
++	nop
++	nop
++#endif
+ 	blr
+ 
+ # case FFI_TYPE_LONGDOUBLE
++#ifndef __NO_FPRS__
+ 	lfd %f1,112+0(%r1)
+ 	lfd %f2,112+8(%r1)
+ 	mtlr %r0
+ 	b .Lfinish
++#else
++	nop
++	nop
++	nop
++	blr
++#endif
+ 
+ # case FFI_TYPE_UINT8
++#ifdef __LITTLE_ENDIAN__
++	lbz %r3,112+0(%r1)
++#else
+ 	lbz %r3,112+3(%r1)
++#endif
+ 	mtlr %r0
+ 	addi %r1,%r1,144
+ 	blr
+ 
+ # case FFI_TYPE_SINT8
++#ifdef __LITTLE_ENDIAN__
++	lbz %r3,112+0(%r1)
++#else
+ 	lbz %r3,112+3(%r1)
++#endif
+ 	extsb %r3,%r3
+ 	mtlr %r0
+ 	b .Lfinish
+ 
+ # case FFI_TYPE_UINT16
++#ifdef __LITTLE_ENDIAN__
++	lhz %r3,112+0(%r1)
++#else
+ 	lhz %r3,112+2(%r1)
++#endif
+ 	mtlr %r0
+ 	addi %r1,%r1,144
+ 	blr
+ 
+ # case FFI_TYPE_SINT16
++#ifdef __LITTLE_ENDIAN__
++	lha %r3,112+0(%r1)
++#else
+ 	lha %r3,112+2(%r1)
++#endif
+ 	mtlr %r0
+ 	addi %r1,%r1,144
+ 	blr
+@@ -203,7 +238,7 @@ ENTRY(ffi_closure_SYSV)
+ 	lwz %r3,112+0(%r1)
+ 	lwz %r4,112+4(%r1)
+ 	lwz %r5,112+8(%r1)
+-	bl .Luint128
++	b .Luint128
+ 
+ # The return types below are only used when the ABI type is FFI_SYSV.
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 1. One byte struct.
+@@ -220,9 +255,15 @@ ENTRY(ffi_closure_SYSV)
+ 
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 3. Three byte struct.
+ 	lwz %r3,112+0(%r1)
++#ifdef __LITTLE_ENDIAN__
++	mtlr %r0
++	addi %r1,%r1,144
++	blr
++#else
+ 	srwi %r3,%r3,8
+ 	mtlr %r0
+ 	b .Lfinish
++#endif
+ 
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 4. Four byte struct.
+ 	lwz %r3,112+0(%r1)
+@@ -233,20 +274,35 @@ ENTRY(ffi_closure_SYSV)
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 5. Five byte struct.
+ 	lwz %r3,112+0(%r1)
+ 	lwz %r4,112+4(%r1)
++#ifdef __LITTLE_ENDIAN__
++	mtlr %r0
++	b .Lfinish
++#else
+ 	li %r5,24
+ 	b .Lstruct567
++#endif
+ 
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 6. Six byte struct.
+ 	lwz %r3,112+0(%r1)
+ 	lwz %r4,112+4(%r1)
++#ifdef __LITTLE_ENDIAN__
++	mtlr %r0
++	b .Lfinish
++#else
+ 	li %r5,16
+ 	b .Lstruct567
++#endif
+ 
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 7. Seven byte struct.
+ 	lwz %r3,112+0(%r1)
+ 	lwz %r4,112+4(%r1)
++#ifdef __LITTLE_ENDIAN__
++	mtlr %r0
++	b .Lfinish
++#else
+ 	li %r5,8
+ 	b .Lstruct567
++#endif
+ 
+ # case FFI_SYSV_TYPE_SMALL_STRUCT + 8. Eight byte struct.
+ 	lwz %r3,112+0(%r1)
+@@ -254,6 +310,7 @@ ENTRY(ffi_closure_SYSV)
+ 	mtlr %r0
+ 	b .Lfinish
+ 
++#ifndef __LITTLE_ENDIAN__
+ .Lstruct567:
+ 	subfic %r6,%r5,32
+ 	srw %r4,%r4,%r5
+@@ -263,6 +320,7 @@ ENTRY(ffi_closure_SYSV)
+ 	mtlr %r0
+ 	addi %r1,%r1,144
+ 	blr
++#endif
+ 
+ .Luint128:
+ 	lwz %r6,112+12(%r1)
+--- mozilla/js/src/ctypes/libffi/src/powerpc/sysv.S	2013-10-24 09:56:51.848587813 +0200
++++ /suse/dvaleev/obs/openSUSE:Factory:PowerLE/libffi48/gcc-4.8-ibmr205465/libffi/src/powerpc/sysv.S	2013-11-29 17:23:26.000000000 +0100
+@@ -83,6 +83,7 @@ ENTRY(ffi_call_SYSV)
+ 	nop
+ 1:
+ 
++#ifndef __NO_FPRS__
+ 	/* Load all the FP registers.  */
+ 	bf-	6,2f
+ 	lfd	%f1,-16-(8*4)-(8*8)(%r28)
+@@ -94,6 +95,7 @@ ENTRY(ffi_call_SYSV)
+ 	lfd	%f6,-16-(8*4)-(3*8)(%r28)
+ 	lfd	%f7,-16-(8*4)-(2*8)(%r28)
+ 	lfd	%f8,-16-(8*4)-(1*8)(%r28)
++#endif
+ 2:
+ 
+ 	/* Make the call.  */
+@@ -103,7 +105,9 @@ ENTRY(ffi_call_SYSV)
+ 	mtcrf	0x01,%r31 /* cr7  */
+ 	bt-	31,L(small_struct_return_value)
+ 	bt-	30,L(done_return_value)
++#ifndef __NO_FPRS__
+ 	bt-	29,L(fp_return_value)
++#endif
+ 	stw	%r3,0(%r30)
+ 	bf+	28,L(done_return_value)
+ 	stw	%r4,4(%r30)
+@@ -124,6 +128,7 @@ L(done_return_value):
+ 	lwz	%r1,0(%r1)
+ 	blr
+ 
++#ifndef __NO_FPRS__
+ L(fp_return_value):
+ 	bf	28,L(float_return_value)
+ 	stfd	%f1,0(%r30)
+@@ -134,21 +139,17 @@ L(fp_return_value):
+ L(float_return_value):
+ 	stfs	%f1,0(%r30)
+ 	b	L(done_return_value)
++#endif
+ 
+ L(small_struct_return_value):
+-	extrwi	%r6,%r31,2,19         /* number of bytes padding = shift/8 */
+-	mtcrf	0x02,%r31	      /* copy flags to cr[24:27] (cr6) */
+-	extrwi	%r5,%r31,5,19         /* r5 <- number of bits of padding */
+-	subfic  %r6,%r6,4             /* r6 <- number of useful bytes in r3 */
+-	bf-	25,L(done_return_value) /* struct in r3 ? if not, done. */
+-/* smst_one_register: */
+-	slw	%r3,%r3,%r5           /* Left-justify value in r3 */
+-	mtxer	%r6                   /* move byte count to XER ... */
+-	stswx	%r3,0,%r30            /* ... and store that many bytes */
+-	bf+	26,L(done_return_value)  /* struct in r3:r4 ? */
+-	add	%r6,%r6,%r30          /* adjust pointer */
+-	stswi	%r4,%r6,4             /* store last four bytes */
+-	b	L(done_return_value)
++	/*
++	 * The C code always allocates a properly-aligned 8-byte bounce
++	 * buffer to make this assembly code very simple.  Just write out
++	 * r3 and r4 to the buffer to allow the C code to handle the rest.
++	 */
++	stw %r3, 0(%r30)
++	stw %r4, 4(%r30)
++	b L(done_return_value)
+ 
+ .LFE1:
+ END(ffi_call_SYSV)

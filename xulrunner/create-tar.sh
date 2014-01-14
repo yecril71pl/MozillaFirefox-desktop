@@ -2,8 +2,8 @@
 
 CHANNEL="esr24"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_24_1_0esr_RELEASE"
-VERSION="24.1.0"
+RELEASE_TAG="FIREFOX_24_2_0esr_RELEASE"
+VERSION="24.2.0"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -47,7 +47,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
       ;;
     *)
       echo "fetching $locale ..."
-      hg clone http://hg.mozilla.org/releases/l10n/mozilla-$CHANNEL/$locale l10n/$locale
+      hg clone http://hg.mozilla.org/releases/l10n/mozilla-release/$locale l10n/$locale
       [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
       ;;
   esac

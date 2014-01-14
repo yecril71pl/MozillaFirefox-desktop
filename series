@@ -17,6 +17,9 @@ mozilla-arm-disable-edsp.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
+libffi-ppc64le.patch
+#xpcom-ppc64le.patch
+#ppc64le-support.patch
 
 # Firefox patches
 firefox-browser-css.patch

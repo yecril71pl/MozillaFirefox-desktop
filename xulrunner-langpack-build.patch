@@ -1,0 +1,24 @@
+# HG changeset patch
+# Parent 982d6080b8827036145bc86d46a7075c3feaef2f
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+diff --git a/toolkit/locales/Makefile.in b/toolkit/locales/Makefile.in
+--- a/toolkit/locales/Makefile.in
++++ b/toolkit/locales/Makefile.in
+@@ -10,16 +10,17 @@ relativesrcdir = @relativesrcdir@
+ 
+ include $(DEPTH)/config/autoconf.mk
+ 
+ DEFINES += -DAB_CD=$(AB_CD)
+ 
+ XULPPFLAGS += -I$(LOCALE_SRCDIR)/defines.inc
+ 
+ include $(topsrcdir)/config/rules.mk
++include $(topsrcdir)/toolkit/locales/l10n.mk
+ 
+ ifdef LOCALE_MERGEDIR
+ vpath crashreporter.% $(LOCALE_MERGEDIR)/toolkit/crashreporter
+ endif
+ vpath crashreporter.% $(LOCALE_SRCDIR)/crashreporter
+ ifdef LOCALE_MERGEDIR
+ vpath crashreporter.% @srcdir@/en-US/crashreporter
+ endif

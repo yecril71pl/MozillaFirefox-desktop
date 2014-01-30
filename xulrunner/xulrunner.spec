@@ -91,6 +91,7 @@ Patch11:        mozilla-libproxy-compat.patch
 Patch12:        libffi-ppc64le.patch
 Patch13:        xpcom-ppc64le.patch
 Patch14:        ppc64le-support.patch
+Patch15:        xulrunner-langpack-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -101,7 +102,7 @@ Obsoletes:      xulrunner-esr < 24.0
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 0
+%define localize 1
 %ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm aarch64
 %define crashreporter    0
 %else
@@ -211,6 +212,7 @@ symbols meant for upload to Mozilla's crash collector database.
 #%patch12 -p1
 #%patch13 -p1
 #%patch14 -p1
+%patch15 -p1
 
 %build
 # no need to add build time to binaries

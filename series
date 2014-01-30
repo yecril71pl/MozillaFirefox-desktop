@@ -18,6 +18,7 @@ mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
 libffi-ppc64le.patch
+xulrunner-langpack-build.patch
 #xpcom-ppc64le.patch
 #ppc64le-support.patch
 

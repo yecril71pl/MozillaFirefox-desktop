@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2013 Wolfgang Rosenauer
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2014 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -17,9 +17,9 @@
 #
 
 
-%define major 26
-%define mainver %major.99
-%define update_channel beta
+%define major 27
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -63,7 +63,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013122800
+%define         releasedate 2014012800
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -76,17 +76,17 @@ Summary:        Mozilla Firefox Web Browser
 License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
 Url:            http://www.mozilla.org/
-Source:         firefox-%{version}-source.tar.bz2
+Source:         firefox-%{version}-source.tar.xz
 Source1:        MozillaFirefox.desktop
 Source2:        MozillaFirefox-rpmlintrc
 Source3:        mozilla.sh.in
 Source4:        find-external-requires.sh
 Source5:        source-stamp.txt
 Source6:        kde.js
-Source7:        l10n-%{version}.tar.bz2
+Source7:        l10n-%{version}.tar.xz
 Source8:        firefox-mimeinfo.xml
 Source9:        firefox.js
-Source10:       compare-locales.tar.bz2
+Source10:       compare-locales.tar.xz
 Source11:       firefox.1
 Source12:       mozilla-get-app-id
 Source13:       add-plugins.sh.in

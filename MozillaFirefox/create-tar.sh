@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="beta"
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_27_0b4_RELEASE"
-VERSION="26.99"
+RELEASE_TAG="FIREFOX_27_0_RELEASE"
+VERSION="27.0"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -36,7 +36,7 @@ echo -n "REPO=" >> ../source-stamp.txt
 hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" >> ../source-stamp.txt
 popd
 echo "creating archive..."
-tar cjf firefox-$VERSION-source.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
+tar cJf firefox-$VERSION-source.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
 
 # l10n
 echo "fetching locales..."
@@ -53,10 +53,10 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
   esac
 done
 echo "creating l10n archive..."
-tar cjf l10n-$VERSION.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg l10n
+tar cJf l10n-$VERSION.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg l10n
 
 # compare-locales
 echo "creating compare-locales"
 hg clone http://hg.mozilla.org/build/compare-locales
-tar cjf compare-locales.tar.bz2 --exclude=.hgtags --exclude=.hgignore --exclude=.hg compare-locales
+tar cJf compare-locales.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg compare-locales
 

@@ -76,12 +76,12 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsNSSComponent.h"
  
  #include "CertVerifier.h"
+ #include "mozilla/Telemetry.h"
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
  #include "nsDirectoryServiceDefs.h"
- #include "nsICertOverrideService.h"
-@@ -1254,18 +1261,35 @@ nsNSSComponent::InitializeNSS(bool showW
+@@ -1263,18 +1270,35 @@ nsNSSComponent::InitializeNSS(bool showW
      ConfigureInternalPKCS11Token();
  
      // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs

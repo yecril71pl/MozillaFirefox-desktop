@@ -1,7 +1,34 @@
 -------------------------------------------------------------------
 Tue Jan 28 15:45:41 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 27.0 (bnc#)
+- update to Firefox 27.0 (bnc#861847)
+  * MFSA 2014-01/CVE-2014-1477/CVE-2014-1478
+    Miscellaneous memory safety hazards (rv:27.0 / rv:24.3)
+  * MFSA 2014-02/CVE-2014-1479 (bmo#911864)
+    Clone protected content with XBL scopes
+  * MFSA 2014-03/CVE-2014-1480 (bmo#916726)
+    UI selection timeout missing on download prompts
+  * MFSA 2014-04/CVE-2014-1482 (bmo#943803)
+    Incorrect use of discarded images by RasterImage
+  * MFSA 2014-05/CVE-2014-1483 (bmo#950427)
+    Information disclosure with *FromPoint on iframes
+  * MFSA 2014-06/CVE-2014-1484 (bmo#953993)
+    Profile path leaks to Android system log
+  * MFSA 2014-07/CVE-2014-1485 (bmo#910139)
+    XSLT stylesheets treated as styles in Content Security Policy
+  * MFSA 2014-08/CVE-2014-1486 (bmo#942164)
+    Use-after-free with imgRequestProxy and image proccessing
+  * MFSA 2014-09/CVE-2014-1487 (bmo#947592)
+    Cross-origin information leak through web workers
+  * MFSA 2014-10/CVE-2014-1489 (bmo#959531)
+    Firefox default start page UI content invokable by script
+  * MFSA 2014-11/CVE-2014-1488 (bmo#950604)
+    Crash when using web workers with asm.js
+  * MFSA 2014-12/CVE-2014-1490/CVE-2014-1491
+    (bmo#934545, bmo#930874, bmo#930857)
+    NSS ticket handling issues
+  * MFSA 2014-13/CVE-2014-1481(bmo#936056)
+    Inconsistent JavaScript handling of access to Window objects
 - requires NSS 3.15.4 or higher
 - rebased/reworked patches
 - removed obsolete mozilla-bug929439.patch

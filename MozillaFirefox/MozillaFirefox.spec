@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2013 Wolfgang Rosenauer
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2014 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -18,7 +18,7 @@
 
 
 %define major 24
-%define mainver %major.2.0
+%define mainver %major.3.0
 %define update_channel esr24
 
 %if %suse_version > 1220
@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.2
-BuildRequires:  mozilla-nss-devel >= 3.15.3.1
+BuildRequires:  mozilla-nss-devel >= 3.15.4
 BuildRequires:  nss-shared-helper-devel
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
@@ -63,7 +63,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2013120700
+%define         releasedate 2014013000
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

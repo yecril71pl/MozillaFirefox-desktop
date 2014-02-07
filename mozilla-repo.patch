@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 8d013204e3f06811daf5156939452765fb3e10bb
+# Parent 9b45fd4b00c45014b17358158cdb51805c8ca327
 
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
@@ -33,11 +33,11 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
 diff --git a/toolkit/xre/Makefile.in b/toolkit/xre/Makefile.in
 --- a/toolkit/xre/Makefile.in
 +++ b/toolkit/xre/Makefile.in
-@@ -214,17 +214,17 @@ DEFINES += -DHAVE_USR_LIB64_DIR
- endif
- endif
+@@ -39,17 +39,17 @@ TOOLKIT_EM_VERSION=$(shell $(PERL) $(top
+ # Valid if null: {warn,error}IfEmpty
+ DEFINES += -DTOOLKIT_EM_VERSION='"$(TOOLKIT_EM_VERSION)"'
  
- MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template="{node|short}\n" 2>/dev/null))
+ MOZ_SOURCE_STAMP ?= $(firstword $(shell hg -R $(topsrcdir) parent --template='{node|short}\n' 2>/dev/null))
  ifdef MOZ_SOURCE_STAMP
  
    INIARGS = --sourcestamp=$(MOZ_SOURCE_STAMP)

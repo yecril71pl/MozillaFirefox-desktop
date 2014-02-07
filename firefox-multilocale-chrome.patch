@@ -1,12 +1,12 @@
 # HG changeset patch
-# Parent f144d934d339d048bf9b650fc776397029150dd6
+# Parent 14ed7d2308e6f129e791449afa0d58869e451264
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -381,16 +381,20 @@ pref("browser.helperApps.deleteTempFileO
+@@ -368,16 +368,20 @@ pref("browser.helperApps.deleteTempFileO
  #endif
  
  // search engines URL
@@ -30,9 +30,9 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -66,21 +66,23 @@ STUB_HOOK = $(NSINSTALL) -D "$(_ABS_DIST
-     cp ../installer/windows/l10ngen/stub.exe "$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe"; \
-     chmod 0755 "$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe"; \
+@@ -66,21 +66,23 @@ STUB_HOOK = $(NSINSTALL) -D '$(_ABS_DIST
+     cp ../installer/windows/l10ngen/stub.exe '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
+     chmod 0755 '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      $(NULL)
  endif
  
@@ -56,10 +56,10 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  DIST_SUBDIRS = browser metro
  else
  DIST_SUBDIRS = $(DIST_SUBDIR)
-@@ -127,20 +129,44 @@ install:: $(addprefix generic/profile/,$
+@@ -118,16 +120,39 @@ libs:: $(addprefix generic/profile/,$(PR
  
- install:: $(call MERGE_FILES,$(addprefix profile/chrome/,$(PROFILE_CHROME)))
- 	$(SYSINSTALL) $(IFLAGS1) $^ $(DESTDIR)$(mozappdir)/defaults/profile/chrome
+ libs:: $(call MERGE_FILES,$(addprefix profile/chrome/,$(PROFILE_CHROME)))
+ 	$(SYSINSTALL) $(IFLAGS1) $^ $(FINAL_TARGET)/defaults/profile/chrome
  
  # metro build calls back here for search engine plugins
  searchplugins: $(addprefix $(FINAL_TARGET)/searchplugins/,$(SEARCHPLUGINS))
@@ -72,17 +72,17 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +
 +searchplugins-jar:: $(SEARCHPLUGINS)
 +	for SEARCHPLUGIN in $^; do \
-+	 $(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
-+	 $$SEARCHPLUGIN > $$SEARCHPLUGIN-new ; \
-+	 mv $$SEARCHPLUGIN-new $$SEARCHPLUGIN ; \
++	$(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
++	$$SEARCHPLUGIN > $$SEARCHPLUGIN-new ; \
++	mv $$SEARCHPLUGIN-new $$SEARCHPLUGIN ; \
 +	done
 +
 +searchplugins-jar:: tmp-search.jar.mn
 +	$(call py_action,jar_maker,\
-+	 $(QUIET) -j $(FINAL_TARGET)/chrome \
-+	 -s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
-+	 -s $(LOCALE_SRCDIR)/searchplugins \
-+	 $(MAKE_JARS_FLAGS) tmp-search.jar.mn)
++	$(QUIET) -j $(FINAL_TARGET)/chrome \
++	-s $(topsrcdir)/$(relativesrcdir)/en-US/searchplugins \
++	-s $(LOCALE_SRCDIR)/searchplugins \
++	$(MAKE_JARS_FLAGS) tmp-search.jar.mn)
 +
 +libs:: searchplugins-jar
 +
@@ -92,15 +92,10 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  	$(NSINSTALL) -D $(DIST)/install
  	@$(MAKE) -C ../../toolkit/locales libs-$*
  	@$(MAKE) -C ../../services/sync/locales AB_CD=$* XPI_NAME=locale-$*
-+	@$(MAKE) -B searchplugins-jar AB_CD=$* XPI_NAME=locale-$*
  ifdef MOZ_WEBAPP_RUNTIME
  	@$(MAKE) -C ../../webapprt/locales AB_CD=$* XPI_NAME=locale-$*
  endif
  	@$(MAKE) -C ../../extensions/spellcheck/locales AB_CD=$* XPI_NAME=locale-$*
- 	@$(MAKE) -C ../../intl/locales AB_CD=$* XPI_NAME=locale-$*
- 	@$(MAKE) libs AB_CD=$* XPI_NAME=locale-$* PREF_DIR=$(PREF_DIR)
- ifdef MOZ_METRO
- 	@$(MAKE) -C ../metro/locales AB_CD=$* XPI_NAME=locale-$*
 diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en-US/searchplugins/google.xml
 --- a/browser/locales/en-US/searchplugins/google.xml
 +++ b/browser/locales/en-US/searchplugins/google.xml
@@ -133,7 +128,7 @@ diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -124,14 +124,15 @@
+@@ -123,14 +123,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/

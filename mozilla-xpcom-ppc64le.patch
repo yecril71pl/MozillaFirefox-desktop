@@ -1,39 +1,17 @@
 # HG changeset patch
-# Parent 5f1384375f10a5f0ee7c8288adef9593822e4e68
+# Parent c5c0f80f1967fd1921e85b443ee87d097e4baf19
 # User Ulrich Weigand <uweigand@de.ibm.com>
 PPC64 LE support for XPCOM
 
-diff --git a/xpcom/reflect/xptcall/src/md/unix/Makefile.in b/xpcom/reflect/xptcall/src/md/unix/Makefile.in
---- a/xpcom/reflect/xptcall/src/md/unix/Makefile.in
-+++ b/xpcom/reflect/xptcall/src/md/unix/Makefile.in
-@@ -161,17 +161,17 @@ endif
- ifneq (,$(filter Linuxpowerpc FreeBSDpowerpc,$(OS_ARCH)$(OS_TEST)))
- ASFILES		:= xptcinvoke_asm_ppc_linux.s xptcstubs_asm_ppc_linux.s
- AS		:= $(CC) -c -x assembler-with-cpp
- endif
- 
- #
- # Linux/PPC64
- #
--ifneq (,$(filter Linuxpowerpc64 FreeBSDpowerpc64,$(OS_ARCH)$(OS_TEST)))
-+ifneq (,$(filter Linuxpowerpc64 Linuxpowerpc64le FreeBSDpowerpc64,$(OS_ARCH)$(OS_TEST)))
- ASFILES                := xptcinvoke_asm_ppc64_linux.s xptcstubs_asm_ppc64_linux.s
- AS             := $(CC) -c -x assembler-with-cpp
- endif
- 
- #
- # NetBSD/PPC
- #
- ifneq (,$(filter NetBSDmacppc NetBSDbebox NetBSDofppc NetBSDprep NetBSDamigappc,$(OS_ARCH)$(OS_TEST)))                           
 diff --git a/xpcom/reflect/xptcall/src/md/unix/moz.build b/xpcom/reflect/xptcall/src/md/unix/moz.build
 --- a/xpcom/reflect/xptcall/src/md/unix/moz.build
 +++ b/xpcom/reflect/xptcall/src/md/unix/moz.build
-@@ -186,16 +186,23 @@ if CONFIG['OS_TEST'] == 'powerpc':
- 
- if CONFIG['OS_TEST'] == 'powerpc64':
+@@ -228,16 +228,23 @@ if CONFIG['OS_TEST'] == 'powerpc64':
      if CONFIG['OS_ARCH'] in ('Linux', 'FreeBSD'):
            SOURCES += [
+               'xptcinvoke_asm_ppc64_linux.s',
                'xptcinvoke_ppc64_linux.cpp',
+               'xptcstubs_asm_ppc64_linux.s',
                'xptcstubs_ppc64_linux.cpp',
            ]
  
@@ -47,11 +25,11 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/moz.build b/xpcom/reflect/xptcall
  if CONFIG['OS_TEST'] in ('macppc', 'bebox', 'ofppc', 'prep', 'amigappc'):
      if CONFIG['OS_ARCH'] == 'NetBSD':
          SOURCES += [
+             'xptcinvoke_asm_ppc_netbsd.s',
              'xptcinvoke_ppc_netbsd.cpp',
+             'xptcstubs_asm_ppc_netbsd.s',
              'xptcstubs_ppc_netbsd.cpp',
          ]
- 
- if CONFIG['OS_ARCH'] == 'OpenBSD' and CONFIG['OS_TEST'] == 'powerpc':
 diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
 --- a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
 +++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s

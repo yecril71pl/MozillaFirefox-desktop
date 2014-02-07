@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Feb  7 13:34:20 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 28.0b1
+- requires NSPR 4.10.3
+- new build dependency:
+  * libpulse
+
+-------------------------------------------------------------------
 Tue Jan 28 15:45:41 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 27.0 (bnc#861847)

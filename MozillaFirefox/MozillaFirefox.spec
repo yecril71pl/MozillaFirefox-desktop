@@ -18,8 +18,8 @@
 
 
 %define major 27
-%define mainver %major.0
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -50,9 +50,10 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.2
+BuildRequires:  mozilla-nspr-devel >= 4.10.3
 BuildRequires:  mozilla-nss-devel >= 3.15.4
 BuildRequires:  nss-shared-helper-devel
+BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
@@ -63,7 +64,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014012800
+%define         releasedate 2014020500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -122,6 +123,7 @@ Requires:       %{name}-branding > 20.0
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
+Recommends:     libpulse0
 # libproxy's mozjs pacrunner crashes FF (bnc#759123)
 %if %suse_version < 1220
 Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
@@ -244,9 +246,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch17 -p1
 #
 %patch30 -p1
-%if %suse_version >= 1110
 %patch31 -p1
-%endif
 %if %suse_version >= 1140
 %patch32 -p1
 %endif
@@ -363,10 +363,8 @@ mkdir -p $RPM_BUILD_ROOT%{progdir}/distribution/extensions
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/searchplugins
 mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
 # install kde.js
-%if %suse_version >= 1110
 install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/kde.js
 install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/firefox.js
-%endif
 # install add-plugins.sh
 sed "s:%%PROGDIR:%{progdir}:g" \
   %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh

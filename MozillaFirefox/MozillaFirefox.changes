@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Mon Feb 17 11:59:28 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 27.0.1
+  * Fixed stability issues with Greasemonkey and other JS that used
+    ClearTimeoutOrInterval
+  * JS math correctness issue (bnc#941381)
+- incorporate Google API key for geolocation (bnc#864170)
+- updated list of "other" locales in RPM requirements
+
+-------------------------------------------------------------------
 Tue Jan 28 15:45:41 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 27.0 (bnc#861847)

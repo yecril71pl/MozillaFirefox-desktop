@@ -1,10 +1,20 @@
 -------------------------------------------------------------------
-Fri Feb  7 13:34:20 UTC 2014 - wr@rosenauer.org
+Mon Feb 17 12:57:51 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 28.0b1
+- update to Firefox 28.0b3
 - requires NSPR 4.10.3
 - new build dependency:
   * libpulse
+
+-------------------------------------------------------------------
+Mon Feb 17 11:59:28 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 27.0.1
+  * Fixed stability issues with Greasemonkey and other JS that used
+    ClearTimeoutOrInterval
+  * JS math correctness issue (bnc#941381)
+- incorporate Google API key for geolocation (bnc#864170)
+- updated list of "other" locales in RPM requirements
 
 -------------------------------------------------------------------
 Tue Jan 28 15:45:41 UTC 2014 - wr@rosenauer.org

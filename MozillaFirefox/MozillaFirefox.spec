@@ -64,7 +64,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014020500
+%define         releasedate 2014021700
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -142,6 +142,10 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define desktop_file_name %{name}
 %endif
 ### build options
+# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
+# Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
+# please get your own set of keys.
+%define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
 %define branding 1
 %define localize 1
 %ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm
@@ -275,6 +279,7 @@ export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
+export MOZ_GOOGLE_API_KEY=%{_google_api_key}
 export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"

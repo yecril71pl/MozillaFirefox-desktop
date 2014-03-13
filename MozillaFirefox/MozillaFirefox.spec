@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.3
-BuildRequires:  mozilla-nss-devel >= 3.15.4
+BuildRequires:  mozilla-nss-devel >= 3.15.5
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -64,7 +64,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014021700
+%define         releasedate 2014030600
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -172,7 +172,6 @@ Requires:       perl(XML::Simple)
 Development files for Firefox to make packaging of addons easier.
 
 %if %localize
-
 %package translations-common
 Summary:        Common translations for Firefox
 Group:          System/Localization
@@ -228,7 +227,11 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 
 %prep
+%if %localize
 %setup -q -n mozilla -b 7 -b 10
+%else
+%setup -q -n mozilla
+%endif
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
@@ -302,7 +305,9 @@ ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
+%if %{localize}
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
+%endif
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
 ac_add_options --with-system-zlib
@@ -315,30 +320,20 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 EOF
 %if %suse_version > 1130
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
-EOF
 %endif
 %if %suse_version < 1220
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gstreamer
-EOF
 %endif
 %if %branding
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-official-branding
-EOF
 %endif
 %if %suse_version > 1110
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
-EOF
 %endif
 %if ! %crashreporter
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
-EOF
 %endif
 # Disable neon for arm as it does not build correctly
 %ifarch %arm
@@ -347,9 +342,7 @@ ac_add_options --disable-neon
 EOF
 %endif
 %ifnarch %ix86 x86_64
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-webrtc
-EOF
 %endif
 make -f client.mk build
 

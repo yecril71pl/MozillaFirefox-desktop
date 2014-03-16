@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 14ed7d2308e6f129e791449afa0d58869e451264
+# Parent 4b6055d24a2bbc4a37490214df4acf08269f14ff
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
@@ -72,8 +72,8 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 +
 +searchplugins-jar:: $(SEARCHPLUGINS)
 +	for SEARCHPLUGIN in $^; do \
-+	$(PYTHON) $(topsrcdir)/config/Preprocessor.py $(DEFINES) $(ACDEFINES) \
-+	$$SEARCHPLUGIN > $$SEARCHPLUGIN-new ; \
++	$(call py_action,preprocessor,$(DEFINES) $(ACDEFINES) \
++	$$SEARCHPLUGIN > $$SEARCHPLUGIN-new) ; \
 +	mv $$SEARCHPLUGIN-new $$SEARCHPLUGIN ; \
 +	done
 +

@@ -16,6 +16,7 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
 %else
@@ -47,19 +48,19 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.2
-BuildRequires:  mozilla-nss-devel >= 3.15.3.1
+BuildRequires:  mozilla-nspr-devel >= 4.10.3
+BuildRequires:  mozilla-nss-devel >= 3.15.4
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
-Version:        24.2.0
+Version:        24.4.0
 Release:        0
-%define         releasedate 2013120700
-%define         version_internal 24.2.0
+%define         releasedate 2014031500
+%define         version_internal 24.4.0
 %define         apiversion 24
-%define         uaweight 2402000
+%define         uaweight 2404000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -88,10 +89,11 @@ Patch7:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-sle11.patch
 Patch10:        mozilla-ppc.patch
 Patch11:        mozilla-libproxy-compat.patch
-Patch12:        libffi-ppc64le.patch
-Patch13:        xpcom-ppc64le.patch
-Patch14:        ppc64le-support.patch
-Patch15:        xulrunner-langpack-build.patch
+Patch12:        mozilla-ppc64le-libffi.patch
+Patch13:        mozilla-ppc64le-xpcom.patch
+Patch14:        mozilla-ppc64le-generic.patch
+Patch15:        mozilla-ppc64le-skia.patch
+Patch16:        xulrunner-langpack-build.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils
@@ -102,7 +104,7 @@ Obsoletes:      xulrunner-esr < 24.0
 %define has_system_nspr  1
 %define has_system_nss   1
 %define has_system_cairo 0
-%define localize 1
+%define localize 0
 %ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm aarch64
 %define crashreporter    0
 %else
@@ -196,7 +198,11 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 
 %prep
+%if %{localize}
 %setup -n mozilla -q -b 1 -b 9
+%else
+%setup -n mozilla -q
+%endif
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -209,10 +215,11 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch10 -p1
 %patch11 -p1
-#%patch12 -p1
-#%patch13 -p1
-#%patch14 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 # no need to add build time to binaries
@@ -256,7 +263,9 @@ ac_add_options --enable-extensions=default
 #ac_add_options --with-system-jpeg # mozilla uses internal libjpeg-turbo now
 #ac_add_options --with-system-png  # no APNG support
 ac_add_options --with-system-zlib
+%if %{localize}
 ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
+%endif
 ac_add_options --disable-tests
 ac_add_options --disable-mochitest
 ac_add_options --disable-installer
@@ -459,6 +468,7 @@ exit 0
 
 %files
 %defattr(-,root,root)
+%doc %attr(644,root,root) LICENSE
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %dir %{_libdir}/xulrunner-%{version_internal}/chrome/
 %dir %{_libdir}/xulrunner-%{version_internal}/dictionaries/

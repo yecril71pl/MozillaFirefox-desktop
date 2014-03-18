@@ -1,0 +1,16 @@
+diff -ur mozilla/gfx.orig/skia/include/core/SkPreConfig.h mozilla/gfx/skia/include/core/SkPreConfig.h
+--- mozilla/gfx.orig/skia/include/core/SkPreConfig.h	2014-02-01 03:35:27.426017176 -0600
++++ mozilla/gfx/skia/include/core/SkPreConfig.h	2014-02-27 10:33:20.869986226 -0600
+@@ -95,7 +95,11 @@
+ 
+ #if !defined(SK_CPU_BENDIAN) && !defined(SK_CPU_LENDIAN)
+ #if defined (__ppc__) || defined(__PPC__) || defined(__ppc64__) || defined(__PPC64__)
+-        #define SK_CPU_BENDIAN
++        #if defined (__BIG_ENDIAN__)
++            #define SK_CPU_BENDIAN
++        #else
++            #define SK_CPU_LENDIAN
++        #endif
+     #else
+         #define SK_CPU_LENDIAN
+     #endif

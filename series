@@ -17,10 +17,11 @@ mozilla-arm-disable-edsp.patch
 mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
-libffi-ppc64le.patch
 xulrunner-langpack-build.patch
-#xpcom-ppc64le.patch
-#ppc64le-support.patch
+mozilla-ppc64le-libffi.patch
+mozilla-ppc64le-xpcom.patch
+mozilla-ppc64le-generic.patch
+mozilla-ppc64le-skia.patch
 
 # Firefox patches
 firefox-browser-css.patch

@@ -112,6 +112,7 @@ Patch17:        mozilla-ppc64le-libffi.patch
 Patch18:        mozilla-ppc64le-mfbt.patch
 Patch19:        mozilla-ppc64le-webrtc.patch
 Patch20:        mozilla-ppc64le-xpcom.patch
+Patch21:        mozilla-ppc64-xpcom.patch
 # Firefox/browser
 Patch30:        firefox-browser-css.patch
 Patch31:        firefox-kde.patch
@@ -257,6 +258,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 #
 %patch30 -p1
 %patch31 -p1

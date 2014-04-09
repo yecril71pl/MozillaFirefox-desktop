@@ -3,42 +3,32 @@
 # User Ulrich Weigand <uweigand@de.ibm.com>
 Bug 976648 - powerpc64le-linux support - xptcall port
 
-diff --git a/xpcom/reflect/xptcall/src/md/unix/moz.build b/xpcom/reflect/xptcall/src/md/unix/moz.build
---- a/xpcom/reflect/xptcall/src/md/unix/moz.build
-+++ b/xpcom/reflect/xptcall/src/md/unix/moz.build
-@@ -228,16 +228,23 @@ if CONFIG['OS_TEST'] == 'powerpc64':
+Index: mozilla/xpcom/reflect/xptcall/src/md/unix/moz.build
+===================================================================
+--- mozilla.orig/xpcom/reflect/xptcall/src/md/unix/moz.build
++++ mozilla/xpcom/reflect/xptcall/src/md/unix/moz.build
+@@ -224,12 +224,12 @@ if CONFIG['OS_TEST'] == 'powerpc':
+             'xptcstubs_ppc_linux.cpp',
+         ]
+ 
+-if CONFIG['OS_TEST'] == 'powerpc64':
++if CONFIG['OS_TEST'] in ('powerpc64', 'powerpc64le'):
      if CONFIG['OS_ARCH'] in ('Linux', 'FreeBSD'):
            SOURCES += [
-               'xptcinvoke_asm_ppc64_linux.s',
+-              'xptcinvoke_asm_ppc64_linux.s',
++              'xptcinvoke_asm_ppc64_linux.S',
                'xptcinvoke_ppc64_linux.cpp',
-               'xptcstubs_asm_ppc64_linux.s',
+-              'xptcstubs_asm_ppc64_linux.s',
++              'xptcstubs_asm_ppc64_linux.S',
                'xptcstubs_ppc64_linux.cpp',
            ]
  
-+if CONFIG['OS_TEST'] == 'powerpc64le':
-+    if CONFIG['OS_ARCH'] == 'Linux':
-+          CPP_SOURCES += [
-+              'xptcinvoke_ppc64_linux.cpp',
-+              'xptcstubs_ppc64_linux.cpp',
-+          ]
-+
- if CONFIG['OS_TEST'] in ('macppc', 'bebox', 'ofppc', 'prep', 'amigappc'):
-     if CONFIG['OS_ARCH'] == 'NetBSD':
-         SOURCES += [
-             'xptcinvoke_asm_ppc_netbsd.s',
-             'xptcinvoke_ppc_netbsd.cpp',
-             'xptcstubs_asm_ppc_netbsd.s',
-             'xptcstubs_ppc_netbsd.cpp',
-         ]
-diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.S
+rename from xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
+rename to xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.S
 --- a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
-+++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s
-@@ -12,90 +12,121 @@
- .set f0,0; .set f1,1; .set f2,2; .set f3,3; .set f4,4
- .set f5,5; .set f6,6; .set f7,7; .set f8,8; .set f9,9
- .set f10,10; .set f11,11; .set f12,12; .set f13,13; .set f14,14
- .set f15,15; .set f16,16; .set f17,17; .set f18,18; .set f19,19
- .set f20,20; .set f21,21; .set f22,22; .set f23,23; .set f24,24
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.S
+@@ -17,12 +17,38 @@
  .set f25,25; .set f26,26; .set f27,27; .set f28,28; .set f29,29
  .set f30,30; .set f31,31
  
@@ -77,11 +67,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
          .section ".toc","aw"
          .section ".text"
          .align 2
-         .globl  NS_InvokeByIndex
-         .section ".opd","aw"
-         .align 3
- NS_InvokeByIndex:
-         .quad   .NS_InvokeByIndex,.TOC.@tocbase
+@@ -34,6 +60,7 @@ NS_InvokeByIndex:
          .previous
          .type   NS_InvokeByIndex,@function
  .NS_InvokeByIndex:
@@ -89,16 +75,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
          mflr    0
          std     0,16(r1)
  
-         std     r29,-24(r1)
-         std     r30,-16(r1)
-         std     r31,-8(r1)
- 
-         mr      r29,r3                  # Save 'that' in r29
-         mr      r30,r4                  # Save 'methodIndex' in r30
-         mr      r31,r1                  # Save old frame
- 
-         # Allocate stack frame with space for params. Since at least the
-         # first 7 parameters (not including 'that') will be in registers,
+@@ -50,13 +77,12 @@ NS_InvokeByIndex:
          # we don't actually need stack space for those. We must ensure
          # that the stack remains 16-byte aligned.
          #
@@ -116,10 +93,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
          rldicr  r7,r7,3,59              # multiply by 8 and mask with ~15
          neg     r7,r7
          stdux   r1,r1,r7
- 
- 
-         # Call invoke_copy_to_stack(uint64_t* gpregs, double* fpregs,
-         #                           uint32_t paramCount, nsXPTCVariant* s, 
+@@ -67,12 +93,13 @@ NS_InvokeByIndex:
          #                           uint64_t* d))
  
          # r5, r6 are passed through intact (paramCount, params)
@@ -135,10 +109,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
          bl      invoke_copy_to_stack
          nop
  
-         # Set up to invoke function
- 
-         ld      r9,0(r29)               # vtable (r29 is 'that')
-         mr      r3,r29                  # self is first arg, obviously
+@@ -83,14 +110,18 @@ NS_InvokeByIndex:
  
          sldi    r30,r30,3               # Find function descriptor 
          add     r9,r9,r30
@@ -162,17 +133,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
  
          # Load FP and GP registers as required
          ld      r4, -(23*8)(r31) 
-         ld      r5, -(22*8)(r31) 
-         ld      r6, -(21*8)(r31) 
-         ld      r7, -(20*8)(r31) 
-         ld      r8, -(19*8)(r31) 
-         ld      r9, -(18*8)(r31) 
-@@ -112,21 +143,25 @@ NS_InvokeByIndex:
-         lfd     f9, -(8*8)(r31)
-         lfd     f10, -(7*8)(r31)
-         lfd     f11, -(6*8)(r31)
-         lfd     f12, -(5*8)(r31)
-         lfd     f13, -(4*8)(r31)
+@@ -117,7 +148,7 @@ NS_InvokeByIndex:
  
          bctrl                           # Do it
  
@@ -181,8 +142,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
          ld      r1,0(r1)                # Revert stack frame
          ld      0,16(r1)                # Reload lr
          ld      29,-24(r1)              # Restore NVGPRS
-         ld      30,-16(r1)
-         ld      31,-8(r1)
+@@ -126,7 +157,11 @@ NS_InvokeByIndex:
          mtlr    0
          blr
  
@@ -194,15 +154,11 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_asm_ppc64_linux.s b/xp
  
          # Magic indicating no need for an executable stack
          .section .note.GNU-stack, "", @progbits ; .previous
-diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
---- a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
-+++ b/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
-@@ -69,17 +69,19 @@ invoke_copy_to_stack(uint64_t* gpregs,
-             else
-                 *(double *)d = s->val.d;
-         }
-         else if (!s->IsPtrData() && s->type == nsXPTType::T_FLOAT) {
-             if (i < FPR_COUNT) {
+Index: mozilla/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
+===================================================================
+--- mozilla.orig/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
++++ mozilla/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp
+@@ -74,7 +74,9 @@ invoke_copy_to_stack(uint64_t* gpregs,
                  fpregs[i]   = s->val.f; // if passed in registers, floats are promoted to doubles
              } else {
                  float *p = (float *)d;
@@ -212,20 +168,12 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcinvoke_ppc64_linux.cpp b/xpco
                  *p = s->val.f;
              }
          }
-         else {
-             if (i < GPR_COUNT)
-                 gpregs[i] = tempu64;
-             else
-                 *d = tempu64;
-diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
+diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.S
+rename from xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
+rename to xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.S
 --- a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
-+++ b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s
-@@ -12,28 +12,50 @@
- .set f0,0; .set f1,1; .set f2,2; .set f3,3; .set f4,4
- .set f5,5; .set f6,6; .set f7,7; .set f8,8; .set f9,9
- .set f10,10; .set f11,11; .set f12,12; .set f13,13; .set f14,14
- .set f15,15; .set f16,16; .set f17,17; .set f18,18; .set f19,19
- .set f20,20; .set f21,21; .set f22,22; .set f23,23; .set f24,24
++++ b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.S
+@@ -17,6 +17,27 @@
  .set f25,25; .set f26,26; .set f27,27; .set f28,28; .set f29,29
  .set f30,30; .set f31,31
  
@@ -253,12 +201,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpc
          .section ".text"
          .align 2
          .globl SharedStub
-         .section ".opd","aw"
-         .align 3
- 
- SharedStub:
-         .quad   .SharedStub,.TOC.@tocbase
-         .previous
+@@ -29,6 +50,7 @@ SharedStub:
          .type   SharedStub,@function
  
  .SharedStub:
@@ -266,17 +209,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpc
          mflr    r0
  
          std     r4, -56(r1)                     # Save all GPRS
-         std     r5, -48(r1)
-         std     r6, -40(r1)
-         std     r7, -32(r1)
-         std     r8, -24(r1)
-         std     r9, -16(r1)
-@@ -50,17 +72,17 @@ SharedStub:
-         stfd    f5, -128(r1)
-         stfd    f4, -136(r1)
-         stfd    f3, -144(r1)
-         stfd    f2, -152(r1)
-         stfd    f1, -160(r1)
+@@ -55,7 +77,7 @@ SharedStub:
  
          subi    r6,r1,56                        # r6 --> gprData
          subi    r7,r1,160                       # r7 --> fprData
@@ -285,17 +218,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpc
  
          std     r0, 16(r1)
  	
-         stdu    r1,-288(r1)
-                                                 # r3 has the 'self' pointer
-                                                 # already
- 
-         mr      r4,r11                          # r4 is methodIndex selector,
-@@ -70,12 +92,16 @@ SharedStub:
-         bl      PrepareAndDispatch
-         nop
- 
-         ld      1,0(r1)                         # restore stack
-         ld      r0,16(r1)                       # restore LR
+@@ -75,7 +97,11 @@ SharedStub:
          mtlr    r0
          blr
  
@@ -307,15 +230,11 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_asm_ppc64_linux.s b/xpc
  
          # Magic indicating no need for an executable stack
          .section .note.GNU-stack, "", @progbits ; .previous
-diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
---- a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
-+++ b/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
-@@ -78,17 +78,19 @@ PrepareAndDispatch(nsXPTCStubBase* self,
-                 dp->val.d = fprData[i];
-             else
-                 dp->val.d = *(double*) ap;
-         } else if (!param.IsOut() && type == nsXPTType::T_FLOAT) {
-             if (i < FPR_COUNT)
+Index: mozilla/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
+===================================================================
+--- mozilla.orig/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
++++ mozilla/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp
+@@ -83,7 +83,9 @@ PrepareAndDispatch(nsXPTCStubBase* self,
                  dp->val.f = (float) fprData[i]; // in registers floats are passed as doubles
              else {
                  float *p = (float *)ap;
@@ -325,17 +244,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp b/xpcom
                  dp->val.f = *p;
              }
          } else { /* integer type or pointer */
-             if (i < GPR_COUNT)
-                 tempu64 = gprData[i];
-             else
-                 tempu64 = *ap;
- 
-@@ -148,16 +150,53 @@ PrepareAndDispatch(nsXPTCStubBase* self,
- // Create names would be like:
- // _ZN14nsXPTCStubBase5Stub1Ev
- // _ZN14nsXPTCStubBase6Stub12Ev
- // _ZN14nsXPTCStubBase7Stub123Ev
- // _ZN14nsXPTCStubBase8Stub1234Ev
+@@ -153,6 +155,43 @@ PrepareAndDispatch(nsXPTCStubBase* self,
  // etc.
  // Use assembler directives to get the names right...
  
@@ -379,17 +288,7 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp b/xpcom
  # define STUB_ENTRY(n)                                                  \
  __asm__ (                                                               \
          ".section \".toc\",\"aw\" \n\t"                                 \
-         ".section \".text\" \n\t"                                       \
-         ".align 2 \n\t"                                                 \
-         ".if "#n" < 10 \n\t"                                            \
-         ".globl _ZN14nsXPTCStubBase5Stub"#n"Ev \n\t"                    \
-         ".section \".opd\",\"aw\" \n\t"                                 \
-@@ -190,16 +229,17 @@ PrepareAndDispatch(nsXPTCStubBase* self,
-                                                                         \
-         ".else  \n\t"                                                   \
-         ".err   \"stub number "#n" >= 1000 not yet supported\"\n"       \
-         ".endif \n\t"                                                   \
-                                                                         \
+@@ -195,6 +234,7 @@ __asm__ (
          "li     11,"#n" \n\t"                                           \
          "b      SharedStub \n"                                          \
  );
@@ -397,8 +296,3 @@ diff --git a/xpcom/reflect/xptcall/src/md/unix/xptcstubs_ppc64_linux.cpp b/xpcom
  
  #define SENTINEL_ENTRY(n)                                               \
  nsresult nsXPTCStubBase::Sentinel##n()                                  \
- {                                                                       \
-     NS_ERROR("nsXPTCStubBase::Sentinel called");                  \
-     return NS_ERROR_NOT_IMPLEMENTED;                                    \
- }
- 

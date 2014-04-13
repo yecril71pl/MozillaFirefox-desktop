@@ -113,13 +113,25 @@ Patch18:        mozilla-ppc64le-mfbt.patch
 Patch19:        mozilla-ppc64le-webrtc.patch
 Patch20:        mozilla-ppc64le-xpcom.patch
 Patch21:        mozilla-ppc64-xpcom.patch
+# Gecko/Toolkit AArch64 Porting
+Patch36:        mozilla-aarch64-599882cfb998.diff
+Patch37:        mozilla-aarch64-bmo-810631.patch
+Patch38:        mozilla-aarch64-bmo-962488.patch
+Patch39:        mozilla-aarch64-bmo-963030.patch
+Patch40:        mozilla-aarch64-bmo-963027.patch
+Patch41:        mozilla-aarch64-bmo-963028.patch
+Patch42:        mozilla-aarch64-bmo-963029.patch
+Patch43:        mozilla-aarch64-bmo-963023.patch
+Patch44:        mozilla-aarch64-bmo-963024.patch
+Patch45:        mozilla-aarch64-bmo-963031.patch
+
 # Firefox/browser
-Patch30:        firefox-browser-css.patch
-Patch31:        firefox-kde.patch
-Patch32:        firefox-kde-114.patch
-Patch33:        firefox-no-default-ualocale.patch
-Patch34:        firefox-multilocale-chrome.patch
-Patch35:        firefox-branded-icons.patch
+Patch100:       firefox-browser-css.patch
+Patch101:       firefox-kde.patch
+Patch102:       firefox-kde-114.patch
+Patch103:       firefox-no-default-ualocale.patch
+Patch104:       firefox-multilocale-chrome.patch
+Patch105:       firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -152,7 +164,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
 %define branding 1
 %define localize 1
-%ifarch ppc ppc64 ppc64le s390 s390x ia64 %arm
+%ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0
 %else
 %define crashreporter 1
@@ -259,15 +271,26 @@ cd $RPM_BUILD_DIR/mozilla
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
-#
-%patch30 -p1
-%patch31 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
+
+# Firefox
+%patch100 -p1
+%patch101 -p1
 %if %suse_version >= 1140
-%patch32 -p1
+%patch102 -p1
 %endif
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 %build
 # no need to add build time to binaries

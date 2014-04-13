@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Mon Apr  7 15:34:31 UTC 2014 - dmueller@suse.com
+
+- add mozilla-aarch64-599882cfb998.patch,
+      mozilla-aarch64-bmo-810631.patch,
+      mozilla-aarch64-bmo-962488.patch,
+      mozilla-aarch64-bmo-963030.patch,
+      mozilla-aarch64-bmo-963027.patch,
+      mozilla-aarch64-bmo-963028.patch,
+      mozilla-aarch64-bmo-963029.patch,
+      mozilla-aarch64-bmo-963023.patch,
+      mozilla-aarch64-bmo-963024.patch,
+      mozilla-aarch64-bmo-963031.patch: AArch64 porting
+
+-------------------------------------------------------------------
 Mon Mar 24 16:18:44 UTC 2014 - dvaleev@suse.com
 
 - Add patch for bmo#973977

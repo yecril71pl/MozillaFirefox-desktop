@@ -1,0 +1,43 @@
+
+# HG changeset patch
+# User Marcin Juszkiewicz <mjuszkiewicz@redhat.com>
+# Date 1390512871 18000
+# Node ID 89e06a821ad5986035de99c8bc1f9d7a99541b2a
+# Parent  feaf8bd56a82749f5d0d8869b7c0a1c01e300362
+Bug 963029 - AArch64 support for MFBT. r=froydnj
+
+Index: mozilla/mfbt/Endian.h
+===================================================================
+--- mozilla.orig/mfbt/Endian.h
++++ mozilla/mfbt/Endian.h
+@@ -121,14 +121,14 @@
+ #elif defined(__sparc) || defined(__sparc__) || \
+       defined(_POWER) || defined(__hppa) || \
+       defined(_MIPSEB) || defined(__ARMEB__) || \
+-      defined(__s390__) || \
++      defined(__s390__) || defined(__AARCH64EB__) || \
+       (defined(__sh__) && defined(__LITTLE_ENDIAN__)) || \
+       (defined(__ia64) && defined(__BIG_ENDIAN__))
+ #  define MOZ_BIG_ENDIAN 1
+ #elif defined(__i386) || defined(__i386__) || \
+       defined(__x86_64) || defined(__x86_64__) || \
+       defined(_MIPSEL) || defined(__ARMEL__) || \
+-      defined(__alpha__) || \
++      defined(__alpha__) || defined(__AARCH64EL__) ||  \
+       (defined(__sh__) && defined(__BIG_ENDIAN__)) || \
+       (defined(__ia64) && !defined(__BIG_ENDIAN__))
+ #  define MOZ_LITTLE_ENDIAN 1
+Index: mozilla/mfbt/tests/TestPoisonArea.cpp
+===================================================================
+--- mozilla.orig/mfbt/tests/TestPoisonArea.cpp
++++ mozilla/mfbt/tests/TestPoisonArea.cpp
+@@ -161,6 +161,9 @@
+ #elif defined __s390__
+ #define RETURN_INSTR 0x07fe0000 /* br %r14 */
+ 
++#elif defined __aarch64__
++#define RETURN_INSTR 0xd65f03c0 /* ret */
++
+ #elif defined __ia64
+ struct ia64_instr { uint32_t i[4]; };
+ static const ia64_instr _return_instr =

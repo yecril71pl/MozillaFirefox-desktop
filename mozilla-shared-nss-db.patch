@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8042,16 +8042,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8113,16 +8113,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -73,54 +73,49 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 +
  #include "nsNSSComponent.h"
  
- #include "CertVerifier.h"
+ #include "ExtendedValidation.h"
+ #include "NSSCertDBTrustDomain.h"
  #include "mozilla/Telemetry.h"
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
- #include "nsDirectoryServiceDefs.h"
-@@ -1207,18 +1214,35 @@ nsNSSComponent::InitializeNSS()
-     ConfigureInternalPKCS11Token();
+@@ -1117,17 +1124,31 @@ nsNSSComponent::InitializeNSS()
+   if (NS_FAILED(rv)) {
+     nsPSMInitPanic::SetPanic();
+     return NS_ERROR_NOT_AVAILABLE;
+   }
  
-     // The NSS_INIT_NOROOTINIT flag turns off the loading of the root certs
-     // module by NSS_Initialize because we will load it in InstallLoadableRoots
-     // later.  It also allows us to work around a bug in the system NSS in
-     // Ubuntu 8.04, which loads any nonexistent "<configdir>/libnssckbi.so" as
-     // "/usr/lib/nss/libnssckbi.so".
-     uint32_t init_flags = NSS_INIT_NOROOTINIT | NSS_INIT_OPTIMIZESPACE;
--    SECStatus init_rv = ::NSS_Initialize(profileStr.get(), "", "",
--                                         SECMOD_DB, init_flags);
-+
-+    SECStatus init_rv = SECFailure;
+   SECStatus init_rv = SECFailure;
+   if (!profileStr.IsEmpty()) {
+     // First try to initialize the NSS DB in read/write mode.
+-    SECStatus init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +#ifdef MOZ_ENABLE_NSSHELPER
 +    if (PR_GetEnv("MOZ_XRE_NO_NSSHELPER")) {
-+      init_rv = ::NSS_Initialize(profileStr.get(), "", "",
-+                                 SECMOD_DB, init_flags);
++      init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +    } else {
-+      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), init_flags);
++      uint32_t flags = NSS_INIT_NOROOTINIT | NSS_INIT_OPTIMIZESPACE;
++      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), flags);
 +
 +      if (init_rv != SECSuccess) {
 +        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));
-+        init_rv = ::NSS_Initialize(profileStr.get(), "", "",
-+                                   SECMOD_DB, init_flags);
++        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +      }
 +    }
 +#else
-+    init_rv = ::NSS_Initialize(profileStr.get(), "", "",
-+                               SECMOD_DB, init_flags);
++    init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +#endif
- 
+     // If that fails, attempt read-only mode.
      if (init_rv != SECSuccess) {
-       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS r/w in %s\n", profileStr.get()));
- 
-       // try to init r/o
-       init_flags |= NSS_INIT_READONLY;
-       init_rv = ::NSS_Initialize(profileStr.get(), "", "",
-                                  SECMOD_DB, init_flags);
+       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init NSS r/w in %s\n", profileStr.get()));
+       init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), true);
+     }
+     if (init_rv != SECSuccess) {
+       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
+     }
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -245,17 +245,17 @@ endif
+@@ -223,17 +223,17 @@ endif
  ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
  SDK_LIBRARY = $(IMPORT_LIBRARY)
  else

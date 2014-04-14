@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Sun Apr 13 15:34:58 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 29beta7
+  * rebased patches
+  * removed obsolete patches
+- requires NSS 3.16
+- patches disabled temporarily (TODO)
+  * mozilla-ppc64le-build.patch
+  * firefox-browser-css.patch
+- added mozilla-icu-strncat.patch to fix post build checks
+
+-------------------------------------------------------------------
 Mon Apr  7 15:34:31 UTC 2014 - dmueller@suse.com
 
 - add mozilla-aarch64-599882cfb998.patch,

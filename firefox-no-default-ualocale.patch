@@ -1,17 +1,17 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 5c1cb20bb3ad68c77841909461700cbb11707708
+# Parent 5ffbb37bbfc52f549620ff67ce45f218a825cf4e
 Do not overwrite the locale dynamic pref from xulrunner's all.js with a wrong default value
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -246,17 +246,17 @@ pref("lightweightThemes.update.enabled",
- pref("browser.uitour.enabled", false);
- pref("browser.uitour.requireSecure", true);
- pref("browser.uitour.themeOrigin", "https://addons.mozilla.org/%LOCALE%/firefox/themes/");
- pref("browser.uitour.pinnedTabUrl", "https://support.mozilla.org/%LOCALE%/kb/pinned-tabs-keep-favorite-websites-open");
+@@ -253,17 +253,17 @@ pref("browser.uitour.pinnedTabUrl", "htt
+ pref("browser.uitour.url", "https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/tour/");
  pref("browser.uitour.whitelist.add.260", "www.mozilla.org,support.mozilla.org");
+ 
+ pref("browser.customizemode.tip0.shown", false);
+ pref("browser.customizemode.tip0.learnMoreUrl", "https://support.mozilla.org/1/firefox/%VERSION%/%OS%/%LOCALE%/customize");
  
  pref("keyword.enabled", true);
  

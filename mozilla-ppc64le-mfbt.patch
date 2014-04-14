@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 147a75fe8f8e4a43b66f9716659e1209d7f5a950
+# Parent 46508a61b834f02575c116a508aa37b66d50bd20
 # User Ulrich Weigand <uweigand@de.ibm.com>
 Bug 976648 - powerpc64le-linux support - mfbt endian config
 
@@ -38,7 +38,7 @@ diff --git a/mfbt/Endian.h b/mfbt/Endian.h
 -      defined(__ppc__) || defined(__hppa) || \
 +      defined(_POWER) || defined(__hppa) || \
        defined(_MIPSEB) || defined(__ARMEB__) || \
-       defined(__s390__) || \
+       defined(__s390__) || defined(__AARCH64EB__) || \
        (defined(__sh__) && defined(__LITTLE_ENDIAN__)) || \
        (defined(__ia64) && defined(__BIG_ENDIAN__))
  #  define MOZ_BIG_ENDIAN 1

@@ -16,16 +16,6 @@ mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
 #mozilla-ppc64le-build.patch
-mozilla-ppc64le-javascript.patch
-mozilla-ppc64le-libffi.patch
-mozilla-ppc64le-mfbt.patch
-mozilla-ppc64le-webrtc.patch
-mozilla-ppc64le-xpcom.patch
-mozilla-ppc64-xpcom.patch
-mozilla-aarch64-bmo-963024.patch
-mozilla-aarch64-bmo-963023.patch
-mozilla-aarch64-bmo-963027.patch
-mozilla-aarch64-bmo-962488.patch
 mozilla-aarch64-bmo-810631.patch
 
 # Firefox patches

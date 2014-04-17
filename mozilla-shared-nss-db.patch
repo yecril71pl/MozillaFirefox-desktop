@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8113,16 +8113,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8069,16 +8069,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -79,7 +79,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -1117,17 +1124,31 @@ nsNSSComponent::InitializeNSS()
+@@ -1129,17 +1136,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -115,8 +115,8 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 --- a/toolkit/library/Makefile.in
 +++ b/toolkit/library/Makefile.in
-@@ -223,17 +223,17 @@ endif
- ifneq (,$(filter OS2 WINNT,$(OS_ARCH)))
+@@ -161,17 +161,17 @@ endif
+ ifneq (,$(filter WINNT,$(OS_ARCH)))
  SDK_LIBRARY = $(IMPORT_LIBRARY)
  else
  SDK_LIBRARY = $(SHARED_LIBRARY)
@@ -130,7 +130,7 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
  ifeq ($(MOZ_WIDGET_TOOLKIT),cocoa)
  CXXFLAGS += $(TK_CFLAGS)
  OS_LIBS += \
-   -framework SystemConfiguration \
-   -framework QTKit \
-   -framework IOKit \
-   -F$(MACOS_PRIVATE_FRAMEWORKS_DIR) -framework CoreUI \
+   $(TK_LIBS) \
+   $(NULL)
+ endif
+ 

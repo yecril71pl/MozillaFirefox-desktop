@@ -17,14 +17,14 @@
 #
 
 
-%define major 28
-%define mainver %major.99
-%define update_channel beta
+%define major 29
+%define mainver %major.98
+%define update_channel aurora
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
 %else
-%define gstreamer_ver 0.10
+%define gstreamer_ver 1.0
 %endif
 
 Name:           MozillaFirefox
@@ -51,7 +51,7 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.3
+BuildRequires:  mozilla-nspr-devel >= 4.10.4
 BuildRequires:  mozilla-nss-devel >= 3.16
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
@@ -59,13 +59,13 @@ BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
-Requires:       libgstreamer-0_10-0
-Recommends:     gstreamer-0_10-fluendo-mp3
-Recommends:     gstreamer-0_10-plugins-ffmpeg
+Requires:       libgstreamer-1_0
+Recommends:     gstreamer-fluendo-mp3
+#Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014041300
+%define         releasedate 2014041700
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -108,19 +108,8 @@ Patch11:        mozilla-icu-strncat.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-libproxy-compat.patch
-Patch15:        mozilla-ppc64le-build.patch
-Patch16:        mozilla-ppc64le-javascript.patch
-Patch17:        mozilla-ppc64le-libffi.patch
-Patch18:        mozilla-ppc64le-mfbt.patch
-Patch19:        mozilla-ppc64le-webrtc.patch
-Patch20:        mozilla-ppc64le-xpcom.patch
-Patch21:        mozilla-ppc64-xpcom.patch
 # Gecko/Toolkit AArch64 Porting
 Patch30:        mozilla-aarch64-bmo-810631.patch
-Patch31:        mozilla-aarch64-bmo-962488.patch
-Patch32:        mozilla-aarch64-bmo-963027.patch
-Patch33:        mozilla-aarch64-bmo-963023.patch
-Patch34:        mozilla-aarch64-bmo-963024.patch
 
 # Firefox/browser
 Patch100:       firefox-browser-css.patch
@@ -262,18 +251,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-#%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
 %patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
 
 # Firefox
 #%patch100 -p1

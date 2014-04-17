@@ -411,14 +411,9 @@ new file mode 100644
 +        <image class="sync-panel-icon"/>
 +        <vbox class="sync-panel-inner">
 +          <description id="sync-start-panel-title"
-+                       value="&syncStartPanel.heading;"/>
-+          <description id="sync-start-panel-subtitle">
-+#ifdef XP_UNIX
-+            &syncStartPanel.subTitleUnix;
-+#else
-+            &syncStartPanel.subTitle;
-+#endif
-+          </description>
++                       value="&syncStartPanel2.heading;"/>
++          <description id="sync-start-panel-subtitle"
++                       value="&syncStartPanel2.subTitle;"/>
 +        </vbox>
 +      </hbox>
 +    </panel>
@@ -508,7 +503,12 @@ new file mode 100644
 +      </hbox>
 +    </hbox>
 +#ifdef XP_MACOSX
-+    <hbox id="titlebar-fullscreen-button"/>
++    <!-- OS X does not natively support RTL for its titlebar items, so we prevent this secondary
++         buttonbox from reversing order in RTL by forcing an LTR direction. -->
++    <hbox id="titlebar-secondary-buttonbox" dir="ltr">
++      <hbox class="private-browsing-indicator"/>
++      <hbox id="titlebar-fullscreen-button"/>
++    </hbox>
 +#endif
 +  </hbox>
 +</vbox>
@@ -612,8 +612,8 @@ new file mode 100644
 +                     cui-areatype="toolbar"
 +                     tooltiptext="&closeTab.label;"/>
 +
-+#ifdef XP_WIN
-+      <hbox class="private-browsing-indicator" skipintoolbarset="true" ordinal="1000"/>
++#if !defined(MOZ_WIDGET_GTK) && !defined(MOZ_WIDGET_QT)
++      <hbox class="private-browsing-indicator" skipintoolbarset="true"/>
 +#endif
 +#ifdef CAN_DRAW_IN_TITLEBAR
 +      <hbox class="titlebar-placeholder" type="caption-buttons"
@@ -709,6 +709,8 @@ new file mode 100644
 +                <image id="mixed-content-blocked-notification-icon" class="notification-anchor-icon" role="button"/>
 +                <image id="webRTC-shareDevices-notification-icon" class="notification-anchor-icon" role="button"/>
 +                <image id="webRTC-sharingDevices-notification-icon" class="notification-anchor-icon" role="button"/>
++                <image id="webRTC-shareMicrophone-notification-icon" class="notification-anchor-icon" role="button"/>
++                <image id="webRTC-sharingMicrophone-notification-icon" class="notification-anchor-icon" role="button"/>
 +                <image id="pointerLock-notification-icon" class="notification-anchor-icon" role="button"/>
 +                <image id="servicesInstall-notification-icon" class="notification-anchor-icon" role="button"/>
 +              </box>
@@ -1106,7 +1108,6 @@ new file mode 100644
 +                        command="Social:ToggleNotifications"
 +                        label="&social.toggleNotifications.label;"
 +                        accesskey="&social.toggleNotifications.accesskey;"/>
-+              <menuitem class="social-toggle-menuitem" command="Social:Toggle"/>
 +              <menuseparator/>
 +              <menuseparator class="social-provider-menu" hidden="true"/>
 +              <menuitem class="social-addons-menuitem" command="Social:Addons"
@@ -1191,15 +1192,14 @@ new file mode 100644
 +  <svg:svg height="0">
 +#include tab-shape.inc.svg
 +
-+#ifndef XP_UNIX
-+    <svg:clipPath id="windows-keyhole-forward-clip-path" clipPathUnits="userSpaceOnUse">
-+      <svg:path d="M 0,0 a 16 16 0 0 1 0,24 l 10000,0 l 0,-24 l -10000,0 z"/>
++#ifndef XP_MACOSX
++    <svg:clipPath id="keyhole-forward-clip-path" clipPathUnits="objectBoundingBox">
++      <svg:path d="m 0,0 c .3,.25 .3,.75, 0,1 l 1,0 0,-1 z"/>
 +    </svg:clipPath>
-+    <svg:clipPath id="windows-urlbar-back-button-clip-path" clipPathUnits="userSpaceOnUse">
-+      <svg:path d="M -1,1 a 16 16 0 0 1 0,24 l 10000,0 l 0,-24 l -10000,0 z"/>
++    <svg:clipPath id="urlbar-back-button-clip-path" clipPathUnits="userSpaceOnUse">
++      <svg:path d="m 0,-5 l 0,7.8 c 2.5,3.2 4,6.2 4,10.2 c 0,4 -1.5,7 -4,10 l 0,22l10000,0 l 0,-50 l -10000,0 z"/>
 +    </svg:clipPath>
-+#endif
-+#ifdef XP_MACOSX
++#else
 +    <svg:clipPath id="osx-keyhole-forward-clip-path" clipPathUnits="userSpaceOnUse">
 +      <svg:path d="M 0,0 a 16 16 0 0 1 0,24 l 10000,0 l 0,-24 l -10000,0 z"/>
 +    </svg:clipPath>
@@ -1801,7 +1801,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -654,19 +654,21 @@
+@@ -641,19 +641,21 @@
  @BINPATH@/defaults/autoconfig/prefcalls.js
  @BINPATH@/browser/defaults/profile/prefs.js
  

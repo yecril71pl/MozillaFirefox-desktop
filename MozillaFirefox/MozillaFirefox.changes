@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sun Apr 13 15:34:58 UTC 2014 - wr@rosenauer.org
+Thu Apr 17 20:41:36 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 29beta7
+- update to Firefox 29beta8
   * rebased patches
   * removed obsolete patches
 - requires NSS 3.16

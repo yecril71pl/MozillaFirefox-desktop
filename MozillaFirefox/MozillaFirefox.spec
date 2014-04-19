@@ -21,10 +21,13 @@
 %define mainver %major.98
 %define update_channel aurora
 
-%if %suse_version > 1220
-%define gstreamer_ver 0.10
-%else
+%if %suse_version > 1210
+%if %suse_version > 1310
 %define gstreamer_ver 1.0
+%define gstreamer 1
+%else
+%define gstreamer_ver 0.10
+%endif
 %endif
 
 Name:           MozillaFirefox
@@ -59,9 +62,15 @@ BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
-Requires:       libgstreamer-1_0
+%if 0%{?gstreamer} == 1
+Requires:       libgstreamer-1_0-0
 Recommends:     gstreamer-fluendo-mp3
-#Recommends:     gstreamer-0_10-plugins-ffmpeg
+Recommends:     gstreamer-plugin-libav
+%else
+Requires:       libgstreamer-0_10-0
+Recommends:     gstreamer-0_10-fluendo-mp3
+Recommends:     gstreamer-0_10-plugins-ffmpeg
+%endif
 %endif
 Version:        %{mainver}
 Release:        0
@@ -148,7 +157,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0
@@ -320,6 +329,9 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
+%if 0%{?gstreamer} == 1
+ac_add_options --enable-gstreamer=1.0
+%endif
 %if %suse_version > 1130
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio

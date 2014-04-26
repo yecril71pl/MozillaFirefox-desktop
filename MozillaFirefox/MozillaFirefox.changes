@@ -6,8 +6,6 @@ Sat Apr 26 12:18:07 UTC 2014 - wr@rosenauer.org
 - removed obsolete patches
   * firefox-browser-css.patch
 - requires NSS 3.16
-- patches disabled temporarily
-  * mozilla-ppc64le-build.patch
 - added mozilla-icu-strncat.patch to fix post build checks
 
 -------------------------------------------------------------------

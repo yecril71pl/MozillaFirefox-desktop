@@ -1,13 +1,13 @@
 -------------------------------------------------------------------
-Thu Apr 17 20:41:36 UTC 2014 - wr@rosenauer.org
+Sat Apr 26 12:18:07 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 29beta8
-  * rebased patches
-  * removed obsolete patches
-- requires NSS 3.16
-- patches disabled temporarily (TODO)
-  * mozilla-ppc64le-build.patch
+- update to Firefox 29.0 (bnc#)
+- rebased patches
+- removed obsolete patches
   * firefox-browser-css.patch
+- requires NSS 3.16
+- patches disabled temporarily
+  * mozilla-ppc64le-build.patch
 - added mozilla-icu-strncat.patch to fix post build checks
 
 -------------------------------------------------------------------

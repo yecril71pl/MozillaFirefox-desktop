@@ -17,9 +17,9 @@
 #
 
 
-%define major 28
-%define mainver %major.99
-%define update_channel beta
+%define major 29
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1220
 %define gstreamer_ver 0.10
@@ -65,7 +65,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014041600
+%define         releasedate 2014042500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -123,7 +123,6 @@ Patch33:        mozilla-aarch64-bmo-963023.patch
 Patch34:        mozilla-aarch64-bmo-963024.patch
 
 # Firefox/browser
-Patch100:       firefox-browser-css.patch
 Patch101:       firefox-kde.patch
 Patch102:       firefox-kde-114.patch
 Patch103:       firefox-no-default-ualocale.patch
@@ -276,7 +275,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch34 -p1
 
 # Firefox
-#%patch100 -p1
 %patch101 -p1
 %if %suse_version >= 1140
 %patch102 -p1

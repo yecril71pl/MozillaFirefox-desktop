@@ -19,7 +19,6 @@ mozilla-libproxy-compat.patch
 mozilla-aarch64-bmo-810631.patch
 
 # Firefox patches
-#firefox-browser-css.patch
 firefox-kde.patch
 firefox-kde-114.patch
 firefox-no-default-ualocale.patch

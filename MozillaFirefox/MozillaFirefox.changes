@@ -1,10 +1,15 @@
 -------------------------------------------------------------------
 Sat Apr 26 12:18:07 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 29.0 (bnc#)
+- update to Firefox 29.0 (bnc#875378)
 - rebased patches
 - removed obsolete patches
   * firefox-browser-css.patch
+  * mozilla-aarch64-599882cfb998.diff
+  * mozilla-aarch64-bmo-963028.patch
+  * mozilla-aarch64-bmo-963029.patch
+  * mozilla-aarch64-bmo-963030.patch
+  * mozilla-aarch64-bmo-963031.patch
 - requires NSS 3.16
 - added mozilla-icu-strncat.patch to fix post build checks
 

@@ -48,19 +48,19 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.3
+BuildRequires:  mozilla-nspr-devel >= 4.10.2
 BuildRequires:  mozilla-nss-devel >= 3.15.4
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %endif
-Version:        24.4.0
+Version:        24.5.0
 Release:        0
-%define         releasedate 2014031500
-%define         version_internal 24.4.0
+%define         releasedate 2014042400
+%define         version_internal 24.5.0
 %define         apiversion 24
-%define         uaweight 2404000
+%define         uaweight 2405000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other

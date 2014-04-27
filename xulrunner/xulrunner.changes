@@ -1,4 +1,32 @@
 -------------------------------------------------------------------
+Fri Apr 25 08:25:17 UTC 2014 - wr@rosenauer.org
+
+- update to xulrunner 24.5.0 (bnc#875378)
+
+-------------------------------------------------------------------
+Mon Mar 17 07:47:39 UTC 2014 - wr@rosenauer.org
+
+- update to version 24.4.0 (bnc#868603)
+  * MFSA 2014-15/CVE-2014-1493/CVE-2014-1494
+    Miscellaneous memory safety hazards
+  * MFSA 2014-17/CVE-2014-1497 (bmo#966311)
+    Out of bounds read during WAV file decoding
+  * MFSA 2014-26/CVE-2014-1508 (bmo#963198)
+    Information disclosure through polygon rendering in MathML
+  * MFSA 2014-27/CVE-2014-1509 (bmo#966021)
+    Memory corruption in Cairo during PDF font rendering
+  * MFSA 2014-28/CVE-2014-1505 (bmo#941887)
+    SVG filters information disclosure through feDisplacementMap
+  * MFSA 2014-29/CVE-2014-1510/CVE-2014-1511 (bmo#982906, bmo#982909)
+    Privilege escalation using WebIDL-implemented APIs
+  * MFSA 2014-30/CVE-2014-1512 (bmo#982957)
+    Use-after-free in TypeObject
+  * MFSA 2014-31/CVE-2014-1513 (bmo#982974)
+    Out-of-bounds read/write through neutering ArrayBuffer objects
+  * MFSA 2014-32/CVE-2014-1514 (bmo#983344)
+    Out-of-bounds write through TypedArrayObject after neutering
+
+-------------------------------------------------------------------
 Fri Feb 28 11:02:40 UTC 2014 - pcerny@suse.com
 
 - Updated PowerPC 64 bit support

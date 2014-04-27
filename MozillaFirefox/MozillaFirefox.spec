@@ -121,7 +121,6 @@ Patch14:        mozilla-libproxy-compat.patch
 Patch30:        mozilla-aarch64-bmo-810631.patch
 
 # Firefox/browser
-Patch100:       firefox-browser-css.patch
 Patch101:       firefox-kde.patch
 Patch102:       firefox-kde-114.patch
 Patch103:       firefox-no-default-ualocale.patch
@@ -263,7 +262,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch30 -p1
 
 # Firefox
-#%patch100 -p1
 %patch101 -p1
 %if %suse_version >= 1140
 %patch102 -p1

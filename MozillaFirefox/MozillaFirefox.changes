@@ -1,16 +1,16 @@
 -------------------------------------------------------------------
-Thu Apr 17 21:28:05 UTC 2014 - wr@rosenauer.org
+Wed Apr 23 08:03:17 UTC 2014 - wr@rosenauer.org
 
-- update to Aurora 30 (20140417)
+- update to Aurora 30 (20140422)
   * rebased patches
   * removed obsolete patches
 - requires NSPR 4.10.4
-- enabled GStreamer 1.0 usage
+- enabled GStreamer 1.0 usage for 13.2 and above
 
 -------------------------------------------------------------------
-Thu Apr 17 20:41:36 UTC 2014 - wr@rosenauer.org
+Sat Apr 19 06:21:06 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 29beta8
+- update to Firefox 29beta9
   * rebased patches
   * removed obsolete patches
 - requires NSS 3.16

@@ -2,6 +2,20 @@
 Fri Apr 25 08:25:17 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 24.5.0 (bnc#875378)
+  * MFSA 2014-34/CVE-2014-1518
+    Miscellaneous memory safety hazards
+  * MFSA 2014-37/CVE-2014-1523 (bmo#969226)
+    Out of bounds read while decoding JPG images
+  * MFSA 2014-38/CVE-2014-1524 (bmo#989183)
+    Buffer overflow when using non-XBL object as XBL
+  * MFSA 2014-42/CVE-2014-1529 (bmo#987003)
+    Privilege escalation through Web Notification API
+  * MFSA 2014-43/CVE-2014-1530 (bmo#895557)
+    Cross-site scripting (XSS) using history navigations
+  * MFSA 2014-44/CVE-2014-1531 (bmo#987140)
+    Use-after-free in imgLoader while resizing images
+  * MFSA 2014-46/CVE-2014-1532 (bmo#966006)
+    Use-after-free in nsHostResolver
 
 -------------------------------------------------------------------
 Sun Mar 16 17:28:25 UTC 2014 - wr@rosenauer.org

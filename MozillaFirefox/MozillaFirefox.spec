@@ -198,7 +198,7 @@ of Firefox.
 %package translations-other
 Summary:        Extra translations for Firefox
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;an;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;vi;xh;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -371,6 +371,10 @@ cd $RPM_BUILD_DIR/obj
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
+# need to remove default en-US firefox-l10n.js before it gets
+# populated into browser's omni.ja; it only contains general.useragent.locale
+# which should be loaded from each language pack (set in firefox.js)
+rm dist/bin/browser/defaults/preferences/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
 grep amazondotcom dist/firefox/browser/omni.ja

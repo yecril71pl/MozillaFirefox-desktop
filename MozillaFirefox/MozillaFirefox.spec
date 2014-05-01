@@ -18,8 +18,8 @@
 
 
 %define major 29
-%define mainver %major.98
-%define update_channel aurora
+%define mainver %major.99
+%define update_channel beta
 
 %if %suse_version > 1210
 %if %suse_version > 1310
@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014042200
+%define         releasedate 2014043000
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -156,7 +156,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0
@@ -361,6 +361,10 @@ cd $RPM_BUILD_DIR/obj
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
+# need to remove default en-US firefox-l10n.js before it gets
+# populated into browser's omni.ja; it only contains general.useragent.locale
+# which should be loaded from each language pack (set in firefox.js)
+rm dist/bin/browser/defaults/preferences/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
 grep amazondotcom dist/firefox/browser/omni.ja

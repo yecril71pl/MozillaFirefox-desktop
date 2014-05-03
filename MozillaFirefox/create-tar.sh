@@ -3,7 +3,7 @@
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
-VERSION="29.99
+VERSION="29.99"
 
 # mozilla
 if [ -d mozilla ]; then

@@ -17,7 +17,7 @@
 #
 
 
-%define major 29
+%define major 30
 %define mainver %major.98
 %define update_channel aurora
 
@@ -54,8 +54,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.4
-BuildRequires:  mozilla-nss-devel >= 3.16
+BuildRequires:  mozilla-nspr-devel >= 4.10.5
+BuildRequires:  mozilla-nss-devel >= 3.16.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014042200
+%define         releasedate 2014050300
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -361,6 +361,10 @@ cd $RPM_BUILD_DIR/obj
 source %{SOURCE5}
 export MOZ_SOURCE_STAMP=$REV
 export MOZ_SOURCE_REPO=$REPO
+# need to remove default en-US firefox-l10n.js before it gets
+# populated into browser's omni.ja; it only contains general.useragent.locale
+# which should be loaded from each language pack (set in firefox.js)
+rm dist/bin/browser/defaults/preferences/firefox-l10n.js
 make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
 grep amazondotcom dist/firefox/browser/omni.ja

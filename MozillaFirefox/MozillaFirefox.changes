@@ -1,16 +1,58 @@
 -------------------------------------------------------------------
-Sun Apr 27 15:51:18 UTC 2014 - wr@rosenauer.org
+Thu May  1 15:35:25 UTC 2014 - wr@rosenauer.org
 
-- update to Aurora 30 (20140422)
-  * rebased patches
-  * removed obsolete patches
+- update to Firefox 30.0b1
+- rebased patches
+- removed obsolete patches
+  * firefox-browser-css.patch
+  * mozilla-aarch64-bmo-962488.patch
+  * mozilla-aarch64-bmo-963023.patch
+  * mozilla-aarch64-bmo-963024.patch
+  * mozilla-aarch64-bmo-963027.patch
+  * mozilla-ppc64-xpcom.patch
+  * mozilla-ppc64le-javascript.patch
+  * mozilla-ppc64le-libffi.patch
+  * mozilla-ppc64le-mfbt.patch
+  * mozilla-ppc64le-webrtc.patch
+  * mozilla-ppc64le-xpcom.patch
 - requires NSPR 4.10.4
 - enabled GStreamer 1.0 usage for 13.2 and above
+
+-------------------------------------------------------------------
+Thu May  1 15:29:04 UTC 2014 - wr@rosenauer.org
+
+- general.useragent.locale gets overwritten with en-US while it
+  should be using the active langpack's setting
 
 -------------------------------------------------------------------
 Sat Apr 26 12:18:07 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 29.0 (bnc#875378)
+  * MFSA 2014-34/CVE-2014-1518/CVE-2014-1519
+    Miscellaneous memory safety hazards
+  * MFSA 2014-36/CVE-2014-1522 (bmo#995289)
+    Web Audio memory corruption issues
+  * MFSA 2014-37/CVE-2014-1523 (bmo#969226)
+    Out of bounds read while decoding JPG images
+  * MFSA 2014-38/CVE-2014-1524 (bmo#989183)
+    Buffer overflow when using non-XBL object as XBL
+  * MFSA 2014-39/CVE-2014-1525 (bmo#989210)
+    Use-after-free in the Text Track Manager for HTML video
+  * MFSA 2014-41/CVE-2014-1528 (bmo#963962)
+    Out-of-bounds write in Cairo
+  * MFSA 2014-42/CVE-2014-1529 (bmo#987003)
+    Privilege escalation through Web Notification API
+  * MFSA 2014-43/CVE-2014-1530 (bmo#895557)
+    Cross-site scripting (XSS) using history navigations
+  * MFSA 2014-44/CVE-2014-1531 (bmo#987140)
+    Use-after-free in imgLoader while resizing images
+  * MFSA 2014-45/CVE-2014-1492 (bmo#903885)
+    Incorrect IDNA domain name matching for wildcard certificates
+    (fixed by NSS 3.16)
+  * MFSA 2014-46/CVE-2014-1532 (bmo#966006)
+    Use-after-free in nsHostResolver
+  * MFSA 2014-47/CVE-2014-1526 (bmo#988106)
+    Debugger can bypass XrayWrappers with JavaScript
 - rebased patches
 - removed obsolete patches
   * firefox-browser-css.patch

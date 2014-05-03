@@ -3,7 +3,7 @@
 CHANNEL="aurora"
 BRANCH="releases/mozilla-$CHANNEL"
 RELEASE_TAG="default"
-VERSION="29.98"
+VERSION="30.98"
 
 # mozilla
 if [ -d mozilla ]; then

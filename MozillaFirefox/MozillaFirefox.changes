@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu May  8 06:22:45 UTC 2014 - wr@rosenauer.org
+Thu May 15 07:27:58 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 30.0b2
+- update to Firefox 30.0b4
 - rebased patches
 - removed obsolete patches
   * firefox-browser-css.patch

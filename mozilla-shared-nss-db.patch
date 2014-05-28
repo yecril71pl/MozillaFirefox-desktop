@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8069,16 +8069,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8231,16 +8231,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -79,7 +79,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -1129,17 +1136,31 @@ nsNSSComponent::InitializeNSS()
+@@ -1141,17 +1148,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -112,14 +112,14 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
      if (init_rv != SECSuccess) {
        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
      }
-diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
---- a/toolkit/library/Makefile.in
-+++ b/toolkit/library/Makefile.in
-@@ -161,17 +161,17 @@ endif
- ifneq (,$(filter WINNT,$(OS_ARCH)))
- SDK_LIBRARY = $(IMPORT_LIBRARY)
- else
- SDK_LIBRARY = $(SHARED_LIBRARY)
+diff --git a/toolkit/library/libxul.mk b/toolkit/library/libxul.mk
+--- a/toolkit/library/libxul.mk
++++ b/toolkit/library/libxul.mk
+@@ -146,17 +146,17 @@ OS_LIBS += $(call EXPAND_LIBNAME,mfuuid 
+ endif
+ 
+ ifdef MOZ_DIRECTSHOW
+ OS_LIBS += $(call EXPAND_LIBNAME,dmoguids wmcodecdspuuid strmiids msdmo)
  endif
  
  EXTRA_DSO_LDOPTS += $(LIBS_DIR)
@@ -128,9 +128,9 @@ diff --git a/toolkit/library/Makefile.in b/toolkit/library/Makefile.in
 +EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB) $(NSSHELPER_LIBS)
  
  ifeq ($(MOZ_WIDGET_TOOLKIT),cocoa)
- CXXFLAGS += $(TK_CFLAGS)
  OS_LIBS += \
    $(TK_LIBS) \
    $(NULL)
  endif
  
+ ifeq (OpenBSD,$(OS_ARCH))

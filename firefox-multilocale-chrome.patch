@@ -1,12 +1,12 @@
 # HG changeset patch
-# Parent 4b6055d24a2bbc4a37490214df4acf08269f14ff
+# Parent 8e7e4170601428db00564f738c8223c8d5122274
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -368,16 +368,20 @@ pref("browser.helperApps.deleteTempFileO
+@@ -375,16 +375,20 @@ pref("browser.helperApps.deleteTempFileO
  #endif
  
  // search engines URL
@@ -121,14 +121,14 @@ diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en
    <MozParam name="channel" condition="purpose" purpose="keyword" value="fflb"/>
    <MozParam name="channel" condition="purpose" purpose="searchbar" value="sb"/>
    <MozParam name="channel" condition="purpose" purpose="homepage" value="np"/>
+   <MozParam name="channel" condition="purpose" purpose="newtab" value="nts"/>
    <MozParam name="source" condition="purpose" purpose="homepage" value="hp"/>
  </Url>
- <SearchForm>https://www.google.com/</SearchForm>
- </SearchPlugin>
+ <Url type="text/html" method="GET" template="https://www.google.com/" rel="searchform"/>
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -123,14 +123,15 @@
+@@ -130,14 +130,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/

@@ -19,8 +19,13 @@ Thu May 15 07:27:58 UTC 2014 - wr@rosenauer.org
 - enabled GStreamer 1.0 usage for 13.2 and above
 
 -------------------------------------------------------------------
-Thu May  1 15:29:04 UTC 2014 - wr@rosenauer.org
+Sat May 10 06:09:37 UTC 2014 - wr@rosenauer.org
 
+- update to Firefox 29.0.1
+  * Seer disabled by default (bmo#1005958)
+  * Session Restore failed with a corrupted sessionstore.js file
+    (bmo#1001167)
+  * pdf.js printing white page (bmo#1003707, bnc#876833)
 - general.useragent.locale gets overwritten with en-US while it
   should be using the active langpack's setting
 

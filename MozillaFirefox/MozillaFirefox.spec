@@ -41,7 +41,7 @@ BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  makeinfo
-BuildRequires:  python
+BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
 BuildRequires:  update-desktop-files

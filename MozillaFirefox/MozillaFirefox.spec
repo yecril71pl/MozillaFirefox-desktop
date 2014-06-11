@@ -17,9 +17,9 @@
 #
 
 
-%define major 29
-%define mainver %major.99
-%define update_channel beta
+%define major 30
+%define mainver %major.0
+%define update_channel release
 
 %if %suse_version > 1210
 %if %suse_version > 1310
@@ -54,7 +54,7 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.4
+BuildRequires:  mozilla-nspr-devel >= 4.10.6
 BuildRequires:  mozilla-nss-devel >= 3.16
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014051400
+%define         releasedate 2014060900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

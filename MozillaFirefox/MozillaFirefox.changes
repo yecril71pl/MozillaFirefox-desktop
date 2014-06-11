@@ -39,6 +39,7 @@ Mon Jun  9 08:28:17 UTC 2014 - wr@rosenauer.org
   * mozilla-ppc64le-mfbt.patch
   * mozilla-ppc64le-webrtc.patch
   * mozilla-ppc64le-xpcom.patch
+  * mozilla-ppc64le-build.patch
 - requires NSPR 4.10.6
 - enabled GStreamer 1.0 usage for 13.2 and above
 

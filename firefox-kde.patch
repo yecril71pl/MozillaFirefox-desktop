@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1213 @@
+@@ -0,0 +1,1219 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -810,6 +810,12 @@ new file mode 100644
 +                      oncommand="toggleSidebar('viewBookmarksSidebar');">
 +              <observes element="viewBookmarksSidebar" attribute="checked"/>
 +            </menuitem>
++            <!-- NB: temporary solution for bug 985024, this should go away soon. -->
++            <menuitem id="BMB_bookmarksShowAllTop"
++                      class="menuitem-iconic subviewbutton"
++                      label="&showAllBookmarks2.label;"
++                      command="Browser:ShowAllBookmarks"
++                      key="manBookmarkKb"/>
 +            <menuseparator/>
 +            <menuitem id="BMB_subscribeToPageMenuitem"
 +#ifndef XP_MACOSX
@@ -1219,7 +1225,7 @@ new file mode 100644
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -66,16 +66,18 @@ browser.jar:
+@@ -62,16 +62,18 @@ browser.jar:
          content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)
          content/browser/aboutSocialError.xhtml        (content/aboutSocialError.xhtml)

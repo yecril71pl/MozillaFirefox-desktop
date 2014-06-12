@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Jun 12 20:58:31 UTC 2014 - wr@rosenauer.org
+
+- update to Aurora 32 (20140611)
+- rebased patches
+- requires NSS 3.16.2
+
+-------------------------------------------------------------------
 Thu Jun 12 15:41:45 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 31beta1

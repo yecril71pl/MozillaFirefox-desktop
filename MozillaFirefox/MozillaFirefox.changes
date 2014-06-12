@@ -1,14 +1,38 @@
 -------------------------------------------------------------------
-Wed May 28 20:15:32 UTC 2014 - wr@rosenauer.org
+Thu Jun 12 15:41:45 UTC 2014 - wr@rosenauer.org
 
-- update to Aurora 31 (20140527)
+- update to Firefox 31beta1
 - rebased patches
-- requires NSPR 4.10.5 and NSS 3.16.1
+- requires NSS 3.16.1
 
 -------------------------------------------------------------------
-Thu May 15 07:27:58 UTC 2014 - wr@rosenauer.org
+Mon Jun  9 08:28:17 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 30.0b4
+- update to Firefox 30.0 (bnc#881874)
+  * MFSA 2014-48/CVE-2014-1533/CVE-2014-1534
+    (bmo#921622, bmo#967354, bmo#969517, bmo#969549, bmo#973874,
+     bmo#978652, bmo#978811, bmo#988719, bmo#990868, bmo#991981,
+     bmo#992274, bmo#994907, bmo#995679, bmo#995816, bmo#995817,
+     bmo#996536, bmo#996715, bmo#999651, bmo#1000598,
+     bmo#1000960, bmo#1002340, bmo#1005578, bmo#1007223,
+     bmo#1009952, bmo#1011007)
+    Miscellaneous memory safety hazards (rv:30.0)
+  * MFSA 2014-49/CVE-2014-1536/CVE-2014-1537/CVE-2014-1538
+    (bmo#989994, bmo#999274, bmo#1005584)
+    Use-after-free and out of bounds issues found using Address
+    Sanitizer
+  * MFSA 2014-50/CVE-2014-1539 (bmo#995603)
+    Clickjacking through cursor invisability after Flash interaction
+  * MFSA 2014-51/CVE-2014-1540 (bmo#978862)
+    Use-after-free in Event Listener Manager
+  * MFSA 2014-52/CVE-2014-1541 (bmo#1000185)
+    Use-after-free with SMIL Animation Controller
+  * MFSA 2014-53/CVE-2014-1542 (bmo#991533)
+    Buffer overflow in Web Audio Speex resampler
+  * MFSA 2014-54/CVE-2014-1543 (bmo#1011859)
+    Buffer overflow in Gamepad API
+  * MFSA 2014-55/CVE-2014-1545 (bmo#1018783)
+    Out of bounds write in NSPR
 - rebased patches
 - removed obsolete patches
   * firefox-browser-css.patch
@@ -22,7 +46,8 @@ Thu May 15 07:27:58 UTC 2014 - wr@rosenauer.org
   * mozilla-ppc64le-mfbt.patch
   * mozilla-ppc64le-webrtc.patch
   * mozilla-ppc64le-xpcom.patch
-- requires NSPR 4.10.4
+  * mozilla-ppc64le-build.patch
+- requires NSPR 4.10.6
 - enabled GStreamer 1.0 usage for 13.2 and above
 
 -------------------------------------------------------------------

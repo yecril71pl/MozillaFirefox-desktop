@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014061100
+%define         releasedate 2014062000
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -156,7 +156,7 @@ Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%define branding 0
+%define branding 1
 %define localize 1
 %ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0

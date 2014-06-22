@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Thu Jun 12 15:41:45 UTC 2014 - wr@rosenauer.org
+Sat Jun 21 15:11:10 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 31beta1
+- update to Firefox 31beta3
 - rebased patches
 - requires NSS 3.16.1
 

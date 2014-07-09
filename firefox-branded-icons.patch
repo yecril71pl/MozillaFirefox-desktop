@@ -1,10 +1,10 @@
 # HG changeset patch
-# Parent 9745e5d5cdc7e91dbfc5582b49881668cb6725f7
+# Parent 17ccae9100af86bc65f924b87545184af2f4ada9
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
 +++ b/browser/app/Makefile.in
-@@ -76,16 +76,21 @@ GARBAGE += $(addprefix $(FINAL_TARGET)/d
+@@ -75,16 +75,21 @@ GARBAGE += $(addprefix $(FINAL_TARGET)/d
  endif
  
  ifdef MOZ_WIDGET_GTK
@@ -54,7 +54,7 @@ diff --git a/browser/branding/official/Makefile.in b/browser/branding/official/M
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -613,18 +613,21 @@
+@@ -629,18 +629,21 @@
  @BINPATH@/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/install.rdf
  @BINPATH@/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}/icon.png
  @BINPATH@/chrome/toolkit@JAREXT@
@@ -70,9 +70,9 @@ diff --git a/browser/installer/package-manifest.in b/browser/installer/package-m
 +@BINPATH@/browser/chrome/icons/default/default256.png
  #endif
  
- ; shell icons
- #ifdef XP_UNIX
- #ifndef XP_MACOSX
- ; shell icons
- @BINPATH@/browser/icons/*.png
- #ifdef MOZ_UPDATER
+ ; [Webide Files]
+ #ifdef MOZ_DEVTOOLS_WEBIDE
+ @BINPATH@/browser/chrome/webide@JAREXT@
+ @BINPATH@/browser/chrome/webide.manifest
+ @BINPATH@/browser/@PREF_DIR@/webide-prefs.js
+ #endif

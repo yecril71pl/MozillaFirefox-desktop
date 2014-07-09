@@ -55,7 +55,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.6
-BuildRequires:  mozilla-nss-devel >= 3.16.2
+BuildRequires:  mozilla-nss-devel >= 3.16.3
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -117,8 +117,6 @@ Patch11:        mozilla-icu-strncat.patch
 Patch12:        mozilla-arm-disable-edsp.patch
 Patch13:        mozilla-ppc.patch
 Patch14:        mozilla-libproxy-compat.patch
-# Gecko/Toolkit AArch64 Porting
-Patch30:        mozilla-aarch64-bmo-810631.patch
 
 # Firefox/browser
 Patch101:       firefox-kde.patch
@@ -259,7 +257,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch30 -p1
 
 # Firefox
 %patch101 -p1

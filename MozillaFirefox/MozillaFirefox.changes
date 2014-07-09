@@ -1,16 +1,18 @@
 -------------------------------------------------------------------
-Thu Jun 12 20:58:31 UTC 2014 - wr@rosenauer.org
+Wed Jul  9 05:13:39 UTC 2014 - wr@rosenauer.org
 
-- update to Aurora 32 (20140611)
+- update to Aurora 32 (20140707)
 - rebased patches
-- requires NSS 3.16.2
+- requires NSS 3.16.3
+- removed upstreamed patch
+  * mozilla-aarch64-bmo-810631.patch
 
 -------------------------------------------------------------------
-Thu Jun 12 15:41:45 UTC 2014 - wr@rosenauer.org
+Sat Jul  5 12:28:20 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 31beta1
+- update to Firefox 31beta7
 - rebased patches
-- requires NSS 3.16.1
+- requires NSS 3.16.2
 
 -------------------------------------------------------------------
 Mon Jun  9 08:28:17 UTC 2014 - wr@rosenauer.org

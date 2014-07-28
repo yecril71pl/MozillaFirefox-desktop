@@ -1,4 +1,21 @@
 -------------------------------------------------------------------
+Sun Jul 20 08:29:55 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 24.7.0 (bnc#887746)
+  * MFSA 2014-56/CVE-2014-1547/CVE-2014-1548
+    Miscellaneous memory safety hazards
+  * MFSA 2014-61/CVE-2014-1555 (bmo#1023121)
+    Use-after-free with FireOnStateChange event
+  * MFSA 2014-62/CVE-2014-1556 (bmo#1028891)
+    Exploitable WebGL crash with Cesium JavaScript library
+  * MFSA 2014-63/CVE-2014-1544 (bmo#963150)
+    Use-after-free while when manipulating certificates in the trusted cache
+    (solved with NSS 3.16.2 requirement)
+  * MFSA 2014-64/CVE-2014-1557 (bmo#913805)
+    Crash in Skia library when scaling high quality images
+- require NSS 3.16.2
+
+-------------------------------------------------------------------
 Sat Jun  7 06:45:33 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 24.6.0 (bnc#881874)

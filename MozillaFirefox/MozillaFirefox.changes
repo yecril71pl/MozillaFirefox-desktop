@@ -1,18 +1,42 @@
 -------------------------------------------------------------------
-Wed Jul  9 05:13:39 UTC 2014 - wr@rosenauer.org
+Mon Jul 28 07:08:08 UTC 2014 - wr@rosenauer.org
 
-- update to Aurora 32 (20140707)
+- update to Firefox 32b1
 - rebased patches
 - requires NSS 3.16.3
 - removed upstreamed patch
   * mozilla-aarch64-bmo-810631.patch
 
 -------------------------------------------------------------------
-Sat Jul  5 12:28:20 UTC 2014 - wr@rosenauer.org
+Sun Jul 20 18:11:44 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 31beta7
+- update to Firefox 31.0 (bnc#887746)
+  * MFSA 2014-56/CVE-2014-1547/CVE-2014-1548
+    Miscellaneous memory safety hazards
+  * MFSA 2014-57/CVE-2014-1549 (bmo#1020205)
+    Buffer overflow during Web Audio buffering for playback
+  * MFSA 2014-58/CVE-2014-1550 (bmo#1020411)
+    Use-after-free in Web Audio due to incorrect control message ordering
+  * MFSA 2014-60/CVE-2014-1561 (bmo#1000514, bmo#910375)
+    Toolbar dialog customization event spoofing
+  * MFSA 2014-61/CVE-2014-1555 (bmo#1023121)
+    Use-after-free with FireOnStateChange event
+  * MFSA 2014-62/CVE-2014-1556 (bmo#1028891)
+    Exploitable WebGL crash with Cesium JavaScript library
+  * MFSA 2014-63/CVE-2014-1544 (bmo#963150)
+    Use-after-free while when manipulating certificates in the trusted cache
+    (solved with NSS 3.16.2 requirement)
+  * MFSA 2014-64/CVE-2014-1557 (bmo#913805)
+    Crash in Skia library when scaling high quality images
+  * MFSA 2014-65/CVE-2014-1558/CVE-2014-1559/CVE-2014-1560
+    (bmo#1015973, bmo#1026022, bmo#997795)
+    Certificate parsing broken by non-standard character encoding
+  * MFSA 2014-66/CVE-2014-1552 (bmo#985135)
+    IFRAME sandbox same-origin access through redirect
+- use EGL on ARM
 - rebased patches
 - requires NSS 3.16.2
+- requires python-devel (not only python)
 
 -------------------------------------------------------------------
 Mon Jun  9 08:28:17 UTC 2014 - wr@rosenauer.org

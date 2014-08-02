@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014072700
+%define         releasedate 2014080100
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -349,6 +349,10 @@ ac_add_options --disable-neon
 %endif
 %ifnarch %ix86 x86_64
 ac_add_options --disable-webrtc
+%endif
+# try to use OpenGL-ES on ARM
+%ifarch %arm
+ac_add_options --with-gl-provider=EGL
 %endif
 EOF
 make -f client.mk build

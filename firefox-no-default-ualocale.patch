@@ -1,14 +1,14 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent 5ffbb37bbfc52f549620ff67ce45f218a825cf4e
+# Parent b7bc98abc45462dec0f6603f3c9a88e772172f29
 Do not overwrite the locale dynamic pref from xulrunner's all.js with a wrong default value
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -253,17 +253,17 @@ pref("browser.uitour.pinnedTabUrl", "htt
- pref("browser.uitour.url", "https://www.mozilla.org/%LOCALE%/firefox/%VERSION%/tour/");
+@@ -254,17 +254,17 @@ pref("browser.uitour.url", "https://www.
  pref("browser.uitour.whitelist.add.260", "www.mozilla.org,support.mozilla.org");
+ pref("browser.uitour.whitelist.add.340", "about:home");
  
  pref("browser.customizemode.tip0.shown", false);
  pref("browser.customizemode.tip0.learnMoreUrl", "https://support.mozilla.org/1/firefox/%VERSION%/%OS%/%LOCALE%/customize");

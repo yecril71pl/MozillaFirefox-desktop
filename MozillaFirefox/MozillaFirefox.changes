@@ -1,9 +1,9 @@
 -------------------------------------------------------------------
-Mon Jul 28 07:08:08 UTC 2014 - wr@rosenauer.org
+Sun Aug 24 19:56:04 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 32b1
+- update to Firefox 32.0b9
 - rebased patches
-- requires NSS 3.16.3
+- requires NSS 3.16.4
 - removed upstreamed patch
   * mozilla-aarch64-bmo-810631.patch
 

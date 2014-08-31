@@ -1,0 +1,55 @@
+# HG changeset patch
+# Parent c7f2d830f66744f9da21b93f80017d28b5fba9a0
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+Bug 1044581 - compilation error: bit_reader.cc:12:3: error: 'nullptr' was not declared in this scope
+
+diff --git a/content/media/fmp4/demuxer/bit_reader.cc b/content/media/fmp4/demuxer/bit_reader.cc
+--- a/content/media/fmp4/demuxer/bit_reader.cc
++++ b/content/media/fmp4/demuxer/bit_reader.cc
+@@ -1,12 +1,13 @@
+ // Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
+ 
++#include "nullptr.h"
+ #include "mp4_demuxer/bit_reader.h"
+ #include <algorithm>
+ 
+ namespace mp4_demuxer {
+ 
+ BitReader::BitReader(const uint8_t* data, off_t size)
+     : data_(data), bytes_left_(size), num_remaining_bits_in_curr_byte_(0) {
+   DCHECK(data_ != nullptr && bytes_left_ > 0);
+diff --git a/content/media/fmp4/moz.build b/content/media/fmp4/moz.build
+--- a/content/media/fmp4/moz.build
++++ b/content/media/fmp4/moz.build
+@@ -2,16 +2,17 @@
+ # vim: set filetype=python:
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ 
+ EXPORTS += [
+     'MP4Decoder.h',
+     'MP4Reader.h',
++    'nullptr.h',
+     'PlatformDecoderModule.h',
+ ]
+ 
+ EXPORTS.mp4_demuxer += [
+     'demuxer/aac.h',
+     'demuxer/audio_decoder_config.h',
+     'demuxer/avc.h',
+     'demuxer/basictypes.h',
+diff --git a/content/media/fmp4/nullptr.h b/content/media/fmp4/nullptr.h
+new file mode 100644
+--- /dev/null
++++ b/content/media/fmp4/nullptr.h
+@@ -0,0 +1,7 @@
++
++// GCC does not understand nullptr until 4.6
++#if defined(__GNUC__) && !defined(__clang__)
++#if __GNUC__ * 100 + __GNUC_MINOR__ < 406
++#define nullptr __null
++#endif
++#endif

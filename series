@@ -16,6 +16,7 @@ mozilla-ppc.patch
 mozilla-idldir.patch
 mozilla-libproxy-compat.patch
 mozilla-aarch64-bmo-810631.patch
+mozilla-nullptr-gcc45.patch
 
 # Firefox patches
 firefox-kde.patch

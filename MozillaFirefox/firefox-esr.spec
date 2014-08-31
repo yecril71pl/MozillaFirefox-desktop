@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox
+# spec file for package firefox-esr
 #
 # Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2014 Wolfgang Rosenauer
@@ -30,7 +30,7 @@
 %endif
 %endif
 
-Name:           MozillaFirefox
+Name:           firefox-esr
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -78,14 +78,15 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 Version:        %{mainver}
 Release:        0
 %define         releasedate 2014082900
-Provides:       firefox = %{mainver}
-Provides:       firefox = %{version}-%{release}
+Provides:       firefox-esr = %{mainver}
+Provides:       firefox-esr = %{version}-%{release}
 Provides:       web_browser
 Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
+Conflicts:      firefox
 Summary:        Mozilla Firefox Web Browser
 License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
@@ -213,7 +214,7 @@ of Firefox.
 Summary:        Upstream branding for Firefox
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = %{version}
-Conflicts:      otherproviders(%{name}-branding)
+Conflicts:      otherproviders(MozillaFirefox-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -
 #BRAND: /usr/lib/firefox/browserconfig.properties that contains the

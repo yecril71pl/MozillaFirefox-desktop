@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Aug 30 10:53:59 UTC 2014 - wr@rosenauer.org
+
+- renamed package to firefox-esr
+
+-------------------------------------------------------------------
 Fri Aug 29 16:39:43 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 31.1.0esr (bnc#)

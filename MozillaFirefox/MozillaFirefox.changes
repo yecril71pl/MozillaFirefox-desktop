@@ -1,11 +1,27 @@
 -------------------------------------------------------------------
-Sun Aug 24 19:56:04 UTC 2014 - wr@rosenauer.org
+Sun Aug 31 07:44:54 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 32.0b9
+- update to Firefox 32.0 (bnc#894370)
+  * MFSA 2014-67/CVE-2014-1553/CVE-2014-1554/CVE-2014-1562
+    Miscellaneous memory safety hazards
+  * MFSA 2014-68/CVE-2014-1563 (bmo#1018524)
+    Use-after-free during DOM interactions with SVG
+  * MFSA 2014-69/CVE-2014-1564 (bmo#1045977)
+    Uninitialized memory use during GIF rendering
+  * MFSA 2014-70/CVE-2014-1565 (bmo#1047831)
+    Out-of-bounds read in Web Audio audio timeline
+  * MFSA 2014-72/CVE-2014-1567 (bmo#1037641)
+    Use-after-free setting text directionality
 - rebased patches
 - requires NSS 3.16.4
 - removed upstreamed patch
   * mozilla-aarch64-bmo-810631.patch
+
+-------------------------------------------------------------------
+Wed Aug 20 13:50:58 CEST 2014 - behlert@suse.de
+
+- adapted _constraints, used more than 3900MB on s390x during
+  last build
 
 -------------------------------------------------------------------
 Sun Jul 20 18:11:44 UTC 2014 - wr@rosenauer.org

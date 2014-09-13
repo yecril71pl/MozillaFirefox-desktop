@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Sat Sep 13 16:58:16 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 32.0.1
+  * fixed stability issues for computers with multiple graphics cards
+  * mixed content icon may be incorrectly displayed instead of lock
+    icon for SSL sites in 32.0 (
+  * WebRTC: setRemoteDescription() silently fails if no success
+    callback is specified (bmo#1063971)
+
+-------------------------------------------------------------------
 Sun Aug 31 07:44:54 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 32.0 (bnc#894370)

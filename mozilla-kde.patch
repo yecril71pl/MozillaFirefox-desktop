@@ -2719,10 +2719,13 @@ diff --git a/uriloader/exthandler/unix/nsCommonRegistry.h b/uriloader/exthandler
 new file mode 100644
 --- /dev/null
 +++ b/uriloader/exthandler/unix/nsCommonRegistry.h
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,28 @@
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
 + * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
++
++#ifndef nsCommonRegistry_h__
++#define nsCommonRegistry_h__
 +
 +#include "nsIURI.h"
 +#include "nsCOMPtr.h"
@@ -2743,6 +2746,8 @@ new file mode 100644
 +
 +  static already_AddRefed<nsMIMEInfoBase> GetFromType(const nsACString& aMIMEType);
 +};
++
++#endif
 diff --git a/uriloader/exthandler/unix/nsKDERegistry.cpp b/uriloader/exthandler/unix/nsKDERegistry.cpp
 new file mode 100644
 --- /dev/null

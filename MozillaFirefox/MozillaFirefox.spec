@@ -115,9 +115,6 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-sle11.patch
 Patch11:        mozilla-icu-strncat.patch
 Patch12:        mozilla-arm-disable-edsp.patch
-Patch13:        mozilla-ppc.patch
-Patch14:        mozilla-libproxy-compat.patch
-
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-kde-114.patch
@@ -256,8 +253,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-
 # Firefox
 %patch101 -p1
 %if %suse_version >= 1140

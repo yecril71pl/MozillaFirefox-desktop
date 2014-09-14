@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sun Sep 14 19:59:11 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 33.0b3
+- requires NSPR 4.10.7
+- requires NSS 3.17
+
+-------------------------------------------------------------------
 Sat Sep 13 16:58:16 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 32.0.1

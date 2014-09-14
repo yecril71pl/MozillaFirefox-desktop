@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8231,16 +8231,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8193,16 +8193,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -79,7 +79,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -1141,17 +1148,31 @@ nsNSSComponent::InitializeNSS()
+@@ -1115,17 +1122,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -115,14 +115,14 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/libxul.mk b/toolkit/library/libxul.mk
 --- a/toolkit/library/libxul.mk
 +++ b/toolkit/library/libxul.mk
-@@ -146,17 +146,17 @@ OS_LIBS += $(call EXPAND_LIBNAME,mfuuid 
+@@ -145,17 +145,17 @@ endif
+ ifdef MOZ_WMF
+ OS_LIBS += $(call EXPAND_LIBNAME,mfuuid wmcodecdspuuid strmiids)
  endif
  
  ifdef MOZ_DIRECTSHOW
  OS_LIBS += $(call EXPAND_LIBNAME,dmoguids wmcodecdspuuid strmiids msdmo)
  endif
- 
- EXTRA_DSO_LDOPTS += $(LIBS_DIR)
  
 -EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB)
 +EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB) $(NSSHELPER_LIBS)

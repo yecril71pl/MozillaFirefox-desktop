@@ -1,9 +1,12 @@
 -------------------------------------------------------------------
-Sun Sep 14 19:59:11 UTC 2014 - wr@rosenauer.org
+Tue Sep 16 06:16:11 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 33.0b3
+- update to Firefox 33.0b4
 - requires NSPR 4.10.7
 - requires NSS 3.17
+- use some more build flags to align with upstream
+- use --disable-optimize for i586 where build fails otherwise
+  (bnc#896624)
 
 -------------------------------------------------------------------
 Sat Sep 13 16:58:16 UTC 2014 - wr@rosenauer.org

@@ -252,7 +252,6 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 # Firefox
 %patch101 -p1
 %if %suse_version >= 1140
@@ -304,6 +303,14 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
+ac_add_options --enable-release
+ac_add_options --enable-stdcxx-compat
+%ifarch %ix86
+%if %suse_version > 1230
+ac_add_options --disable-optimize
+%endif
+%endif
+ac_add_options --enable-elf-hack
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 %if %{localize}

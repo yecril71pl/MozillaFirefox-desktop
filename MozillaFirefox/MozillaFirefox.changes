@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Sat Sep 20 13:33:51 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 32.0.2
+  * just a version bump for our builds
+  * fixed the in application update process for certain environments
+    (in application update is not enabled in openSUSE and Linux
+    is unaffected in any case)
+- build with --disable-optimize for 13.1 and above for i586 to
+  workaround miscompilations (bnc#896624)
+- use some more build flags to align with upstream
+
+-------------------------------------------------------------------
 Sat Sep 13 16:58:16 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 32.0.1

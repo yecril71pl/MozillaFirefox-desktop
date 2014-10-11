@@ -102,6 +102,7 @@ Source11:       firefox.1
 Source12:       mozilla-get-app-id
 Source13:       add-plugins.sh.in
 Source14:       create-tar.sh
+Source15:       firefox-appdata.xml
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -444,6 +445,9 @@ install -m 644 %{SOURCE1} \
 # additional mime-types
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
+# appdata
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.xml
 # install man-page
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
 cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
@@ -608,6 +612,7 @@ exit 0
 %{_datadir}/applications/%{desktop_file_name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*
+%{_datadir}/appdata/
 %dir %{_datadir}/mozilla
 %dir %{_datadir}/mozilla/extensions
 %dir %{_datadir}/mozilla/extensions/%{firefox_appid}

@@ -6,6 +6,7 @@ Sun Oct  5 16:10:28 UTC 2014 - wr@rosenauer.org
 - requires NSS 3.17.1
 - removed obsolete patch:
   * mozilla-ppc.patch
+- added basic appdata information
 
 -------------------------------------------------------------------
 Sat Sep 20 13:33:51 UTC 2014 - wr@rosenauer.org

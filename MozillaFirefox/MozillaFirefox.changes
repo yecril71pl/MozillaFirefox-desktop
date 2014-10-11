@@ -1,11 +1,12 @@
 -------------------------------------------------------------------
-Sun Oct  5 16:10:28 UTC 2014 - wr@rosenauer.org
+Sat Oct 11 08:48:24 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 33.0b9
+- update to Firefox 33.0 (bnc#)
 - requires NSPR 4.10.7
 - requires NSS 3.17.1
-- removed obsolete patch:
+- removed obsolete patches:
   * mozilla-ppc.patch
+  * mozilla-libproxy-compat.patch
 - added basic appdata information
 
 -------------------------------------------------------------------

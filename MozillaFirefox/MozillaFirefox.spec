@@ -55,7 +55,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.7
-BuildRequires:  mozilla-nss-devel >= 3.17
+BuildRequires:  mozilla-nss-devel >= 3.17.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014092100
+%define         releasedate 2014100400
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

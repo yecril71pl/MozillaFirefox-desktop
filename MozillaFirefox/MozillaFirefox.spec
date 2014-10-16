@@ -17,7 +17,7 @@
 #
 
 
-%define major 32
+%define major 33
 %define mainver %major.99
 %define update_channel beta
 
@@ -55,7 +55,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.7
-BuildRequires:  mozilla-nss-devel >= 3.17.1
+BuildRequires:  mozilla-nss-devel >= 3.17.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -74,7 +74,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014100400
+%define         releasedate 2014101500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -311,7 +311,9 @@ ac_add_options --enable-stdcxx-compat
 ac_add_options --disable-optimize
 %endif
 %endif
+%ifnarch ppc ppc64 ppc64le
 ac_add_options --enable-elf-hack
+%endif
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 %if %{localize}
@@ -447,7 +449,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
 # appdata
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.xml
+cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
 # install man-page
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
 cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1

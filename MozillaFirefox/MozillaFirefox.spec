@@ -311,7 +311,9 @@ ac_add_options --enable-stdcxx-compat
 ac_add_options --disable-optimize
 %endif
 %endif
+%ifnarch ppc ppc64 ppc64le
 ac_add_options --enable-elf-hack
+%endif
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
 %if %{localize}
@@ -447,7 +449,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
 cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
 # appdata
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.xml
+cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
 # install man-page
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
 cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1

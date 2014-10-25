@@ -134,7 +134,7 @@ Source9:        firefox.js
 Source10:       compare-locales.tar.xz
 Source11:       firefox.1
 Source12:       mozilla-get-app-id
-Source13:       add-plugins.sh.in
+Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 # Gecko/Toolkit
@@ -391,13 +391,11 @@ cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* %{buildroot}%{progdir}
 mkdir -p %{buildroot}%{progdir}/distribution/extensions
 mkdir -p %{buildroot}%{progdir}/browser/searchplugins
 mkdir -p %{buildroot}%{progdir}/browser/defaults/preferences/
-# install kde.js
+# install gre prefs
+install -m 644 %{SOURCE13} %{buildroot}%{progdir}/defaults/pref/
+# install browser prefs
 install -m 644 %{SOURCE6} %{buildroot}%{progdir}/browser/defaults/preferences/kde.js
 install -m 644 %{SOURCE9} %{buildroot}%{progdir}/browser/defaults/preferences/firefox.js
-# install add-plugins.sh
-sed "s:%%PROGDIR:%{progdir}:g" \
-  %{SOURCE13} > %{buildroot}%{progdir}/add-plugins.sh
-chmod 755 %{buildroot}%{progdir}/add-plugins.sh
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
@@ -555,7 +553,6 @@ if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
 %endif
-%{progdir}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %postun
@@ -571,15 +568,6 @@ if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
 %endif
-exit 0
-
-%posttrans
-[ -e %{progdir}/add-plugins.sh ] && \
-  %{progdir}/add-plugins.sh > /dev/null 2>&1
-exit 0
-
-%preun
-rm -f %{progdir}/dictionaries/*
 exit 0
 
 %files
@@ -606,7 +594,6 @@ exit 0
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/firefox-bin
-%{progdir}/add-plugins.sh
 %{progdir}/application.ini
 %{progdir}/dependentlibs.list
 %{progdir}/*.so

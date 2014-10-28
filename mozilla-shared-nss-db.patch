@@ -27,8 +27,8 @@ diff --git a/configure.in b/configure.in
 +  AC_DEFINE(MOZ_ENABLE_NSSHELPER)
 +fi
 +AC_SUBST(MOZ_ENABLE_NSSHELPER)
-+AC_SUBST(NSSHELPER_CFLAGS)
-+AC_SUBST(NSSHELPER_LIBS)
++AC_SUBST_LIST(NSSHELPER_CFLAGS)
++AC_SUBST_LIST(NSSHELPER_LIBS)
 +
 +dnl ========================================================
  dnl disable xul
@@ -39,19 +39,29 @@ diff --git a/configure.in b/configure.in
  if test "$MOZ_XUL"; then
    AC_DEFINE(MOZ_XUL)
  else
-diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
-new file mode 100644
---- /dev/null
-+++ b/security/manager/ssl/src/Makefile.in
-@@ -0,0 +1,8 @@
-+#! gmake
-+# 
-+# This Source Code Form is subject to the terms of the Mozilla Public
-+# License, v. 2.0. If a copy of the MPL was not distributed with this
-+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.build
+--- a/security/manager/ssl/src/moz.build
++++ b/security/manager/ssl/src/moz.build
+@@ -91,16 +91,19 @@ FAIL_ON_WARNINGS = True
+ 
+ FINAL_LIBRARY = 'xul'
+ 
+ LOCAL_INCLUDES += [
+     '../../../certverifier',
+     '../../../pkix/include',
+ ]
+ 
++LOCAL_INCLUDES += CONFIG['NSSHELPER_CFLAGS']
++EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
 +
-+LOCAL_INCLUDES += $(NSSHELPER_CFLAGS)
-+EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
+ if CONFIG['NSS_DISABLE_DBM']:
+     DEFINES['NSS_DISABLE_DBM'] = '1'
+ 
+ DEFINES['SSL_DISABLE_DEPRECATED_CIPHER_SUITE_NAMES'] = 'True'
+ DEFINES['NSS_ENABLE_ECC'] = 'True'
+ for var in ('DLL_PREFIX', 'DLL_SUFFIX'):
+     DEFINES[var] = '"%s"' % CONFIG[var]
+ 
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
 --- a/security/manager/ssl/src/nsNSSComponent.cpp
 +++ b/security/manager/ssl/src/nsNSSComponent.cpp
@@ -112,25 +122,25 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
      if (init_rv != SECSuccess) {
        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
      }
-diff --git a/toolkit/library/libxul.mk b/toolkit/library/libxul.mk
---- a/toolkit/library/libxul.mk
-+++ b/toolkit/library/libxul.mk
-@@ -32,16 +32,18 @@ endif
- ifeq (Linux,$(OS_ARCH))
- # Create a GDB Python auto-load file alongside the libxul shared library in
- # the build directory.
- PP_TARGETS += LIBXUL_AUTOLOAD
- LIBXUL_AUTOLOAD = $(topsrcdir)/toolkit/library/libxul.so-gdb.py.in
- LIBXUL_AUTOLOAD_FLAGS := -Dtopsrcdir=$(abspath $(topsrcdir))
- endif
+diff --git a/toolkit/library/libxul.mozbuild b/toolkit/library/libxul.mozbuild
+--- a/toolkit/library/libxul.mozbuild
++++ b/toolkit/library/libxul.mozbuild
+@@ -22,16 +22,18 @@ DELAYLOAD_DLLS += [
+     'psapi.dll',
+     'rasapi32.dll',
+     'rasdlg.dll',
+     'secur32.dll',
+     'wininet.dll',
+     'winspool.drv'
+ ]
  
-+EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
++EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
 +
- # BFD ld doesn't create multiple PT_LOADs as usual when an unknown section
- # exists. Using an implicit linker script to make it fold that section in
- # .data.rel.ro makes it create multiple PT_LOADs. That implicit linker
- # script however makes gold misbehave, first because it doesn't like that
- # the linker script is given after crtbegin.o, and even past that, replaces
- # the default section rules with those from the script instead of
- # supplementing them. Which leads to a lib with a huge load of sections.
- ifneq (OpenBSD,$(OS_TARGET))
+ if CONFIG['MOZ_METRO']:
+     DELAYLOAD_DLLS += [
+         'API-MS-WIN-CORE-WINRT-L' + CONFIG['CRTEXPDLLVERSION'] + '.DLL',
+         'API-MS-WIN-CORE-WINRT-STRING-L' + CONFIG['CRTEXPDLLVERSION'] + '.DLL',
+         'uiautomationcore.dll'
+     ]
+ 
+ if CONFIG['ACCESSIBILITY']:

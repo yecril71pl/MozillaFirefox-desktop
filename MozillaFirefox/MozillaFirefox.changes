@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Sat Oct 25 08:45:43 UTC 2014 - wr@rosenauer.org
+
+- define /usr/share/myspell as additional dictionary location
+  and remove add-plugins.sh finally (bnc#900639)
+
+-------------------------------------------------------------------
+Sun Oct 19 12:59:28 UTC 2014 - vindex17@outlook.it
+
+- use Firefox default optimization flags instead of -Os
+- specfile cleanup
+
+-------------------------------------------------------------------
 Wed Oct 15 08:05:33 UTC 2014 - wr@rosenauer.org
 
 - fix build for all ppc by not enabling elf-hack

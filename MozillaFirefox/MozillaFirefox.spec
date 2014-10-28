@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 33
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 2014101000
+%define releasedate 2014102500
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}

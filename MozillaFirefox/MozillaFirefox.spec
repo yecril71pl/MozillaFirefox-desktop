@@ -17,12 +17,49 @@
 #
 
 
+# changed with every update
 %define major 33
 %define mainver %major.99
 %define update_channel beta
+%define mainver %major.0
+%define update_channel release
+%define releasedate 2014101000
 
-%if %suse_version > 1210
-%if %suse_version > 1310
+# general build definitions
+%define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
+%define _use_internal_dependency_generator 0
+%define __find_requires sh %{SOURCE4}
+%global provfind sh -c "grep -v '.so' | %__find_provides"
+%global __find_provides %provfind
+%define progname firefox
+%define progdir %{_prefix}/%_lib/%{progname}
+%define gnome_dir     %{_prefix}
+%if 0%{?suse_version} > 1130
+%define desktop_file_name firefox
+%else
+%define desktop_file_name %{name}
+%endif
+%if 0%{?suse_version} > 1210
+%if 0%{?suse_version} > 1310
+%define gstreamer_ver 1.0
+%define gstreamer 1
+%else
+%define gstreamer_ver 0.10
+%endif
+%endif
+# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
+# Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
+# please get your own set of keys.
+%define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
+%define branding 1
+%define localize 1
+%ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
+%define crashreporter 0
+%else
+%define crashreporter 1
+%endif
+%if 0%{?suse_version} > 1210
+%if 0%{?suse_version} > 1310
 %define gstreamer_ver 1.0
 %define gstreamer 1
 %else
@@ -48,7 +85,7 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-%if %suse_version > 1110
+%if 0%{?suse_version} > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
 %else
@@ -58,7 +95,7 @@ BuildRequires:  mozilla-nspr-devel >= 4.10.7
 BuildRequires:  mozilla-nss-devel >= 3.17.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
-%if %suse_version > 1210
+%if 0%{?suse_version} > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
@@ -74,7 +111,6 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014101500
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser
@@ -100,7 +136,7 @@ Source9:        firefox.js
 Source10:       compare-locales.tar.xz
 Source11:       firefox.1
 Source12:       mozilla-get-app-id
-Source13:       add-plugins.sh.in
+Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 # Gecko/Toolkit
@@ -131,35 +167,9 @@ Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
 Recommends:     libpulse0
 # libproxy's mozjs pacrunner crashes FF (bnc#759123)
-%if %suse_version < 1220
+%if 0%{?suse_version} < 1220
 Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %endif
-%define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define _use_internal_dependency_generator 0
-%define __find_requires sh %{SOURCE4}
-%global provfind sh -c "grep -v '.so' | %__find_provides"
-%global __find_provides %provfind
-%define progname firefox
-%define progdir %{_prefix}/%_lib/%{progname}
-%define gnome_dir     %{_prefix}
-%if %suse_version > 1130
-%define desktop_file_name firefox
-%else
-%define desktop_file_name %{name}
-%endif
-### build options
-# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
-# Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
-# please get your own set of keys.
-%define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%define branding 1
-%define localize 1
-%ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
-%define crashreporter 0
-%else
-%define crashreporter 1
-%endif
-### build options end
 
 %description
 Mozilla Firefox is a standalone web browser, designed for standards
@@ -248,14 +258,14 @@ cd $RPM_BUILD_DIR/mozilla
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%if %suse_version < 1120
+%if 0%{?suse_version} < 1120
 %patch10 -p1
 %endif
 %patch11 -p1
 %patch12 -p1
 # Firefox
 %patch101 -p1
-%if %suse_version >= 1140
+%if 0%{?suse_version} >= 1140
 %patch102 -p1
 %endif
 %patch103 -p1
@@ -284,7 +294,10 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export MOZ_GOOGLE_API_KEY=%{_google_api_key}
-export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+export CFLAGS="%{optflags} -fno-strict-aliasing"
+%ifarch %ix86
+export CFLAGS="${CFLAGS} -Os"
+%endif
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
 %endif
@@ -307,7 +320,7 @@ ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
 ac_add_options --enable-stdcxx-compat
 %ifarch %ix86
-%if %suse_version > 1230
+%if 0%{?suse_version} > 1230
 ac_add_options --disable-optimize
 %endif
 %endif
@@ -332,17 +345,17 @@ ac_add_options --enable-update-channel=%{update_channel}
 %if 0%{?gstreamer} == 1
 ac_add_options --enable-gstreamer=1.0
 %endif
-%if %suse_version > 1130
+%if 0%{?suse_version} > 1130
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
 %endif
-%if %suse_version < 1220
+%if 0%{?suse_version} < 1220
 ac_add_options --disable-gstreamer
 %endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif
-%if %suse_version > 1110
+%if 0%{?suse_version} > 1110
 ac_add_options --enable-libproxy
 %endif
 %if ! %crashreporter
@@ -375,18 +388,16 @@ make -C browser/installer STRIP=/bin/true MOZ_PKG_FATAL_WARNINGS=0
 #DEBUG (break the build if searchplugins are missing / temporary)
 grep amazondotcom dist/firefox/browser/omni.ja
 # copy tree into RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{progdir}
-cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* $RPM_BUILD_ROOT%{progdir}
-mkdir -p $RPM_BUILD_ROOT%{progdir}/distribution/extensions
-mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/searchplugins
-mkdir -p $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/
-# install kde.js
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/kde.js
-install -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{progdir}/browser/defaults/preferences/firefox.js
-# install add-plugins.sh
-sed "s:%%PROGDIR:%{progdir}:g" \
-  %{SOURCE13} > $RPM_BUILD_ROOT%{progdir}/add-plugins.sh
-chmod 755 $RPM_BUILD_ROOT%{progdir}/add-plugins.sh
+mkdir -p %{buildroot}%{progdir}
+cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* %{buildroot}%{progdir}
+mkdir -p %{buildroot}%{progdir}/distribution/extensions
+mkdir -p %{buildroot}%{progdir}/browser/searchplugins
+mkdir -p %{buildroot}%{progdir}/browser/defaults/preferences/
+# install gre prefs
+install -m 644 %{SOURCE13} %{buildroot}%{progdir}/defaults/pref/
+# install browser prefs
+install -m 644 %{SOURCE6} %{buildroot}%{progdir}/browser/defaults/preferences/kde.js
+install -m 644 %{SOURCE9} %{buildroot}%{progdir}/browser/defaults/preferences/firefox.js
 # install additional locales
 %if %localize
 rm -f %{_tmppath}/translations.*
@@ -404,10 +415,10 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 	LOCALE_MERGEDIR=$RPM_BUILD_DIR/l10n-merged/$locale \
   	make -C browser/locales langpack-$locale
 	cp -rL dist/xpi-stage/locale-$locale \
-	       $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org
+	       %{buildroot}%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org
 	# remove prefs, profile defaults, and hyphenation from langpack
-	rm -rf $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/defaults
-	rm -rf $RPM_BUILD_ROOT%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
+	rm -rf %{buildroot}%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/defaults
+	rm -rf %{buildroot}%{progdir}/browser/extensions/langpack-$locale@firefox.mozilla.org/hyphenation
 	# check against the fixed common list and sort into the right filelist
 	_matched=0
 	for _match in ar ca cs da de en-GB el es-AR es-CL es-ES fi fr hu it ja ko nb-NO nl pl pt-BR pt-PT ru sv-SE zh-CN zh-TW; do
@@ -420,7 +431,7 @@ for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales);
 done
 %endif
 # remove some executable permissions
-find $RPM_BUILD_ROOT%{progdir} \
+find %{buildroot}%{progdir} \
      -name "*.js" -o \
      -name "*.jsm" -o \
      -name "*.rdf" -o \
@@ -430,63 +441,63 @@ find $RPM_BUILD_ROOT%{progdir} \
      -name "*.xml" -o \
      -name "*.css" | xargs chmod a-x
 # remove mkdir.done files from installed base
-find $RPM_BUILD_ROOT%{progdir} -name ".mkdir.done" | xargs rm
+find %{buildroot}%{progdir} -name ".mkdir.done" | xargs rm
 # overwrite the mozilla start-script and link it to /usr/bin
-mkdir --parents $RPM_BUILD_ROOT/usr/bin
+mkdir --parents %{buildroot}/usr/bin
 sed "s:%%PREFIX:%{_prefix}:g
 s:%%PROGDIR:%{progdir}:g
 s:%%APPNAME:firefox:g
 s:%%PROFILE:.mozilla/firefox:g" \
-  %{SOURCE3} > $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
-chmod 755 $RPM_BUILD_ROOT%{progdir}/%{progname}.sh
-ln -sf ../..%{progdir}/%{progname}.sh $RPM_BUILD_ROOT%{_bindir}/%{progname}
+  %{SOURCE3} > %{buildroot}%{progdir}/%{progname}.sh
+chmod 755 %{buildroot}%{progdir}/%{progname}.sh
+ln -sf ../..%{progdir}/%{progname}.sh %{buildroot}%{_bindir}/%{progname}
 # desktop definition
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/applications
 install -m 644 %{SOURCE1} \
-   $RPM_BUILD_ROOT%{_datadir}/applications/%{desktop_file_name}.desktop
+   %{buildroot}%{_datadir}/applications/%{desktop_file_name}.desktop
 # additional mime-types
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/mime/packages
-cp %{SOURCE8} $RPM_BUILD_ROOT%{_datadir}/mime/packages/%{progname}.xml
+mkdir -p %{buildroot}%{_datadir}/mime/packages
+cp %{SOURCE8} %{buildroot}%{_datadir}/mime/packages/%{progname}.xml
 # appdata
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cp %{SOURCE15} $RPM_BUILD_ROOT%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
+mkdir -p %{buildroot}%{_datadir}/appdata
+cp %{SOURCE15} %{buildroot}%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
 # install man-page
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1/
-cp %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man1/%{progname}.1
+mkdir -p %{buildroot}%{_mandir}/man1/
+cp %{SOURCE11} %{buildroot}%{_mandir}/man1/%{progname}.1
 ##########
 # ADDONS
 #
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/extensions/%{firefox_appid}
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/mozilla/extensions/%{firefox_appid}
-mkdir -p $RPM_BUILD_ROOT/usr/share/pixmaps/
-ln -sf %{progdir}/browser/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}.png
-ln -sf %{progdir}/browser/icons/mozicon128.png $RPM_BUILD_ROOT/usr/share/pixmaps/%{progname}-gnome.png
+mkdir -p %{buildroot}%{_datadir}/mozilla/extensions/%{firefox_appid}
+mkdir -p %{buildroot}%{_libdir}/mozilla/extensions/%{firefox_appid}
+mkdir -p %{buildroot}/usr/share/pixmaps/
+ln -sf %{progdir}/browser/icons/mozicon128.png %{buildroot}/usr/share/pixmaps/%{progname}.png
+ln -sf %{progdir}/browser/icons/mozicon128.png %{buildroot}/usr/share/pixmaps/%{progname}-gnome.png
 %if %branding
 for size in 16 22 24 32 48 256; do
 %else
 for size in 16 32 48; do
 %endif
-  mkdir -p $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
+  mkdir -p %{buildroot}%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
   ln -sf %{progdir}/browser/chrome/icons/default/default$size.png \
-         $RPM_BUILD_ROOT%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
+         %{buildroot}%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
 %suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
 # excludes
-rm -f $RPM_BUILD_ROOT%{progdir}/updater.ini
-rm -f $RPM_BUILD_ROOT%{progdir}/removed-files
-rm -f $RPM_BUILD_ROOT%{progdir}/README.txt
-rm -f $RPM_BUILD_ROOT%{progdir}/old-homepage-default.properties
-rm -f $RPM_BUILD_ROOT%{progdir}/run-mozilla.sh
-rm -f $RPM_BUILD_ROOT%{progdir}/LICENSE
-rm -f $RPM_BUILD_ROOT%{progdir}/precomplete
-rm -f $RPM_BUILD_ROOT%{progdir}/dictionaries/en-US*
-rm -f $RPM_BUILD_ROOT%{progdir}/update-settings.ini
+rm -f %{buildroot}%{progdir}/updater.ini
+rm -f %{buildroot}%{progdir}/removed-files
+rm -f %{buildroot}%{progdir}/README.txt
+rm -f %{buildroot}%{progdir}/old-homepage-default.properties
+rm -f %{buildroot}%{progdir}/run-mozilla.sh
+rm -f %{buildroot}%{progdir}/LICENSE
+rm -f %{buildroot}%{progdir}/precomplete
+rm -f %{buildroot}%{progdir}/dictionaries/en-US*
+rm -f %{buildroot}%{progdir}/update-settings.ini
 # devel
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %SOURCE12 %{buildroot}%{_bindir}
 # inspired by mandriva
-mkdir -p %{buildroot}/etc/rpm
-cat <<'FIN' >%{buildroot}/etc/rpm/macros.%{progname}
+mkdir -p %{buildroot}%{_sysconfdir}/rpm
+cat <<'FIN' >%{buildroot}%{_sysconfdir}/rpm/macros.%{progname}
 # Macros from %{name} package
 %%firefox_major              %{major}
 %%firefox_version            %{version}
@@ -509,8 +520,8 @@ FIN
 #       cp "%%1" "$extdir" \
 #       %%{nil}
 # fdupes
-%fdupes $RPM_BUILD_ROOT%{progdir}
-%fdupes $RPM_BUILD_ROOT%{_datadir}
+%fdupes %{buildroot}%{progdir}
+%fdupes %{buildroot}%{_datadir}
 # create breakpad debugsymbols
 %if %crashreporter
 SYMBOLS_NAME="firefox-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
@@ -519,20 +530,20 @@ make buildsymbols \
   SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
   SYMBOL_ARCHIVE_BASENAME="$SYMBOLS_NAME"
 if [ -e dist/*symbols.zip ]; then
-  mkdir -p $RPM_BUILD_ROOT%{_datadir}/mozilla/
-  cp dist/*symbols.zip $RPM_BUILD_ROOT%{_datadir}/mozilla/
+  mkdir -p %{buildroot}%{_datadir}/mozilla/
+  cp dist/*symbols.zip %{buildroot}%{_datadir}/mozilla/
 fi
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %if %localize
 rm -rf %{_tmppath}/translations.*
 %endif
 
 %post
 # update mime and desktop database
-%if %suse_version > 1130
+%if 0%{?suse_version} > 1130
 %mime_database_post
 %desktop_database_post
 %icon_theme_cache_post
@@ -544,11 +555,10 @@ if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
 %endif
-%{progdir}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %postun
-%if %suse_version > 1130
+%if 0%{?suse_version} > 1130
 %icon_theme_cache_postun
 %desktop_database_postun
 %mime_database_postun
@@ -560,15 +570,6 @@ if [ -f usr/bin/update-desktop-database ] ; then
   usr/bin/update-desktop-database > /dev/null || :
 fi
 %endif
-exit 0
-
-%posttrans
-[ -e %{progdir}/add-plugins.sh ] && \
-  %{progdir}/add-plugins.sh > /dev/null 2>&1
-exit 0
-
-%preun
-rm -f %{progdir}/dictionaries/*
 exit 0
 
 %files
@@ -595,7 +596,6 @@ exit 0
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
 %{progdir}/firefox-bin
-%{progdir}/add-plugins.sh
 %{progdir}/application.ini
 %{progdir}/dependentlibs.list
 %{progdir}/*.so
@@ -628,7 +628,7 @@ exit 0
 %files devel
 %defattr(-,root,root)
 %{_bindir}/mozilla-get-app-id
-%config /etc/rpm/macros.%{progname}
+%config %{_sysconfdir}/rpm/macros.%{progname}
 
 %if %localize
 

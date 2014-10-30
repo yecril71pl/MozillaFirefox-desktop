@@ -1,4 +1,19 @@
 -------------------------------------------------------------------
+Thu Oct 30 10:48:57 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 33.1
+  33.0.1
+  * Firefox displays a black screen at start-up with certain
+    graphics drivers
+  33.0.2
+  * Fix a startup crash with some combination of hardware and drivers
+  33.1
+  * DuckDuckGo is now included upstream (bmo#1061736)
+  * fix to allow overriding sec_error_ca_cert_invalid errors
+    (bmo#1042889)
+  * disable http/1 framing enforcement (bmo#1088850)
+
+-------------------------------------------------------------------
 Tue Oct 28 15:23:09 UTC 2014 - josua.mayer97@gmail.com
 
 - added mozilla-bmo1088588.patch to fix build with EGL (bmo#1088588)

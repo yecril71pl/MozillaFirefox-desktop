@@ -8,4 +8,15 @@
       <size unit="M">4500</size>
     </memory>
   </hardware>
+  <overwrite>
+    <conditions>
+      <arch>armv6l</arch>
+      <arch>armv7l</arch>
+    </conditions>
+    <hardware>
+      <memory>
+        <size unit="M">768</size>
+      </memory>
+    </hardware>
+  </overwrite>
 </constraints>

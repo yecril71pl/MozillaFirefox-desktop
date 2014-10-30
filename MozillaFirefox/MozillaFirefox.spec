@@ -23,7 +23,7 @@
 %define update_channel beta
 %define mainver %major.0
 %define update_channel release
-%define releasedate 2014102700
+%define releasedate 2014103000
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}

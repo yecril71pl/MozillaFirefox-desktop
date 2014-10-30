@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 33
-%define mainver %major.1
-%define update_channel release
-%define releasedate 2014102900
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 2014103000
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -90,7 +90,7 @@ BuildRequires:  libproxy-devel
 BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.7
-BuildRequires:  mozilla-nss-devel >= 3.17.1
+BuildRequires:  mozilla-nss-devel >= 3.17.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 %if 0%{?suse_version} > 1210

@@ -1,12 +1,12 @@
 # HG changeset patch
-# Parent 78b2c4af37108b3a2b6a856da7544335001cd444
+# Parent 839ad2a7997b5b64edf2454b42c733a0fc729270
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -381,16 +381,20 @@ pref("browser.helperApps.deleteTempFileO
+@@ -386,16 +386,20 @@ pref("browser.helperApps.deleteTempFileO
  #endif
  
  // search engines URL
@@ -39,10 +39,10 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  ifeq ($(MOZ_WIDGET_TOOLKIT) $(DIST_SUBDIR),windows metro)
  SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/metrolist.txt))
  else
--SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt)) ddg
+-SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt))
 +SEARCHPLUGINS_NAMES = $(shell cat \
-+   $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
-+   @srcdir@/en-US/searchplugins/list.txt ) ) ddg
++  $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
++  @srcdir@/en-US/searchplugins/list.txt ) ) ddg
  endif
  SEARCHPLUGINS_PATH := $(FINAL_TARGET)/searchplugins
  SEARCHPLUGINS := $(addsuffix .xml,$(SEARCHPLUGINS_NAMES))
@@ -128,7 +128,7 @@ diff --git a/browser/locales/en-US/searchplugins/google.xml b/browser/locales/en
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -135,14 +135,15 @@
+@@ -139,14 +139,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/

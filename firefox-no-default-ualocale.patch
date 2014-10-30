@@ -1,0 +1,27 @@
+# HG changeset patch
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+# Parent 39f441dc7ba560595404d47506b0ce70180f99fd
+Do not overwrite the locale dynamic pref from xulrunner's all.js with a wrong default value
+
+diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
+--- a/browser/app/profile/firefox.js
++++ b/browser/app/profile/firefox.js
+@@ -259,17 +259,17 @@ pref("browser.uitour.whitelist.add.260",
+ pref("browser.uitour.whitelist.add.340", "about:home");
+ 
+ pref("browser.customizemode.tip0.shown", false);
+ pref("browser.customizemode.tip0.learnMoreUrl", "https://support.mozilla.org/1/firefox/%VERSION%/%OS%/%LOCALE%/customize");
+ 
+ pref("keyword.enabled", true);
+ pref("browser.fixup.domainwhitelist.localhost", true);
+ 
+-pref("general.useragent.locale", "@AB_CD@");
++pref("general.useragent.locale", "chrome://global/locale/intl.properties");
+ pref("general.skins.selectedSkin", "classic/1.0");
+ 
+ pref("general.smoothScroll", true);
+ #ifdef UNIX_BUT_NOT_MAC
+ pref("general.autoScroll", false);
+ #else
+ pref("general.autoScroll", true);
+ #endif

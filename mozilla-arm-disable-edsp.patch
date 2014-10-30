@@ -1,0 +1,27 @@
+# HG changeset patch
+# User Adrian Schröter <adrian@suse.de>
+# Parent b945e0c3b145b6b2245f42bab52f911c2d1f6759
+disable ESDP support (no BNC or BMO reference yet :-()
+
+diff --git a/mozglue/build/arm.h b/mozglue/build/arm.h
+--- a/mozglue/build/arm.h
++++ b/mozglue/build/arm.h
+@@ -116,17 +116,17 @@ namespace mozilla {
+     extern bool MFBT_DATA neon_enabled;
+ #endif
+ #endif
+   }
+ 
+ #if defined(MOZILLA_PRESUME_EDSP)
+ #  define MOZILLA_MAY_SUPPORT_EDSP 1
+   inline bool supports_edsp() { return true; }
+-#elif defined(MOZILLA_MAY_SUPPORT_EDSP) \
++#elif 0 \
+    && defined(MOZILLA_ARM_HAVE_CPUID_DETECTION)
+   inline bool supports_edsp() { return arm_private::edsp_enabled; }
+ #else
+   inline bool supports_edsp() { return false; }
+ #endif
+ 
+ #if defined(MOZILLA_PRESUME_ARMV6)
+ #  define MOZILLA_MAY_SUPPORT_ARMV6 1

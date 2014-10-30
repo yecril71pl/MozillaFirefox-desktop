@@ -1,0 +1,588 @@
+-------------------------------------------------------------------
+Wed Sep 18 14:39:34 UTC 2013 - wr@rosenauer.org
+
+- update to 24.0 (bnc#840485)
+  * MFSA 2013-76/CVE-2013-1718/CVE-2013-1719
+    Miscellaneous memory safety hazards
+  * MFSA 2013-77/CVE-2013-1720 (bmo#888820)
+    Improper state in HTML5 Tree Builder with templates
+  * MFSA 2013-78/CVE-2013-1721 (bmo#890277)
+    Integer overflow in ANGLE library
+  * MFSA 2013-79/CVE-2013-1722 (bmo#893308)
+    Use-after-free in Animation Manager during stylesheet cloning
+  * MFSA 2013-80/CVE-2013-1723 (bmo#891292)
+    NativeKey continues handling key messages after widget is destroyed
+  * MFSA 2013-81/CVE-2013-1724 (bmo#894137)
+    Use-after-free with select element
+  * MFSA 2013-82/CVE-2013-1725 (bmo#876762)
+    Calling scope for new Javascript objects can lead to memory corruption
+  * MFSA 2013-85/CVE-2013-1728 (bmo#883686)
+    Uninitialized data in IonMonkey
+  * MFSA 2013-88/CVE-2013-1730 (bmo#851353)
+    Compartment mismatch re-attaching XBL-backed nodes
+  * MFSA 2013-89/CVE-2013-1732 (bmo#883514)
+    Buffer overflow with multi-column, lists, and floats
+  * MFSA 2013-90/CVE-2013-1735/CVE-2013-1736 (bmo#898871, bmo#906301)
+    Memory corruption involving scrolling
+  * MFSA 2013-91/CVE-2013-1737 (bmo#907727)
+    User-defined properties on DOM proxies get the wrong "this" object
+  * MFSA 2013-92/CVE-2013-1738 (bmo#887334, bmo#882897)
+    GC hazard with default compartments and frame chain restoration
+- require NSPR 4.10 and NSS 3.15.1
+
+-------------------------------------------------------------------
+Fri Aug  2 10:56:43 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.8esr (bnc#833389)
+  * MFSA 2013-63/CVE-2013-1701
+    Miscellaneous memory safety hazards
+  * MFSA 2013-68/CVE-2013-1709 (bmo#838253)
+    Document URI misrepresentation and masquerading
+  * MFSA 2013-69/CVE-2013-1710 (bmo#871368)
+    CRMF requests allow for code execution and XSS attacks
+  * MFSA 2013-72/CVE-2013-1713 (bmo#887098)
+    Wrong principal used for validating URI for some Javascript
+    components
+  * MFSA 2013-73/CVE-2013-1714 (bmo#879787)
+    Same-origin bypass with web workers and XMLHttpRequest
+  * MFSA 2013-75/CVE-2013-1717 (bmo#406541, bmo#738397)
+    Local Java applets may read contents of local file system
+
+-------------------------------------------------------------------
+Mon Jun 24 15:26:27 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.7esr (bnc#825935)
+  * MFSA 2013-49/CVE-2013-1682
+    Miscellaneous memory safety hazards
+  * MFSA 2013-50/CVE-2013-1684/CVE-2013-1685/CVE-2013-1686
+    Memory corruption found using Address Sanitizer
+  * MFSA 2013-51/CVE-2013-1687 (bmo#863933, bmo#866823)
+    Privileged content access and execution via XBL
+  * MFSA 2013-53/CVE-2013-1690 (bmo#857883)
+    Execution of unmapped memory through onreadystatechange event
+  * MFSA 2013-54/CVE-2013-1692 (bmo#866915)
+    Data in the body of XHR HEAD requests leads to CSRF attacks
+  * MFSA 2013-55/CVE-2013-1693 (bmo#711043)
+    SVG filters can lead to information disclosure
+  * MFSA 2013-56/CVE-2013-1694 (bmo#848535)
+    PreserveWrapper has inconsistent behavior
+  * MFSA 2013-59/CVE-2013-1697 (bmo#858101)
+    XrayWrappers can be bypassed to run user defined methods in a
+    privileged context
+
+-------------------------------------------------------------------
+Tue Jun  4 16:24:51 UTC 2013 - dvaleev@suse.com
+
+- Fix build on powerpc (ppc-xpcshell.patch)
+
+-------------------------------------------------------------------
+Fri May 10 17:27:23 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.6esr (bnc#819204)
+  * MFSA 2013-41/CVE-2013-0801/CVE-2013-1669
+    Miscellaneous memory safety hazards
+  * MFSA 2013-42/CVE-2013-1670 (bmo#853709)
+    Privileged access for content level constructor
+  * MFSA 2013-46/CVE-2013-1674 (bmo#860971)
+    Use-after-free with video and onresize event
+  * MFSA 2013-47/CVE-2013-1675 (bmo#866825)
+    Uninitialized functions in DOMSVGZoomEvent
+  * MFSA 2013-48/CVE-2013-1676/CVE-2013-1677/CVE-2013-1678/
+    CVE-2013-1679/CVE-2013-1680/CVE-2013-1681
+    Memory corruption found using Address Sanitizer
+
+-------------------------------------------------------------------
+Fri Mar 29 16:27:59 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.5esr (bnc#813026)
+  * requires NSPR 4.9.5 and NSS 3.14.3
+  * MFSA 2013-30/CVE-2013-0788
+    Miscellaneous memory safety hazards
+  * MFSA 2013-31/CVE-2013-0800 (bmo#825721)
+    Out-of-bounds write in Cairo library
+  * MFSA 2013-35/CVE-2013-0796 (bmo#827106)
+    WebGL crash with Mesa graphics driver on Linux
+  * MFSA 2013-36/CVE-2013-0795 (bmo#825697)
+    Bypass of SOW protections allows cloning of protected nodes
+  * MFSA 2013-37/CVE-2013-0794 (bmo#626775)
+    Bypass of tab-modal dialog origin disclosure
+  * MFSA 2013-38/CVE-2013-0793 (bmo#803870)
+    Cross-site scripting (XSS) using timed history navigations
+
+-------------------------------------------------------------------
+Fri Mar  8 09:00:09 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.4esr (bnc#808243)
+  * MFSA 2013-29/CVE-2013-0787 (bmo#848644)
+    Use-after-free in HTML Editor
+
+-------------------------------------------------------------------
+Sat Feb 16 17:38:21 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.3esr (bnc#804248)
+  * MFSA 2013-21/CVE-2013-0783
+    Miscellaneous memory safety hazards
+  * MFSA 2013-24/CVE-2013-0773 (bmo#809652)
+    Web content bypass of COW and SOW security wrappers
+  * MFSA 2013-25/CVE-2013-0774 (bmo#827193)
+    Privacy leak in JavaScript Workers
+  * MFSA 2013-26/CVE-2013-0775 (bmo#831095)
+    Use-after-free in nsImageLoadingContent
+  * MFSA 2013-27/CVE-2013-0776 (bmo#796475)
+    Phishing on HTTPS connection through malicious proxy
+  * MFSA 2013-28/CVE-2013-0780/CVE-2013-0782
+    Use-after-free, out of bounds read, and buffer overflow issues
+    found using Address Sanitizer
+
+-------------------------------------------------------------------
+Sat Jan  5 14:46:06 UTC 2013 - wr@rosenauer.org
+
+- update to 17.0.2esr (bnc#796895)
+  * MFSA 2013-01/CVE-2013-0749/CVE-2013-0769/CVE-2013-0770
+    Miscellaneous memory safety hazards
+  * MFSA 2013-02/CVE-2013-0760/CVE-2013-0762/CVE-2013-0766/CVE-2013-0767
+    CVE-2013-0761/CVE-2013-0763/CVE-2013-0771/CVE-2012-5829
+    Use-after-free and buffer overflow issues found using Address Sanitizer
+  * MFSA 2013-03/CVE-2013-0768 (bmo#815795)
+    Buffer Overflow in Canvas
+  * MFSA 2013-04/CVE-2012-0759 (bmo#802026)
+    URL spoofing in addressbar during page loads
+  * MFSA 2013-05/CVE-2013-0744 (bmo#814713)
+    Use-after-free when displaying table with many columns and column groups
+  * MFSA 2013-07/CVE-2013-0764 (bmo#804237)
+    Crash due to handling of SSL on threads
+  * MFSA 2013-08/CVE-2013-0745 (bmo#794158)
+    AutoWrapperChanger fails to keep objects alive during garbage collection
+  * MFSA 2013-09/CVE-2013-0746 (bmo#816842)
+    Compartment mismatch with quickstubs returned values
+  * MFSA 2013-10/CVE-2013-0747 (bmo#733305)
+    Event manipulation in plugin handler to bypass same-origin policy
+  * MFSA 2013-11/CVE-2013-0748 (bmo#806031)
+    Address space layout leaked in XBL objects
+  * MFSA 2013-12/CVE-2013-0750 (bmo#805121)
+    Buffer overflow in Javascript string concatenation
+  * MFSA 2013-13/CVE-2013-0752 (bmo#805024)
+    Memory corruption in XBL with XML bindings containing SVG
+  * MFSA 2013-14/CVE-2013-0757 (bmo#813901)
+    Chrome Object Wrapper (COW) bypass through changing prototype
+  * MFSA 2013-15/CVE-2013-0758 (bmo#813906)
+    Privilege escalation through plugin objects
+  * MFSA 2013-16/CVE-2013-0753 (bmo#814001)
+    Use-after-free in serializeToStream
+  * MFSA 2013-17/CVE-2013-0754 (bmo#814026)
+    Use-after-free in ListenerManager
+  * MFSA 2013-18/CVE-2013-0755 (bmo#814027)
+    Use-after-free in Vibrate
+  * MFSA 2013-19/CVE-2013-0756 (bmo#814029)
+    Use-after-free in Javascript Proxy objects
+- requires NSS 3.14.1 (MFSA 2013-20, CVE-2013-0743)
+- build on SLE11
+  * mozilla-gcc43-enums.patch
+  * mozilla-gcc43-template_hacks.patch
+  * mozilla-gcc43-templates_instantiation.patch
+
+-------------------------------------------------------------------
+Thu Nov 29 20:04:34 UTC 2012 - wr@rosenauer.org
+
+- update to 17.0.1
+  * regression/compatibility fixes
+
+-------------------------------------------------------------------
+Tue Nov 20 20:15:23 UTC 2012 - wr@rosenauer.org
+
+- update to 17.0 (bnc#790140)
+  * MFSA 2012-91/CVE-2012-5842/CVE-2012-5843
+    Miscellaneous memory safety hazards
+  * MFSA 2012-92/CVE-2012-4202 (bmo#758200)
+    Buffer overflow while rendering GIF images
+  * MFSA 2012-93/CVE-2012-4201 (bmo#747607)
+    evalInSanbox location context incorrectly applied
+  * MFSA 2012-94/CVE-2012-5836 (bmo#792857)
+    Crash when combining SVG text on path with CSS
+  * MFSA 2012-95/CVE-2012-4203 (bmo#765628)
+    Javascript: URLs run in privileged context on New Tab page
+  * MFSA 2012-96/CVE-2012-4204 (bmo#778603)
+    Memory corruption in str_unescape
+  * MFSA 2012-97/CVE-2012-4205 (bmo#779821)
+    XMLHttpRequest inherits incorrect principal within sandbox
+  * MFSA 2012-99/CVE-2012-4208 (bmo#798264)
+    XrayWrappers exposes chrome-only properties when not in chrome
+    compartment
+  * MFSA 2012-100/CVE-2012-5841 (bmo#805807)
+    Improper security filtering for cross-origin wrappers
+  * MFSA 2012-101/CVE-2012-4207 (bmo#801681)
+    Improper character decoding in HZ-GB-2312 charset
+  * MFSA 2012-102/CVE-2012-5837 (bmo#800363)
+    Script entered into Developer Toolbar runs with chrome privileges
+  * MFSA 2012-103/CVE-2012-4209 (bmo#792405)
+    Frames can shadow top.location
+  * MFSA 2012-104/CVE-2012-4210 (bmo#796866)
+    CSS and HTML injection through Style Inspector
+  * MFSA 2012-105/CVE-2012-4214/CVE-2012-4215/CVE-2012-4216/
+    CVE-2012-5829/CVE-2012-5839/CVE-2012-5840/CVE-2012-4212/
+    CVE-2012-4213/CVE-2012-4217/CVE-2012-4218
+    Use-after-free and buffer overflow issues found using Address
+    Sanitizer
+  * MFSA 2012-106/CVE-2012-5830/CVE-2012-5833/CVE-2012-5835/CVE-2012-5838
+    Use-after-free, buffer overflow, and memory corruption issues
+    found using Address Sanitizer
+- rebased patches
+- disabled WebRTC since build is broken (bmo#776877)
+
+-------------------------------------------------------------------
+Wed Oct 24 08:28:49 UTC 2012 - wr@rosenauer.org
+
+- update to 16.0.2 (bnc#786522)
+  * MFSA 2012-90/CVE-2012-4194/CVE-2012-4195/CVE-2012-4196
+    (bmo#800666, bmo#793121, bmo#802557)
+    Fixes for Location object issues
+
+-------------------------------------------------------------------
+Thu Oct 11 01:50:19 UTC 2012 - wr@rosenauer.org
+
+- update to 16.0.1 (bnc#783533)
+  * MFSA 2012-88/CVE-2012-4191 (bmo#798045)
+    Miscellaneous memory safety hazards
+  * MFSA 2012-89/CVE-2012-4192/CVE-2012-4193 (bmo#799952, bmo#720619)
+    defaultValue security checks not applied
+
+-------------------------------------------------------------------
+Sun Oct  7 21:41:01 UTC 2012 - wr@rosenauer.org
+
+- update to 16.0 (bnc#783533)
+  * MFSA 2012-74/CVE-2012-3982/CVE-2012-3983
+    Miscellaneous memory safety hazards
+  * MFSA 2012-75/CVE-2012-3984 (bmo#575294)
+    select element persistance allows for attacks
+  * MFSA 2012-76/CVE-2012-3985 (bmo#655649)
+    Continued access to initial origin after setting document.domain
+  * MFSA 2012-77/CVE-2012-3986 (bmo#775868)
+    Some DOMWindowUtils methods bypass security checks
+  * MFSA 2012-79/CVE-2012-3988 (bmo#725770)
+    DOS and crash with full screen and history navigation
+  * MFSA 2012-80/CVE-2012-3989 (bmo#783867)
+    Crash with invalid cast when using instanceof operator
+  * MFSA 2012-81/CVE-2012-3991 (bmo#783260)
+    GetProperty function can bypass security checks
+  * MFSA 2012-82/CVE-2012-3994 (bmo#765527)
+    top object and location property accessible by plugins
+  * MFSA 2012-83/CVE-2012-3993/CVE-2012-4184 (bmo#768101, bmo#780370)
+    Chrome Object Wrapper (COW) does not disallow acces to privileged
+    functions or properties
+  * MFSA 2012-84/CVE-2012-3992 (bmo#775009)
+    Spoofing and script injection through location.hash
+  * MFSA 2012-85/CVE-2012-3995/CVE-2012-4179/CVE-2012-4180/
+    CVE-2012-4181/CVE-2012-4182/CVE-2012-4183
+    Use-after-free, buffer overflow, and out of bounds read issues
+    found using Address Sanitizer
+  * MFSA 2012-86/CVE-2012-4185/CVE-2012-4186/CVE-2012-4187/
+    CVE-2012-4188
+    Heap memory corruption issues found using Address Sanitizer
+  * MFSA 2012-87/CVE-2012-3990 (bmo#787704)
+    Use-after-free in the IME State Manager
+- requires NSPR 4.9.2
+- removed upstreamed mozilla-crashreporter-restart-args.patch
+- updated translations-other with new languages
+
+-------------------------------------------------------------------
+Sun Aug 26 13:48:04 UTC 2012 - wr@rosenauer.org
+
+- update to 15.0 (bnc#777588)
+  * MFSA 2012-57/CVE-2012-1970
+    Miscellaneous memory safety hazards
+  * MFSA 2012-58/CVE-2012-1972/CVE-2012-1973/CVE-2012-1974/CVE-2012-1975
+    CVE-2012-1976/CVE-2012-3956/CVE-2012-3957/CVE-2012-3958/CVE-2012-3959
+    CVE-2012-3960/CVE-2012-3961/CVE-2012-3962/CVE-2012-3963/CVE-2012-3964
+    Use-after-free issues found using Address Sanitizer
+  * MFSA 2012-59/CVE-2012-1956 (bmo#756719)
+    Location object can be shadowed using Object.defineProperty
+  * MFSA 2012-60/CVE-2012-3965 (bmo#769108)
+    Escalation of privilege through about:newtab
+  * MFSA 2012-61/CVE-2012-3966 (bmo#775794, bmo#775793)
+    Memory corruption with bitmap format images with negative height
+  * MFSA 2012-62/CVE-2012-3967/CVE-2012-3968
+    WebGL use-after-free and memory corruption
+  * MFSA 2012-63/CVE-2012-3969/CVE-2012-3970
+    SVG buffer overflow and use-after-free issues
+  * MFSA 2012-64/CVE-2012-3971
+    Graphite 2 memory corruption
+  * MFSA 2012-65/CVE-2012-3972 (bmo#746855)
+    Out-of-bounds read in format-number in XSLT
+  * MFSA 2012-66/CVE-2012-3973 (bmo#757128)
+    HTTPMonitor extension allows for remote debugging without explicit
+    activation
+  * MFSA 2012-68/CVE-2012-3975 (bmo#770684)
+    DOMParser loads linked resources in extensions when parsing
+    text/html
+  * MFSA 2012-69/CVE-2012-3976 (bmo#768568)
+    Incorrect site SSL certificate data display
+  * MFSA 2012-70/CVE-2012-3978 (bmo#770429)
+    Location object security checks bypassed by chrome code
+  * MFSA 2012-72/CVE-2012-3980 (bmo#771859)
+    Web console eval capable of executing chrome-privileged code
+- fix HTML5 video crash with GStreamer enabled (bmo#761030)
+- fixed filelist
+
+-------------------------------------------------------------------
+Fri Aug 17 13:09:49 UTC 2012 - dmueller@suse.com
+
+- fix build on ARM:
+  * disable crashreporter, it does not build
+  * reduce debuginfo during built to avoid running out of memory
+
+-------------------------------------------------------------------
+Sat Jul 14 19:33:44 UTC 2012 - wr@rosenauer.org
+
+- update to 14.0.1 (bnc#771583)
+  * MFSA 2012-42/CVE-2012-1949/CVE-2012-1948
+    Miscellaneous memory safety hazards
+  * MFSA 2012-43/CVE-2012-1950
+    Incorrect URL displayed in addressbar through drag and drop
+  * MFSA 2012-44/CVE-2012-1951/CVE-2012-1954/CVE-2012-1953/CVE-2012-1952
+    Gecko memory corruption
+  * MFSA 2012-45/CVE-2012-1955 (bmo#757376)
+    Spoofing issue with location
+  * MFSA 2012-46/CVE-2012-1966 (bmo#734076)
+    XSS through data: URLs
+  * MFSA 2012-47/CVE-2012-1957 (bmo#750096)
+    Improper filtering of javascript in HTML feed-view
+  * MFSA 2012-48/CVE-2012-1958 (bmo#750820)
+    use-after-free in nsGlobalWindow::PageHidden
+  * MFSA 2012-49/CVE-2012-1959 (bmo#754044, bmo#737559)
+    Same-compartment Security Wrappers can be bypassed
+  * MFSA 2012-50/CVE-2012-1960 (bmo#761014)
+    Out of bounds read in QCMS
+  * MFSA 2012-51/CVE-2012-1961 (bmo#761655)
+    X-Frame-Options header ignored when duplicated
+  * MFSA 2012-52/CVE-2012-1962 (bmo#764296)
+    JSDependentString::undepend string conversion results in memory
+    corruption
+  * MFSA 2012-53/CVE-2012-1963 (bmo#767778)
+    Content Security Policy 1.0 implementation errors cause data
+    leakage
+  * MFSA 2012-55/CVE-2012-1965 (bmo#758990)
+    feed: URLs with an innerURI inherit security context of page
+  * MFSA 2012-56/CVE-2012-1967 (bmo#758344)
+    Code execution through javascript: URLs
+- license change from tri license to MPL-2.0
+- require NSS 3.13.5
+- PPC fixes:
+  * reenabled mozilla-yarr-pcre.patch to fix build for PPC
+  * add patches for bmo#750620 and bmo#746112
+  * fix xpcshell segfault on ppc
+- build plugin-container on every arch
+
+-------------------------------------------------------------------
+Fri Jun 15 12:40:23 UTC 2012 - wr@rosenauer.org
+
+- update to 13.0.1
+  * bugfix release
+
+-------------------------------------------------------------------
+Sat Jun  2 09:16:34 UTC 2012 - wr@rosenauer.org
+
+- update to 13.0 (bnc#765204)
+  * MFSA 2012-34/CVE-2012-1938/CVE-2012-1937/CVE-2011-3101
+    Miscellaneous memory safety hazards
+  * MFSA 2012-36/CVE-2012-1944 (bmo#751422)
+    Content Security Policy inline-script bypass
+  * MFSA 2012-37/CVE-2012-1945 (bmo#670514)
+    Information disclosure though Windows file shares and shortcut
+    files
+  * MFSA 2012-38/CVE-2012-1946 (bmo#750109)
+    Use-after-free while replacing/inserting a node in a document
+  * MFSA 2012-40/CVE-2012-1947/CVE-2012-1940/CVE-2012-1941
+    Buffer overflow and use-after-free issues found using Address
+    Sanitizer
+- require NSS 3.13.4
+  * MFSA 2012-39/CVE-2012-0441 (bmo#715073)
+- reenabled crashreporter for Factory/12.2
+  (fixed in mozilla-gcc47.patch)
+
+-------------------------------------------------------------------
+Sat Apr 21 10:03:42 UTC 2012 - wr@rosenauer.org
+
+- update to 12.0 (bnc#758408)
+  * rebased patches
+  * MFSA 2012-20/CVE-2012-0467/CVE-2012-0468
+    Miscellaneous memory safety hazards
+  * MFSA 2012-22/CVE-2012-0469 (bmo#738985)
+    use-after-free in IDBKeyRange
+  * MFSA 2012-23/CVE-2012-0470 (bmo#734288)
+    Invalid frees causes heap corruption in gfxImageSurface
+  * MFSA 2012-24/CVE-2012-0471 (bmo#715319)
+    Potential XSS via multibyte content processing errors
+  * MFSA 2012-25/CVE-2012-0472 (bmo#744480)
+    Potential memory corruption during font rendering using cairo-dwrite
+  * MFSA 2012-26/CVE-2012-0473 (bmo#743475)
+    WebGL.drawElements may read illegal video memory due to
+    FindMaxUshortElement error
+  * MFSA 2012-27/CVE-2012-0474 (bmo#687745, bmo#737307)
+    Page load short-circuit can lead to XSS
+  * MFSA 2012-28/CVE-2012-0475 (bmo#694576)
+    Ambiguous IPv6 in Origin headers may bypass webserver access
+    restrictions
+  * MFSA 2012-29/CVE-2012-0477 (bmo#718573)
+    Potential XSS through ISO-2022-KR/ISO-2022-CN decoding issues
+  * MFSA 2012-30/CVE-2012-0478 (bmo#727547)
+    Crash with WebGL content using textImage2D
+  * MFSA 2012-31/CVE-2011-3062 (bmo#739925)
+    Off-by-one error in OpenType Sanitizer
+  * MFSA 2012-32/CVE-2011-1187 (bmo#624621)
+    HTTP Redirections and remote content can be read by javascript errors
+  * MFSA 2012-33/CVE-2012-0479 (bmo#714631)
+    Potential site identity spoofing when loading RSS and Atom feeds
+- added mozilla-libnotify.patch to allow fallback from libnotify
+  to xul based events if no notification-daemon is running
+- gcc 4.7 fixes
+  * mozilla-gcc47.patch
+  * disabled crashreporter temporarily for Factory
+
+-------------------------------------------------------------------
+Fri Mar  9 21:49:05 UTC 2012 - wr@rosenauer.org
+
+- update to version 11.0 (bnc#750044)
+  * MFSA 2012-13/CVE-2012-0455 (bmo#704354)
+    XSS with Drag and Drop and Javascript: URL
+  * MFSA 2012-14/CVE-2012-0456/CVE-2012-0457 (bmo#711653, #720103)
+    SVG issues found with Address Sanitizer
+  * MFSA 2012-15/CVE-2012-0451 (bmo#717511)
+    XSS with multiple Content Security Policy headers
+  * MFSA 2012-16/CVE-2012-0458
+    Escalation of privilege with Javascript: URL as home page
+  * MFSA 2012-17/CVE-2012-0459 (bmo#723446)
+    Crash when accessing keyframe cssText after dynamic modification
+  * MFSA 2012-18/CVE-2012-0460 (bmo#727303)
+    window.fullScreen writeable by untrusted content
+  * MFSA 2012-19/CVE-2012-0461/CVE-2012-0462/CVE-2012-0464/
+    CVE-2012-0463
+    Miscellaneous memory safety hazards
+- fix build on ARM
+- disable jemalloc on s390(x)
+
+-------------------------------------------------------------------
+Thu Feb 16 08:51:42 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0.2 (bnc#747328)
+  * CVE-2011-3026 (bmo#727401)
+    libpng: integer overflow leading to heap-buffer overflow
+
+-------------------------------------------------------------------
+Thu Feb  9 10:20:49 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0.1 (bnc#746616)
+  * MFSA 2012-10/CVE-2012-0452 (bmo#724284)
+    use after free in nsXBLDocumentInfo::ReadPrototypeBindings
+
+-------------------------------------------------------------------
+Tue Feb  7 10:40:58 UTC 2012 - dvaleev@suse.com
+
+- Use YARR interpreter instead of PCRE on platforms where YARR JIT
+  is not supported, since PCRE doesnt build (bmo#691898)
+- fix ppc64 build (bmo#703534)
+
+-------------------------------------------------------------------
+Mon Jan 30 09:43:21 UTC 2012 - wr@rosenauer.org
+
+- update to version 10.0 (bnc#744275)
+  * MFSA 2012-01/CVE-2012-0442/CVE-2012-0443
+    Miscellaneous memory safety hazards
+  * MFSA 2012-03/CVE-2012-0445 (bmo#701071)
+    <iframe> element exposed across domains via name attribute
+  * MFSA 2012-04/CVE-2011-3659 (bmo#708198)
+    Child nodes from nsDOMAttribute still accessible after removal
+    of nodes
+  * MFSA 2012-05/CVE-2012-0446 (bmo#705651)
+    Frame scripts calling into untrusted objects bypass security
+    checks
+  * MFSA 2012-06/CVE-2012-0447 (bmo#710079)
+    Uninitialized memory appended when encoding icon images may
+    cause information disclosure
+  * MFSA 2012-07/CVE-2012-0444 (bmo#719612)
+    Potential Memory Corruption When Decoding Ogg Vorbis files
+  * MFSA 2012-08/CVE-2012-0449 (bmo#701806, bmo#702466)
+    Crash with malformed embedded XSLT stylesheets
+- removed obsolete ppc64 patch
+- disable neon for ARM as it doesn't build correctly
+
+-------------------------------------------------------------------
+Fri Dec 23 17:02:01 UTC 2011 - wr@rosenauer.org
+
+- update to Firefox 9.0.1
+  * (strongparent) parentNode of element gets lost (bmo#335998)
+
+-------------------------------------------------------------------
+Sun Dec 18 09:28:02 UTC 2011 - wr@rosenauer.org
+
+- update to release 9.0 (bnc#737533)
+  * MFSA 2011-53/CVE-2011-3660
+    Miscellaneous memory safety hazards (rv:9.0)
+  * MFSA 2011-54/CVE-2011-3661 (bmo#691299)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-55/CVE-2011-3658 (bmo#708186)
+    nsSVGValue out-of-bounds access
+  * MFSA 2011-56/CVE-2011-3663 (bmo#704482)
+    Key detection without JavaScript via SVG animation
+  * MFSA 2011-58/VE-2011-3665 (bmo#701259)
+    Crash scaling <video> to extreme sizes
+
+-------------------------------------------------------------------
+Sat Nov 12 15:20:49 UTC 2011 - wr@rosenauer.org
+
+- fix ppc64 build
+
+-------------------------------------------------------------------
+Sun Nov  6 08:23:04 UTC 2011 - wr@rosenauer.org
+
+- update to release 8.0 (bnc#728520)
+  * MFSA 2011-47/CVE-2011-3648 (bmo#690225)
+    Potential XSS against sites using Shift-JIS
+  * MFSA 2011-48/CVE-2011-3651/CVE-2011-3652/CVE-2011-3654
+    Miscellaneous memory safety hazards
+  * MFSA 2011-49/CVE-2011-3650 (bmo#674776)
+    Memory corruption while profiling using Firebug
+  * MFSA 2011-52/CVE-2011-3655 (bmo#672182)
+    Code execution via NoWaiverWrapper
+- rebased patches
+
+-------------------------------------------------------------------
+Fri Sep 30 10:59:54 UTC 2011 - wr@rosenauer.org
+
+- update to minor release 7.0.1
+  * fixed staged addon updates
+
+-------------------------------------------------------------------
+Fri Sep 23 11:36:04 UTC 2011 - wr@rosenauer.org
+
+- update to version 7.0 (bnc#720264)
+  * MFSA 2011-36/CVE-2011-2995/CVE-2011-2996/CVE-2011-2997
+    Miscellaneous memory safety hazards
+  * MFSA 2011-39/CVE-2011-3000 (bmo#655389)
+    Defense against multiple Location headers due to CRLF Injection
+  * MFSA 2011-40/CVE-2011-2372/CVE-2011-3001
+    Code installation through holding down Enter
+  * MFSA 2011-41/CVE-2011-3002/CVE-2011-3003 (bmo#680840, bmo#682335)
+    Potentially exploitable WebGL crashes
+  * MFSA 2011-42/CVE-2011-3232 (bmo#653672)
+    Potentially exploitable crash in the YARR regular expression
+    library
+  * MFSA 2011-43/CVE-2011-3004 (bmo#653926)
+    loadSubScript unwraps XPCNativeWrapper scope parameter
+  * MFSA 2011-44/CVE-2011-3005 (bmo#675747)
+    Use after free reading OGG headers
+  * MFSA 2011-45
+    Inferring keystrokes from motion data
+- removed obsolete mozilla-cairo-lcd.patch
+- rebased patches
+
+-------------------------------------------------------------------
+Tue Sep 20 11:54:28 UTC 2011 - wr@rosenauer.org
+
+- install xpt.py into SDK (mozilla-639554.patch) (bnc#639554)
+
+-------------------------------------------------------------------
+Wed Sep 14 13:07:39 UTC 2011 - wr@rosenauer.org
+
+- initial xulrunner package
+

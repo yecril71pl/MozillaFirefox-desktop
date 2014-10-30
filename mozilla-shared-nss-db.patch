@@ -1,0 +1,136 @@
+From: Hans Petter Jansson <hpj@copyleft.no>
+      Wolfgang Rosenauer <wr@rosenauer.org>
+Subject: use libnsssharedhelper if available at compile time
+         (can be disabled by exporting MOZ_XRE_NO_NSSHELPER=1)
+References:
+
+diff --git a/configure.in b/configure.in
+--- a/configure.in
++++ b/configure.in
+@@ -8193,16 +8193,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+     MOZ_ENABLE_SKIA_GPU=1
+     AC_DEFINE(USE_SKIA_GPU)
+     AC_SUBST(MOZ_ENABLE_SKIA_GPU)
+   fi
+ fi
+ AC_SUBST(MOZ_ENABLE_SKIA)
+ 
+ dnl ========================================================
++dnl Check for nss-shared-helper
++dnl ========================================================
++
++  PKG_CHECK_MODULES(NSSHELPER, nss-shared-helper,
++    [MOZ_ENABLE_NSSHELPER=1],
++    [MOZ_ENABLE_NSSHELPER=])
++
++if test "$MOZ_ENABLE_NSSHELPER"; then
++  AC_DEFINE(MOZ_ENABLE_NSSHELPER)
++fi
++AC_SUBST(MOZ_ENABLE_NSSHELPER)
++AC_SUBST(NSSHELPER_CFLAGS)
++AC_SUBST(NSSHELPER_LIBS)
++
++dnl ========================================================
+ dnl disable xul
+ dnl ========================================================
+ MOZ_ARG_DISABLE_BOOL(xul,
+ [  --disable-xul           Disable XUL],
+     MOZ_XUL= )
+ if test "$MOZ_XUL"; then
+   AC_DEFINE(MOZ_XUL)
+ else
+diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
+new file mode 100644
+--- /dev/null
++++ b/security/manager/ssl/src/Makefile.in
+@@ -0,0 +1,8 @@
++#! gmake
++# 
++# This Source Code Form is subject to the terms of the Mozilla Public
++# License, v. 2.0. If a copy of the MPL was not distributed with this
++# file, You can obtain one at http://mozilla.org/MPL/2.0/.
++
++LOCAL_INCLUDES += $(NSSHELPER_CFLAGS)
++EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
+diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
+--- a/security/manager/ssl/src/nsNSSComponent.cpp
++++ b/security/manager/ssl/src/nsNSSComponent.cpp
+@@ -3,16 +3,23 @@
+  * This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ 
+ #ifdef MOZ_LOGGING
+ #define FORCE_PR_LOG 1
+ #endif
+ 
++#ifdef MOZ_ENABLE_NSSHELPER
++#pragma GCC visibility push(default)
++#include <nss-shared-helper.h>
++#pragma GCC visibility pop
++#include "prenv.h"
++#endif
++
+ #include "nsNSSComponent.h"
+ 
+ #include "ExtendedValidation.h"
+ #include "NSSCertDBTrustDomain.h"
+ #include "mozilla/Telemetry.h"
+ #include "nsCertVerificationThread.h"
+ #include "nsAppDirectoryServiceDefs.h"
+ #include "nsComponentManagerUtils.h"
+@@ -1115,17 +1122,31 @@ nsNSSComponent::InitializeNSS()
+   if (NS_FAILED(rv)) {
+     nsPSMInitPanic::SetPanic();
+     return NS_ERROR_NOT_AVAILABLE;
+   }
+ 
+   SECStatus init_rv = SECFailure;
+   if (!profileStr.IsEmpty()) {
+     // First try to initialize the NSS DB in read/write mode.
+-    SECStatus init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++#ifdef MOZ_ENABLE_NSSHELPER
++    if (PR_GetEnv("MOZ_XRE_NO_NSSHELPER")) {
++      init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++    } else {
++      uint32_t flags = NSS_INIT_NOROOTINIT | NSS_INIT_OPTIMIZESPACE;
++      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), flags);
++
++      if (init_rv != SECSuccess) {
++        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));
++        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++      }
++    }
++#else
++    init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++#endif
+     // If that fails, attempt read-only mode.
+     if (init_rv != SECSuccess) {
+       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init NSS r/w in %s\n", profileStr.get()));
+       init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), true);
+     }
+     if (init_rv != SECSuccess) {
+       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
+     }
+diff --git a/toolkit/library/libxul.mk b/toolkit/library/libxul.mk
+--- a/toolkit/library/libxul.mk
++++ b/toolkit/library/libxul.mk
+@@ -145,17 +145,17 @@ endif
+ ifdef MOZ_WMF
+ OS_LIBS += $(call EXPAND_LIBNAME,mfuuid wmcodecdspuuid strmiids)
+ endif
+ 
+ ifdef MOZ_DIRECTSHOW
+ OS_LIBS += $(call EXPAND_LIBNAME,dmoguids wmcodecdspuuid strmiids msdmo)
+ endif
+ 
+-EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB)
++EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB) $(NSSHELPER_LIBS)
+ 
+ ifeq ($(MOZ_WIDGET_TOOLKIT),cocoa)
+ OS_LIBS += \
+   $(TK_LIBS) \
+   $(NULL)
+ endif
+ 
+ ifeq (OpenBSD,$(OS_ARCH))

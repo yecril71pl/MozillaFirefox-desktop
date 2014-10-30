@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sun Oct 26 21:06:12 UTC 2014 - wr@rosenauer.org
+Tue Oct 28 15:23:09 UTC 2014 - josua.mayer97@gmail.com
 
-- update to Firefox 33.0.1
+- added mozilla-bmo1088588.patch to fix build with EGL (bmo#1088588)
 
 -------------------------------------------------------------------
 Sat Oct 25 08:45:43 UTC 2014 - wr@rosenauer.org

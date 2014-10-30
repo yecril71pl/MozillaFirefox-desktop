@@ -13,6 +13,7 @@ mozilla-sle11.patch
 mozilla-icu-strncat.patch
 mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
+mozilla-bmo1088588.patch
 
 # Firefox patches
 firefox-kde.patch

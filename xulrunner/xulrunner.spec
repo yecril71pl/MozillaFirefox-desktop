@@ -1,8 +1,8 @@
 #
 # spec file for package xulrunner
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2013 Wolfgang Rosenauer
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2014 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -16,10 +16,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%if %suse_version > 1220
-%define gstreamer_ver 0.10
+%define         version_internal 31.2.0
+%define         apiversion 31
+%define         uaweight 3120000
+%define         releasedate 2014101100
+
+%if %suse_version > 1210
+%if %suse_version > 1310
+%define gstreamer_ver 1.0
+%define gstreamer 1
 %else
 %define gstreamer_ver 0.10
+%endif
 %endif
 
 Name:           xulrunner
@@ -33,6 +41,9 @@ BuildRequires:  libcurl-devel
 BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
 BuildRequires:  libnotify-devel
+%if %suse_version > 1140
+BuildRequires:  makeinfo
+%endif
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkg-config
 BuildRequires:  python
@@ -47,19 +58,24 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10
-BuildRequires:  mozilla-nss-devel >= 3.15.1
+BuildRequires:  mozilla-nspr-devel >= 4.10.6
+BuildRequires:  mozilla-nss-devel >= 3.16.5
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
+%if 0%{?gstreamer} == 1
+Requires:       libgstreamer-1_0-0
+Recommends:     gstreamer-fluendo-mp3
+Recommends:     gstreamer-plugin-libav
+%else
+Requires:       libgstreamer-0_10-0
+Recommends:     gstreamer-0_10-fluendo-mp3
+Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
-Version:        24.0
+%endif
+Version:        31.2.0
 Release:        0
-%define         releasedate 2013091000
-%define         version_internal 24.0
-%define         apiversion 24
-%define         uaweight 2400000
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
 Group:          Productivity/Other
@@ -79,15 +95,24 @@ Source7:        baselibs.conf
 Source8:        source-stamp.txt
 Source9:        compare-locales.tar.bz2
 Patch1:         toolkit-download-folder.patch
-Patch2:         mozilla-pkgconfig.patch
-Patch3:         mozilla-idldir.patch
-Patch4:         mozilla-nongnome-proxies.patch
-Patch5:         mozilla-prefer_plugin_pref.patch
-Patch6:         mozilla-language.patch
-Patch7:         mozilla-ntlm-full-path.patch
-Patch9:         mozilla-sle11.patch
-Patch10:        mozilla-ppc.patch
-Patch11:        mozilla-libproxy-compat.patch
+Patch2:         mozilla-nongnome-proxies.patch
+Patch3:         mozilla-prefer_plugin_pref.patch
+Patch4:         mozilla-shared-nss-db.patch
+Patch5:         mozilla-kde.patch
+Patch6:         mozilla-preferences.patch
+Patch7:         mozilla-language.patch
+Patch8:         mozilla-ntlm-full-path.patch
+Patch9:         mozilla-repo.patch
+Patch10:        mozilla-sle11.patch
+Patch11:        mozilla-icu-strncat.patch
+Patch12:        mozilla-arm-disable-edsp.patch
+Patch13:        mozilla-ppc.patch
+Patch14:        mozilla-libproxy-compat.patch
+Patch15:        mozilla-nullptr-gcc45.patch
+Patch16:        mozilla-idldir.patch
+# Gecko/Toolkit AArch64 Porting
+Patch30:        mozilla-aarch64-bmo-810631.patch
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       mozilla-js = %{version}
 Requires(post):  update-alternatives coreutils

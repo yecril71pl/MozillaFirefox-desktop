@@ -1,4 +1,23 @@
 -------------------------------------------------------------------
+Sat Oct 11 16:39:46 UTC 2014 - wr@rosenauer.org
+
+- update to Firefox 31.2.0 (bnc#900941)
+  * MFSA 2014-74/CVE-2014-1574
+    Miscellaneous memory safety hazards
+  * MFSA 2014-75/CVE-2014-1576 (bmo#1041512)
+    Buffer overflow during CSS manipulation
+  * MFSA 2014-76/CVE-2014-1577 (bmo#1012609)
+    Web Audio memory corruption issues with custom waveforms
+  * MFSA 2014-77/CVE-2014-1578 (bmo#1063327)
+    Out-of-bounds write with WebM video
+  * MFSA 2014-79/CVE-2014-1581 (bmo#1068218)
+    Use-after-free interacting with text directionality
+  * MFSA 2014-81/CVE-2014-1585/CVE-2014-1586 (bmo#1062876, bmo#1062981)
+    Inconsistent video sharing within iframe
+  * MFSA 2014-82/CVE-2014-1583 (bmo#1045540)
+    Accessing cross-origin objects via the Alarms API
+
+-------------------------------------------------------------------
 Wed Sep 24 09:28:00 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 31.1.1esr

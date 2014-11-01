@@ -89,7 +89,7 @@ Source1:        l10n-%{version}.tar.bz2
 Source2:        find-external-requires.sh
 Source3:        %{name}-rpmlintrc
 Source4:        xulrunner-openSUSE-prefs.js
-Source5:        add-plugins.sh.in
+Source5:        spellcheck.js
 Source6:        create-tar.sh
 Source7:        baselibs.conf
 Source8:        source-stamp.txt
@@ -230,6 +230,12 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch30 -p1
 
 %build
 # no need to add build time to binaries
@@ -283,53 +289,34 @@ ac_add_options --enable-system-hunspell
 ac_add_options --enable-startup-notification
 ac_add_options --enable-shared-js
 #ac_add_options --enable-debug
-EOF
 %if %suse_version > 1130
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
-EOF
 %endif
 %if %suse_version < 1220
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-gstreamer
-EOF
 %endif
 %if %has_system_nspr
-cat << EOF >> $MOZCONFIG
 ac_add_options --with-system-nspr
-EOF
 %endif
 %if %has_system_nss
-cat << EOF >> $MOZCONFIG
 ac_add_options --with-system-nss
-EOF
 %endif
 %if %has_system_cairo
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-system-cairo
-EOF
 %endif
 %if %suse_version > 1110
-cat << EOF >> $MOZCONFIG
 ac_add_options --enable-libproxy
-EOF
 %endif
 %if ! %crashreporter
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-crashreporter
-EOF
 %endif
 # ARM
 %ifarch %arm
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-neon
-EOF
 %endif
 %ifnarch %ix86 x86_64
-cat << EOF >> $MOZCONFIG
 ac_add_options --disable-webrtc
-EOF
 %endif
 make -f client.mk build
 
@@ -337,6 +324,7 @@ make -f client.mk build
 cd ../obj
 # preferences (to package in omni.jar)
 cp %{SOURCE4} dist/bin/defaults/pref/all-openSUSE.js
+cp %{SOURCE5} dist/bin/defaults/pref/
 %makeinstall STRIP=/bin/true
 # xpt.py is not executable
 chmod a+x $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/bin/*.py
@@ -365,10 +353,6 @@ tar --exclude=*.cpp --exclude=*.mm \
     mozilla/testing mozilla/toolkit/mozapps/installer mozilla/probes mozilla/memory \
     mozilla/toolkit/xre mozilla/nsprpub/config mozilla/tools mozilla/xpcom/build
 popd
-# install add-plugins.sh
-sed "s:%%PROGDIR:%{_libdir}/xulrunner-%{version_internal}:g" \
-  %{SOURCE5} > $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 # ghosts
 touch $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/global.reginfo
 # install additional locales
@@ -444,7 +428,6 @@ rm -rf %{_tmppath}/translations.*
 %post
 /usr/sbin/update-alternatives --install %{_bindir}/xulrunner \
   xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner %{uaweight} || :
-%{_libdir}/xulrunner-%{apiversion}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %posttrans
@@ -453,8 +436,6 @@ exit 0
 test -d %{_libdir}/xulrunner-%{ga_version} && rm -rf %{_libdir}/xulrunner-%{ga_version}
 ln -sf xulrunner-%{version_internal} %{_libdir}/xulrunner-%{ga_version}
 %endif
-[ -e %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh ] && \
-  %{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %preun
@@ -463,15 +444,6 @@ if [ "$1" = "0" ]; then # deinstallation
   # but that's problematic for updates w/o raising the version number
   /usr/sbin/update-alternatives --remove xulrunner %{_libdir}/xulrunner-%{apiversion}/xulrunner
 fi
-rm -f %{_libdir}/xulrunner-%{version_internal}/dictionaries/*
-exit 0
-
-%triggerin -- myspell-dictionary
-%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
-exit 0
-
-%triggerpostun -- myspell-dictionary
-%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh > /dev/null 2>&1
 exit 0
 
 %files
@@ -484,7 +456,6 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/components/
 %{_libdir}/xulrunner-%{version_internal}/*.so
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
-%{_libdir}/xulrunner-%{version_internal}/add-plugins.sh
 %{_libdir}/xulrunner-%{version_internal}/chrome.manifest
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client

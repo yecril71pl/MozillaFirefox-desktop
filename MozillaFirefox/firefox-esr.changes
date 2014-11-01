@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Sat Oct 25 08:45:43 UTC 2014 - wr@rosenauer.org
+
+- define /usr/share/myspell as additional dictionary location
+  and remove add-plugins.sh finally (bnc#900639)
+
+-------------------------------------------------------------------
 Sat Oct 11 16:39:46 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 31.2.0 (bnc#900941)

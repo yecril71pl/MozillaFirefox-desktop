@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8193,16 +8193,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8192,16 +8192,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -27,8 +27,8 @@ diff --git a/configure.in b/configure.in
 +  AC_DEFINE(MOZ_ENABLE_NSSHELPER)
 +fi
 +AC_SUBST(MOZ_ENABLE_NSSHELPER)
-+AC_SUBST(NSSHELPER_CFLAGS)
-+AC_SUBST(NSSHELPER_LIBS)
++AC_SUBST_LIST(NSSHELPER_CFLAGS)
++AC_SUBST_LIST(NSSHELPER_LIBS)
 +
 +dnl ========================================================
  dnl disable xul
@@ -39,19 +39,29 @@ diff --git a/configure.in b/configure.in
  if test "$MOZ_XUL"; then
    AC_DEFINE(MOZ_XUL)
  else
-diff --git a/security/manager/ssl/src/Makefile.in b/security/manager/ssl/src/Makefile.in
-new file mode 100644
---- /dev/null
-+++ b/security/manager/ssl/src/Makefile.in
-@@ -0,0 +1,8 @@
-+#! gmake
-+# 
-+# This Source Code Form is subject to the terms of the Mozilla Public
-+# License, v. 2.0. If a copy of the MPL was not distributed with this
-+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.build
+--- a/security/manager/ssl/src/moz.build
++++ b/security/manager/ssl/src/moz.build
+@@ -91,16 +91,19 @@ FAIL_ON_WARNINGS = True
+ 
+ FINAL_LIBRARY = 'xul'
+ 
+ LOCAL_INCLUDES += [
+     '../../../certverifier',
+     '../../../pkix/include',
+ ]
+ 
++LOCAL_INCLUDES += CONFIG['NSSHELPER_CFLAGS']
++EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
 +
-+LOCAL_INCLUDES += $(NSSHELPER_CFLAGS)
-+EXTRA_DSO_LDOPTS += $(NSSHELPER_LIBS)
+ if CONFIG['NSS_DISABLE_DBM']:
+     DEFINES['NSS_DISABLE_DBM'] = '1'
+ 
+ DEFINES['SSL_DISABLE_DEPRECATED_CIPHER_SUITE_NAMES'] = 'True'
+ DEFINES['NSS_ENABLE_ECC'] = 'True'
+ for var in ('DLL_PREFIX', 'DLL_SUFFIX'):
+     DEFINES[var] = '"%s"' % CONFIG[var]
+ 
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
 --- a/security/manager/ssl/src/nsNSSComponent.cpp
 +++ b/security/manager/ssl/src/nsNSSComponent.cpp
@@ -79,7 +89,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -1115,17 +1122,31 @@ nsNSSComponent::InitializeNSS()
+@@ -944,17 +951,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -112,25 +122,25 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
      if (init_rv != SECSuccess) {
        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
      }
-diff --git a/toolkit/library/libxul.mk b/toolkit/library/libxul.mk
---- a/toolkit/library/libxul.mk
-+++ b/toolkit/library/libxul.mk
-@@ -145,17 +145,17 @@ endif
- ifdef MOZ_WMF
- OS_LIBS += $(call EXPAND_LIBNAME,mfuuid wmcodecdspuuid strmiids)
- endif
+diff --git a/toolkit/library/libxul.mozbuild b/toolkit/library/libxul.mozbuild
+--- a/toolkit/library/libxul.mozbuild
++++ b/toolkit/library/libxul.mozbuild
+@@ -22,16 +22,18 @@ DELAYLOAD_DLLS += [
+     'psapi.dll',
+     'rasapi32.dll',
+     'rasdlg.dll',
+     'secur32.dll',
+     'wininet.dll',
+     'winspool.drv'
+ ]
  
- ifdef MOZ_DIRECTSHOW
- OS_LIBS += $(call EXPAND_LIBNAME,dmoguids wmcodecdspuuid strmiids msdmo)
- endif
++EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
++
+ if CONFIG['MOZ_METRO']:
+     DELAYLOAD_DLLS += [
+         'API-MS-WIN-CORE-WINRT-L' + CONFIG['CRTEXPDLLVERSION'] + '.DLL',
+         'API-MS-WIN-CORE-WINRT-STRING-L' + CONFIG['CRTEXPDLLVERSION'] + '.DLL',
+         'uiautomationcore.dll'
+     ]
  
--EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB)
-+EXTRA_DSO_LDOPTS += $(NSPR_LIBS) $(MOZALLOC_LIB) $(NSSHELPER_LIBS)
- 
- ifeq ($(MOZ_WIDGET_TOOLKIT),cocoa)
- OS_LIBS += \
-   $(TK_LIBS) \
-   $(NULL)
- endif
- 
- ifeq (OpenBSD,$(OS_ARCH))
+ if CONFIG['ACCESSIBILITY']:

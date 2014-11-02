@@ -7,9 +7,9 @@ package unconditionally.
 # HG changeset patch
 # Parent 8c1bfc96b05ef1836aad6e9f2af323f63ed1b69c
 
-diff --git a/modules/libpref/src/init/all.js b/modules/libpref/src/init/all.js
---- a/modules/libpref/src/init/all.js
-+++ b/modules/libpref/src/init/all.js
+diff --git a/modules/libpref/init/all.js b/modules/libpref/init/all.js
+--- a/modules/libpref/init/all.js
++++ b/modules/libpref/init/all.js
 @@ -1503,17 +1503,17 @@ pref("converter.html2txt.header_strategy
  
  pref("intl.accept_languages",               "chrome://global/locale/intl.properties");

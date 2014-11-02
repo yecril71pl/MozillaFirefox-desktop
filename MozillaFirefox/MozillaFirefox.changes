@@ -1,11 +1,12 @@
 -------------------------------------------------------------------
-Thu Oct 30 18:22:02 UTC 2014 - wr@rosenauer.org
+Sun Nov  2 09:14:12 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 33.1
   * DuckDuckGo is now included upstream (bmo#1061736)
   * fix to allow overriding sec_error_ca_cert_invalid errors
     (bmo#1042889)
   * disable http/1 framing enforcement (bmo#1088850)
+- fix typo in GStreamer Recommends
 
 -------------------------------------------------------------------
 Thu Oct 30 11:31:05 UTC 2014 - wr@rosenauer.org

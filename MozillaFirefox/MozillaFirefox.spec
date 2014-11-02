@@ -21,7 +21,7 @@
 %define major 33
 %define mainver %major.1
 %define update_channel release
-%define releasedate 2014102900
+%define releasedate 2014103000
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -100,7 +100,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %if 0%{?gstreamer} == 1
 Requires:       libgstreamer-1_0-0
 Recommends:     gstreamer-fluendo-mp3
-Recommends:     gstreamer-plugin-libav
+Recommends:     gstreamer-plugins-libav
 %else
 Requires:       libgstreamer-0_10-0
 Recommends:     gstreamer-0_10-fluendo-mp3

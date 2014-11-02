@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sun Nov  2 09:19:33 UTC 2014 - wr@rosenauer.org
+
+- fix typo in GStreamer Recommends
+
+-------------------------------------------------------------------
 Sat Oct 25 08:45:43 UTC 2014 - wr@rosenauer.org
 
 - define /usr/share/myspell as additional dictionary location

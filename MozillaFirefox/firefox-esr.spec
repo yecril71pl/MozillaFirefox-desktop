@@ -68,7 +68,7 @@ BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 %if 0%{?gstreamer} == 1
 Requires:       libgstreamer-1_0-0
 Recommends:     gstreamer-fluendo-mp3
-Recommends:     gstreamer-plugin-libav
+Recommends:     gstreamer-plugins-libav
 %else
 Requires:       libgstreamer-0_10-0
 Recommends:     gstreamer-0_10-fluendo-mp3

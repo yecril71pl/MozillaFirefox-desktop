@@ -16,11 +16,20 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define         version_internal 31.2.0
-%define         apiversion 31
-%define         uaweight 3120000
-%define         releasedate 2014101100
-
+%define version_internal 31.2.0
+%define apiversion 31
+%define uaweight 3120000
+%define releasedate 2014101100
+%define shared_js 0
+%define has_system_nspr  1
+%define has_system_nss   1
+%define has_system_cairo 0
+%define localize         0
+%ifarch ppc ppc64 s390 s390x ia64 %arm
+%define crashreporter    0
+%else
+%define crashreporter    0
+%endif
 %if %suse_version > 1210
 %if %suse_version > 1310
 %define gstreamer_ver 1.0
@@ -44,7 +53,6 @@ BuildRequires:  libnotify-devel
 %if %suse_version > 1140
 BuildRequires:  makeinfo
 %endif
-BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkg-config
 BuildRequires:  python
 BuildRequires:  startup-notification-devel
@@ -60,6 +68,7 @@ BuildRequires:  wireless-tools
 %endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.6
 BuildRequires:  mozilla-nss-devel >= 3.16.5
+BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
@@ -74,7 +83,7 @@ Recommends:     gstreamer-0_10-fluendo-mp3
 Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 %endif
-Version:        31.2.0
+Version:        %{version_internal}
 Release:        0
 Summary:        Mozilla Runtime Environment
 License:        MPL-2.0
@@ -84,8 +93,8 @@ Provides:       gecko
 %ifarch %ix86
 Provides:       xulrunner-32bit = %{version}-%{release}
 %endif
-Source:         xulrunner-%{version}-source.tar.bz2
-Source1:        l10n-%{version}.tar.bz2
+Source:         xulrunner-%{version}-source.tar.xz
+Source1:        l10n-%{version}.tar.xz
 Source2:        find-external-requires.sh
 Source3:        %{name}-rpmlintrc
 Source4:        xulrunner-openSUSE-prefs.js
@@ -93,12 +102,10 @@ Source5:        spellcheck.js
 Source6:        create-tar.sh
 Source7:        baselibs.conf
 Source8:        source-stamp.txt
-Source9:        compare-locales.tar.bz2
+Source9:        compare-locales.tar.xz
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
 Patch3:         mozilla-prefer_plugin_pref.patch
-Patch4:         mozilla-shared-nss-db.patch
-Patch5:         mozilla-kde.patch
 Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
@@ -119,17 +126,6 @@ Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 Provides:       xulrunner-esr = %{version}
 Obsoletes:      xulrunner-esr < 24.0
-### build configuration ###
-%define has_system_nspr  1
-%define has_system_nss   1
-%define has_system_cairo 0
-%define localize 1
-%ifarch ppc ppc64 s390 s390x ia64 %arm
-%define crashreporter    0
-%else
-%define crashreporter    1
-%endif
-### configuration end ###
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE2}
 %global provfind sh -c "grep -Ev 'mozsqlite3|dbusservice|unixprint' | %__find_provides"
@@ -146,7 +142,7 @@ XULRunner is a single installable package that can be used to bootstrap
 multiple XUL+XPCOM applications that are as rich as Firefox and
 Thunderbird.
 
-
+%if 0%{?shared_js} == 1
 %package -n mozilla-js
 Summary:        Mozilla JS engine
 Group:          Productivity/Other
@@ -156,6 +152,7 @@ JavaScript is the Netscape-developed object scripting language used in millions
 of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
 with only mild differences from the published standard.
+%endif
 
 
 %package devel
@@ -173,7 +170,6 @@ Requires:       %{name} = %{version}
 Software Development Kit to embed XUL or Gecko into other applications.
 
 %if %localize
-
 %package translations-common
 Summary:        Common translations for XULRunner
 Group:          System/Localization
@@ -206,7 +202,6 @@ This package contains rarely used languages.
 %endif
 
 %if %crashreporter
-
 %package buildsymbols
 Summary:        Breakpad buildsymbols for %{name}
 Group:          Development/Debug
@@ -221,8 +216,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %if %suse_version < 1120
@@ -246,7 +239,10 @@ find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIM
 #
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
 export MOZ_BUILD_DATE=%{releasedate}
-export CFLAGS="$RPM_OPT_FLAGS -Os -fno-strict-aliasing"
+export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+%ifarch %ix86
+export CFLAGS="${CFLAGS} -Os"
+%endif
 %ifarch ppc64
 export CFLAGS="$CFLAGS -mminimal-toc"
 %endif
@@ -274,7 +270,16 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
-ac_add_options --enable-optimize
+ac_add_options --enable-release
+ac_add_options --enable-stdcxx-compat
+%ifarch %ix86
+%if 0%{?suse_version} > 1230
+ac_add_options --disable-optimize
+%endif
+%endif
+%ifnarch ppc ppc64 ppc64le
+ac_add_options --enable-elf-hack
+%endif
 ac_add_options --enable-extensions=default
 #ac_add_options --with-system-jpeg # mozilla uses internal libjpeg-turbo now
 #ac_add_options --with-system-png  # no APNG support
@@ -287,11 +292,16 @@ ac_add_options --disable-updater
 ac_add_options --disable-javaxpcom
 ac_add_options --enable-system-hunspell
 ac_add_options --enable-startup-notification
+%if 0%{?shared_js} == 1
 ac_add_options --enable-shared-js
+%endif
 #ac_add_options --enable-debug
 %if %suse_version > 1130
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
+%endif
+%if 0%{?gstreamer} == 1
+ac_add_options --enable-gstreamer=1.0
 %endif
 %if %suse_version < 1220
 ac_add_options --disable-gstreamer
@@ -318,6 +328,7 @@ ac_add_options --disable-neon
 %ifnarch %ix86 x86_64
 ac_add_options --disable-webrtc
 %endif
+EOF
 make -f client.mk build
 
 %install
@@ -338,8 +349,10 @@ find $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/ \
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/extensions
 # fixing SDK dynamic libs (symlink instead of copy)
 rm $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/*.so
+%if 0%{?shared_js} == 1
 ln -sf ../../../xulrunner-%{version_internal}/libmozjs.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
+%endif
 ln -sf ../../../xulrunner-%{version_internal}/libxul.so \
        $RPM_BUILD_ROOT%{_libdir}/xulrunner-devel-%{version_internal}/sdk/lib/
 # include basic buildenv for xulapps to use
@@ -455,7 +468,9 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
 %{_libdir}/xulrunner-%{version_internal}/*.so
+%if 0%{?shared_js} == 1
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
+%endif
 %{_libdir}/xulrunner-%{version_internal}/chrome.manifest
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
 %{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
@@ -483,11 +498,13 @@ exit 0
 %ghost %{_libdir}/xulrunner-%{ga_version}
 %endif
 
+%if 0%{?shared_js} == 1
 %files -n mozilla-js
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
 %{_libdir}/xulrunner-%{apiversion}
 %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
+%endif
 
 %files devel
 %defattr(-,root,root)

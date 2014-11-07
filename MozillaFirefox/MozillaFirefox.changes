@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Sun Nov  2 09:14:12 UTC 2014 - wr@rosenauer.org
+Fri Nov  7 20:14:32 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 33.1
   * DuckDuckGo is now included upstream (bmo#1061736)
@@ -7,6 +7,27 @@ Sun Nov  2 09:14:12 UTC 2014 - wr@rosenauer.org
     (bmo#1042889)
   * disable http/1 framing enforcement (bmo#1088850)
 - fix typo in GStreamer Recommends
+
+-------------------------------------------------------------------
+Tue Nov  4 18:00:35 UTC 2014 - guillaume@opensuse.org
+
+- Disable elf-hack for aarch64
+- Enable EGL for aarch64
+- Limit RAM usage during link for %arm
+- Fix _constraints for ARM
+
+-------------------------------------------------------------------
+Mon Nov  3 11:36:04 UTC 2014 - dmueller@suse.com
+
+- use proper macros for ARM
+
+-------------------------------------------------------------------
+Mon Nov  3 11:26:23 UTC 2014 - josua.mayer97@gmail.com
+
+- use '--disable-optimize' not only on 32-bit x86, but on 32-bit arm too
+  to fix compiling.
+- pass '-Wl,--no-keep-memory' to linker to reduce required memory during
+  linking on arm.
 
 -------------------------------------------------------------------
 Thu Oct 30 11:31:05 UTC 2014 - wr@rosenauer.org

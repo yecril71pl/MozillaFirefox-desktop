@@ -21,7 +21,7 @@
 %define major 33
 %define mainver %major.1
 %define update_channel release
-%define releasedate 2014103000
+%define releasedate 2014110600
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -300,6 +300,8 @@ export CFLAGS="${CFLAGS} -Os"
 %endif
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
+# Limit RAM usage during link
++export LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
 %endif
 %ifarch ppc64 ppc64le
 export CFLAGS="$CFLAGS -mminimal-toc"
@@ -319,12 +321,12 @@ ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
 ac_add_options --enable-stdcxx-compat
-%ifarch %ix86
+%ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
 ac_add_options --disable-optimize
 %endif
 %endif
-%ifnarch ppc ppc64 ppc64le
+%ifnarch ppc ppc64 ppc64le aarch64
 ac_add_options --enable-elf-hack
 %endif
 ac_add_options --with-system-nspr
@@ -369,7 +371,7 @@ ac_add_options --disable-neon
 ac_add_options --disable-webrtc
 %endif
 # try to use OpenGL-ES on ARM
-%ifarch %arm
+%ifarch %arm aarch64
 ac_add_options --with-gl-provider=EGL
 %endif
 EOF

@@ -2,10 +2,10 @@
 Fri Nov  7 20:14:32 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 33.1
-  * DuckDuckGo is now included upstream (bmo#1061736)
-  * fix to allow overriding sec_error_ca_cert_invalid errors
-    (bmo#1042889)
-  * disable http/1 framing enforcement (bmo#1088850)
+  * Adding DuckDuckGo as a search option (upstream)
+  * Forget Button added
+  * Enhanced Tiles
+  * Privacy tour introduced
 - fix typo in GStreamer Recommends
 
 -------------------------------------------------------------------

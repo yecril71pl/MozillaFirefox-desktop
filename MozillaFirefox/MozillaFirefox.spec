@@ -301,7 +301,7 @@ export CFLAGS="${CFLAGS} -Os"
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
 # Limit RAM usage during link
-+export LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
+export LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
 %endif
 %ifarch ppc64 ppc64le
 export CFLAGS="$CFLAGS -mminimal-toc"

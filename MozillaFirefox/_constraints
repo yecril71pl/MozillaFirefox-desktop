@@ -5,7 +5,7 @@
       <size unit="G">9</size>
     </disk>
     <memory>
-      <size unit="M">4500</size>
+      <size unit="M">5000</size>
     </memory>
   </hardware>
   <overwrite>

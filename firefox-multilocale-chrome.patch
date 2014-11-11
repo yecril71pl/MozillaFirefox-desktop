@@ -39,10 +39,10 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  ifeq ($(MOZ_WIDGET_TOOLKIT) $(DIST_SUBDIR),windows metro)
  SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/metrolist.txt))
  else
--SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt))
+-SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt)) ddg
 +SEARCHPLUGINS_NAMES = $(shell cat \
 +  $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
-+  @srcdir@/en-US/searchplugins/list.txt ) )
++  @srcdir@/en-US/searchplugins/list.txt ) ) ddg
  endif
  SEARCHPLUGINS_PATH := $(FINAL_TARGET)/searchplugins
  SEARCHPLUGINS := $(addsuffix .xml,$(SEARCHPLUGINS_NAMES))

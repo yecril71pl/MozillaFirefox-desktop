@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent 839ad2a7997b5b64edf2454b42c733a0fc729270
+# Parent e6f3afc034d1bef0f7661469d8ca3ef7744c907e
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 Add searchplugins to chrome packaging for proper localization
 
@@ -42,7 +42,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 -SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt))
 +SEARCHPLUGINS_NAMES = $(shell cat \
 +  $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
-+  @srcdir@/en-US/searchplugins/list.txt ) ) ddg
++  @srcdir@/en-US/searchplugins/list.txt ) )
  endif
  SEARCHPLUGINS_PATH := $(FINAL_TARGET)/searchplugins
  SEARCHPLUGINS := $(addsuffix .xml,$(SEARCHPLUGINS_NAMES))

@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8192,16 +8192,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8199,16 +8199,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -51,8 +51,8 @@ diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.b
      '../../../pkix/include',
  ]
  
-+LOCAL_INCLUDES += CONFIG['NSSHELPER_CFLAGS']
-+EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
++CXXFLAGS += sorted(CONFIG['NSSHELPER_CFLAGS'])
++OS_LIBS += sorted(CONFIG['NSSHELPER_LIBS'])
 +
  if CONFIG['NSS_DISABLE_DBM']:
      DEFINES['NSS_DISABLE_DBM'] = '1'
@@ -89,7 +89,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -944,17 +951,31 @@ nsNSSComponent::InitializeNSS()
+@@ -943,17 +950,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -134,7 +134,7 @@ diff --git a/toolkit/library/libxul.mozbuild b/toolkit/library/libxul.mozbuild
      'winspool.drv'
  ]
  
-+EXTRA_DSO_LDOPTS += CONFIG['NSSHELPER_LIBS']
++OS_LIBS += sorted(CONFIG['NSSHELPER_LIBS'])
 +
  if CONFIG['MOZ_METRO']:
      DELAYLOAD_DLLS += [

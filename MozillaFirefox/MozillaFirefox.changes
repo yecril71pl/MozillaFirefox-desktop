@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
-Tue Nov 11 20:45:44 UTC 2014 - wr@rosenauer.org
+Sat Nov 15 10:01:21 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 34.0b8
+- update to Firefox 34.0b9
+- limit linker memory usage for %ix86
 
 -------------------------------------------------------------------
 Fri Nov  7 20:14:32 UTC 2014 - wr@rosenauer.org

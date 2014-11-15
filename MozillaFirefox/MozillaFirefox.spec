@@ -21,7 +21,7 @@
 %define major 33
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2014111000
+%define releasedate 2014111400
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -295,11 +295,10 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export MOZ_GOOGLE_API_KEY=%{_google_api_key}
 export CFLAGS="%{optflags} -fno-strict-aliasing"
-%ifarch %ix86
-export CFLAGS="${CFLAGS} -Os"
-%endif
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
+%endif
+%ifarch %arm %ix86
 # Limit RAM usage during link
 export LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
 %endif

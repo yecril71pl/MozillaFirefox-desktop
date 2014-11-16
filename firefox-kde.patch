@@ -1249,7 +1249,7 @@ diff --git a/browser/base/content/browser.xul b/browser/base/content/browser.xul
          <button id="editBookmarkPanelDeleteButton"
                  class="editBookmarkPanelBottomButton"
                  label="&editBookmark.cancel.label;"
-@@ -1150,17 +1150,17 @@
+@@ -1153,17 +1153,17 @@
  
    <hbox id="full-screen-warning-container" hidden="true" fadeout="true">
      <hbox style="width: 100%;" pack="center"> <!-- Inner hbox needed due to bug 579776. -->
@@ -1271,10 +1271,10 @@ diff --git a/browser/base/content/browser.xul b/browser/base/content/browser.xul
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -70,16 +70,18 @@ browser.jar:
-         content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
+@@ -69,16 +69,18 @@ browser.jar:
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)
          content/browser/aboutSocialError.xhtml        (content/aboutSocialError.xhtml)
+         content/browser/aboutProviderDirectory.xhtml  (content/aboutProviderDirectory.xhtml)
          content/browser/aboutTabCrashed.js            (content/aboutTabCrashed.js)
          content/browser/aboutTabCrashed.xhtml         (content/aboutTabCrashed.xhtml)
  *       content/browser/browser.css                   (content/browser.css)
@@ -1376,7 +1376,7 @@ diff --git a/browser/components/preferences/main.js b/browser/components/prefere
      // when the user will select the default.  We refresh here periodically
      // in case the default changes.  On other Windows OS's defaults can also
      // be set while the prefs are open.
-@@ -497,16 +503,27 @@ var gMainPane = {
+@@ -572,16 +578,27 @@ var gMainPane = {
     */
    setDefaultBrowser: function()
    {
@@ -1844,7 +1844,7 @@ new file mode 100644
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in
 --- a/browser/installer/package-manifest.in
 +++ b/browser/installer/package-manifest.in
-@@ -685,19 +685,21 @@
+@@ -697,19 +697,21 @@
  @BINPATH@/defaults/autoconfig/prefcalls.js
  @BINPATH@/browser/defaults/profile/prefs.js
  

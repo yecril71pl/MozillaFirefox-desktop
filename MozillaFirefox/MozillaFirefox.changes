@@ -1,8 +1,15 @@
 -------------------------------------------------------------------
+Sun Nov 16 15:03:49 UTC 2014 - wr@rosenauer.org
+
+- Aurora 35 (20141115) aka Firefox Developer Edition
+- rebased patches
+
+-------------------------------------------------------------------
 Sat Nov 15 10:01:21 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 34.0b9
 - limit linker memory usage for %ix86
+- rebased patches
 
 -------------------------------------------------------------------
 Fri Nov  7 20:14:32 UTC 2014 - wr@rosenauer.org

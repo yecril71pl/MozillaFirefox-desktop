@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 33
-%define mainver %major.99
-%define update_channel beta
-%define releasedate 2014111400
+%define major 34
+%define mainver %major.98
+%define update_channel aurora
+%define releasedate 2014111500
 
 # general build definitions
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
@@ -49,7 +49,7 @@
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%define branding 1
+%define branding 0
 %define localize 1
 %ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0

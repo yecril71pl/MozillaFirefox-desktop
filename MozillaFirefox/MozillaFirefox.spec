@@ -56,14 +56,6 @@
 %else
 %define crashreporter 1
 %endif
-%if 0%{?suse_version} > 1210
-%if 0%{?suse_version} > 1310
-%define gstreamer_ver 1.0
-%define gstreamer 1
-%else
-%define gstreamer_ver 0.10
-%endif
-%endif
 
 Name:           MozillaFirefox
 BuildRequires:  Mesa-devel

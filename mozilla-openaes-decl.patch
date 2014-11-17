@@ -1,0 +1,24 @@
+# HG changeset patch
+# Parent 9c6da588016c1f6cd7489561e72e72a8b7e00fe8
+# User Wolfgang Rosenauer <wr@rosenauer.org>
+diff --git a/media/gmp-clearkey/0.1/openaes/oaes_lib.c b/media/gmp-clearkey/0.1/openaes/oaes_lib.c
+--- a/media/gmp-clearkey/0.1/openaes/oaes_lib.c
++++ b/media/gmp-clearkey/0.1/openaes/oaes_lib.c
+@@ -27,16 +27,17 @@
+  * POSSIBILITY OF SUCH DAMAGE.
+  * ---------------------------------------------------------------------------
+  */
+ static const char _NR[] = {
+ 	0x4e,0x61,0x62,0x69,0x6c,0x20,0x53,0x2e,0x20,
+ 	0x41,0x6c,0x20,0x52,0x61,0x6d,0x6c,0x69,0x00 };
+ 
+ #include <stdlib.h>
++#include <stdio.h>
+ #include <stddef.h>
+ #include <time.h> 
+ #include <sys/timeb.h>
+ #include <string.h>
+ 
+ #ifdef WIN32
+ #include <process.h>
+ #endif

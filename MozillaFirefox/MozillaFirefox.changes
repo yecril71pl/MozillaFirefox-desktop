@@ -2,7 +2,15 @@
 Sun Nov 16 15:03:49 UTC 2014 - wr@rosenauer.org
 
 - Aurora 35 (20141115) aka Firefox Developer Edition
+  * Aurora does not use branding subpackages anymore
 - rebased patches
+- dropped explicit support for everything older than 12.3
+  (including SLES11)
+  * merge firefox-kde.patch and firefox-kde-114.patch
+  * dropped mozilla-sle11.patch
+- reworked specfile to build conditionally based on release channel
+  either Firefox or Firefox Developer Edition
+- added mozilla-openaes-decl.patch to fix implicit declarations
 
 -------------------------------------------------------------------
 Sat Nov 15 10:01:21 UTC 2014 - wr@rosenauer.org

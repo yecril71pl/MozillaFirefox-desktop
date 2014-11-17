@@ -9,15 +9,14 @@ mozilla-preferences.patch
 mozilla-language.patch
 mozilla-ntlm-full-path.patch
 mozilla-repo.patch
-mozilla-sle11.patch
 mozilla-icu-strncat.patch
 mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
 mozilla-bmo1088588.patch
+mozilla-openaes-decl.patch
 
 # Firefox patches
 firefox-kde.patch
-firefox-kde-114.patch
 firefox-no-default-ualocale.patch
 firefox-multilocale-chrome.patch
 firefox-branded-icons.patch

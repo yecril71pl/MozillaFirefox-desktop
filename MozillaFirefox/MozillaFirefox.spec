@@ -16,7 +16,6 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
 # changed with every update
 %define major 34
 %define mainver %major.98
@@ -24,48 +23,46 @@
 %define releasedate 2014111500
 
 # general build definitions
+%if "%{update_channel}" != "aurora"
+%define progname firefox
+%define pkgname  MozillaFirefox
+%define appname  Firefox
+%else
+%define progname firefox-dev
+%define pkgname  firefox-dev-edition
+%define appname  Firefox Developer Edition
+%endif
+%define progdir %{_prefix}/%_lib/%{progname}
+%define gnome_dir     %{_prefix}
+%define desktop_file_name %{progname}
 %define firefox_appid \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define _use_internal_dependency_generator 0
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
-%define progname firefox
-%define progdir %{_prefix}/%_lib/%{progname}
-%define gnome_dir     %{_prefix}
-%if 0%{?suse_version} > 1130
-%define desktop_file_name firefox
-%else
-%define desktop_file_name %{name}
-%endif
-%if 0%{?suse_version} > 1210
 %if 0%{?suse_version} > 1310
 %define gstreamer_ver 1.0
 %define gstreamer 1
 %else
 %define gstreamer_ver 0.10
 %endif
-%endif
 # Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
+%if %update_channel == "aurora"
 %define branding 0
+%else
+%define branding 1
+%endif
 %define localize 1
 %ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter 0
 %else
 %define crashreporter 1
 %endif
-%if 0%{?suse_version} > 1210
-%if 0%{?suse_version} > 1310
-%define gstreamer_ver 1.0
-%define gstreamer 1
-%else
-%define gstreamer_ver 0.10
-%endif
-%endif
 
-Name:           MozillaFirefox
+Name:           %{pkgname}
 BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
@@ -83,17 +80,12 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-%if 0%{?suse_version} > 1110
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
-%else
-BuildRequires:  wireless-tools
-%endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.7
 BuildRequires:  mozilla-nss-devel >= 3.17.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
-%if 0%{?suse_version} > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
@@ -106,18 +98,19 @@ Requires:       libgstreamer-0_10-0
 Recommends:     gstreamer-0_10-fluendo-mp3
 Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
-%endif
 Version:        %{mainver}
 Release:        0
+%if "%{name}" == "MozillaFirefox"
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
+%endif
 Provides:       web_browser
 Provides:       browser(npapi)
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
-Summary:        Mozilla Firefox Web Browser
+Summary:        Mozilla %{appname} Web Browser
 License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
 Url:            http://www.mozilla.org/
@@ -147,20 +140,21 @@ Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
-Patch10:        mozilla-sle11.patch
-Patch11:        mozilla-icu-strncat.patch
-Patch12:        mozilla-arm-disable-edsp.patch
-Patch13:        mozilla-bmo1088588.patch
+Patch10:        mozilla-icu-strncat.patch
+Patch11:        mozilla-arm-disable-edsp.patch
+Patch12:        mozilla-bmo1088588.patch
+Patch13:        mozilla-openaes-decl.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
-Patch102:       firefox-kde-114.patch
-Patch103:       firefox-no-default-ualocale.patch
-Patch104:       firefox-multilocale-chrome.patch
-Patch105:       firefox-branded-icons.patch
+Patch102:       firefox-no-default-ualocale.patch
+Patch103:       firefox-multilocale-chrome.patch
+Patch104:       firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
+%if %branding
 Requires:       %{name}-branding > 20.0
+%endif
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
@@ -176,7 +170,7 @@ compliance and performance.  Its functionality can be enhanced via a
 plethora of extensions.
 
 %package devel
-Summary:        Devel package for Firefox
+Summary:        Devel package for %{appname}
 Group:          Development/Tools/Other
 Provides:       firefox-devel = %{version}-%{release}
 Requires:       %{name} = %{version}
@@ -184,11 +178,11 @@ Requires:       perl(Archive::Zip)
 Requires:       perl(XML::Simple)
 
 %description devel
-Development files for Firefox to make packaging of addons easier.
+Development files for %{appname} to make packaging of addons easier.
 
 %if %localize
 %package translations-common
-Summary:        Common translations for Firefox
+Summary:        Common translations for %{appname}
 Group:          System/Localization
 Provides:       locale(%{name}:ar;ca;cs;da;de;en_GB;el;es_AR;es_CL;es_ES;fi;fr;hu;it;ja;ko;nb_NO;nl;pl;pt_BR;pt_PT;ru;sv_SE;zh_CN;zh_TW)
 Requires:       %{name} = %{version}
@@ -196,10 +190,10 @@ Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-common
 This package contains several common languages for the user interface
-of Firefox.
+of %{appname}.
 
 %package translations-other
-Summary:        Extra translations for Firefox
+Summary:        Extra translations for %{appname}
 Group:          System/Localization
 Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
 Requires:       %{name} = %{version}
@@ -207,11 +201,12 @@ Obsoletes:      %{name}-translations < %{version}-%{release}
 
 %description translations-other
 This package contains rarely used languages for the user interface
-of Firefox.
+of %{appname}.
 %endif
 
+%if %branding
 %package branding-upstream
-Summary:        Upstream branding for Firefox
+Summary:        Upstream branding for %{appname}
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = %{version}
 Conflicts:      otherproviders(%{name}-branding)
@@ -227,13 +222,12 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
 
 %description branding-upstream
-This package provides upstream look and feel for Firefox.
-
+This package provides upstream look and feel for %{appname}.
+%endif
 
 %if %crashreporter
-
 %package buildsymbols
-Summary:        Breakpad buildsymbols for %{name}
+Summary:        Breakpad buildsymbols for %{appname}
 Group:          Development/Debug
 
 %description buildsymbols
@@ -257,24 +251,19 @@ cd $RPM_BUILD_DIR/mozilla
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%if 0%{?suse_version} < 1120
 %patch10 -p1
-%endif
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 # Firefox
 %patch101 -p1
-%if 0%{?suse_version} >= 1140
 %patch102 -p1
-%endif
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 
 %build
 # no need to add build time to binaries
-modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/%{name}.changes")"
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/MozillaFirefox.changes")"
 DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
@@ -346,19 +335,12 @@ ac_add_options --enable-update-channel=%{update_channel}
 %if 0%{?gstreamer} == 1
 ac_add_options --enable-gstreamer=1.0
 %endif
-%if 0%{?suse_version} > 1130
 ac_add_options --disable-gnomevfs
 ac_add_options --enable-gio
-%endif
-%if 0%{?suse_version} < 1220
-ac_add_options --disable-gstreamer
-%endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif
-%if 0%{?suse_version} > 1110
 ac_add_options --enable-libproxy
-%endif
 %if ! %crashreporter
 ac_add_options --disable-crashreporter
 %endif
@@ -452,16 +434,21 @@ s:%%PROFILE:.mozilla/firefox:g" \
   %{SOURCE3} > %{buildroot}%{progdir}/%{progname}.sh
 chmod 755 %{buildroot}%{progdir}/%{progname}.sh
 ln -sf ../..%{progdir}/%{progname}.sh %{buildroot}%{_bindir}/%{progname}
-# desktop definition
+# desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
-install -m 644 %{SOURCE1} \
-   %{buildroot}%{_datadir}/applications/%{desktop_file_name}.desktop
+sed "s:%%NAME:%{appname}:g
+s:%%EXEC:%{progname}:g
+s:%%ICON:%{progname}:g" \
+  %{SOURCE1} > %{buildroot}%{_datadir}/applications/%{desktop_file_name}.desktop
+%suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
 # additional mime-types
 mkdir -p %{buildroot}%{_datadir}/mime/packages
 cp %{SOURCE8} %{buildroot}%{_datadir}/mime/packages/%{progname}.xml
 # appdata
+%if "%{update_channel}" != "aurora"
 mkdir -p %{buildroot}%{_datadir}/appdata
 cp %{SOURCE15} %{buildroot}%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
+%endif
 # install man-page
 mkdir -p %{buildroot}%{_mandir}/man1/
 cp %{SOURCE11} %{buildroot}%{_mandir}/man1/%{progname}.1
@@ -482,7 +469,6 @@ for size in 16 32 48; do
   ln -sf %{progdir}/browser/chrome/icons/default/default$size.png \
          %{buildroot}%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
-%suse_update_desktop_file %{desktop_file_name} Network WebBrowser GTK
 # excludes
 rm -f %{buildroot}%{progdir}/updater.ini
 rm -f %{buildroot}%{progdir}/removed-files
@@ -544,33 +530,15 @@ rm -rf %{_tmppath}/translations.*
 
 %post
 # update mime and desktop database
-%if 0%{?suse_version} > 1130
 %mime_database_post
 %desktop_database_post
 %icon_theme_cache_post
-%else
-if [ -f usr/bin/update-mime-database ] ; then
-  usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
-fi
-if [ -f usr/bin/update-desktop-database ] ; then
-  usr/bin/update-desktop-database > /dev/null || :
-fi
-%endif
 exit 0
 
 %postun
-%if 0%{?suse_version} > 1130
 %icon_theme_cache_postun
 %desktop_database_postun
 %mime_database_postun
-%else
-if [ -f usr/bin/update-mime-database ] ; then
-  usr/bin/update-mime-database %{_datadir}/mime > /dev/null || :
-fi
-if [ -f usr/bin/update-desktop-database ] ; then
-  usr/bin/update-desktop-database > /dev/null || :
-fi
-%endif
 exit 0
 
 %files
@@ -615,7 +583,6 @@ exit 0
 %{_datadir}/applications/%{desktop_file_name}.desktop
 %{_datadir}/mime/packages/%{progname}.xml
 %{_datadir}/pixmaps/firefox*
-%{_datadir}/appdata/
 %dir %{_datadir}/mozilla
 %dir %{_datadir}/mozilla/extensions
 %dir %{_datadir}/mozilla/extensions/%{firefox_appid}
@@ -625,6 +592,9 @@ exit 0
 %{gnome_dir}/share/icons/hicolor/
 %{_bindir}/%{progname}
 %doc %{_mandir}/man1/%{progname}.1.gz
+%if "%{update_channel}" != "aurora"
+%{_datadir}/appdata/
+%endif
 
 %files devel
 %defattr(-,root,root)
@@ -646,13 +616,13 @@ exit 0
 
 # this package does not need to provide files but is needed to fulfill
 # requirements if no other branding package is to be installed
-
+%if %branding
 %files branding-upstream
 %defattr(-,root,root)
 %dir %{progdir}
+%endif
 
 %if %crashreporter
-
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/*.zip

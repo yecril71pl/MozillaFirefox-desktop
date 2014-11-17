@@ -1393,7 +1393,7 @@ diff --git a/browser/components/preferences/main.js b/browser/components/prefere
 +                                .createInstance(Components.interfaces.nsIProcess);
 +        process.init(shellObj);
 +        var args = ["--file", "kdeglobals", "--group", "General", "--key",
-+            "BrowserApplication", "MozillaFirefox"];
++            "BrowserApplication", "firefox"];
 +        process.run(false, args, args.length);
 +      }
      } catch (ex) {

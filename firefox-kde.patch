@@ -2,7 +2,7 @@ diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1224 @@
+@@ -0,0 +1,1234 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -145,6 +145,9 @@ new file mode 100644
 +    <!-- for search and content formfill/pw manager -->
 +    <panel type="autocomplete" id="PopupAutoComplete" noautofocus="true" hidden="true"/>
 +
++    <!-- for search with one-off buttons -->
++    <panel type="autocomplete" id="PopupSearchAutoComplete" noautofocus="true" hidden="true"/>
++
 +    <!-- for url bar autocomplete -->
 +    <panel type="autocomplete-richlistbox" id="PopupAutoCompleteRichResult" noautofocus="true" hidden="true"/>
 +
@@ -241,6 +244,13 @@ new file mode 100644
 +           consumeoutsideclicks="false"
 +           mousethrough="always">
 +      <box id="UITourHighlight"></box>
++    </panel>
++
++    <panel id="abouthome-search-panel" orient="vertical" type="arrow">
++      <hbox id="abouthome-search-panel-manage" class="abouthome-search-panel-item"
++            onclick="openPreferences('paneSearch')">
++        <label>&cmd_engineManager.label;</label>
++      </hbox>
 +    </panel>
 +
 +    <panel id="social-share-panel"
@@ -1230,7 +1240,7 @@ new file mode 100644
 diff --git a/browser/base/content/browser.xul b/browser/base/content/browser.xul
 --- a/browser/base/content/browser.xul
 +++ b/browser/base/content/browser.xul
-@@ -171,17 +171,17 @@
+@@ -174,17 +174,17 @@
                      class="editBookmarkPanelHeaderButton"
                      oncommand="StarUI.removeBookmarkButtonCommand();"
                      accesskey="&editBookmark.removeBookmark.accessKey;"/>
@@ -1249,7 +1259,7 @@ diff --git a/browser/base/content/browser.xul b/browser/base/content/browser.xul
          <button id="editBookmarkPanelDeleteButton"
                  class="editBookmarkPanelBottomButton"
                  label="&editBookmark.cancel.label;"
-@@ -1150,17 +1150,17 @@
+@@ -1160,17 +1160,17 @@
  
    <hbox id="full-screen-warning-container" hidden="true" fadeout="true">
      <hbox style="width: 100%;" pack="center"> <!-- Inner hbox needed due to bug 579776. -->
@@ -1271,7 +1281,7 @@ diff --git a/browser/base/content/browser.xul b/browser/base/content/browser.xul
 diff --git a/browser/base/jar.mn b/browser/base/jar.mn
 --- a/browser/base/jar.mn
 +++ b/browser/base/jar.mn
-@@ -70,16 +70,18 @@ browser.jar:
+@@ -71,16 +71,18 @@ browser.jar:
          content/browser/aboutRobots-icon.png          (content/aboutRobots-icon.png)
          content/browser/aboutRobots-widget-left.png   (content/aboutRobots-widget-left.png)
          content/browser/aboutSocialError.xhtml        (content/aboutSocialError.xhtml)

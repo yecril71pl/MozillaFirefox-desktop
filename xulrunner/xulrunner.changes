@@ -2,6 +2,8 @@
 Sat Nov  1 13:08:20 UTC 2014 - wr@rosenauer.org
 
 - update to 31.2.0
+- synchronize patchset with firefox-esr
+- removed add-plugins.sh in favor of using a pref to use myspell
 
 -------------------------------------------------------------------
 Wed Sep 18 14:39:34 UTC 2013 - wr@rosenauer.org

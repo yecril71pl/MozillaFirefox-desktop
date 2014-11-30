@@ -25,7 +25,7 @@
 %define has_system_nss   1
 %define has_system_cairo 0
 %define localize         0
-%ifarch ppc ppc64 s390 s390x ia64 %arm
+%ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
 %define crashreporter    0
 %else
 %define crashreporter    0
@@ -121,7 +121,9 @@ Patch16:        mozilla-idldir.patch
 Patch30:        mozilla-aarch64-bmo-810631.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+%if 0%{?shared_js} == 1
 Requires:       mozilla-js = %{version}
+%endif
 Requires(post):  update-alternatives coreutils
 Requires(preun): update-alternatives coreutils
 Provides:       xulrunner-esr = %{version}
@@ -218,10 +220,11 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch3 -p1
 %patch6 -p1
 %patch7 -p1
-%if %suse_version < 1120
+%patch8 -p1
 %patch9 -p1
-%endif
+%if %suse_version < 1120
 %patch10 -p1
+%endif
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -238,7 +241,14 @@ TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +
 #
 MOZ_APP_DIR=%{_libdir}/xulrunner-%{version_internal}
+source %{SOURCE8}
 export MOZ_BUILD_DATE=%{releasedate}
+export MOZ_SOURCE_STAMP=$REV
+export SOURCE_REPO=$REPO
+export source_repo=$REPO
+export MOZ_SOURCE_REPO=$REPO
+export MOZILLA_OFFICIAL=1
+export BUILD_OFFICIAL=1
 export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
 %ifarch %ix86
 export CFLAGS="${CFLAGS} -Os"
@@ -254,8 +264,6 @@ LDFLAGS+="-Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
 %endif
 export CXXFLAGS="$CFLAGS"
 export MOZCONFIG=$RPM_BUILD_DIR/mozconfig
-export MOZILLA_OFFICIAL=1
-export BUILD_OFFICIAL=1
 export MOZ_MILESTONE_RELEASE=1
 #
 cat << EOF > $MOZCONFIG
@@ -327,6 +335,10 @@ ac_add_options --disable-neon
 %endif
 %ifnarch %ix86 x86_64
 ac_add_options --disable-webrtc
+%endif
+# try to use OpenGL-ES on ARM
+%ifarch %arm
+ac_add_options --with-gl-provider=EGL
 %endif
 EOF
 make -f client.mk build
@@ -492,7 +504,9 @@ exit 0
 %ghost %{_bindir}/xulrunner
 %endif
 # API symlink (already in mozilla-js)
-#%{_libdir}/xulrunner-%{apiversion}
+%if 0%{?shared_js} == 0
+%{_libdir}/xulrunner-%{apiversion}
+%endif
 # compat symlinks
 %if 0%{?ga_version:1}
 %ghost %{_libdir}/xulrunner-%{ga_version}
@@ -516,7 +530,6 @@ exit 0
 %{_datadir}/xulrunner-%{version_internal}/
 
 %if %localize
-
 %files translations-common -f %{_tmppath}/translations.common
 %defattr(-,root,root)
 %dir %{_libdir}/xulrunner-%{version_internal}/
@@ -529,7 +542,6 @@ exit 0
 %endif
 
 %if %crashreporter
-
 %files buildsymbols
 %defattr(-,root,root)
 %{_datadir}/mozilla/

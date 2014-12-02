@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="beta"
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_34_0b11_RELEASE"
-VERSION="33.99"
+RELEASE_TAG="FIREFOX_34_0_5_RELEASE"
+VERSION="34.0.5"
 
 # mozilla
 if [ -d mozilla ]; then

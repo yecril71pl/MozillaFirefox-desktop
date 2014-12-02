@@ -1,7 +1,30 @@
 -------------------------------------------------------------------
-Tue Nov 25 20:20:46 UTC 2014 - wr@rosenauer.org
+Sat Nov 29 21:23:03 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 34.0b11
+- update to Firefox 34.0.5 (bnc#908009)
+  * Default search engine changed to Yahoo! for North America
+  * Default search engine changed to Yandex for Belarusian, Kazakh,
+    and Russian locales
+  * Improved search bar (en-US only)
+  * Firefox Hello real-time communication client
+  * Easily switch themes/personas directly in the Customizing mode
+  * Implementation of HTTP/2 (draft14) and ALPN
+  * Disabled SSLv3
+  * MFSA 2014-83/CVE-2014-1587/CVE-2014-1588
+    Miscellaneous memory safety hazards
+  * MFSA 2014-84/CVE-2014-1589 (bmo#1043787)
+    XBL bindings accessible via improper CSS declarations
+  * MFSA 2014-85/CVE-2014-1590 (bmo#1087633)
+    XMLHttpRequest crashes with some input streams
+  * MFSA 2014-86/CVE-2014-1591 (bmo#1069762)
+    CSP leaks redirect data via violation reports
+  * MFSA 2014-87/CVE-2014-1592 (bmo#1088635)
+    Use-after-free during HTML5 parsing
+  * MFSA 2014-88/CVE-2014-1593 (bmo#1085175)
+    Buffer overflow while parsing media content
+  * MFSA 2014-89/CVE-2014-1594 (bmo#1074280)
+    Bad casting from the BasicThebesLayer to BasicContainerLayer
+- rebased patches
 - limit linker memory usage for %ix86
 
 -------------------------------------------------------------------

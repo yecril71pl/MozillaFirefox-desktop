@@ -1,4 +1,26 @@
 -------------------------------------------------------------------
+Sun Nov 30 12:15:59 UTC 2014 - wr@rosenauer.org
+
+- update to 31.3.0 (bnc#908009)
+  * MFSA 2014-83/CVE-2014-1587
+    Miscellaneous memory safety hazards
+  * MFSA 2014-85/CVE-2014-1590 (bmo#1087633)
+    XMLHttpRequest crashes with some input streams
+  * MFSA 2014-87/CVE-2014-1592 (bmo#1088635)
+    Use-after-free during HTML5 parsing
+  * MFSA 2014-88/CVE-2014-1593 (bmo#1085175)
+    Buffer overflow while parsing media content
+  * MFSA 2014-89/CVE-2014-1594 (bmo#1074280)
+    Bad casting from the BasicThebesLayer to BasicContainerLayer
+- readded mozilla-pkgconfig.patch
+
+-------------------------------------------------------------------
+Thu Nov 13 08:37:50 UTC 2014 - guillaume@opensuse.org
+
+- Fix %arm build (fix CFLAGS)
+- Disable elf-hack for aarch64
+
+-------------------------------------------------------------------
 Sat Nov  1 13:08:20 UTC 2014 - wr@rosenauer.org
 
 - update to 31.2.0

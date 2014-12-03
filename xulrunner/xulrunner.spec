@@ -16,10 +16,11 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define version_internal 31.2.0
+
+%define version_internal 31.3.0
 %define apiversion 31
-%define uaweight 3120000
-%define releasedate 2014101100
+%define uaweight 3130000
+%define releasedate 2014112600
 %define shared_js 0
 %define has_system_nspr  1
 %define has_system_nss   1
@@ -106,6 +107,7 @@ Source9:        compare-locales.tar.xz
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
 Patch3:         mozilla-prefer_plugin_pref.patch
+Patch4:         mozilla-pkgconfig.patch
 Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
@@ -155,7 +157,6 @@ of web pages and server applications worldwide. Netscape's JavaScript is a
 superset of the ECMA-262 Edition 3 (ECMAScript) standard scripting language,
 with only mild differences from the published standard.
 %endif
-
 
 %package devel
 Summary:        XULRunner/Gecko SDK
@@ -218,6 +219,7 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -259,7 +261,8 @@ export CFLAGS="$CFLAGS -mminimal-toc"
 export LDFLAGS=" -Wl,-rpath -Wl,${MOZ_APP_DIR}"
 %ifarch %arm
 # debug symbols require too much memory during build
-export CFLAGS="${CFLAGS/-g/}"
+export CFLAGS="${CFLAGS/-g / }"
+# Limit RAM usage during link
 LDFLAGS+="-Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
 %endif
 export CXXFLAGS="$CFLAGS"
@@ -285,7 +288,7 @@ ac_add_options --enable-stdcxx-compat
 ac_add_options --disable-optimize
 %endif
 %endif
-%ifnarch ppc ppc64 ppc64le
+%ifnarch aarch64 ppc ppc64 ppc64le
 ac_add_options --enable-elf-hack
 %endif
 ac_add_options --enable-extensions=default

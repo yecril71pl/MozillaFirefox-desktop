@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sat Dec  6 18:17:14 UTC 2014 - wr@rosenauer.org
+Thu Dec 11 20:46:41 UTC 2014 - wr@rosenauer.org
 
-- update to Firefox 35.0b1
+- update to Firefox 35.0b2
 - rebased patches
 - dropped explicit support for everything older than 12.3
   (including SLES11)

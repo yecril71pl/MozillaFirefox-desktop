@@ -159,6 +159,8 @@ Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
 Recommends:     libpulse0
+# addon leads to startup crash (bnc#908892)
+Obsoletes:      tracker-miner-firefox < 0.15
 # libproxy's mozjs pacrunner crashes FF (bnc#759123)
 %if 0%{?suse_version} < 1220
 Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7

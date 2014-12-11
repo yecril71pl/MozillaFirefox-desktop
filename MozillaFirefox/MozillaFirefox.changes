@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Thu Dec 11 20:46:41 UTC 2014 - wr@rosenauer.org
+Thu Dec 11 20:47:10 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 35.0b2
 - rebased patches
@@ -10,6 +10,8 @@ Thu Dec 11 20:46:41 UTC 2014 - wr@rosenauer.org
 - reworked specfile to build conditionally based on release channel
   either Firefox or Firefox Developer Edition
 - added mozilla-openaes-decl.patch to fix implicit declarations
+- obsolete tracker-miner-firefox < 0.15 because it leads to startup
+  crashes (bnc#908892)
 
 -------------------------------------------------------------------
 Sat Nov 29 21:23:03 UTC 2014 - wr@rosenauer.org

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Dec 13 22:13:00 UTC 2014 - Led <ledest@gmail.com>
+
+- fix bashism in mozilla.sh script
+
+-------------------------------------------------------------------
 Sat Nov 29 21:23:03 UTC 2014 - wr@rosenauer.org
 
 - update to Firefox 34.0.5 (bnc#908009)

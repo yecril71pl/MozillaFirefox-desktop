@@ -1,3 +1,6 @@
+# HG changeset patch
+# Parent  6697591ddc0a1b18171c31a7bf18d99be9825aab
+
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
 --- /dev/null
@@ -729,9 +732,9 @@ new file mode 100644
 +             fullscreentoolbar="true" mode="icons" customizable="true"
 +             iconsize="small"
 +#ifdef MOZ_DEV_EDITION
-+             defaultset="urlbar-container,search-container,developer-button,bookmarks-menu-button,downloads-button,home-button,loop-button-throttled"
++             defaultset="urlbar-container,search-container,developer-button,bookmarks-menu-button,downloads-button,home-button"
 +#else
-+             defaultset="urlbar-container,search-container,bookmarks-menu-button,downloads-button,home-button,loop-button-throttled"
++             defaultset="urlbar-container,search-container,bookmarks-menu-button,downloads-button,home-button"
 +#endif
 +             customizationtarget="nav-bar-customization-target"
 +             overflowable="true"

@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2014 Wolfgang Rosenauer
+# Copyright (c) 2015 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2015 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -20,7 +20,7 @@
 %define major 34
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2014122200
+%define releasedate 2014123000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"

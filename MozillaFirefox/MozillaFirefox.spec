@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#               2006-2014 Wolfgang Rosenauer
+# Copyright (c) 2015 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#               2006-2015 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -18,7 +18,7 @@
 
 
 %define major 31
-%define mainver %major.3.0
+%define mainver %major.4.0
 %define update_channel esr31
 
 %if %suse_version > 1210
@@ -77,7 +77,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2014112600
+%define         releasedate 2015010900
 Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 Provides:       web_browser

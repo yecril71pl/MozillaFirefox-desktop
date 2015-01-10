@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Sat Jan 10 17:33:51 UTC 2015 - wr@rosenauer.org
+
+- update to 31.4.0 (bnc#910669)
+
+-------------------------------------------------------------------
+Wed Dec 31 16:01:40 UTC 2014 - dimstar@opensuse.org
+
+- Do not require mozilla-js-32bit from xulrunner-32bit: since we
+  have shared_js currently set to 0, mozilla-js(-32bit) is not
+  being built.
+
+-------------------------------------------------------------------
 Sun Nov 30 12:15:59 UTC 2014 - wr@rosenauer.org
 
 - update to 31.3.0 (bnc#908009)

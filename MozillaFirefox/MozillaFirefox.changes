@@ -2,6 +2,30 @@
 Sat Jan 10 18:36:37 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 35.0 (bnc#910669)
+  notable features:
+  * Firefox Hello with new rooms-based conversations model
+  * Implemented HTTP Public Key Pinning Extension (for enhanced
+    authentication of encrypted connections)
+  security fixes:
+  * MFSA 2015-01/CVE-2014-8634/CVE-2014-8635
+    Miscellaneous memory safety hazards
+  * MFSA 2015-02/CVE-2014-8637 (bmo#1094536)
+    Uninitialized memory use during bitmap rendering
+  * MFSA 2015-03/CVE-2014-8638 (bmo#1080987)
+    sendBeacon requests lack an Origin header
+  * MFSA 2015-04/CVE-2014-8639 (bmo#1095859)
+    Cookie injection through Proxy Authenticate responses
+  * MFSA 2015-05/CVE-2014-8640 (bmo#1100409)
+    Read of uninitialized memory in Web Audio
+  * MFSA 2015-06/CVE-2014-8641 (bmo#1108455)
+    Read-after-free in WebRTC
+  * MFSA 2015-07/CVE-2014-8643 (bmo#1114170) (Windows-only)
+    Gecko Media Plugin sandbox escape
+  * MFSA 2015-08/CVE-2014-8642 (bmo#1079658)
+    Delegated OCSP responder certificates failure with
+    id-pkix-ocsp-nocheck extension
+  * MFSA 2015-09/CVE-2014-8636 (bmo#987794)
+    XrayWrapper bypass through DOM objects
 - rebased patches
 - dropped explicit support for everything older than 12.3
   (including SLES11)

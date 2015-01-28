@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sun Jan 25 10:13:57 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 36.0b3
+  * rebased patches
+  * mozilla-xremote-client was removed
+  * added libclearkey.so media plugin
+- requires NSS 3.17.3
+
+-------------------------------------------------------------------
 Sat Jan 10 18:36:37 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 35.0 (bnc#910669)

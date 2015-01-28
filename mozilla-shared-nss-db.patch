@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8302,16 +8302,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8268,16 +8268,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -42,26 +42,26 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.build
 --- a/security/manager/ssl/src/moz.build
 +++ b/security/manager/ssl/src/moz.build
-@@ -95,16 +95,19 @@ FAIL_ON_WARNINGS = True
- 
- FINAL_LIBRARY = 'xul'
+@@ -77,16 +77,19 @@ SOURCES += [
+     'nsNSSVersion.cpp',
+     'PSMContentListener.cpp',
+ ]
  
  LOCAL_INCLUDES += [
-     '../../../certverifier',
-     '../../../pkix/include',
+     '/security/manager/boot/src',
  ]
  
 +CXXFLAGS += sorted(CONFIG['NSSHELPER_CFLAGS'])
 +OS_LIBS += sorted(CONFIG['NSSHELPER_LIBS'])
 +
- if CONFIG['NSS_DISABLE_DBM']:
-     DEFINES['NSS_DISABLE_DBM'] = '1'
+ if not CONFIG['MOZ_NO_SMART_CARDS']:
+     UNIFIED_SOURCES += [
+         'nsSmartCardMonitor.cpp',
+     ]
  
- DEFINES['SSL_DISABLE_DEPRECATED_CIPHER_SUITE_NAMES'] = 'True'
- DEFINES['NSS_ENABLE_ECC'] = 'True'
- for var in ('DLL_PREFIX', 'DLL_SUFFIX'):
-     DEFINES[var] = '"%s"' % CONFIG[var]
- 
+ if CONFIG['MOZ_XUL']:
+     UNIFIED_SOURCES += [
+         'nsCertTree.cpp',
 diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
 --- a/security/manager/ssl/src/nsNSSComponent.cpp
 +++ b/security/manager/ssl/src/nsNSSComponent.cpp
@@ -87,7 +87,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsComponentManagerUtils.h"
-@@ -945,17 +952,31 @@ nsNSSComponent::InitializeNSS()
+@@ -986,17 +993,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -123,7 +123,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/moz.build b/toolkit/library/moz.build
 --- a/toolkit/library/moz.build
 +++ b/toolkit/library/moz.build
-@@ -213,16 +213,18 @@ if CONFIG['MOZ_B2G_CAMERA']:
+@@ -208,16 +208,18 @@ if CONFIG['MOZ_B2G_CAMERA']:
          'stagefright_omx',
      ]
  

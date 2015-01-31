@@ -1,11 +1,28 @@
 -------------------------------------------------------------------
-Sun Jan 25 10:13:57 UTC 2015 - wr@rosenauer.org
+Sat Jan 31 18:47:14 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 36.0b3
+- update to Firefox 36.0b5
   * rebased patches
   * mozilla-xremote-client was removed
   * added libclearkey.so media plugin
-- requires NSS 3.17.3
+- requires NSS 3.17.4
+
+-------------------------------------------------------------------
+Sat Jan 31 18:37:38 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 35.0.1
+  (via firefox-35_0_1.patch)
+  * With the Enhanced Steam extension, Firefox could crash (bmo#1123732)
+  * Kerberos authentication did not work with alias (bmo#1108971)
+  * SVG / CSS animation had a regression causing rendering issues on
+    websites like openstreemap.org (bmo#1083079)
+  * On Godaddy webmail, Firefox could crash (bmo#1113121)
+  * document.baseURI did not get updated to document.location after
+    base tag was removed from DOM for site with a CSP (bmo#1121857)
+  * With a Right-to-left (RTL) version of Firefox, the text selection
+    could be broken (bmo#1104036)
+  * CSP had a change in behavior with regard to case sensitivity
+    resources loading (bmo#1122445)
 
 -------------------------------------------------------------------
 Sat Jan 10 18:36:37 UTC 2015 - wr@rosenauer.org

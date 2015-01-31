@@ -20,7 +20,7 @@
 %define major 35
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015012400
+%define releasedate 2015012900
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -83,7 +83,7 @@ BuildRequires:  zip
 BuildRequires:  libiw-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  mozilla-nspr-devel >= 4.10.7
-BuildRequires:  mozilla-nss-devel >= 3.17.3
+BuildRequires:  mozilla-nss-devel >= 3.17.4
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)

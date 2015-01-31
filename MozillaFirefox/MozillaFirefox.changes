@@ -1,7 +1,27 @@
 -------------------------------------------------------------------
+Sat Jan 31 18:37:38 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 35.0.1
+  * With the Enhanced Steam extension, Firefox could crash (bmo#1123732)
+  * Kerberos authentication did not work with alias (bmo#1108971)
+  * SVG / CSS animation had a regression causing rendering issues on
+    websites like openstreemap.org (bmo#1083079)
+  * On Godaddy webmail, Firefox could crash (bmo#1113121)
+  * document.baseURI did not get updated to document.location after
+    base tag was removed from DOM for site with a CSP (bmo#1121857)
+  * With a Right-to-left (RTL) version of Firefox, the text selection
+    could be broken (bmo#1104036)
+  * CSP had a change in behavior with regard to case sensitivity
+    resources loading (bmo#1122445)
+
+-------------------------------------------------------------------
 Sat Jan 10 18:36:37 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 35.0 (bnc#910669)
+  notable features:
+  * Firefox Hello with new rooms-based conversations model
+  * Implemented HTTP Public Key Pinning Extension (for enhanced
+    authentication of encrypted connections)
 - rebased patches
 - dropped explicit support for everything older than 12.3
   (including SLES11)

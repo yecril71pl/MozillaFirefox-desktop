@@ -2,6 +2,14 @@
 Sat Jan 10 17:30:10 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 31.4.0esr (bnc#910669)
+  * MFSA 2015-01/CVE-2014-8634/CVE-2014-8635
+    Miscellaneous memory safety hazards
+  * MFSA 2015-03/CVE-2014-8638 (bmo#1080987)
+    sendBeacon requests lack an Origin header
+  * MFSA 2015-04/CVE-2014-8639 (bmo#1095859)
+    Cookie injection through Proxy Authenticate responses
+  * MFSA 2015-06/CVE-2014-8641 (bmo#1108455)
+    Read-after-free in WebRTC
 
 -------------------------------------------------------------------
 Sun Nov 30 09:13:19 UTC 2014 - wr@rosenauer.org

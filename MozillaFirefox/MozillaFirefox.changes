@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sat Jan 31 18:47:14 UTC 2015 - wr@rosenauer.org
+Thu Feb 19 22:43:47 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 36.0b5
+- update to Firefox 36.0b10
   * rebased patches
   * mozilla-xremote-client was removed
   * added libclearkey.so media plugin
@@ -11,7 +11,6 @@ Sat Jan 31 18:47:14 UTC 2015 - wr@rosenauer.org
 Sat Jan 31 18:37:38 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 35.0.1
-  (via firefox-35_0_1.patch)
   * With the Enhanced Steam extension, Firefox could crash (bmo#1123732)
   * Kerberos authentication did not work with alias (bmo#1108971)
   * SVG / CSS animation had a regression causing rendering issues on

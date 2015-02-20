@@ -1,10 +1,14 @@
 -------------------------------------------------------------------
-Thu Feb 19 22:43:47 UTC 2015 - wr@rosenauer.org
+Fri Feb 20 22:53:39 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 36.0b10
-  * rebased patches
+- update to Firefox 36.0 (bnc#917597)
   * mozilla-xremote-client was removed
   * added libclearkey.so media plugin
+  * Pinned tiles on the new tab page can be synced
+  * Support for the full HTTP/2 protocol. HTTP/2 enables a faster,
+    more scalable, and more responsive web.
+  * Locale added: Uzbek (uz)
+- rebased patches
 - requires NSS 3.17.4
 
 -------------------------------------------------------------------

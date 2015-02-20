@@ -2,8 +2,8 @@
 
 CHANNEL="esr31"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_31_4_0esr_RELEASE"
-VERSION="31.4.0"
+RELEASE_TAG="FIREFOX_31_5_0esr_RELEASE"
+VERSION="31.5.0"
 
 # mozilla
 if [ -d mozilla ]; then

@@ -1,7 +1,7 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2015 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
 #               2006-2015 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -15,6 +15,7 @@
 
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
+
 
 # changed with every update
 %define major 36
@@ -71,8 +72,13 @@ BuildRequires:  gcc-c++
 BuildRequires:  libcurl-devel
 BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
+BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
+BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
+BuildRequires:  mozilla-nspr-devel >= 4.10.7
+BuildRequires:  mozilla-nss-devel >= 3.17.4
+BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
@@ -80,15 +86,10 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-BuildRequires:  libiw-devel
-BuildRequires:  libproxy-devel
-BuildRequires:  mozilla-nspr-devel >= 4.10.7
-BuildRequires:  mozilla-nss-devel >= 3.17.4
-BuildRequires:  nss-shared-helper-devel
-BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
+BuildRequires:  pkgconfig(libpulse)
 %if 0%{?gstreamer} == 1
 Requires:       libgstreamer-1_0-0
 Recommends:     gstreamer-fluendo-mp3

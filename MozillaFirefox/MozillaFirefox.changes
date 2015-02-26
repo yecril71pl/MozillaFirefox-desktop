@@ -8,6 +8,44 @@ Fri Feb 20 22:53:39 UTC 2015 - wr@rosenauer.org
   * Support for the full HTTP/2 protocol. HTTP/2 enables a faster,
     more scalable, and more responsive web.
   * Locale added: Uzbek (uz)
+  security fixes:
+  * MFSA 2015-11/CVE-2015-0835/CVE-2015-0836
+    Miscellaneous memory safety hazards
+  * MFSA 2015-12/CVE-2015-0833 (bmo#945192)
+    Invoking Mozilla updater will load locally stored DLL files
+    (Windows only)
+  * MFSA 2015-13/CVE-2015-0832 (bmo#1065909)
+    Appended period to hostnames can bypass HPKP and HSTS protections
+  * MFSA 2015-14/CVE-2015-0830 (bmo#1110488)
+    Malicious WebGL content crash when writing strings
+  * MFSA 2015-15/CVE-2015-0834 (bmo#1098314)
+    TLS TURN and STUN connections silently fail to simple TCP connections
+  * MFSA 2015-16/CVE-2015-0831 (bmo#1130514)
+    Use-after-free in IndexedDB
+  * MFSA 2015-17/CVE-2015-0829 (bmo#1128939)
+    Buffer overflow in libstagefright during MP4 video playback
+  * MFSA 2015-18/CVE-2015-0828 (bmo#1030667, bmo#988675)
+    Double-free when using non-default memory allocators with a
+    zero-length XHR
+  * MFSA 2015-19/CVE-2015-0827 (bmo#1117304)
+    Out-of-bounds read and write while rendering SVG content
+  * MFSA 2015-20/CVE-2015-0826 (bmo#1092363)
+    Buffer overflow during CSS restyling
+  * MFSA 2015-21/CVE-2015-0825 (bmo#1092370)
+    Buffer underflow during MP3 playback
+  * MFSA 2015-22/CVE-2015-0824 (bmo#1095925)
+    Crash using DrawTarget in Cairo graphics library
+  * MFSA 2015-23/CVE-2015-0823 (bmo#1098497)
+    Use-after-free in Developer Console date with OpenType Sanitiser
+  * MFSA 2015-24/CVE-2015-0822 (bmo#1110557)
+    Reading of local files through manipulation of form autocomplete
+  * MFSA 2015-25/CVE-2015-0821 (bmo#1111960)
+    Local files or privileged URLs in pages can be opened into new tabs
+  * MFSA 2015-26/CVE-2015-0819 (bmo#1079554)
+    UI Tour whitelisted sites in background tab can spoof foreground
+    tabs
+  * MFSA 2015-27CVE-2015-0820 (bmo#1125398)
+    Caja Compiler JavaScript sandbox bypass
 - rebased patches
 - requires NSS 3.17.4
 

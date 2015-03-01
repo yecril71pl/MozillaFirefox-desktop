@@ -12,7 +12,6 @@ mozilla-repo.patch
 mozilla-icu-strncat.patch
 mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
-mozilla-bmo1088588.patch
 mozilla-openaes-decl.patch
 
 # Firefox patches

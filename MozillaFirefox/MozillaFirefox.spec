@@ -143,8 +143,7 @@ Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-icu-strncat.patch
 Patch11:        mozilla-arm-disable-edsp.patch
-Patch12:        mozilla-bmo1088588.patch
-Patch13:        mozilla-openaes-decl.patch
+Patch12:        mozilla-openaes-decl.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -257,7 +256,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

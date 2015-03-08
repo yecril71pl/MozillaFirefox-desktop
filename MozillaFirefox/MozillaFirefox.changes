@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Sat Mar  7 07:40:56 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 36.0.1
+  Bugfixes:
+  * Disable the usage of the ANY DNS query type (bmo#1093983)
+  * Hello may become inactive until restart (bmo#1137469)
+  * Print preferences may not be preserved (bmo#1136855)
+  * Hello contact tabs may not be visible (bmo#1137141)
+  * Accept hostnames that include an underscore character ("_")
+    (bmo#1136616)
+  * WebGL may use significant memory with Canvas2d (bmo#1137251)
+  * Option -remote has been restored (bmo#1080319)
+
+-------------------------------------------------------------------
 Fri Feb 20 22:53:39 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 36.0 (bnc#917597)

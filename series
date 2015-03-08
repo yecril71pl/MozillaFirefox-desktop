@@ -14,6 +14,7 @@ mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
 mozilla-bmo1088588.patch
 mozilla-openaes-decl.patch
+mozilla-skia-bmo1136958.patch
 
 # Firefox patches
 firefox-kde.patch

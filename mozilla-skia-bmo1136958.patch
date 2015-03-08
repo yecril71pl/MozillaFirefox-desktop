@@ -1,0 +1,410 @@
+From 8dc9e73b80ec33fe1a1c855829ef1438301a5de1 Mon Sep 17 00:00:00 2001
+From: Mike Hommey <mh+mozilla@glandium.org>
+Date: Thu, 26 Feb 2015 14:14:02 +0900
+Subject: [PATCH 1/2] Bug 1136958 - Remove duplicate
+ SkDiscardableMemory_none.cpp from gfx/skia/moz.build
+
+And to do so, cleanup gfx/skia/generate_mozbuild.py a little.
+---
+ gfx/skia/generate_mozbuild.py | 53 ++++++++++++++++---------------------------
+ gfx/skia/moz.build            |  1 -
+ 2 files changed, 20 insertions(+), 34 deletions(-)
+
+diff --git a/configure.in b/configure.in
+--- a/configure.in
++++ b/configure.in
+@@ -7997,39 +7997,16 @@ dnl ====================================
+ 
+ if test "${OS_TARGET}" = "WINNT"; then
+   if $PERL -e "exit($MOZ_WINSDK_MAXVER < 0x06020000)"; then
+     MOZ_ENABLE_DIRECT2D1_1=1
+     AC_SUBST(MOZ_ENABLE_DIRECT2D1_1)
+   fi
+ fi
+ 
+-if test "${OS_TARGET}" = "WINNT" -o \
+-        "${OS_ARCH}" = "Darwin" -o \
+-        "${MOZ_WIDGET_TOOLKIT}" = "android" -o \
+-        "${MOZ_WIDGET_TOOLKIT}" = "gonk" -o \
+-        "${MOZ_WIDGET_TOOLKIT}" = "gtk2" -o \
+-        "${MOZ_WIDGET_TOOLKIT}" = "gtk3"; then
+-    case "${target_cpu}" in
+-    i*86*|x86_64|arm)
+-        MOZ_ENABLE_SKIA=1
+-        ;;
+-    *)
+-        MOZ_ENABLE_SKIA=
+-        ;;
+-    esac
+-else
+-MOZ_ENABLE_SKIA=
+-fi
+-
+-MOZ_ARG_ENABLE_BOOL(skia,
+-[  --enable-skia   Enable use of Skia],
+-MOZ_ENABLE_SKIA=1,
+-MOZ_ENABLE_SKIA=)
+-
+ MOZ_ARG_DISABLE_BOOL(skia-gpu,
+ [  --disable-skia-gpu  Disable use of Skia-GPU],
+ MOZ_DISABLE_SKIA_GPU=1,
+ MOZ_DISABLE_SKIA_GPU=)
+ 
+ if test "$USE_FC_FREETYPE"; then
+     if test "$COMPILE_ENVIRONMENT"; then
+         dnl ========================================================
+@@ -8252,30 +8229,26 @@ AC_SUBST(MOZ_TREE_CAIRO)
+ AC_SUBST_LIST(MOZ_CAIRO_CFLAGS)
+ AC_SUBST_LIST(MOZ_CAIRO_LIBS)
+ AC_SUBST_LIST(MOZ_CAIRO_OSLIBS)
+ AC_SUBST(MOZ_TREE_PIXMAN)
+ 
+ dnl ========================================================
+ dnl Skia
+ dnl ========================================================
+-if test "$MOZ_ENABLE_SKIA"; then
+-  AC_DEFINE(MOZ_ENABLE_SKIA)
+-  AC_DEFINE(USE_SKIA)
+-  if test "${MOZ_WIDGET_TOOLKIT}" = "android" -o x"$MOZ_WIDGET_TOOLKIT" = x"gonk"; then
+-    AC_DEFINE(SK_BUILD_FOR_ANDROID_NDK)
+-  fi
+-
+-  if test "${CPU_ARCH}" != "ppc" -a "${CPU_ARCH}" != "ppc64" -a "${CPU_ARCH}" != "sparc" -a -z "$MOZ_DISABLE_SKIA_GPU" ; then
+-    MOZ_ENABLE_SKIA_GPU=1
+-    AC_DEFINE(USE_SKIA_GPU)
+-    AC_SUBST(MOZ_ENABLE_SKIA_GPU)
+-  fi
+-fi
+-AC_SUBST(MOZ_ENABLE_SKIA)
++AC_DEFINE(USE_SKIA)
++if test "${MOZ_WIDGET_TOOLKIT}" = "android" -o x"$MOZ_WIDGET_TOOLKIT" = x"gonk"; then
++  AC_DEFINE(SK_BUILD_FOR_ANDROID_NDK)
++fi
++
++if test "${CPU_ARCH}" != "ppc" -a "${CPU_ARCH}" != "ppc64" -a "${CPU_ARCH}" != "sparc" -a -z "$MOZ_DISABLE_SKIA_GPU" ; then
++  MOZ_ENABLE_SKIA_GPU=1
++  AC_DEFINE(USE_SKIA_GPU)
++  AC_SUBST(MOZ_ENABLE_SKIA_GPU)
++fi
+ 
+ dnl ========================================================
+ dnl Check for nss-shared-helper
+ dnl ========================================================
+ 
+   PKG_CHECK_MODULES(NSSHELPER, nss-shared-helper,
+     [MOZ_ENABLE_NSSHELPER=1],
+     [MOZ_ENABLE_NSSHELPER=])
+diff --git a/gfx/2d/moz.build b/gfx/2d/moz.build
+--- a/gfx/2d/moz.build
++++ b/gfx/2d/moz.build
+@@ -64,51 +64,46 @@ elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'wi
+         SOURCES += [
+             'DrawTargetD2D1.cpp',
+             'FilterNodeD2D1.cpp',
+             'RadialGradientEffectD2D1.cpp',
+             'SourceSurfaceD2D1.cpp'
+         ]
+         DEFINES['USE_D2D1_1'] = True
+ 
+-if CONFIG['MOZ_ENABLE_SKIA']:
+-    UNIFIED_SOURCES += [
+-        'convolver.cpp',
+-        'DrawTargetSkia.cpp',
+-        'PathSkia.cpp',
+-        'SourceSurfaceSkia.cpp',
+-    ]
+-    SOURCES += [
+-        'image_operations.cpp', # Uses _USE_MATH_DEFINES
+-    ]
+-    EXPORTS.mozilla.gfx += [
+-        'HelpersSkia.h',
+-    ]
++UNIFIED_SOURCES += [
++    'convolver.cpp',
++    'DrawTargetSkia.cpp',
++    'PathSkia.cpp',
++    'SourceSurfaceSkia.cpp',
++]
++SOURCES += [
++    'image_operations.cpp', # Uses _USE_MATH_DEFINES
++]
++EXPORTS.mozilla.gfx += [
++    'HelpersSkia.h',
++]
+ 
+ # Are we targeting x86 or x64?  If so, build SSE2 files.
+ if CONFIG['INTEL_ARCHITECTURE']:
+     # VC2005 doesn't support _mm_castsi128_ps, so SSE2 is turned off
+     if CONFIG['_MSC_VER'] != '1400':
+         SOURCES += [
+             'BlurSSE2.cpp',
++	    'convolverSSE2.cpp',
+             'FilterProcessingSSE2.cpp',
+             'ImageScalingSSE2.cpp',
+         ]
+-        if CONFIG['MOZ_ENABLE_SKIA']:
+-            SOURCES += [
+-                'convolverSSE2.cpp',
+-            ]
+         DEFINES['USE_SSE2'] = True
+         # The file uses SSE2 intrinsics, so it needs special compile flags on some
+         # compilers.
+         SOURCES['BlurSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+         SOURCES['FilterProcessingSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+         SOURCES['ImageScalingSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+-        if CONFIG['MOZ_ENABLE_SKIA']:
+-            SOURCES['convolverSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
++        SOURCES['convolverSSE2.cpp'].flags += CONFIG['SSE2_FLAGS']
+ 
+ UNIFIED_SOURCES += [
+     'Blur.cpp',
+     'DataSourceSurface.cpp',
+     'DataSurfaceHelpers.cpp',
+     'DrawEventRecorder.cpp',
+     'DrawTarget.cpp',
+     'DrawTargetCairo.cpp',
+diff --git a/gfx/moz.build b/gfx/moz.build
+--- a/gfx/moz.build
++++ b/gfx/moz.build
+@@ -17,16 +17,15 @@ DIRS += [
+     'layers',
+     'graphite2/src',
+     'harfbuzz/src',
+     'ots/src',
+     'thebes',
+     'ipc',
+ ]
+ 
+-if CONFIG['MOZ_ENABLE_SKIA']:
+-    DIRS += ['skia']
++DIRS += ['skia']
+ 
+ if CONFIG['ENABLE_TESTS']:
+     DIRS += ['tests/gtest']
+ 
+ TEST_DIRS += ['tests']
+ 
+diff --git a/gfx/skia/generate_mozbuild.py b/gfx/skia/generate_mozbuild.py
+--- a/gfx/skia/generate_mozbuild.py
++++ b/gfx/skia/generate_mozbuild.py
+@@ -1,13 +1,14 @@
+ #!/usr/bin/env python
+ 
+ import os
+ 
+ import locale
++from collections import defaultdict
+ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+ 
+ header = """
+ #
+ #   #####   #######           #     #     #     #     #     #
+ # ##     #  #     #          # #    #  #  #    # #     #   #
+ # ##        #     #         #   #   #  #  #   #   #     # #
+ # ##  ####  #     #        #     #  #  #  #  #     #     #
+@@ -187,17 +188,17 @@ def generate_platform_sources():
+ 
+   for plat in platforms:
+     if os.system("cd trunk && GYP_GENERATORS=dump_mozbuild ./gyp_skia -D OS=%s gyp/skia_lib.gyp" % plat) != 0:
+       print 'Failed to generate sources for ' + plat
+       continue
+ 
+ 
+     f = open('trunk/sources.json');
+-    sources[plat] = set(json.load(f));
++    sources[plat] = set(v.replace('../', 'trunk/') for v in json.load(f));
+     f.close()
+ 
+   return dict(sources.items() + generate_opt_sources().items())
+ 
+ 
+ def generate_separated_sources(platform_sources):
+   blacklist = [
+     'ChromeUtils',
+@@ -232,17 +233,17 @@ def generate_separated_sources(platform_
+ 
+   def isblacklisted(value):
+     for item in blacklist:
+       if value.find(item) >= 0:
+         return True
+ 
+     return False
+ 
+-  separated = {
++  separated = defaultdict(set, {
+     'common': {
+       #'trunk/src/effects/gradients/SkGradientTileProc.cpp',
+       'trunk/src/gpu/gl/GrGLCreateNativeInterface_none.cpp',
+       'trunk/src/ports/SkDiscardableMemory_none.cpp',
+       'trunk/src/ports/SkImageDecoder_empty.cpp',
+       'trunk/src/ports/SkMemory_mozalloc.cpp',
+       # 'trunk/src/images/SkImages.cpp',
+       # 'trunk/src/images/SkImageRef.cpp',
+@@ -277,69 +278,55 @@ def generate_separated_sources(platform_
+       'trunk/src/core/SkUtilsArm.cpp',
+     },
+     'neon': {
+       'trunk/src/opts/SkBitmapProcState_arm_neon.cpp',
+     },
+     'none': {
+       'trunk/src/opts/SkUtils_opts_none.cpp',
+     }
+-  }
++  })
+ 
+   for plat in platform_sources.keys():
+-    if not separated.has_key(plat):
+-      separated[plat] = set()
+-
+     for value in platform_sources[plat]:
+       if isblacklisted(value):
+         continue
+ 
+-      if value.find('_SSE') > 0 or value.find('_SSSE') > 0 or value.find('_SSE4') > 0 : #lol
+-        separated['intel'].add(value)
++      if value in separated['common']:
+         continue
+ 
+-      if value.find('_neon') > 0:
+-        separated['neon'].add(value)
+-        continue
++      key = plat
+ 
+-      if value.find('_arm') > 0:
+-        separated['arm'].add(value)
+-        continue
++      if '_SSE' in value or '_SSSE' in value:
++        key = 'intel'
++      elif '_neon' in value:
++        key = 'neon'
++      elif '_arm' in value:
++        key = 'arm'
++      elif '_none' in value:
++        key = 'none'
++      elif all(value in platform_sources.get(p, {})
++               for p in platforms if p != plat):
++        key = 'common'
+ 
+-      if value.find('_none') > 0:
+-        separated['none'].add(value)
+-        continue
+-
+-      found = True
+-      for other in platforms:
+-        if other == plat or not platform_sources.has_key(other):
+-          continue
+-
+-        if not value in platform_sources[other]:
+-          found = False
+-          break;
+-
+-      if found:
+-        separated['common'].add(value)
+-      else:
+-        separated[plat].add(value)
++      separated[key].add(value)
+ 
+   return separated
+ 
+ def uniq(seq):
+   seen = set()
+   seen_add = seen.add
+   return [ x for x in seq if x not in seen and not seen_add(x)]
+ 
+ def write_cflags(f, values, subsearch, cflag, indent):
+   def write_indent(indent):
+     for _ in range(indent):
+         f.write(' ')
+ 
+-  val_list = uniq(sorted(map(lambda val: val.replace('../', 'trunk/'), values), key=lambda x: x.lower()))
++  val_list = uniq(sorted(values, key=lambda x: x.lower()))
+ 
+   if len(val_list) == 0:
+     return
+ 
+   for val in val_list:
+     if val.find(subsearch) > 0:
+       write_indent(indent)
+       f.write("SOURCES[\'" + val + "\'].flags += [\'" + cflag + "\']\n")
+@@ -391,17 +378,17 @@ def write_sources(f, values, indent):
+   write_list(f, "UNIFIED_SOURCES", sources['unified'], indent)
+   write_list(f, "SOURCES", sources['nonunified'], indent)
+   
+ def write_list(f, name, values, indent):
+   def write_indent(indent):
+     for _ in range(indent):
+         f.write(' ')
+ 
+-  val_list = uniq(sorted(map(lambda val: val.replace('../', 'trunk/'), values), key=lambda x: x.lower()))
++  val_list = uniq(sorted(values, key=lambda x: x.lower()))
+ 
+   if len(val_list) == 0:
+     return
+ 
+   write_indent(indent)
+   f.write(name + ' += [\n')
+   for val in val_list:
+     write_indent(indent + 4)
+diff --git a/gfx/skia/moz.build b/gfx/skia/moz.build
+--- a/gfx/skia/moz.build
++++ b/gfx/skia/moz.build
+@@ -847,17 +847,16 @@ else:
+         'trunk/src/opts/SkBitmapProcState_opts_none.cpp',
+         'trunk/src/opts/SkBlitMask_opts_none.cpp',
+         'trunk/src/opts/SkBlitRow_opts_none.cpp',
+         'trunk/src/opts/SkBlurImage_opts_none.cpp',
+         'trunk/src/opts/SkMorphology_opts_none.cpp',
+         'trunk/src/opts/SkTextureCompression_opts_none.cpp',
+         'trunk/src/opts/SkUtils_opts_none.cpp',
+         'trunk/src/opts/SkXfermode_opts_none.cpp',
+-        'trunk/src/ports/SkDiscardableMemory_none.cpp',
+     ]
+ 
+ 
+ # can we find a better way of dealing with asm sources?
+ 
+ # left out of UNIFIED_SOURCES for now; that's not C++ anyway, nothing else to unify it with
+ if not CONFIG['INTEL_ARCHITECTURE'] and CONFIG['CPU_ARCH'] == 'arm' and CONFIG['GNU_CC']:
+     SOURCES += [
+diff --git a/image/src/RasterImage.cpp b/image/src/RasterImage.cpp
+--- a/image/src/RasterImage.cpp
++++ b/image/src/RasterImage.cpp
+@@ -2090,20 +2090,16 @@ RasterImage::RecoverFromLossOfFrames()
+   RequestDecodeCore(ASYNCHRONOUS);
+ }
+ 
+ bool
+ RasterImage::CanScale(GraphicsFilter aFilter,
+                       const nsIntSize& aSize,
+                       uint32_t aFlags)
+ {
+-#ifndef MOZ_ENABLE_SKIA
+-  // The high-quality scaler requires Skia.
+-  return false;
+-#else
+   // Check basic requirements: HQ downscaling is enabled, we're decoded, the
+   // flags allow us to do it, and a 'good' filter is being used. The flags may
+   // ask us not to scale because the caller isn't drawing to the window. If
+   // we're drawing to something else (e.g. a canvas) we usually have no way of
+   // updating what we've drawn, so HQ scaling is useless.
+   if (!gfxPrefs::ImageHQDownscalingEnabled() || !mDecoded ||
+       !(aFlags & imgIContainer::FLAG_HIGH_QUALITY_SCALING) ||
+       aFilter != GraphicsFilter::FILTER_GOOD) {
+@@ -2137,17 +2133,16 @@ RasterImage::CanScale(GraphicsFilter aFi
+   // XXX(seth): It's not clear what this check buys us over
+   // gfxPrefs::ImageHQUpscalingMaxSize().
+   // The default value of this pref is 1000, which means that we never upscale.
+   // If that's all it's getting us, I'd rather we just forbid that explicitly.
+   gfx::Size scale(double(aSize.width) / mSize.width,
+                   double(aSize.height) / mSize.height);
+   gfxFloat minFactor = gfxPrefs::ImageHQDownscalingMinFactor() / 1000.0;
+   return (scale.width < minFactor || scale.height < minFactor);
+-#endif
+ }
+ 
+ void
+ RasterImage::NotifyNewScaledFrame()
+ {
+   if (mProgressTracker) {
+     // Send an invalidation so observers will repaint and can take advantage of
+     // the new scaled frame if possible.

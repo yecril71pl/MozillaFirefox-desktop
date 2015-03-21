@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 36
-%define mainver %major.0.1
+%define mainver %major.0.4
 %define update_channel release
-%define releasedate 2015030500
+%define releasedate 2015032000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -471,7 +471,7 @@ for size in 16 22 24 32 48 256; do
 for size in 16 32 48; do
 %endif
   mkdir -p %{buildroot}%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/
-  ln -sf %{progdir}/browser/chrome/icons/default/default$size.png \
+  cp %{buildroot}%{progdir}/browser/chrome/icons/default/default$size.png \
          %{buildroot}%{gnome_dir}/share/icons/hicolor/${size}x${size}/apps/%{progname}.png
 done
 # excludes

@@ -1,4 +1,23 @@
 -------------------------------------------------------------------
+Sat Mar 21 09:03:12 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 36.0.4 (bnc#923495)
+  * MFSA 2015-28/CVE-2015-0818 (bmo#1144988)
+    Privilege escalation through SVG navigation
+  * MFSA 2015-29/CVE-2015-0817 (bmo#1145255)
+    Code execution through incorrect JavaScript bounds checking
+    elimination
+
+-------------------------------------------------------------------
+Fri Mar 20 15:02:33 UTC 2015 - dimstar@opensuse.org
+
+- Copy the icons to /usr/share/icons instead of symlinking them:
+  in preparation for containerized apps (e.g. xdg-app) as well as
+  AppStream metadata extraction, there are a couple locations that
+  need to be real files for system integration (.desktop files,
+  icons, mime-type info).
+
+-------------------------------------------------------------------
 Sat Mar  7 07:40:56 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 36.0.1

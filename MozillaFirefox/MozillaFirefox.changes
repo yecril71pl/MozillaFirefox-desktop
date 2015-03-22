@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Sat Mar 21 09:03:12 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 36.0.4 (bnc#923495)
+- update to Firefox 36.0.4 (bnc#923534)
   * MFSA 2015-28/CVE-2015-0818 (bmo#1144988)
     Privilege escalation through SVG navigation
   * MFSA 2015-29/CVE-2015-0817 (bmo#1145255)
@@ -30,6 +30,8 @@ Sat Mar  7 07:40:56 UTC 2015 - wr@rosenauer.org
     (bmo#1136616)
   * WebGL may use significant memory with Canvas2d (bmo#1137251)
   * Option -remote has been restored (bmo#1080319)
+- added mozilla-skia-bmo1136958.patch to fix build issues for
+  ARM and PPC
 
 -------------------------------------------------------------------
 Fri Feb 20 22:53:39 UTC 2015 - wr@rosenauer.org

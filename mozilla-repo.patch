@@ -1,5 +1,6 @@
 # HG changeset patch
 # Parent 80b6464bd883864fce57e8748010869af1be69e9
+# Parent  d160c6876c5f05d902b391551bf4f684254b3c7d
 
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
@@ -10,7 +11,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
  
  ifndef INCLUDED_RCS_MK
    USE_RCS_MK := 1
-   include $(topsrcdir)/config/makefiles/makeutils.mk
+   include $(MOZILLA_DIR)/config/makefiles/makeutils.mk
  endif
  
 -MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node|short}\n" 2>/dev/null))

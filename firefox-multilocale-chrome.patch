@@ -1,12 +1,13 @@
 # HG changeset patch
 # Parent 16846914f968944f991c8b12fdc38ce8fc099d73
 # User Wolfgang Rosenauer <wr@rosenauer.org>
+# Parent  c0a406c7a6cc5edc8fb34549428866ff39ad878f
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -389,16 +389,20 @@ pref("browser.helperApps.deleteTempFileO
+@@ -378,16 +378,20 @@ pref("browser.helperApps.deleteTempFileO
  #endif
  
  // search engines URL
@@ -19,18 +20,18 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 +pref("browser.search.loadFromJars", true);
 +pref("browser.search.jarURIs", "chrome://browser/locale/searchplugins/");
 +
- // disable logging for the search service by default
- pref("browser.search.log", false);
- 
  // Ordering of Search Engines in the Engine list. 
  pref("browser.search.order.1",                "chrome://browser-region/locale/region.properties");
  pref("browser.search.order.2",                "chrome://browser-region/locale/region.properties");
  pref("browser.search.order.3",                "chrome://browser-region/locale/region.properties");
  
+ // Market-specific search defaults (US market only)
+ pref("browser.search.geoSpecificDefaults", true);
+ pref("browser.search.defaultenginename.US",      "data:text/plain,browser.search.defaultenginename.US=Yahoo");
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -66,24 +66,27 @@ STUB_HOOK = $(NSINSTALL) -D '$(_ABS_DIST
+@@ -66,27 +66,30 @@ STUB_HOOK = $(NSINSTALL) -D '$(_ABS_DIST
      cp ../installer/windows/l10ngen/stub.exe '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      chmod 0755 '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      $(NULL)
@@ -41,17 +42,20 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  else
 -SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt)) ddg
 +SEARCHPLUGINS_NAMES = $(shell cat \
-+  $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
-+  @srcdir@/en-US/searchplugins/list.txt ) ) ddg
++    $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
++    @srcdir@/en-US/searchplugins/list.txt ) ) ddg
  endif
  SEARCHPLUGINS_PATH := $(FINAL_TARGET)/searchplugins
  # metro build call a searchplugins target for search engine plugins
  .PHONY: searchplugins
  SEARCHPLUGINS_TARGET := libs searchplugins
--SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call MERGE_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
--PP_TARGETS += SEARCHPLUGINS
-+#SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call MERGE_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
+-SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call EN_US_OR_L10N_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
++#SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call EN_US_OR_L10N_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
 +SEARCHPLUGINS := $(addsuffix .xml,$(SEARCHPLUGINS_NAMES))
+ # Some locale-specific search plugins may have preprocessor directives, but the
+ # default en-US ones do not.
+ SEARCHPLUGINS_FLAGS := --silence-missing-directive-warnings
+-PP_TARGETS += SEARCHPLUGINS
 +#PP_TARGETS += SEARCHPLUGINS
  
  # Required for l10n.mk - defines a list of app sub dirs that should
@@ -61,7 +65,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
  DIST_SUBDIRS = browser metro
  else
  DIST_SUBDIRS = $(DIST_SUBDIR)
-@@ -117,16 +120,39 @@ NO_JA_JP_MAC_AB_CD := $(if $(filter ja-J
+@@ -120,16 +123,39 @@ NO_JA_JP_MAC_AB_CD := $(if $(filter ja-J
  libs:: $(FINAL_TARGET)/defaults/profile/bookmarks.html ;
  
  libs:: $(addprefix generic/profile/,$(PROFILE_FILES))
@@ -104,7 +108,7 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -141,14 +141,15 @@
+@@ -146,14 +146,15 @@
      locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
  #endif
  % locale browser-region @AB_CD@ %locale/browser-region/

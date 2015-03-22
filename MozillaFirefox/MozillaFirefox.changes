@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sun Mar 22 13:00:28 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 37.0b7
+- removed obsolete patch
+  * mozilla-bmo1088588.patch
+- requires NSPR 4.10.8
+
+-------------------------------------------------------------------
 Sat Mar 21 09:03:12 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 36.0.4 (bnc#923534)

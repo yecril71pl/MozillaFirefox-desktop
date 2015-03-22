@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 36
-%define mainver %major.0.4
-%define update_channel release
-%define releasedate 2015032000
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 2015032100
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -76,7 +76,7 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.10.7
+BuildRequires:  mozilla-nspr-devel >= 4.10.8
 BuildRequires:  mozilla-nss-devel >= 3.17.4
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
@@ -143,9 +143,8 @@ Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
 Patch10:        mozilla-icu-strncat.patch
 Patch11:        mozilla-arm-disable-edsp.patch
-Patch12:        mozilla-bmo1088588.patch
-Patch13:        mozilla-openaes-decl.patch
-Patch14:        mozilla-skia-bmo1136958.patch
+Patch12:        mozilla-openaes-decl.patch
+Patch13:        mozilla-skia-bmo1136958.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -199,7 +198,7 @@ of %{appname}.
 %package translations-other
 Summary:        Extra translations for %{appname}
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;vi;zu)
+Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;uz;vi;zu)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -259,7 +258,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

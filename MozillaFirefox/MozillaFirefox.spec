@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 36
-%define mainver %major.99
-%define update_channel beta
-%define releasedate 2015032100
+%define major 37
+%define mainver %major.0.1
+%define update_channel release
+%define releasedate 2015040300
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -145,6 +145,8 @@ Patch10:        mozilla-icu-strncat.patch
 Patch11:        mozilla-arm-disable-edsp.patch
 Patch12:        mozilla-openaes-decl.patch
 Patch13:        mozilla-skia-bmo1136958.patch
+Patch14:        mozilla-skia-be-le.patch
+Patch15:        mozilla-bmo1005535.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -258,6 +260,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

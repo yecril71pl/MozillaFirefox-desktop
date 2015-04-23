@@ -1,7 +1,9 @@
 -------------------------------------------------------------------
 Fri Apr 17 16:39:20 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 37.0.2
+- update to Firefox 37.0.2 (bnc#928116)
+  * MFSA 2015-45/CVE-2015-2706 (bmo#1141081)
+    Memory corruption during failed plugin initialization
 
 -------------------------------------------------------------------
 Fri Apr  3 08:27:24 UTC 2015 - wr@rosenauer.org

@@ -1,7 +1,43 @@
 -------------------------------------------------------------------
+Sun Mar 29 09:28:42 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 31.6.0esr (bnc#925368)
+  * MFSA 2015-30/CVE-2015-0815
+    Miscellaneous memory safety hazards
+  * MFSA 2015-31/CVE-2015-0813 (bmo#1106596))
+    Use-after-free when using the Fluendo MP3 GStreamer plugin
+  * MFSA 2015-33/CVE-2015-0816 (bmo#1144991)
+    resource:// documents can load privileged pages
+  * MFSA-2015-37/CVE-2015-0807 (bmo#1111834)
+    CORS requests should not follow 30x redirections after preflight
+  * MFSA-2015-40/CVE-2015-0801 (bmo#1146339)
+    Same-origin bypass through anchor navigation
+
+-------------------------------------------------------------------
+Sat Mar 21 10:38:32 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 31.5.3 (bnc#923534)
+  * MFSA 2015-28/CVE-2015-0818 (bmo#1144988)
+    Privilege escalation through SVG navigation
+  * MFSA 2015-29/CVE-2015-0817 (bmo#1145255)
+    Code execution through incorrect JavaScript bounds checking
+    elimination
+
+-------------------------------------------------------------------
 Thu Feb 19 22:52:00 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 31.5.0esr (bnc#917597)
+  * MFSA 2015-11/CVE-2015-0836
+    Miscellaneous memory safety hazards
+  * MFSA 2015-12/CVE-2015-0833 (bmo#945192)
+    Invoking Mozilla updater will load locally stored DLL files
+    (Windows only)
+  * MFSA 2015-16/CVE-2015-0831 (bmo#1130514)
+    Use-after-free in IndexedDB
+  * MFSA 2015-19/CVE-2015-0827 (bmo#1117304)
+    Out-of-bounds read and write while rendering SVG content
+  * MFSA 2015-24/CVE-2015-0822 (bmo#1110557)
+    Reading of local files through manipulation of form autocomplete
 
 -------------------------------------------------------------------
 Sat Jan 10 17:30:10 UTC 2015 - wr@rosenauer.org

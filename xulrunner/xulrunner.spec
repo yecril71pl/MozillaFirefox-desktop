@@ -1,7 +1,7 @@
 #
 # spec file for package xulrunner
 #
-# Copyright (c) 2015 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
 #               2006-2015 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -17,10 +17,10 @@
 #
 
 
-%define version_internal 31.5.0
+%define version_internal 31.6.0
 %define apiversion 31
-%define uaweight 3150000
-%define releasedate 2015021900
+%define uaweight 3160000
+%define releasedate 2015032800
 %define shared_js 0
 %define has_system_nspr  1
 %define has_system_nss   1

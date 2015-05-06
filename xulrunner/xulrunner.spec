@@ -17,10 +17,10 @@
 #
 
 
-%define version_internal 31.6.0
+%define version_internal 31.7.0
 %define apiversion 31
-%define uaweight 3160000
-%define releasedate 2015032800
+%define uaweight 3170000
+%define releasedate 2015050500
 %define shared_js 0
 %define has_system_nspr  1
 %define has_system_nss   1

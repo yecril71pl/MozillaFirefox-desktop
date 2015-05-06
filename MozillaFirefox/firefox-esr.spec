@@ -18,7 +18,7 @@
 
 
 %define major 31
-%define mainver %major.6.0
+%define mainver %major.7.0
 %define update_channel esr31
 
 %if %suse_version > 1210
@@ -77,7 +77,7 @@ Recommends:     gstreamer-0_10-plugins-ffmpeg
 %endif
 Version:        %{mainver}
 Release:        0
-%define         releasedate 2015032800
+%define         releasedate 2015050500
 Provides:       firefox-esr = %{mainver}
 Provides:       firefox-esr = %{version}-%{release}
 Provides:       web_browser

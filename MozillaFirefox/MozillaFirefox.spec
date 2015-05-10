@@ -21,7 +21,7 @@
 %define major 37
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015040700
+%define releasedate 2015042200
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -77,7 +77,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.10.8
-BuildRequires:  mozilla-nss-devel >= 3.18
+BuildRequires:  mozilla-nss-devel >= 3.18.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -144,7 +144,6 @@ Patch9:         mozilla-repo.patch
 Patch10:        mozilla-icu-strncat.patch
 Patch11:        mozilla-arm-disable-edsp.patch
 Patch12:        mozilla-openaes-decl.patch
-Patch13:        mozilla-skia-bmo1136958.patch
 Patch14:        mozilla-skia-be-le.patch
 Patch15:        mozilla-bmo1005535.patch
 # Firefox/browser
@@ -259,7 +258,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 # Firefox
@@ -342,8 +340,6 @@ ac_add_options --enable-update-channel=%{update_channel}
 %if 0%{?gstreamer} == 1
 ac_add_options --enable-gstreamer=1.0
 %endif
-ac_add_options --disable-gnomevfs
-ac_add_options --enable-gio
 %if %branding
 ac_add_options --enable-official-branding
 %endif

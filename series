@@ -13,7 +13,6 @@ mozilla-icu-strncat.patch
 mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
 mozilla-openaes-decl.patch
-mozilla-skia-bmo1136958.patch
 mozilla-skia-be-le.patch
 mozilla-bmo1005535.patch
 

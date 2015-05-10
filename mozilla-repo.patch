@@ -1,6 +1,6 @@
 # HG changeset patch
 # Parent 80b6464bd883864fce57e8748010869af1be69e9
-# Parent  d160c6876c5f05d902b391551bf4f684254b3c7d
+# Parent  7f246bc54e416716e50efe50c0edf154b26be658
 
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
@@ -21,7 +21,7 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
  # bug: 746277 - preserve existing functionality.
  # MOZILLA_DIR="": cd $(SPACE); hg # succeeds if ~/.hg exists
  ###########################################################################
- ifdef MOZILLA_OFFICIAL
+ ifdef MOZ_INCLUDE_SOURCE_INFO
 -MOZ_SOURCE_REPO = $(call getSourceRepo,$(MOZILLA_DIR)$(NULL) $(NULL))
 +#MOZ_SOURCE_REPO = $(call getSourceRepo,$(MOZILLA_DIR)$(NULL) $(NULL))
  endif

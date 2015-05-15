@@ -1,7 +1,54 @@
 -------------------------------------------------------------------
+Fri May 15 10:40:19 UTC 2015 - normand@linux.vnet.ibm.com
+
+- add mozilla-add-glibcxx_use_cxx11_abi.patch grabbed from
+  https://bugzilla.mozilla.org/show_bug.cgi?id=1153109
+
+-------------------------------------------------------------------
+Fri May 15 07:37:46 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 38.0.1
+  stability and regression fixes
+  * Systems with first generation NVidia Optimus graphics cards
+    may crash on start-up
+  * Users who import cookies from Google Chrome can end up with
+    broken websites
+  * Large animated images may fail to play and may stop other
+    images from loading
+
+-------------------------------------------------------------------
 Sun May 10 07:07:49 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 38.0 (bnc#)
+- update to Firefox 38.0 (bnc#930622)
+  * New tab-based preferences
+  * Ruby annotation support
+  * more info: https://www.mozilla.org/en-US/firefox/38.0/releasenotes/
+  security fixes:
+  * MFSA 2015-46/CVE-2015-2708/CVE-2015-2709
+    Miscellaneous memory safety hazards
+  * MFSA 2015-47/VE-2015-0797 (bmo#1080995)
+    Buffer overflow parsing H.264 video with Linux Gstreamer
+  * MFSA 2015-48/CVE-2015-2710 (bmo#1149542)
+    Buffer overflow with SVG content and CSS
+  * MFSA 2015-49/CVE-2015-2711 (bmo#1113431)
+    Referrer policy ignored when links opened by middle-click and
+    context menu
+  * MFSA 2015-50/CVE-2015-2712 (bmo#1152280)
+    Out-of-bounds read and write in asm.js validation
+  * MFSA 2015-51/CVE-2015-2713 (bmo#1153478)
+    Use-after-free during text processing with vertical text enabled
+  * MFSA 2015-53/CVE-2015-2715 (bmo#988698)
+    Use-after-free due to Media Decoder Thread creation during shutdown
+  * MFSA 2015-54/CVE-2015-2716 (bmo#1140537)
+    Buffer overflow when parsing compressed XML
+  * MFSA 2015-55/CVE-2015-2717 (bmo#1154683)
+    Buffer overflow and out-of-bounds read while parsing MP4 video
+    metadata
+  * MFSA 2015-56/CVE-2015-2718 (bmo#1146724)
+    Untrusted site hosting trusted page can intercept webchannel
+    responses
+  * MFSA 2015-57/CVE-2011-3079 (bmo#1087565)
+    Privilege escalation through IPC channel messages
 - requires NSS 3.18.1
 - removed obsolete patches:
   * mozilla-skia-bmo1136958.patch

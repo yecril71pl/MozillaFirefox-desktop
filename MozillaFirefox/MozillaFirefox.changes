@@ -1,8 +1,12 @@
 -------------------------------------------------------------------
-Thu Apr 23 06:41:34 UTC 2015 - wr@rosenauer.org
+Sun May 10 07:07:49 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 38.0b6
+- update to Firefox 38.0 (bnc#)
 - requires NSS 3.18.1
+- removed obsolete patches:
+  * mozilla-skia-bmo1136958.patch
+- remove gnomevfs build options as it is removed from sources
+- rebased patches
 
 -------------------------------------------------------------------
 Fri Apr 17 16:39:20 UTC 2015 - wr@rosenauer.org

@@ -1,0 +1,35 @@
+From 32b9943e0d2c7c28d9d113c0e83d121c356fe5d5 Mon Sep 17 00:00:00 2001
+From: Mike Hommey <mh+mozilla@glandium.org>
+Date: Fri, 10 Apr 2015 16:53:05 +0900
+Subject: [PATCH] Bug 1153109 - Add -D_GLIBCXX_USE_CXX11_ABI=0 to CXXFLAGS when
+ building with --enable-stdcxx-compat
+
+patch grab from https://bugzilla.mozilla.org/show_bug.cgi?id=1153109
+
+---
+ configure.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/configure.in b/configure.in
+index 95d2a70..6c858b3 100644
+--- a/configure.in
++++ b/configure.in
+@@ -7375,16 +7375,18 @@ STDCXX_COMPAT=
+ MOZ_ARG_ENABLE_BOOL(stdcxx-compat,
+ [  --enable-stdcxx-compat  Enable compatibility with older libstdc++],
+     STDCXX_COMPAT=1)
+ 
+ if test -n "$STDCXX_COMPAT"; then
+    eval $(CXX="$CXX" HOST_CXX="$HOST_CXX" $PYTHON -m mozbuild.configure.libstdcxx)
+    AC_SUBST(MOZ_LIBSTDCXX_TARGET_VERSION)
+    AC_SUBST(MOZ_LIBSTDCXX_HOST_VERSION)
++   CXXFLAGS="$CXXFLAGS -D_GLIBCXX_USE_CXX11_ABI=0"
++   HOST_CXXFLAGS="$HOST_CXXFLAGS -D_GLIBCXX_USE_CXX11_ABI=0"
+ fi
+ 
+ dnl ========================================================
+ dnl =
+ dnl = Profiling and Instrumenting
+ dnl =
+ dnl ========================================================
+ MOZ_ARG_HEADER(Profiling and Instrumenting)

@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 38
-%define mainver %major.0.1
+%define mainver %major.0.5
 %define update_channel release
-%define releasedate 2015051400
+%define releasedate 2015052300
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -131,6 +131,7 @@ Source12:       mozilla-get-app-id
 Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
+Source16:       MozillaFirefox.changes
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch

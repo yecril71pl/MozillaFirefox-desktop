@@ -2,6 +2,8 @@
 Sun Jun  7 07:09:12 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 38.0.6
+  * fixes bmo#1171730 which is not really relevant to oS builds
+- fix KDE regression from 38.0.5 builds (bsc#933439)
 
 -------------------------------------------------------------------
 Sat May 23 21:13:49 UTC 2015 - wr@rosenauer.org

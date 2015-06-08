@@ -2,7 +2,6 @@
 toolkit-download-folder.patch
 mozilla-pkgconfig.patch
 mozilla-nongnome-proxies.patch
-mozilla-prefer_plugin_pref.patch
 mozilla-shared-nss-db.patch
 mozilla-kde.patch
 mozilla-preferences.patch

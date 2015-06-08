@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Mon Jun  8 21:09:06 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 39.0b3
+- dropped mozilla-prefer_plugin_pref.patch as this feature is
+  likely not worth maintaining further
+- rebased patches
+- require NSS 3.19.1
+
+-------------------------------------------------------------------
 Sun Jun  7 07:09:12 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 38.0.6

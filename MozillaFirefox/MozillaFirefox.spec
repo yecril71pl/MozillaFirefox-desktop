@@ -77,7 +77,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.10.8
-BuildRequires:  mozilla-nss-devel >= 3.18.1
+BuildRequires:  mozilla-nss-devel >= 3.19.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -135,7 +135,6 @@ Source16:       MozillaFirefox.changes
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
-Patch3:         mozilla-prefer_plugin_pref.patch
 Patch4:         mozilla-shared-nss-db.patch
 Patch5:         mozilla-kde.patch
 Patch6:         mozilla-preferences.patch
@@ -250,7 +249,6 @@ symbols meant for upload to Mozilla's crash collector database.
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1

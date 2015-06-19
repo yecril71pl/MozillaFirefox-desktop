@@ -133,6 +133,7 @@ Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
+Patch17:        mozilla-arm64-libjpeg-turbo.patch
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -264,6 +265,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

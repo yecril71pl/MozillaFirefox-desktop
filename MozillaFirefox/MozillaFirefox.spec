@@ -147,6 +147,7 @@ Patch12:        mozilla-openaes-decl.patch
 Patch14:        mozilla-skia-be-le.patch
 Patch15:        mozilla-bmo1005535.patch
 Patch16:        mozilla-add-glibcxx_use_cxx11_abi.patch
+Patch17:        mozilla-arm64-libjpeg-turbo.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -261,6 +262,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

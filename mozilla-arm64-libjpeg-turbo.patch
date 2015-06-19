@@ -1,0 +1,22 @@
+Index: mozilla/configure.in
+===================================================================
+--- mozilla.orig/configure.in
++++ mozilla/configure.in
+@@ -6241,7 +6241,7 @@ fi
+ 
+ dnl If we're on an ARM system which supports libjpeg-turbo's asm routines and
+ dnl --disable-libjpeg-turbo wasn't passed, use the C compiler as the assembler.
+-if test -n "$LIBJPEG_TURBO_ARM_ASM" ; then
++if test -n "$LIBJPEG_TURBO_ARM_ASM" -o -n "$LIBJPEG_TURBO_ARM64_ASM" ; then
+     echo "Using $AS as the assembler for ARM code."
+     LIBJPEG_TURBO_AS=$AS
+ fi
+@@ -6252,6 +6252,8 @@ elif test -n "$LIBJPEG_TURBO_X64_ASM"; t
+     AC_DEFINE(LIBJPEG_TURBO_X64_ASM)
+ elif test -n "$LIBJPEG_TURBO_ARM_ASM"; then
+     AC_DEFINE(LIBJPEG_TURBO_ARM_ASM)
++elif test -n "$LIBJPEG_TURBO_ARM64_ASM"; then
++    AC_DEFINE(LIBJPEG_TURBO_ARM64_ASM)
+ elif test -n "$MOZ_LIBJPEG_TURBO"; then
+     dnl Warn if we're not building the optimized routines, even though the user
+     dnl didn't specify --disable-libjpeg-turbo.

@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Mon Jun  8 21:09:06 UTC 2015 - wr@rosenauer.org
+Wed Jun 17 10:48:49 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 39.0b3
+- update to Firefox 39.0b6
 - dropped mozilla-prefer_plugin_pref.patch as this feature is
   likely not worth maintaining further
 - rebased patches

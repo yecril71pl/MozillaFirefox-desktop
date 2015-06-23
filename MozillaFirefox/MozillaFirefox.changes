@@ -1,11 +1,19 @@
 -------------------------------------------------------------------
-Wed Jun 19 10:48:49 UTC 2015 - wr@rosenauer.org
+Tue Jun 23 06:12:45 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 39.0b6
+- update to Firefox 39.0
+  * Share Hello URLs with social networks
+  * Support for 'switch' role in ARIA 1.1 (web accessibility)
+  * SafeBrowsing malware detection lookups enabled for downloads
+    (Mac OS X and Linux)
+  * Support for new Unicode 8.0 skin tone emoji
+  * Removed support for insecure SSLv3 for network communications
+  * Disable use of RC4 except for temporarily whitelisted hosts
+  * NPAPI Plug-in performance improved via asynchronous initialization
 - dropped mozilla-prefer_plugin_pref.patch as this feature is
   likely not worth maintaining further
 - rebased patches
-- require NSS 3.19.1
+- require NSS 3.19.2
 
 -------------------------------------------------------------------
 Thu Jun 18 10:30:18 UTC 2015 - schwab@suse.de

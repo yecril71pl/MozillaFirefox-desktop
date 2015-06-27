@@ -1,7 +1,26 @@
 -------------------------------------------------------------------
+Sat Jun 27 15:26:00 UTC 2015 - wr@rosenauer.org
+
+- update to 31.8.0 (bnc#935979)
+- requires NSS 3.19.2
+
+-------------------------------------------------------------------
 Wed May  6 07:49:53 UTC 2015 - wr@rosenauer.org
 
-- update to 31.7.0 (bnc#)
+- update to 31.7.0 (bnc#930622)
+  * MFSA 2015-46/CVE-2015-2708
+    Miscellaneous memory safety hazards
+  * MFSA 2015-47/VE-2015-0797 (bmo#1080995)
+    Buffer overflow parsing H.264 video with Linux Gstreamer
+  * MFSA 2015-48/CVE-2015-2710 (bmo#1149542)
+    Buffer overflow with SVG content and CSS
+  * MFSA 2015-51/CVE-2015-2713 (bmo#1153478)
+    Use-after-free during text processing with vertical text enabled
+  * MFSA 2015-54/CVE-2015-2716 (bmo#1140537)
+    Buffer overflow when parsing compressed XML
+  * MFSA 2015-57/CVE-2011-3079 (bmo#1087565)
+    Privilege escalation through IPC channel messages
+- strip baselibs.conf to reflect the current set of packages
 
 -------------------------------------------------------------------
 Mon Mar 30 07:56:19 UTC 2015 - wr@rosenauer.org

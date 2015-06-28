@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 38
-%define mainver %major.0.6
-%define update_channel release
-%define releasedate 2015060500
+%define mainver %major.1.0
+%define update_channel esr38
+%define releasedate 2015062600
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -77,7 +77,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.10.8
-BuildRequires:  mozilla-nss-devel >= 3.18.1
+BuildRequires:  mozilla-nss-devel >= 3.19.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -133,7 +133,6 @@ Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
-Patch17:        mozilla-arm64-libjpeg-turbo.patch
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -150,6 +149,7 @@ Patch12:        mozilla-openaes-decl.patch
 Patch14:        mozilla-skia-be-le.patch
 Patch15:        mozilla-bmo1005535.patch
 Patch16:        mozilla-add-glibcxx_use_cxx11_abi.patch
+Patch17:        mozilla-arm64-libjpeg-turbo.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch

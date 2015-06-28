@@ -1,7 +1,13 @@
 -------------------------------------------------------------------
-Fri Jun 19 06:21:43 UTC 2015 - wr@rosenauer.org
+Sun Jun 28 07:11:18 UTC 2015 - wr@rosenauer.org
 
 - renamed package to firefox-esr for ESR 38 cycle
+
+-------------------------------------------------------------------
+Sat Jun 27 21:19:48 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 38.1.0 (bnc#935979)
+- requires NSS 3.19.2
 
 -------------------------------------------------------------------
 Thu Jun 18 10:30:18 UTC 2015 - schwab@suse.de

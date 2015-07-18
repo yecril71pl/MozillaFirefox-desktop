@@ -14,7 +14,6 @@ mozilla-idldir.patch
 mozilla-openaes-decl.patch
 mozilla-skia-be-le.patch
 mozilla-bmo1005535.patch
-mozilla-add-glibcxx_use_cxx11_abi.patch
 mozilla-arm64-libjpeg-turbo.patch
 
 # Firefox patches

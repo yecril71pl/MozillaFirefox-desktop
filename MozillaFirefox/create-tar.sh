@@ -2,8 +2,8 @@
 
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_39_0b6_RELEASE"
-VERSION="38.99"
+RELEASE_TAG="FIREFOX_40_0b5_RELEASE"
+VERSION="39.99"
 
 # mozilla
 if [ -d mozilla ]; then

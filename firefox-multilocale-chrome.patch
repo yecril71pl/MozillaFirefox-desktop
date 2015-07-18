@@ -1,17 +1,17 @@
 # HG changeset patch
 # Parent 16846914f968944f991c8b12fdc38ce8fc099d73
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent  c0a406c7a6cc5edc8fb34549428866ff39ad878f
+# Parent  adcf975f1f5a796da0b1926a67beba003fd08b6b
 Add searchplugins to chrome packaging for proper localization
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 --- a/browser/app/profile/firefox.js
 +++ b/browser/app/profile/firefox.js
-@@ -378,16 +378,20 @@ pref("browser.helperApps.deleteTempFileO
- #endif
+@@ -389,16 +389,20 @@ pref("browser.search.searchEnginesURL", 
  
- // search engines URL
- pref("browser.search.searchEnginesURL",      "https://addons.mozilla.org/%LOCALE%/firefox/search-engines/");
+ // Tell the search service to load search plugins from the locale JAR
+ pref("browser.search.loadFromJars", true);
+ pref("browser.search.jarURIs", "chrome://browser/locale/searchplugins/");
  
  // pointer to the default engine name
  pref("browser.search.defaultenginename",      "chrome://browser-region/locale/region.properties");
@@ -31,23 +31,20 @@ diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js
 diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 --- a/browser/locales/Makefile.in
 +++ b/browser/locales/Makefile.in
-@@ -66,27 +66,30 @@ STUB_HOOK = $(NSINSTALL) -D '$(_ABS_DIST
+@@ -63,24 +63,27 @@ UNINSTALLER_PACKAGE_HOOK = $(RM) -r $(ST
+ 
+ STUB_HOOK = $(NSINSTALL) -D '$(_ABS_DIST)/$(PKG_INST_PATH)'; \
+     $(RM) '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      cp ../installer/windows/l10ngen/stub.exe '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      chmod 0755 '$(_ABS_DIST)/$(PKG_INST_PATH)$(PKG_STUB_BASENAME).exe'; \
      $(NULL)
  endif
  
- ifeq ($(MOZ_WIDGET_TOOLKIT) $(DIST_SUBDIR),windows metro)
- SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/metrolist.txt))
- else
 -SEARCHPLUGINS_NAMES = $(shell cat $(call MERGE_FILE,/searchplugins/list.txt)) ddg
 +SEARCHPLUGINS_NAMES = $(shell cat \
 +    $(firstword $(wildcard $(LOCALE_SRCDIR)/searchplugins/list.txt) \
 +    @srcdir@/en-US/searchplugins/list.txt ) ) ddg
- endif
- SEARCHPLUGINS_PATH := $(FINAL_TARGET)/searchplugins
- # metro build call a searchplugins target for search engine plugins
- .PHONY: searchplugins
+ SEARCHPLUGINS_PATH := .deps/generated_$(AB_CD)
  SEARCHPLUGINS_TARGET := libs searchplugins
 -SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call EN_US_OR_L10N_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
 +#SEARCHPLUGINS := $(foreach plugin,$(addsuffix .xml,$(SEARCHPLUGINS_NAMES)),$(or $(wildcard $(call EN_US_OR_L10N_FILE,searchplugins/$(plugin))),$(info Missing searchplugin: $(plugin))))
@@ -58,14 +55,14 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 -PP_TARGETS += SEARCHPLUGINS
 +#PP_TARGETS += SEARCHPLUGINS
  
+ list-txt = $(SEARCHPLUGINS_PATH)/list.txt
+ GARBAGE += $(list-txt)
+ 
+ libs:: searchplugins
+ 
  # Required for l10n.mk - defines a list of app sub dirs that should
  # be included in langpack xpis.
- ifdef MOZ_METRO
- # metro build, include both app folders
- DIST_SUBDIRS = browser metro
- else
- DIST_SUBDIRS = $(DIST_SUBDIR)
-@@ -120,16 +123,39 @@ NO_JA_JP_MAC_AB_CD := $(if $(filter ja-J
+@@ -119,16 +122,39 @@ NO_JA_JP_MAC_AB_CD := $(if $(filter ja-J
  libs:: $(FINAL_TARGET)/defaults/profile/bookmarks.html ;
  
  libs:: $(addprefix generic/profile/,$(PROFILE_FILES))
@@ -108,9 +105,9 @@ diff --git a/browser/locales/Makefile.in b/browser/locales/Makefile.in
 diff --git a/browser/locales/jar.mn b/browser/locales/jar.mn
 --- a/browser/locales/jar.mn
 +++ b/browser/locales/jar.mn
-@@ -146,14 +146,15 @@
-     locale/browser/syncQuota.properties         (%chrome/browser/syncQuota.properties)
- #endif
+@@ -152,14 +152,15 @@
+     locale/browser/searchplugins/list.txt       (.deps/generated_@AB_CD@/list.txt)
+     locale/browser/searchplugins/               (.deps/generated_@AB_CD@/*.xml)
  % locale browser-region @AB_CD@ %locale/browser-region/
      locale/browser-region/region.properties        (%chrome/browser-region/region.properties)
  # the following files are browser-specific overrides

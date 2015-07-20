@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  372d46509a8899feb3473becff869159d01f1f4c
+# Parent  5f8cbb078ab0d5696255c2f514c6333666b47da9
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -2136,7 +2136,7 @@ new file mode 100644
 diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 --- a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 +++ b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
-@@ -14,16 +14,18 @@
+@@ -14,16 +14,17 @@
  #include "prenv.h"
  #include "nsPrintfCString.h"
  #include "nsNetUtil.h"
@@ -2145,7 +2145,6 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
  #include "nsInterfaceHashtable.h"
  #include "mozilla/Attributes.h"
  #include "nsIURI.h"
-+#include "nsVoidArray.h"
 +#include "nsKDEUtils.h"
  
  class nsUnixSystemProxySettings final : public nsISystemProxySettings {
@@ -2155,7 +2154,7 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
  
    nsUnixSystemProxySettings()
      : mSchemeProxySettings(4)
-@@ -38,16 +40,17 @@ private:
+@@ -38,16 +39,17 @@ private:
    nsCOMPtr<nsIGSettingsService> mGSettings;
    nsCOMPtr<nsIGSettingsCollection> mProxySettings;
    nsInterfaceHashtable<nsCStringHashKey, nsIGSettingsCollection> mSchemeProxySettings;
@@ -2173,7 +2172,7 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
  nsUnixSystemProxySettings::GetMainThreadOnly(bool *aMainThreadOnly)
  {
    // dbus prevents us from being threadsafe, but this routine should not block anyhow
-@@ -504,16 +507,19 @@ nsUnixSystemProxySettings::GetProxyFromG
+@@ -504,16 +506,19 @@ nsUnixSystemProxySettings::GetProxyFromG
  
  nsresult
  nsUnixSystemProxySettings::GetProxyForURI(const nsACString & aSpec,
@@ -2193,7 +2192,7 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
    if (mGConf)
      return GetProxyFromGConf(aScheme, aHost, aPort, aResult);
  
-@@ -539,8 +545,34 @@ static const mozilla::Module::ContractID
+@@ -539,8 +544,34 @@ static const mozilla::Module::ContractID
  
  static const mozilla::Module kUnixProxyModule = {
    mozilla::Module::kVersion,
@@ -2693,7 +2692,7 @@ diff --git a/uriloader/exthandler/unix/nsCommonRegistry.cpp b/uriloader/exthandl
 new file mode 100644
 --- /dev/null
 +++ b/uriloader/exthandler/unix/nsCommonRegistry.cpp
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,53 @@
 +/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -2704,7 +2703,6 @@ new file mode 100644
 +#include "nsGNOMERegistry.h"
 +#include "nsKDERegistry.h"
 +#include "nsString.h"
-+#include "nsVoidArray.h"
 +#include "nsKDEUtils.h"
 +
 +/* static */ bool

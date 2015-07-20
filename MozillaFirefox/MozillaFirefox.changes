@@ -2,9 +2,12 @@
 Sat Jul 18 12:47:47 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 40.0b5
-- remove obsolete patch
+- added mozilla-no-stdcxx-check.patch
+- removed obsolete patches
   * mozilla-add-glibcxx_use_cxx11_abi.patch
+  * firefox-multilocale-chrome.patch
 - rebased patches
+- requires version 40 of the branding package
 
 -------------------------------------------------------------------
 Wed Jul  1 06:43:02 UTC 2015 - wr@rosenauer.org

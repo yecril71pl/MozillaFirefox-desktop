@@ -1,6 +1,6 @@
 # HG changeset patch
 # Parent 80b6464bd883864fce57e8748010869af1be69e9
-# Parent  af6547866a1a2fe0a3a84064f77d8693bff5becc
+# Parent  57bb5e3ab77acbff5414d4dbce35a38f21d39276
 
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk

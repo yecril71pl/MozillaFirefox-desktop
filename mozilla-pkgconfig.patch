@@ -4,7 +4,7 @@ Subject: pkgconfig tuning
 diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
 --- a/xulrunner/installer/Makefile.in
 +++ b/xulrunner/installer/Makefile.in
-@@ -32,16 +32,19 @@ include $(topsrcdir)/config/rules.mk
+@@ -33,16 +33,19 @@ include $(topsrcdir)/config/rules.mk
  
  INSTALL_SDK = 1
  
@@ -24,7 +24,7 @@ diff --git a/xulrunner/installer/Makefile.in b/xulrunner/installer/Makefile.in
  	$(NULL)
  
  ifdef MOZ_NATIVE_NSPR
-@@ -69,16 +72,17 @@ pkg_config_files += mozilla-nss.pc
+@@ -70,16 +73,17 @@ pkg_config_files += mozilla-nss.pc
  endif
  
  %.pc: $(srcdir)/%.pc.in $(GLOBAL_DEPS)

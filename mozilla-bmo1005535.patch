@@ -1,13 +1,13 @@
 # HG changeset patch
 # Parent b7eb1ce0237d6125b75bc8ff1cb3afc328d6e78c
 # User Steve Singer <steve@ssinger.info>
-# Parent  d7af74fb513bcca581012f17ea248b1692db5d97
+# Parent  4e6bb9847daccf128ad3eab9be087ef63f9b974c
 Bug 1005535 - Get skia GPU building on big endian.
 
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8198,21 +8198,21 @@ dnl Skia
+@@ -8208,21 +8208,21 @@ dnl Skia
  dnl ========================================================
  if test "$MOZ_ENABLE_SKIA"; then
    AC_DEFINE(MOZ_ENABLE_SKIA)

@@ -1,6 +1,6 @@
 # HG changeset patch
 # Parent e0751ad74e835e80041a61ea00c2a63bf6fbe2de
-# Parent  d938107fbc91e13c9cc60be7de200fe891826ca1
+# Parent  dbca8a673de340999f67eb321169b44cc4109faf
 
 diff --git a/browser/app/Makefile.in b/browser/app/Makefile.in
 --- a/browser/app/Makefile.in
@@ -41,9 +41,9 @@ diff --git a/browser/branding/branding-common.mozbuild b/browser/branding/brandi
          'default16.png',
 +	'default22.png',
 +	'default24.png',
++	'default256.png',
          'default32.png',
          'default48.png',
-+	'default256.png',
          'mozicon128.png',
      ]
 diff --git a/browser/installer/package-manifest.in b/browser/installer/package-manifest.in

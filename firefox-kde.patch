@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  32cde807c82c4420d152346fd441826a1658f27c
+# Parent  c6048238765dab77cd0c9a45e7afb1157316938b
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644

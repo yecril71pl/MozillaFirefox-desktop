@@ -1,7 +1,7 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 # Parent 099312626f5f7c9cb5573a61d0230574ee12a660
-# Parent  970a562bc8bcf10cdcb0ae5b6f0f8b360bb2f241
+# Parent  ab1135c098843a4a4c5153bd361b964986fccefa
 Do not overwrite the locale dynamic pref from xulrunner's all.js with a wrong default value
 
 diff --git a/browser/app/profile/firefox.js b/browser/app/profile/firefox.js

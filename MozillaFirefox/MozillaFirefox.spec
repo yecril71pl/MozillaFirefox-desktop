@@ -146,18 +146,17 @@ Patch11:        mozilla-arm-disable-edsp.patch
 Patch12:        mozilla-openaes-decl.patch
 Patch14:        mozilla-skia-be-le.patch
 Patch15:        mozilla-bmo1005535.patch
-Patch16:        mozilla-add-glibcxx_use_cxx11_abi.patch
-Patch17:        mozilla-arm64-libjpeg-turbo.patch
+Patch16:        mozilla-arm64-libjpeg-turbo.patch
+Patch17:        mozilla-no-stdcxx-check.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
-Patch103:       firefox-multilocale-chrome.patch
-Patch104:       firefox-branded-icons.patch
+Patch103:       firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
 %if %branding
-Requires:       %{name}-branding > 20.0
+Requires:       %{name}-branding > 39.0
 %endif
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
@@ -267,7 +266,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
 
 %build
 # no need to add build time to binaries

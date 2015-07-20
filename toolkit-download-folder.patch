@@ -6,7 +6,7 @@ https://bugzilla.novell.com/show_bug.cgi?id=501724
 diff --git a/browser/components/preferences/main.js b/browser/components/preferences/main.js
 --- a/browser/components/preferences/main.js
 +++ b/browser/components/preferences/main.js
-@@ -408,17 +408,17 @@ var gMainPane = {
+@@ -383,17 +383,17 @@ var gMainPane = {
        // and was available as an option in the 1.5 drop down. On XP this
        // was in My Documents, on OSX it was in User Docs. In 2.0, we did
        // away with the drop down option, although the special label was
@@ -28,7 +28,7 @@ diff --git a/browser/components/preferences/main.js b/browser/components/prefere
 diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/components/downloads/nsDownloadManager.cpp
 --- a/toolkit/components/downloads/nsDownloadManager.cpp
 +++ b/toolkit/components/downloads/nsDownloadManager.cpp
-@@ -1361,18 +1361,20 @@ nsDownloadManager::GetDefaultDownloadsDi
+@@ -1356,18 +1356,20 @@ nsDownloadManager::GetDefaultDownloadsDi
    // Vista:
    // Downloads
    // XP/2K:

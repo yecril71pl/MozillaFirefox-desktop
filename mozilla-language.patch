@@ -1,6 +1,7 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
 # Parent 5a29924228527f8882c83cf62d470963ea1ce62e
+# Parent  228ea0669fa8cc78532b71d7bdc4bad5477f246e
 Bug 583793 - Firefox interface language set to LANG, ignores LANGUAGE
 
 diff --git a/intl/locale/nsLocaleService.cpp b/intl/locale/nsLocaleService.cpp
@@ -24,7 +25,7 @@ diff --git a/intl/locale/nsLocaleService.cpp b/intl/locale/nsLocaleService.cpp
  
      for( i = 0; i < LocaleListLength; i++ ) {
          nsresult result;
-@@ -150,16 +151,21 @@ nsLocaleService::nsLocaleService(void)
+@@ -158,16 +159,21 @@ nsLocaleService::nsLocaleService(void)
              } else {
                  CopyASCIItoUTF16(lang, platformLocale);
                  result = nsPosixLocale::GetXPLocale(lang, xpLocale);

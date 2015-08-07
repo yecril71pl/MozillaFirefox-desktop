@@ -1,13 +1,14 @@
 -------------------------------------------------------------------
-Sat Jul 18 12:47:47 UTC 2015 - wr@rosenauer.org
+Fri Jul 31 17:10:11 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 40.0b5
+- update to Firefox 40.0b9
 - added mozilla-no-stdcxx-check.patch
 - removed obsolete patches
   * mozilla-add-glibcxx_use_cxx11_abi.patch
   * firefox-multilocale-chrome.patch
 - rebased patches
 - requires version 40 of the branding package
+- removed browser/searchplugins/ location as it's not valid anymore
 
 -------------------------------------------------------------------
 Wed Jul  1 06:43:02 UTC 2015 - wr@rosenauer.org

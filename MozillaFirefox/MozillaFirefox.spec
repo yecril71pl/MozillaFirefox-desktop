@@ -21,7 +21,7 @@
 %define major 39
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015071700
+%define releasedate 2015073000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -224,7 +224,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to create a file
 #BRAND: /usr/lib/firefox/defaults/preferences/firefox-$vendor.js to set
 #BRAND: custom preference overrides.
-#BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
+#BRAND: It's also possible to drop files in /usr/lib/firefox/distribution/searchplugins/common/
 
 %description branding-upstream
 This package provides upstream look and feel for %{appname}.
@@ -378,7 +378,6 @@ grep amazondotcom dist/firefox/browser/omni.ja
 mkdir -p %{buildroot}%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* %{buildroot}%{progdir}
 mkdir -p %{buildroot}%{progdir}/distribution/extensions
-mkdir -p %{buildroot}%{progdir}/browser/searchplugins
 mkdir -p %{buildroot}%{progdir}/browser/defaults/preferences/
 # install gre prefs
 install -m 644 %{SOURCE13} %{buildroot}%{progdir}/defaults/pref/
@@ -556,7 +555,6 @@ exit 0
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
 %{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
-%{progdir}/browser/searchplugins/
 %{progdir}/browser/blocklist.xml
 %{progdir}/browser/chrome.manifest
 %{progdir}/browser/omni.ja

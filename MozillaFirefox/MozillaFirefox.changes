@@ -11,6 +11,13 @@ Fri Jul 31 17:10:11 UTC 2015 - wr@rosenauer.org
 - removed browser/searchplugins/ location as it's not valid anymore
 
 -------------------------------------------------------------------
+Fri Aug  7 07:09:39 UTC 2015 - wr@rosenauer.org
+
+- security update to Firefox 39.0.3 (bnc#940918)
+  * MFSA 2015-78/CVE-2015-4495 (bmo#1179262, bmo#1178058)
+    Same origin violation and local file stealing via PDF reader
+
+-------------------------------------------------------------------
 Wed Jul  1 06:43:02 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 39.0 (bnc#935979)

@@ -1,7 +1,42 @@
 -------------------------------------------------------------------
+Fri Aug  7 09:24:56 UTC 2015 - wr@rosenauer.org
+
+- security update to Firefox 38.1.1 (bnc#940918)
+  * MFSA 2015-78/CVE-2015-4495 (bmo#1179262, bmo#1178058)
+    Same origin violation and local file stealing via PDF reader
+
+-------------------------------------------------------------------
 Sat Jun 27 21:19:48 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 38.1.0 (bnc#935979)
+  * MFSA 2015-59/CVE-2015-2724/CVE-2015-2725
+    Miscellaneous memory safety hazards
+  * MFSA 2015-60/CVE-2015-2727 (bmo#1163422)
+    Local files or privileged URLs in pages can be opened into new tabs
+  * MFSA 2015-61/CVE-2015-2728 (bmo#1142210)
+    Type confusion in Indexed Database Manager
+  * MFSA 2015-62/CVE-2015-2729 (bmo#1122218)
+    Out-of-bound read while computing an oscillator rendering range in Web Audio
+  * MFSA 2015-63/CVE-2015-2731 (bmo#1149891)
+    Use-after-free in Content Policy due to microtask execution error
+  * MFSA 2015-64/CVE-2015-2730 (bmo#1125025)
+    ECDSA signature validation fails to handle some signatures correctly
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-65/CVE-2015-2722/CVE-2015-2733 (bmo#1166924, bmo#1169867)
+    Use-after-free in workers while using XMLHttpRequest
+  * MFSA 2015-66/CVE-2015-2734/CVE-2015-2735/CVE-2015-2736/CVE-2015-2737
+    CVE-2015-2738/CVE-2015-2739/CVE-2015-2740
+    Vulnerabilities found through code inspection
+  * MFSA 2015-67/CVE-2015-2741 (bmo#1147497)
+    Key pinning is ignored when overridable errors are encountered
+  * MFSA 2015-69/CVE-2015-2743 (bmo#1163109)
+    Privilege escalation in PDF.js
+  * MFSA 2015-70/CVE-2015-4000 (bmo#1138554)
+    NSS accepts export-length DHE keys with regular DHE cipher suites
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-71/CVE-2015-2721 (bmo#1086145)
+    NSS incorrectly permits skipping of ServerKeyExchange
+    (this fix is shipped by NSS 3.19.1 externally)
 - requires NSS 3.19.2
 
 -------------------------------------------------------------------

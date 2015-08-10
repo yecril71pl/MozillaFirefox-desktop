@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 38
-%define mainver %major.1.0
+%define mainver %major.1.1
 %define update_channel esr38
-%define releasedate 2015062600
+%define releasedate 2015080600
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -132,7 +132,7 @@ Source12:       mozilla-get-app-id
 Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
-Source16:       MozillaFirefox.changes
+Source16:       firefox-esr.changes
 # Gecko/Toolkit
 Patch1:         toolkit-download-folder.patch
 Patch2:         mozilla-nongnome-proxies.patch
@@ -274,7 +274,7 @@ cd $RPM_BUILD_DIR/mozilla
 
 %build
 # no need to add build time to binaries
-modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/MozillaFirefox.changes")"
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{S:16}")"
 DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +

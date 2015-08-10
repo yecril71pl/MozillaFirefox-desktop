@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 10 16:40:17 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 38.2.0esr (bnc#940806)
+- rebased mozilla-repo.patch
+
+-------------------------------------------------------------------
 Fri Aug  7 09:24:56 UTC 2015 - wr@rosenauer.org
 
 - security update to Firefox 38.1.1 (bnc#940918)

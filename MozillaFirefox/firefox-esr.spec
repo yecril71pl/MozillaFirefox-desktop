@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 38
-%define mainver %major.1.1
+%define mainver %major.2.0
 %define update_channel esr38
-%define releasedate 2015080600
+%define releasedate 2015080900
 
 # general build definitions
 %if "%{update_channel}" != "aurora"

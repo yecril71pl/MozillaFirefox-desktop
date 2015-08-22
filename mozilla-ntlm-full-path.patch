@@ -1,12 +1,13 @@
 # HG changeset patch
 # User Petr Cerny <pcerny@novell.com>
 # Parent 7308e4a7c1f769f4bbbc90870b849cadd99495a6
+# Parent  03565086f1e230cf6f0f6c01bf9a792c732de50b
 Bug 634334 - call to the ntlm_auth helper fails
 
 diff --git a/extensions/auth/nsAuthSambaNTLM.cpp b/extensions/auth/nsAuthSambaNTLM.cpp
 --- a/extensions/auth/nsAuthSambaNTLM.cpp
 +++ b/extensions/auth/nsAuthSambaNTLM.cpp
-@@ -168,17 +168,17 @@ static uint8_t* ExtractMessage(const nsA
+@@ -169,17 +169,17 @@ static uint8_t* ExtractMessage(const nsA
  nsresult
  nsAuthSambaNTLM::SpawnNTLMAuthHelper()
  {

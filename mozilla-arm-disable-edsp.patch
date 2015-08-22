@@ -1,6 +1,7 @@
 # HG changeset patch
 # User Adrian Schröter <adrian@suse.de>
 # Parent b945e0c3b145b6b2245f42bab52f911c2d1f6759
+# Parent  4ecf304db9dc3ea6259b6f16ed5af1022ff1034c
 disable ESDP support (no BNC or BMO reference yet :-()
 
 diff --git a/mozglue/build/arm.h b/mozglue/build/arm.h

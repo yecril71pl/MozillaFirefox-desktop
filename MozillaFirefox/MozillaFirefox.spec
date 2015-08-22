@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 39
+%define major 40
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015071700
+%define releasedate 2015082100
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -146,18 +146,17 @@ Patch11:        mozilla-arm-disable-edsp.patch
 Patch12:        mozilla-openaes-decl.patch
 Patch14:        mozilla-skia-be-le.patch
 Patch15:        mozilla-bmo1005535.patch
-Patch16:        mozilla-add-glibcxx_use_cxx11_abi.patch
-Patch17:        mozilla-arm64-libjpeg-turbo.patch
+Patch16:        mozilla-arm64-libjpeg-turbo.patch
+Patch17:        mozilla-no-stdcxx-check.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
-Patch103:       firefox-multilocale-chrome.patch
-Patch104:       firefox-branded-icons.patch
+Patch103:       firefox-branded-icons.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
 %if %branding
-Requires:       %{name}-branding > 20.0
+Requires:       %{name}-branding > 39.0
 %endif
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
@@ -225,7 +224,7 @@ Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: It's also possible to create a file
 #BRAND: /usr/lib/firefox/defaults/preferences/firefox-$vendor.js to set
 #BRAND: custom preference overrides.
-#BRAND: It's also possible to drop files in /usr/lib/firefox/searchplugins
+#BRAND: It's also possible to drop files in /usr/lib/firefox/distribution/searchplugins/common/
 
 %description branding-upstream
 This package provides upstream look and feel for %{appname}.
@@ -267,7 +266,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
 
 %build
 # no need to add build time to binaries
@@ -380,7 +378,6 @@ grep amazondotcom dist/firefox/browser/omni.ja
 mkdir -p %{buildroot}%{progdir}
 cp -rf $RPM_BUILD_DIR/obj/dist/firefox/* %{buildroot}%{progdir}
 mkdir -p %{buildroot}%{progdir}/distribution/extensions
-mkdir -p %{buildroot}%{progdir}/browser/searchplugins
 mkdir -p %{buildroot}%{progdir}/browser/defaults/preferences/
 # install gre prefs
 install -m 644 %{SOURCE13} %{buildroot}%{progdir}/defaults/pref/
@@ -558,7 +555,6 @@ exit 0
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
 %{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
-%{progdir}/browser/searchplugins/
 %{progdir}/browser/blocklist.xml
 %{progdir}/browser/chrome.manifest
 %{progdir}/browser/omni.ja

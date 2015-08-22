@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  c5d7373760d7abbd34f89cb60d4a45cba2c05379
+# Parent  2cf5e1715c64a30c340872b58816c3a329bd12dc
 Part 2 of
 Bug 1136958 - gfx/layers/basic/BasicCompositor.cpp:20:56: fatal error: skia/SkCanvas.h: No such file or directory when skia is disabled
 

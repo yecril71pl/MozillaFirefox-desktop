@@ -1,4 +1,180 @@
 -------------------------------------------------------------------
+Mon Aug 10 16:40:17 UTC 2015 - wr@rosenauer.org
+
+- update to xulrunner 38.2.0esr (bnc#940806)
+  * MFSA 2015-79/CVE-2015-4473
+    Miscellaneous memory safety hazards
+  * MFSA 2015-80/CVE-2015-4475 (bmo#1175396)
+    Out-of-bounds read with malformed MP3 file
+  * MFSA 2015-82/CVE-2015-4478 (bmo#1105914)
+    Redefinition of non-configurable JavaScript object properties
+  * MFSA 2015-83/CVE-2015-4479/CVE-2015-4480/CVE-2015-4493
+    Overflow issues in libstagefright
+  * MFSA 2015-84/CVE-2015-4481 (bmo1171518)
+    Arbitrary file overwriting through Mozilla Maintenance Service
+    with hard links (only affected Windows)
+  * MFSA 2015-85/CVE-2015-4482 (bmo#1184500)
+    Out-of-bounds write with Updater and malicious MAR file
+    (does not affect openSUSE RPM packages which do not ship the
+     updater)
+  * MFSA 2015-87/CVE-2015-4484 (bmo#1171540)
+    Crash when using shared memory in JavaScript
+  * MFSA 2015-88/CVE-2015-4491 (bmo#1184009)
+    Heap overflow in gdk-pixbuf when scaling bitmap images
+  * MFSA 2015-89/CVE-2015-4485/CVE-2015-4486 (bmo#1177948, bmo#1178148)
+    Buffer overflows on Libvpx when decoding WebM video
+  * MFSA 2015-90/CVE-2015-4487/CVE-2015-4488/CVE-2015-4489
+    Vulnerabilities found through code inspection
+  * MFSA 2015-92/CVE-2015-4492 (bmo#1185820)
+    Use-after-free in XMLHttpRequest with shared workers
+- rebased all patches
+- dropped obsolete patches:
+  * mozilla-sle11.patch
+  * mozilla-ppc.patch
+  * mozilla-nullptr-gcc45.patch
+  * mozilla-libproxy-compat.patch
+  * mozilla-fix-compilation-gcc5-bmo-1021171.patch
+  * mozilla-fix-compilation-gcc5-bmo-1153109.patch
+  * mozilla-aarch64-bmo-810631.patch
+- added platform specific patches from Firefox package:
+  * mozilla-skia-be-le.patch
+  * mozilla-bmo1005535.patch
+  * mozilla-add-glibcxx_use_cxx11_abi.patch
+  * mozilla-arm64-libjpeg-turbo.patch
+  * mozilla-shared-nss-db.patch
+
+-------------------------------------------------------------------
+Sat Jun 27 15:26:00 UTC 2015 - wr@rosenauer.org
+
+- update to 31.8.0 (bnc#935979)
+  * MFSA 2015-59/CVE-2015-2724
+    Miscellaneous memory safety hazards
+  * MFSA 2015-61/CVE-2015-2728 (bmo#1142210)
+    Type confusion in Indexed Database Manager
+  * MFSA 2015-64/CVE-2015-2730 (bmo#1125025)
+    ECDSA signature validation fails to handle some signatures correctly
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-65/CVE-2015-2722/CVE-2015-2733 (bmo#1166924, bmo#1169867)
+    Use-after-free in workers while using XMLHttpRequest
+  * MFSA 2015-66/CVE-2015-2734/CVE-2015-2735/CVE-2015-2736/CVE-2015-2737
+    CVE-2015-2738/CVE-2015-2739/CVE-2015-2740
+    Vulnerabilities found through code inspection
+  * MFSA 2015-69/CVE-2015-2743 (bmo#1163109)
+    Privilege escalation in PDF.js
+  * MFSA 2015-70/CVE-2015-4000 (bmo#1138554)
+    NSS accepts export-length DHE keys with regular DHE cipher suites
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-71/CVE-2015-2721 (bmo#1086145)
+    NSS incorrectly permits skipping of ServerKeyExchange
+    (this fix is shipped by NSS 3.19.1 externally)
+- requires NSS 3.19.2
+
+--------------------------------------------------------------------
+Sun Jun 21 09:39:51 UTC 2015 - antoine.belvire@laposte.net
+
+- Fix compilation with GCC5 (bmo#1153109, bmo#1021171)
+  * add mozilla-fix-compilation-gcc5-bmo-1153109.patch
+  * add mozilla-fix-compilation-gcc5-bmo-1021171.patch
+
+-------------------------------------------------------------------
+Wed May  6 07:49:53 UTC 2015 - wr@rosenauer.org
+
+- update to 31.7.0 (bnc#930622)
+  * MFSA 2015-46/CVE-2015-2708
+    Miscellaneous memory safety hazards
+  * MFSA 2015-47/VE-2015-0797 (bmo#1080995)
+    Buffer overflow parsing H.264 video with Linux Gstreamer
+  * MFSA 2015-48/CVE-2015-2710 (bmo#1149542)
+    Buffer overflow with SVG content and CSS
+  * MFSA 2015-51/CVE-2015-2713 (bmo#1153478)
+    Use-after-free during text processing with vertical text enabled
+  * MFSA 2015-54/CVE-2015-2716 (bmo#1140537)
+    Buffer overflow when parsing compressed XML
+  * MFSA 2015-57/CVE-2011-3079 (bmo#1087565)
+    Privilege escalation through IPC channel messages
+- strip baselibs.conf to reflect the current set of packages
+
+-------------------------------------------------------------------
+Mon Mar 30 07:56:19 UTC 2015 - wr@rosenauer.org
+
+- update to 31.6.0 (bnc#925368)
+  * MFSA 2015-30/CVE-2015-0815
+    Miscellaneous memory safety hazards
+  * MFSA 2015-31/CVE-2015-0813 (bmo#1106596))
+    Use-after-free when using the Fluendo MP3 GStreamer plugin
+  * MFSA 2015-33/CVE-2015-0816 (bmo#1144991)
+    resource:// documents can load privileged pages
+  * MFSA-2015-37/CVE-2015-0807 (bmo#1111834)
+    CORS requests should not follow 30x redirections after preflight
+  * MFSA-2015-40/CVE-2015-0801 (bmo#1146339)
+    Same-origin bypass through anchor navigation
+
+-------------------------------------------------------------------
+Thu Feb 19 22:56:55 UTC 2015 - wr@rosenauer.org
+
+- update to 31.5.0 (bnc#917597)
+  * MFSA 2015-11/CVE-2015-0836
+    Miscellaneous memory safety hazards
+  * MFSA 2015-12/CVE-2015-0833 (bmo#945192)
+    Invoking Mozilla updater will load locally stored DLL files
+    (Windows only)
+  * MFSA 2015-16/CVE-2015-0831 (bmo#1130514)
+    Use-after-free in IndexedDB
+  * MFSA 2015-19/CVE-2015-0827 (bmo#1117304)
+    Out-of-bounds read and write while rendering SVG content
+  * MFSA 2015-24/CVE-2015-0822 (bmo#1110557)
+    Reading of local files through manipulation of form autocomplete
+
+-------------------------------------------------------------------
+Sat Jan 10 17:33:51 UTC 2015 - wr@rosenauer.org
+
+- update to 31.4.0 (bnc#910669)
+  * MFSA 2015-01/CVE-2014-8634/CVE-2014-8635
+    Miscellaneous memory safety hazards
+  * MFSA 2015-03/CVE-2014-8638 (bmo#1080987)
+    sendBeacon requests lack an Origin header
+  * MFSA 2015-04/CVE-2014-8639 (bmo#1095859)
+    Cookie injection through Proxy Authenticate responses
+  * MFSA 2015-06/CVE-2014-8641 (bmo#1108455)
+    Read-after-free in WebRTC
+
+-------------------------------------------------------------------
+Wed Dec 31 16:01:40 UTC 2014 - dimstar@opensuse.org
+
+- Do not require mozilla-js-32bit from xulrunner-32bit: since we
+  have shared_js currently set to 0, mozilla-js(-32bit) is not
+  being built.
+
+-------------------------------------------------------------------
+Sun Nov 30 12:15:59 UTC 2014 - wr@rosenauer.org
+
+- update to 31.3.0 (bnc#908009)
+  * MFSA 2014-83/CVE-2014-1587
+    Miscellaneous memory safety hazards
+  * MFSA 2014-85/CVE-2014-1590 (bmo#1087633)
+    XMLHttpRequest crashes with some input streams
+  * MFSA 2014-87/CVE-2014-1592 (bmo#1088635)
+    Use-after-free during HTML5 parsing
+  * MFSA 2014-88/CVE-2014-1593 (bmo#1085175)
+    Buffer overflow while parsing media content
+  * MFSA 2014-89/CVE-2014-1594 (bmo#1074280)
+    Bad casting from the BasicThebesLayer to BasicContainerLayer
+- readded mozilla-pkgconfig.patch
+
+-------------------------------------------------------------------
+Thu Nov 13 08:37:50 UTC 2014 - guillaume@opensuse.org
+
+- Fix %arm build (fix CFLAGS)
+- Disable elf-hack for aarch64
+
+-------------------------------------------------------------------
+Sat Nov  1 13:08:20 UTC 2014 - wr@rosenauer.org
+
+- update to 31.2.0
+- synchronize patchset with firefox-esr
+- removed add-plugins.sh in favor of using a pref to use myspell
+
+-------------------------------------------------------------------
 Wed Sep 18 14:39:34 UTC 2013 - wr@rosenauer.org
 
 - update to 24.0 (bnc#840485)

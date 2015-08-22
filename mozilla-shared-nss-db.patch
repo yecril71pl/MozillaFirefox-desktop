@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8247,16 +8247,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8217,16 +8217,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -42,9 +42,9 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.build
 --- a/security/manager/ssl/src/moz.build
 +++ b/security/manager/ssl/src/moz.build
-@@ -74,16 +74,19 @@ UNIFIED_SOURCES += [
- SOURCES += [
-     'nsNSSCertificateDB.cpp',
+@@ -81,16 +81,19 @@ SOURCES += [
+ IPDL_SOURCES += [
+     'PPSMContentDownloader.ipdl',
  ]
  
  LOCAL_INCLUDES += [
@@ -87,7 +87,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
-@@ -997,17 +1004,31 @@ nsNSSComponent::InitializeNSS()
+@@ -998,17 +1005,31 @@ nsNSSComponent::InitializeNSS()
    if (NS_FAILED(rv)) {
      nsPSMInitPanic::SetPanic();
      return NS_ERROR_NOT_AVAILABLE;
@@ -123,7 +123,7 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 diff --git a/toolkit/library/moz.build b/toolkit/library/moz.build
 --- a/toolkit/library/moz.build
 +++ b/toolkit/library/moz.build
-@@ -207,16 +207,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
+@@ -197,16 +197,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
          'stagefright_omx',
      ]
  

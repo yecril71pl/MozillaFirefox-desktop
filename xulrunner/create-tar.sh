@@ -1,9 +1,9 @@
 #!/bin/bash
 
-CHANNEL="esr31"
+CHANNEL="esr38"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_31_8_0esr_RELEASE"
-VERSION="31.8.0"
+RELEASE_TAG="FIREFOX_38_2_0esr_RELEASE"
+VERSION="38.2.0"
 
 # mozilla
 if [ -d mozilla ]; then

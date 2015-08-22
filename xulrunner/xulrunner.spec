@@ -17,10 +17,10 @@
 #
 
 
-%define version_internal 31.8.0
-%define apiversion 31
-%define uaweight 3180000
-%define releasedate 2015062600
+%define version_internal 38.2.0
+%define apiversion 38
+%define uaweight 3820000
+%define releasedate 2015080900
 %define shared_js 0
 %define has_system_nspr  1
 %define has_system_nss   1
@@ -67,7 +67,7 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.6
+BuildRequires:  mozilla-nspr-devel >= 4.10.8
 BuildRequires:  mozilla-nss-devel >= 3.19.2
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
@@ -105,23 +105,21 @@ Source7:        baselibs.conf
 Source8:        source-stamp.txt
 Source9:        compare-locales.tar.xz
 Patch1:         toolkit-download-folder.patch
-Patch2:         mozilla-nongnome-proxies.patch
-Patch3:         mozilla-prefer_plugin_pref.patch
-Patch4:         mozilla-pkgconfig.patch
+Patch2:         mozilla-pkgconfig.patch
+Patch3:         mozilla-nongnome-proxies.patch
+Patch4:         mozilla-prefer_plugin_pref.patch
+Patch5:         mozilla-shared-nss-db.patch
 Patch6:         mozilla-preferences.patch
 Patch7:         mozilla-language.patch
 Patch8:         mozilla-ntlm-full-path.patch
 Patch9:         mozilla-repo.patch
-Patch10:        mozilla-sle11.patch
-Patch11:        mozilla-icu-strncat.patch
-Patch12:        mozilla-arm-disable-edsp.patch
-Patch13:        mozilla-ppc.patch
-Patch14:        mozilla-libproxy-compat.patch
-Patch15:        mozilla-nullptr-gcc45.patch
-Patch16:        mozilla-idldir.patch
-# Gecko/Toolkit AArch64 Porting
-Patch30:        mozilla-aarch64-bmo-810631.patch
-
+Patch10:        mozilla-icu-strncat.patch
+Patch11:        mozilla-arm-disable-edsp.patch
+Patch12:        mozilla-idldir.patch
+Patch13:        mozilla-skia-be-le.patch
+Patch14:        mozilla-bmo1005535.patch
+Patch15:        mozilla-add-glibcxx_use_cxx11_abi.patch
+Patch16:        mozilla-arm64-libjpeg-turbo.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %if 0%{?shared_js} == 1
 Requires:       mozilla-js = %{version}
@@ -220,20 +218,18 @@ symbols meant for upload to Mozilla's crash collector database.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%if %suse_version < 1120
 %patch10 -p1
-%endif
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch30 -p1
 
 %build
 # no need to add build time to binaries
@@ -431,6 +427,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/README.txt
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/dictionaries/en-US*
 rm -f $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/nspr-config
 rm -f $RPM_BUILD_ROOT%{_libdir}/pkgconfig/mozilla-plugin.pc
+rm -rf $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/gmp-fake/
+rm -rf $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/gmp-fakeopenh264/
 # fdupes
 %fdupes $RPM_BUILD_ROOT%{_includedir}/xulrunner-%{version_internal}/
 %fdupes $RPM_BUILD_ROOT%{_libdir}/xulrunner-%{version_internal}/
@@ -483,12 +481,12 @@ exit 0
 %{_libdir}/xulrunner-%{version_internal}/chrome/icons/
 %{_libdir}/xulrunner-%{version_internal}/components/
 %{_libdir}/xulrunner-%{version_internal}/*.so
+%{_libdir}/xulrunner-%{version_internal}/gmp-clearkey/
 %if 0%{?shared_js} == 1
 %exclude %{_libdir}/xulrunner-%{version_internal}/libmozjs.so
 %endif
 %{_libdir}/xulrunner-%{version_internal}/chrome.manifest
 %{_libdir}/xulrunner-%{version_internal}/dependentlibs.list
-%{_libdir}/xulrunner-%{version_internal}/mozilla-xremote-client
 %{_libdir}/xulrunner-%{version_internal}/plugin-container
 %{_libdir}/xulrunner-%{version_internal}/xulrunner
 %{_libdir}/xulrunner-%{version_internal}/xulrunner-stub

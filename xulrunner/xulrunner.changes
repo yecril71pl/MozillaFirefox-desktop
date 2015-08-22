@@ -1,8 +1,80 @@
 -------------------------------------------------------------------
+Mon Aug 10 16:40:17 UTC 2015 - wr@rosenauer.org
+
+- update to xulrunner 38.2.0esr (bnc#940806)
+  * MFSA 2015-79/CVE-2015-4473
+    Miscellaneous memory safety hazards
+  * MFSA 2015-80/CVE-2015-4475 (bmo#1175396)
+    Out-of-bounds read with malformed MP3 file
+  * MFSA 2015-82/CVE-2015-4478 (bmo#1105914)
+    Redefinition of non-configurable JavaScript object properties
+  * MFSA 2015-83/CVE-2015-4479/CVE-2015-4480/CVE-2015-4493
+    Overflow issues in libstagefright
+  * MFSA 2015-84/CVE-2015-4481 (bmo1171518)
+    Arbitrary file overwriting through Mozilla Maintenance Service
+    with hard links (only affected Windows)
+  * MFSA 2015-85/CVE-2015-4482 (bmo#1184500)
+    Out-of-bounds write with Updater and malicious MAR file
+    (does not affect openSUSE RPM packages which do not ship the
+     updater)
+  * MFSA 2015-87/CVE-2015-4484 (bmo#1171540)
+    Crash when using shared memory in JavaScript
+  * MFSA 2015-88/CVE-2015-4491 (bmo#1184009)
+    Heap overflow in gdk-pixbuf when scaling bitmap images
+  * MFSA 2015-89/CVE-2015-4485/CVE-2015-4486 (bmo#1177948, bmo#1178148)
+    Buffer overflows on Libvpx when decoding WebM video
+  * MFSA 2015-90/CVE-2015-4487/CVE-2015-4488/CVE-2015-4489
+    Vulnerabilities found through code inspection
+  * MFSA 2015-92/CVE-2015-4492 (bmo#1185820)
+    Use-after-free in XMLHttpRequest with shared workers
+- rebased all patches
+- dropped obsolete patches:
+  * mozilla-sle11.patch
+  * mozilla-ppc.patch
+  * mozilla-nullptr-gcc45.patch
+  * mozilla-libproxy-compat.patch
+  * mozilla-fix-compilation-gcc5-bmo-1021171.patch
+  * mozilla-fix-compilation-gcc5-bmo-1153109.patch
+  * mozilla-aarch64-bmo-810631.patch
+- added platform specific patches from Firefox package:
+  * mozilla-skia-be-le.patch
+  * mozilla-bmo1005535.patch
+  * mozilla-add-glibcxx_use_cxx11_abi.patch
+  * mozilla-arm64-libjpeg-turbo.patch
+  * mozilla-shared-nss-db.patch
+
+-------------------------------------------------------------------
 Sat Jun 27 15:26:00 UTC 2015 - wr@rosenauer.org
 
 - update to 31.8.0 (bnc#935979)
+  * MFSA 2015-59/CVE-2015-2724
+    Miscellaneous memory safety hazards
+  * MFSA 2015-61/CVE-2015-2728 (bmo#1142210)
+    Type confusion in Indexed Database Manager
+  * MFSA 2015-64/CVE-2015-2730 (bmo#1125025)
+    ECDSA signature validation fails to handle some signatures correctly
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-65/CVE-2015-2722/CVE-2015-2733 (bmo#1166924, bmo#1169867)
+    Use-after-free in workers while using XMLHttpRequest
+  * MFSA 2015-66/CVE-2015-2734/CVE-2015-2735/CVE-2015-2736/CVE-2015-2737
+    CVE-2015-2738/CVE-2015-2739/CVE-2015-2740
+    Vulnerabilities found through code inspection
+  * MFSA 2015-69/CVE-2015-2743 (bmo#1163109)
+    Privilege escalation in PDF.js
+  * MFSA 2015-70/CVE-2015-4000 (bmo#1138554)
+    NSS accepts export-length DHE keys with regular DHE cipher suites
+    (this fix is shipped by NSS 3.19.1 externally)
+  * MFSA 2015-71/CVE-2015-2721 (bmo#1086145)
+    NSS incorrectly permits skipping of ServerKeyExchange
+    (this fix is shipped by NSS 3.19.1 externally)
 - requires NSS 3.19.2
+
+--------------------------------------------------------------------
+Sun Jun 21 09:39:51 UTC 2015 - antoine.belvire@laposte.net
+
+- Fix compilation with GCC5 (bmo#1153109, bmo#1021171)
+  * add mozilla-fix-compilation-gcc5-bmo-1153109.patch
+  * add mozilla-fix-compilation-gcc5-bmo-1021171.patch
 
 -------------------------------------------------------------------
 Wed May  6 07:49:53 UTC 2015 - wr@rosenauer.org

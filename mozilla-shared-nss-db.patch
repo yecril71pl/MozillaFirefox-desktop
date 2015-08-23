@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8217,16 +8217,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8296,16 +8296,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      MOZ_ENABLE_SKIA_GPU=1
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
@@ -39,32 +39,32 @@ diff --git a/configure.in b/configure.in
  if test "$MOZ_XUL"; then
    AC_DEFINE(MOZ_XUL)
  else
-diff --git a/security/manager/ssl/src/moz.build b/security/manager/ssl/src/moz.build
---- a/security/manager/ssl/src/moz.build
-+++ b/security/manager/ssl/src/moz.build
-@@ -81,16 +81,19 @@ SOURCES += [
- IPDL_SOURCES += [
-     'PPSMContentDownloader.ipdl',
- ]
+diff --git a/security/manager/ssl/moz.build b/security/manager/ssl/moz.build
+--- a/security/manager/ssl/moz.build
++++ b/security/manager/ssl/moz.build
+@@ -156,16 +156,19 @@ FAIL_ON_WARNINGS = True
+ FINAL_LIBRARY = 'xul'
  
  LOCAL_INCLUDES += [
-     '/security/manager/boot/src',
+     '/dom/base',
+     '/security/certverifier',
+     '/security/pkix/include',
  ]
  
 +CXXFLAGS += sorted(CONFIG['NSSHELPER_CFLAGS'])
 +OS_LIBS += sorted(CONFIG['NSSHELPER_LIBS'])
 +
- if not CONFIG['MOZ_NO_SMART_CARDS']:
-     UNIFIED_SOURCES += [
-         'nsSmartCardMonitor.cpp',
-     ]
+ GENERATED_INCLUDES += [
+     '/dist/public/nss',
+ ]
  
- if CONFIG['MOZ_XUL']:
-     UNIFIED_SOURCES += [
-         'nsCertTree.cpp',
-diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/src/nsNSSComponent.cpp
---- a/security/manager/ssl/src/nsNSSComponent.cpp
-+++ b/security/manager/ssl/src/nsNSSComponent.cpp
+ if CONFIG['NSS_DISABLE_DBM']:
+     DEFINES['NSS_DISABLE_DBM'] = '1'
+ 
+ DEFINES['SSL_DISABLE_DEPRECATED_CIPHER_SUITE_NAMES'] = 'True'
+diff --git a/security/manager/ssl/nsNSSComponent.cpp b/security/manager/ssl/nsNSSComponent.cpp
+--- a/security/manager/ssl/nsNSSComponent.cpp
++++ b/security/manager/ssl/nsNSSComponent.cpp
 @@ -1,14 +1,21 @@
  /* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
   *
@@ -87,16 +87,15 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
  #include "nsAppDirectoryServiceDefs.h"
  #include "nsCertVerificationThread.h"
  #include "nsAppDirectoryServiceDefs.h"
-@@ -998,17 +1005,31 @@ nsNSSComponent::InitializeNSS()
-   if (NS_FAILED(rv)) {
-     nsPSMInitPanic::SetPanic();
+@@ -1015,17 +1022,31 @@ nsNSSComponent::InitializeNSS()
      return NS_ERROR_NOT_AVAILABLE;
    }
  
    SECStatus init_rv = SECFailure;
-   if (!profileStr.IsEmpty()) {
+   bool nocertdb = Preferences::GetBool("security.nocertdb", false);
+ 
+   if (!nocertdb && !profileStr.IsEmpty()) {
      // First try to initialize the NSS DB in read/write mode.
--    SECStatus init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +#ifdef MOZ_ENABLE_NSSHELPER
 +    if (PR_GetEnv("MOZ_XRE_NO_NSSHELPER")) {
 +      init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
@@ -110,20 +109,20 @@ diff --git a/security/manager/ssl/src/nsNSSComponent.cpp b/security/manager/ssl/
 +      }
 +    }
 +#else
-+    init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
+     init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +#endif
      // If that fails, attempt read-only mode.
      if (init_rv != SECSuccess) {
-       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init NSS r/w in %s\n", profileStr.get()));
+       MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("could not init NSS r/w in %s\n", profileStr.get()));
        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), true);
      }
      if (init_rv != SECSuccess) {
-       PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("could not init in r/o either\n"));
+       MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("could not init in r/o either\n"));
      }
 diff --git a/toolkit/library/moz.build b/toolkit/library/moz.build
 --- a/toolkit/library/moz.build
 +++ b/toolkit/library/moz.build
-@@ -197,16 +197,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
+@@ -203,16 +203,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
          'stagefright_omx',
      ]
  

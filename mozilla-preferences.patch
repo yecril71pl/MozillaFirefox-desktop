@@ -6,12 +6,12 @@ package unconditionally.
 
 # HG changeset patch
 # Parent 8c1bfc96b05ef1836aad6e9f2af323f63ed1b69c
-# Parent  3de9f5c9ca0d23956f2580ad534ac139a63527a5
+# Parent  35b625807600ea4a5a3c49bd1cab22fac5188406
 
 diff --git a/modules/libpref/init/all.js b/modules/libpref/init/all.js
 --- a/modules/libpref/init/all.js
 +++ b/modules/libpref/init/all.js
-@@ -1770,17 +1770,17 @@ pref("converter.html2txt.always_include_
+@@ -1790,17 +1790,17 @@ pref("converter.html2txt.always_include_
  
  pref("intl.accept_languages",               "chrome://global/locale/intl.properties");
  pref("intl.menuitems.alwaysappendaccesskeys","chrome://global/locale/intl.properties");
@@ -28,5 +28,5 @@ diff --git a/modules/libpref/init/all.js b/modules/libpref/init/all.js
  pref("intl.fallbackCharsetList.ISO-8859-1", "windows-1252");
  pref("font.language.group",                 "chrome://global/locale/intl.properties");
  
- // these locales have right-to-left UI
- pref("intl.uidirection.ar", "rtl");
+ // Android-specific pref to use key-events-only mode for IME-unaware webapps.
+ #ifdef MOZ_WIDGET_ANDROID

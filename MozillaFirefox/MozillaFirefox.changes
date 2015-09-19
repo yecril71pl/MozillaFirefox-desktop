@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Sun Sep 13 21:13:35 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 41.0b9
+- rebased patches
+- removed obsolete patches
+  * mozilla-arm64-libjpeg-turbo.patch
+
+-------------------------------------------------------------------
 Fri Aug  7 07:49:49 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 40.0 (bnc#940806)

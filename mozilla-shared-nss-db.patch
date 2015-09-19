@@ -104,7 +104,7 @@ diff --git a/security/manager/ssl/nsNSSComponent.cpp b/security/manager/ssl/nsNS
 +      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), flags);
 +
 +      if (init_rv != SECSuccess) {
-+        PR_LOG(gPIPNSSLog, PR_LOG_DEBUG, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));
++        MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));
 +        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
 +      }
 +    }

@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 40
-%define mainver %major.99
-%define update_channel beta
-%define releasedate 2015091100
+%define major 41
+%define mainver %major.0
+%define update_channel release
+%define releasedate 2015091800
 
 # general build definitions
 %if "%{update_channel}" != "aurora"

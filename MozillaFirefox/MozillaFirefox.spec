@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 41
-%define mainver %major.0
+%define mainver %major.0.2
 %define update_channel release
-%define releasedate 2015091800
+%define releasedate 2015101500
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -107,6 +107,10 @@ Provides:       firefox = %{version}-%{release}
 %endif
 Provides:       web_browser
 Provides:       browser(npapi)
+%if "%{update_channel}" != "aurora"
+Provides:       appdata()
+Provides:       appdata(firefox.appdata.xml)
+%endif
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
@@ -312,7 +316,6 @@ ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
-ac_add_options --enable-stdcxx-compat
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
 ac_add_options --disable-optimize

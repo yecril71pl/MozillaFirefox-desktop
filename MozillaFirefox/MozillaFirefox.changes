@@ -1,4 +1,31 @@
 -------------------------------------------------------------------
+Thu Oct 15 08:25:54 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 41.0.2 (bnc#950686)
+  * MFSA 2015-115/CVE-2015-7184 (bmo#1208339, bmo#1212669)
+    Cross-origin restriction bypass using Fetch
+- added explicit appdata provides (bnc#949983)
+
+-------------------------------------------------------------------
+Sun Oct  4 09:20:56 UTC 2015 - wr@rosenauer.org
+
+- do not build with --enable-stdcxx-compat
+  (this starts to fail build on various toolchain combinations
+  and is not required for openSUSE builds in general
+
+-------------------------------------------------------------------
+Thu Oct  1 09:49:57 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 41.0.1
+  * Fix a startup crash related to Yandex toolbar and Adblock Plus
+    (bmo#1209124)
+  * Fix potential hangs with Flash plugins (bmo#1185639)
+  * Fix a regression in the bookmark creation (bmo#1206376)
+  * Fix a startup crash with some Intel Media Accelerator 3150
+    graphic cards (bmo#1207665)
+  * Fix a graphic crash, occurring occasionally on Facebook (bmo#1178601)
+
+-------------------------------------------------------------------
 Sat Sep 19 20:23:29 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 41.0 (bnc#947003)

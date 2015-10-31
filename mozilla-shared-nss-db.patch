@@ -7,13 +7,13 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8296,16 +8296,31 @@ if test "$MOZ_ENABLE_SKIA"; then
-     MOZ_ENABLE_SKIA_GPU=1
+@@ -8309,16 +8309,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
    fi
  fi
  AC_SUBST(MOZ_ENABLE_SKIA)
+ AC_SUBST_LIST(SKIA_INCLUDES)
  
  dnl ========================================================
 +dnl Check for nss-shared-helper
@@ -122,7 +122,7 @@ diff --git a/security/manager/ssl/nsNSSComponent.cpp b/security/manager/ssl/nsNS
 diff --git a/toolkit/library/moz.build b/toolkit/library/moz.build
 --- a/toolkit/library/moz.build
 +++ b/toolkit/library/moz.build
-@@ -203,16 +203,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
+@@ -205,16 +205,18 @@ if CONFIG['MOZ_B2G_CAMERA'] and CONFIG['
          'stagefright_omx',
      ]
  

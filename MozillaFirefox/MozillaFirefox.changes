@@ -1,4 +1,24 @@
 -------------------------------------------------------------------
+Sat Oct 31 19:50:03 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 42.0 (bnc#952810)
+  * Private Browsing with Tracking Protection blocks certain Web
+    elements that could be used to record your behavior across sites
+  * Control Center that contains site security and privacy controls
+  * Login Manager improvements
+  * WebRTC improvements
+  * Indicator added to tabs that play audio with one-click muting
+  * Media Source Extension for HTML5 video available for all sites
+- requires NSPR 4.10.10 and NSS 3.19.4
+- removed obsolete patches
+  * mozilla-arm-disable-edsp.patch
+  * mozilla-icu-strncat.patch
+  * mozilla-skia-be-le.patch
+  * toolkit-download-folder.patch
+- fixed build with enable-libproxy (bmo#1220399)
+  * mozilla-libproxy.patch
+
+-------------------------------------------------------------------
 Thu Oct 15 08:25:54 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 41.0.2 (bnc#950686)

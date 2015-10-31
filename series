@@ -1,5 +1,4 @@
 # xulrunner/gecko patches
-toolkit-download-folder.patch
 mozilla-pkgconfig.patch
 mozilla-nongnome-proxies.patch
 mozilla-shared-nss-db.patch
@@ -8,13 +7,11 @@ mozilla-preferences.patch
 mozilla-language.patch
 mozilla-ntlm-full-path.patch
 mozilla-repo.patch
-mozilla-icu-strncat.patch
-mozilla-arm-disable-edsp.patch
 mozilla-idldir.patch
 mozilla-openaes-decl.patch
-mozilla-skia-be-le.patch
-mozilla-bmo1005535.patch
+#mozilla-bmo1005535.patch
 mozilla-no-stdcxx-check.patch
+mozilla-libproxy.patch
 
 # Firefox patches
 firefox-kde.patch

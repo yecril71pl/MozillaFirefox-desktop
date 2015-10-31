@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 41
-%define mainver %major.0.2
-%define update_channel release
-%define releasedate 2015101500
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 2015103000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -76,8 +76,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.10.8
-BuildRequires:  mozilla-nss-devel >= 3.19.2
+BuildRequires:  mozilla-nspr-devel >= 4.10.10
+BuildRequires:  mozilla-nss-devel >= 3.19.4
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -137,20 +137,17 @@ Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
 # Gecko/Toolkit
-Patch1:         toolkit-download-folder.patch
-Patch2:         mozilla-nongnome-proxies.patch
-Patch4:         mozilla-shared-nss-db.patch
-Patch5:         mozilla-kde.patch
-Patch6:         mozilla-preferences.patch
-Patch7:         mozilla-language.patch
-Patch8:         mozilla-ntlm-full-path.patch
-Patch9:         mozilla-repo.patch
-Patch10:        mozilla-icu-strncat.patch
-Patch11:        mozilla-arm-disable-edsp.patch
-Patch12:        mozilla-openaes-decl.patch
-Patch14:        mozilla-skia-be-le.patch
-Patch15:        mozilla-bmo1005535.patch
-Patch16:        mozilla-no-stdcxx-check.patch
+Patch1:         mozilla-nongnome-proxies.patch
+Patch2:         mozilla-shared-nss-db.patch
+Patch3:         mozilla-kde.patch
+Patch4:         mozilla-preferences.patch
+Patch5:         mozilla-language.patch
+Patch6:         mozilla-ntlm-full-path.patch
+Patch7:         mozilla-repo.patch
+Patch8:         mozilla-openaes-decl.patch
+Patch9:         mozilla-bmo1005535.patch
+Patch10:        mozilla-no-stdcxx-check.patch
+Patch11:        mozilla-libproxy.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -252,18 +249,15 @@ symbols meant for upload to Mozilla's crash collector database.
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
+#%patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

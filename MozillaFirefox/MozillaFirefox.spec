@@ -18,9 +18,9 @@
 
 
 # changed with every update
-%define major 41
-%define mainver %major.99
-%define update_channel beta
+%define major 42
+%define mainver %major.0
+%define update_channel release
 %define releasedate 2015103000
 
 # general build definitions
@@ -145,7 +145,6 @@ Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
 Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
-Patch9:         mozilla-bmo1005535.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
 # Firefox/browser
@@ -255,7 +254,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-#%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 # Firefox

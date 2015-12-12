@@ -17,10 +17,10 @@
 #
 
 
-%define version_internal 38.2.0
+%define version_internal 38.4.0
 %define apiversion 38
-%define uaweight 3820000
-%define releasedate 2015080900
+%define uaweight 3840000
+%define releasedate 2015102700
 %define shared_js 0
 %define has_system_nspr  1
 %define has_system_nss   1
@@ -67,8 +67,8 @@ BuildRequires:  libproxy-devel
 %else
 BuildRequires:  wireless-tools
 %endif
-BuildRequires:  mozilla-nspr-devel >= 4.10.8
-BuildRequires:  mozilla-nss-devel >= 3.19.2
+BuildRequires:  mozilla-nspr-devel >= 4.10.10
+BuildRequires:  mozilla-nss-devel >= 3.19.2.1
 BuildRequires:  pkgconfig(libpulse)
 %if %suse_version > 1210
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)

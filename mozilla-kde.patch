@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  214f99f3ce4f1f8ae9b3d18da44e5d66b3105663
+# Parent  879df970cffe74db62f72f5b815b559dab63418a
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -3148,11 +3148,11 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
  using namespace mozilla;
  
  #define MAX_PREVIEW_SIZE 180
+ // bug 1184009
+ #define MAX_PREVIEW_SOURCE_SIZE 4096
  
  nsIFile *nsFilePicker::mPrevDisplayDirectory = nullptr;
- 
- void
-@@ -238,17 +240,19 @@ nsFilePicker::AppendFilters(int32_t aFil
+@@ -243,17 +245,19 @@ nsFilePicker::AppendFilters(int32_t aFil
    return nsBaseFilePicker::AppendFilters(aFilterMask);
  }
  
@@ -3173,7 +3173,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
  
    mFilters.AppendElement(filter);
    mFilterNames.AppendElement(name);
-@@ -363,16 +367,32 @@ nsFilePicker::Show(int16_t *aReturn)
+@@ -368,16 +372,32 @@ nsFilePicker::Show(int16_t *aReturn)
  
  NS_IMETHODIMP
  nsFilePicker::Open(nsIFilePickerShownCallback *aCallback)
@@ -3206,7 +3206,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
  
    GtkFileChooserAction action = GetGtkFileChooserAction(mMode);
    const gchar *accept_button = (action == GTK_FILE_CHOOSER_ACTION_SAVE)
-@@ -551,8 +571,235 @@ nsFilePicker::Done(GtkWidget* file_choos
+@@ -556,8 +576,235 @@ nsFilePicker::Done(GtkWidget* file_choos
    if (mCallback) {
      mCallback->Done(result);
      mCallback = nullptr;

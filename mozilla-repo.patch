@@ -1,11 +1,11 @@
 # HG changeset patch
 # Parent 80b6464bd883864fce57e8748010869af1be69e9
-# Parent  57bb5e3ab77acbff5414d4dbce35a38f21d39276
+# Parent  4799226b419aaf1fcdbbf44c2edb9491d99eb6cb
 
 diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/installer/package-name.mk
 --- a/toolkit/mozapps/installer/package-name.mk
 +++ b/toolkit/mozapps/installer/package-name.mk
-@@ -142,24 +142,24 @@ else
+@@ -147,24 +147,24 @@ else
  BUILDID = $(shell $(PYTHON) $(MOZILLA_DIR)/config/printconfigsetting.py $(DIST)/bin/platform.ini Build BuildID)
  endif
  
@@ -14,8 +14,8 @@ diff --git a/toolkit/mozapps/installer/package-name.mk b/toolkit/mozapps/install
    include $(MOZILLA_DIR)/config/makefiles/makeutils.mk
  endif
  
--MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node|short}\n" 2>/dev/null))
-+#MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node|short}\n" 2>/dev/null))
+-MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node}\n" 2>/dev/null))
++#MOZ_SOURCE_STAMP = $(firstword $(shell hg -R $(MOZILLA_DIR) parent --template="{node}\n" 2>/dev/null))
  
  ###########################################################################
  # bug: 746277 - preserve existing functionality.

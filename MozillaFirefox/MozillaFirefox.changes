@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Sun Dec 13 12:48:28 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 43.0b9
+  * Improved API support for m4v video playback
+  * Users can opt-in to receive search suggestions from the Awesome Bar
+  * WebRTC streaming on multiple monitors
+  * User selectable second block list for Private Browsing's Tracking
+    Protection
+- rebased patches
+
+-------------------------------------------------------------------
 Sun Nov 15 19:52:20 UTC 2015 - wr@rosenauer.org
 
 - Add desktop menu action for private browsing window to desktop

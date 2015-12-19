@@ -1,4 +1,25 @@
 -------------------------------------------------------------------
+Sat Dec 12 09:09:25 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 38.5.0 (bnc#959277)
+  * MFSA 2015-134/CVE-2015-7201
+    Miscellaneous memory safety hazards
+  * MFSA 2015-138/CVE-2015-7210 (bmo#1218326)
+    Use-after-free in WebRTC when datachannel is used after being
+    destroyed
+  * MFSA 2015-139/CVE-2015-7212 (bmo#1222809)
+    Integer overflow allocating extremely large textures
+  * MFSA 2015-145/CVE-2015-7205 (bmo#1220493)
+    Underflow through code inspection
+  * MFSA 2015-146/CVE-2015-7213 (bmo#1206211)
+    Integer overflow in MP4 playback in 64-bit versions
+  * MFSA 2015-147/CVE-2015-7222 (bmo#1216748)
+    Integer underflow and buffer overflow processing MP4 metadata in
+    libstagefright
+  * MFSA 2015-149/CVE-2015-7214 (bmo#1228950)
+    Cross-site reading attack through data and view-source URIs
+
+-------------------------------------------------------------------
 Fri Oct 30 21:31:52 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 38.4.0 (bnc#952810)

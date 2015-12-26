@@ -1,4 +1,17 @@
 -------------------------------------------------------------------
+Sat Dec 26 07:37:19 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 43.0.3
+  * requires NSS 3.20.2 to fix
+    MFSA 2015-150/CVE-2015-7575 (bmo#1158489)
+    MD5 signatures accepted within TLS 1.2 ServerKeyExchange in
+    server signature
+  * various changes to support Windows update (SHA-1 vs. SHA-2)
+  * workaround Youtube user agent detection issue (bmo#1233970)
+- fix file download regression for multi user systems
+  (bmo#1233434) (mozilla-bmo1233434.patch)
+
+-------------------------------------------------------------------
 Sun Dec 13 23:07:56 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 43.0 (bnc#959277)

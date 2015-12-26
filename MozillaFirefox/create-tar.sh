@@ -2,8 +2,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_43_0_RELEASE"
-VERSION="43.0"
+RELEASE_TAG="FIREFOX_43_0_3_RELEASE"
+VERSION="43.0.3"
 
 # mozilla
 if [ -d mozilla ]; then

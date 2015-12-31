@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  1e6ab61ae64f601da61197f34ad145f54a400b1f
+# Parent  fc87d8519207c57c22fb5a01243722be530679fa
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -2503,12 +2503,12 @@ new file mode 100644
 +    }
 +
 +
-+bool nsKDEUtils::commandBlockUi( const nsTArray<nsCString>& command, const GtkWindow* parent, nsTArray<nsCString>* output )
++bool nsKDEUtils::commandBlockUi( const nsTArray<nsCString>& command, GtkWindow* parent, nsTArray<nsCString>* output )
 +    {
 +    return self()->internalCommand( command, parent, true, output );
 +    }
 +
-+bool nsKDEUtils::internalCommand( const nsTArray<nsCString>& command, const GtkWindow* parent, bool blockUi,
++bool nsKDEUtils::internalCommand( const nsTArray<nsCString>& command, GtkWindow* parent, bool blockUi,
 +    nsTArray<nsCString>* output )
 +    {
 +    if( !startHelper())
@@ -2524,8 +2524,8 @@ new file mode 100644
 +        {
 +        data.loop = g_main_loop_new( NULL, FALSE );
 +        GtkWidget* window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-+        if( parent && parent->group )
-+            gtk_window_group_add_window( parent->group, GTK_WINDOW( window ));
++        if( parent && gtk_window_get_group(parent) )
++            gtk_window_group_add_window( gtk_window_get_group(parent), GTK_WINDOW( window ));
 +        gtk_widget_realize( window );
 +        gtk_widget_set_sensitive( window, TRUE );
 +        gtk_grab_add( window );
@@ -2678,7 +2678,7 @@ new file mode 100644
 +        /* Like command(), but additionally blocks the parent widget like if there was
 +           a modal dialog shown and enters the event loop (i.e. there are still paint updates,
 +           this is for commands that take long). */
-+        static bool commandBlockUi( const nsTArray<nsCString>& command, const GtkWindow* parent, nsTArray<nsCString>* output = NULL );
++        static bool commandBlockUi( const nsTArray<nsCString>& command, GtkWindow* parent, nsTArray<nsCString>* output = NULL );
 +
 +    private:
 +        nsKDEUtils();
@@ -2687,7 +2687,7 @@ new file mode 100644
 +        bool startHelper();
 +        void closeHelper();
 +        void feedCommand( const nsTArray<nsCString>& command );
-+        bool internalCommand( const nsTArray<nsCString>& command, const GtkWindow* parent, bool isParent,
++        bool internalCommand( const nsTArray<nsCString>& command, GtkWindow* parent, bool isParent,
 +            nsTArray<nsCString>* output );
 +        FILE* commandFile;
 +        FILE* replyFile;

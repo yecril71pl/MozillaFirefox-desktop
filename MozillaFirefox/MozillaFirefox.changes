@@ -1,12 +1,69 @@
 -------------------------------------------------------------------
-Sun Dec 13 12:48:28 UTC 2015 - wr@rosenauer.org
+Thu Dec 31 08:45:14 UTC 2015 - wr@rosenauer.org
 
-- update to Firefox 43.0b9
+- prepare mozilla-kde.patch for Gtk3 builds
+
+-------------------------------------------------------------------
+Tue Dec 29 20:29:35 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 43.0.3
+  * requires NSS 3.20.2 to fix
+    MFSA 2015-150/CVE-2015-7575 (bmo#1158489)
+    MD5 signatures accepted within TLS 1.2 ServerKeyExchange in
+    server signature
+  * various changes to support Windows update (SHA-1 vs. SHA-2)
+  * workaround Youtube user agent detection issue (bmo#1233970)
+- fix file download regression for multi user systems
+  (bmo#1233434) (mozilla-bmo1233434.patch)
+- explicitely requires libXcomposite-devel
+
+-------------------------------------------------------------------
+Sun Dec 13 23:07:56 UTC 2015 - wr@rosenauer.org
+
+- update to Firefox 43.0 (bnc#959277)
   * Improved API support for m4v video playback
   * Users can opt-in to receive search suggestions from the Awesome Bar
   * WebRTC streaming on multiple monitors
   * User selectable second block list for Private Browsing's Tracking
     Protection
+  security fixes:
+  * MFSA 2015-134/CVE-2015-7201/CVE-2015-7202
+    Miscellaneous memory safety hazards
+  * MFSA 2015-135/CVE-2015-7204 (bmo#1216130)
+    Crash with JavaScript variable assignment with unboxed objects
+  * MFSA 2015-136/CVE-2015-7207 (bmo#1185256)
+    Same-origin policy violation using perfomance.getEntries and
+    history navigation
+  * MFSA 2015-137/CVE-2015-7208 (bmo#1191423)
+    Firefox allows for control characters to be set in cookies
+  * MFSA 2015-138/CVE-2015-7210 (bmo#1218326)
+    Use-after-free in WebRTC when datachannel is used after being
+    destroyed
+  * MFSA 2015-139/CVE-2015-7212 (bmo#1222809)
+    Integer overflow allocating extremely large textures
+  * MFSA 2015-140/CVE-2015-7215 (bmo#1160890)
+    Cross-origin information leak through web workers error events
+  * MFSA 2015-141/CVE-2015-7211 (bmo#1221444)
+    Hash in data URI is incorrectly parsed
+  * MFSA 2015-142/CVE-2015-7218/CVE-2015-7219 (bmo#1194818, bmo#1194820)
+    DOS due to malformed frames in HTTP/2
+  * MFSA 2015-143/CVE-2015-7216/CVE-2015-7217 (bmo#1197059, bmo#1203078)
+    Linux file chooser crashes on malformed images due to flaws in
+    Jasper library
+  * MFSA 2015-144/CVE-2015-7203/CVE-2015-7220/CVE-2015-7221
+    (bmo#1201183, bmo#1178033, bmo#1199400)
+    Buffer overflows found through code inspection
+  * MFSA 2015-145/CVE-2015-7205 (bmo#1220493)
+    Underflow through code inspection
+  * MFSA 2015-146/CVE-2015-7213 (bmo#1206211)
+    Integer overflow in MP4 playback in 64-bit versions
+  * MFSA 2015-147/CVE-2015-7222 (bmo#1216748)
+    Integer underflow and buffer overflow processing MP4 metadata in
+    libstagefright
+  * MFSA 2015-148/CVE-2015-7223 (bmo#1226423)
+    Privilege escalation vulnerabilities in WebExtension APIs
+  * MFSA 2015-149/CVE-2015-7214 (bmo#1228950)
+    Cross-site reading attack through data and view-source URIs
 - rebased patches
 
 -------------------------------------------------------------------

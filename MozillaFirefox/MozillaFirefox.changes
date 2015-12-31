@@ -1,9 +1,4 @@
 -------------------------------------------------------------------
-Sat Dec 26 12:47:56 UTC 2015 - wr@rosenauer.org
-
-- experimental build with Gtk3
-
--------------------------------------------------------------------
 Sat Dec 26 07:37:19 UTC 2015 - wr@rosenauer.org
 
 - update to Firefox 43.0.3
@@ -15,6 +10,7 @@ Sat Dec 26 07:37:19 UTC 2015 - wr@rosenauer.org
   * workaround Youtube user agent detection issue (bmo#1233970)
 - fix file download regression for multi user systems
   (bmo#1233434) (mozilla-bmo1233434.patch)
+- prepare mozilla-kde.patch for Gtk3
 
 -------------------------------------------------------------------
 Sun Dec 13 23:07:56 UTC 2015 - wr@rosenauer.org

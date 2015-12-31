@@ -321,8 +321,8 @@ ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
-%if 0%{?suse_version} > 1310
-ac_add_options --enable-default-toolkit=cairo-gtk3
+%if 0%{?suse_version} > 1320
+#ac_add_options --enable-default-toolkit=cairo-gtk3
 %endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
@@ -572,8 +572,8 @@ exit 0
 %{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
-%if 0%{?suse_version} > 1310
-%dir %{progdir}/gtk2
+%if 0%{?suse_version} > 1320
+#%dir %{progdir}/gtk2
 %{progdir}/gtk2/libmozgtk.so
 %endif
 %{progdir}/webapprt/

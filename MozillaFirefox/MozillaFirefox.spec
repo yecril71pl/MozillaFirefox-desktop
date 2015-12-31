@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 42
+%define major 43
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015120300
+%define releasedate 2015123000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -69,6 +69,7 @@ BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
+BuildRequires:  libXcomposite-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
@@ -76,8 +77,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.10.10
-BuildRequires:  mozilla-nss-devel >= 3.19.4
+BuildRequires:  mozilla-nspr-devel >= 4.11
+BuildRequires:  mozilla-nss-devel >= 3.21
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -90,6 +91,17 @@ BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 BuildRequires:  pkgconfig(libpulse)
+# libavcodec is already used if available for H.264 but
+# explicitely loaded by FF. For proper H.264 support the
+# openSUSE delivered version is not sufficient but currently
+# prevents even the use of the GStreamer method
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1234157
+# to get H.264 working correctly libavcodec from packman
+# is required. As of today the following recommends will
+# pull in libavcodec52 from packman since it's the only
+# package providing libavcodec but it's not loaded from
+# Firefox as the minimal version is 53
+#Recommends:     libavcodec
 %if 0%{?gstreamer} == 1
 Requires:       libgstreamer-1_0-0
 Recommends:     gstreamer-fluendo-mp3
@@ -147,6 +159,7 @@ Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
+Patch12:        mozilla-bmo1233434.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -256,6 +269,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -308,6 +322,9 @@ ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
+%if 0%{?suse_version} > 1320
+#ac_add_options --enable-default-toolkit=cairo-gtk3
+%endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
 ac_add_options --disable-optimize
@@ -556,6 +573,10 @@ exit 0
 %{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
+%if 0%{?suse_version} > 1320
+#%dir %{progdir}/gtk2
+%{progdir}/gtk2/libmozgtk.so
+%endif
 %{progdir}/webapprt/
 %{progdir}/gmp-clearkey/
 %attr(755,root,root) %{progdir}/%{progname}.sh

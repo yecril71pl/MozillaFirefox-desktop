@@ -69,6 +69,7 @@ BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
+BuildRequires:  libXcomposite-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel

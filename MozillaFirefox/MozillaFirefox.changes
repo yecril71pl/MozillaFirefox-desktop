@@ -1,7 +1,11 @@
 -------------------------------------------------------------------
-Mon Jan 11 19:52:50 UTC 2016 - wr@rosenauer.org
+Sun Jan 24 09:33:15 UTC 2016 - wr@rosenauer.org
 
+- update to Firefox 44.0b9
+  * requires NSPR 4.11
+  * requires NSS 3.21
 - prepare mozilla-kde.patch for Gtk3 builds
+- rebased patches
 
 -------------------------------------------------------------------
 Mon Jan 11 08:04:24 UTC 2016 - astieger@suse.com

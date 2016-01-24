@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 43
-%define mainver %major.0.4
-%define update_channel release
-%define releasedate 2016010600
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 2016012300
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -77,8 +77,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.10.10
-BuildRequires:  mozilla-nss-devel >= 3.20.2
+BuildRequires:  mozilla-nspr-devel >= 4.11
+BuildRequires:  mozilla-nss-devel >= 3.21
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel

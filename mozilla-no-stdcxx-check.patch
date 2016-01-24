@@ -1,30 +1,11 @@
 # HG changeset patch
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent  af8fd72bd18717e6fc46340f467c7fa4f6d8c2ab
+# Parent  e96e9b3997ea31024687aaa1e9aa5ccf78bc0ee9
 
 diff --git a/config/config.mk b/config/config.mk
 --- a/config/config.mk
 +++ b/config/config.mk
-@@ -626,34 +626,33 @@ EXPAND_LD = $(EXPAND_LIBS_EXEC) --uselis
- EXPAND_MKSHLIB_ARGS = --uselist
- ifdef SYMBOL_ORDER
- EXPAND_MKSHLIB_ARGS += --symbol-order $(SYMBOL_ORDER)
- endif
- EXPAND_MKSHLIB = $(EXPAND_LIBS_EXEC) $(EXPAND_MKSHLIB_ARGS) -- $(MKSHLIB)
- 
- ifneq (,$(MOZ_LIBSTDCXX_TARGET_VERSION)$(MOZ_LIBSTDCXX_HOST_VERSION))
- ifneq ($(OS_ARCH),Darwin)
--CHECK_STDCXX = @$(TOOLCHAIN_PREFIX)objdump -p $(1) | grep -e 'GLIBCXX_3\.4\.\(1[1-9]\|[2-9][0-9]\)' > /dev/null && echo 'TEST-UNEXPECTED-FAIL | check_stdcxx | We do not want these libstdc++ symbols to be used:' && $(TOOLCHAIN_PREFIX)objdump -T $(1) | grep -e 'GLIBCXX_3\.4\.\(1[1-9]\|[2-9][0-9]\)' && exit 1 || true
-+#CHECK_STDCXX = @$(TOOLCHAIN_PREFIX)objdump -p $(1) | grep -e 'GLIBCXX_3\.4\.\(1[1-9]\|[2-9][0-9]\)' > /dev/null && echo 'TEST-UNEXPECTED-FAIL | check_stdcxx | We do not want these libstdc++ symbols to be used:' && $(TOOLCHAIN_PREFIX)objdump -T $(1) | grep -e 'GLIBCXX_3\.4\.\(1[1-9]\|[2-9][0-9]\)' && exit 1 || true
- endif
- endif
- 
- ifeq (,$(filter $(OS_TARGET),WINNT Darwin))
- CHECK_TEXTREL = @$(TOOLCHAIN_PREFIX)readelf -d $(1) | grep TEXTREL > /dev/null && echo 'TEST-UNEXPECTED-FAIL | check_textrel | We do not want text relocations in libraries and programs' || true
- endif
- 
- ifeq ($(MOZ_WIDGET_TOOLKIT),android)
- # While this is very unlikely (libc being added by the compiler at the end
+@@ -653,17 +653,16 @@ ifeq ($(MOZ_WIDGET_TOOLKIT),android)
  # of the linker command line), if libmozglue.so ends up after libc.so, all
  # hell breaks loose, so better safe than sorry, and check it's actually the
  # case.
@@ -32,6 +13,7 @@ diff --git a/config/config.mk b/config/config.mk
  endif
  
  define CHECK_BINARY
+ $(call CHECK_GLIBC,$(1))
 -$(call CHECK_STDCXX,$(1))
  $(call CHECK_TEXTREL,$(1))
  $(call LOCAL_CHECKS,$(1))

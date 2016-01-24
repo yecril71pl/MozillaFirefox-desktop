@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  fc87d8519207c57c22fb5a01243722be530679fa
+# Parent  efd9bcb9a96668b78749748e76c7982149c1bc40
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -21,7 +21,7 @@ diff --git a/modules/libpref/Makefile.in b/modules/libpref/Makefile.in
 +LOCAL_INCLUDES += -I$(topsrcdir)/toolkit/xre
 +
  greprefs.js: $(grepref_files)
- 	$(call py_action,preprocessor,$(PREF_PPFLAGS) $(DEFINES) $(ACDEFINES) $(XULPPFLAGS) $^ -o $@)
+ 	$(call py_action,preprocessor,$(PREF_PPFLAGS) $(DEFINES) $(ACDEFINES) $(MOZ_DEBUG_DEFINES) $^ -o $@)
  
  libs:: greprefs.js
  	$(INSTALL) $^ $(DIST)/bin/
@@ -137,7 +137,7 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
  
    // Load jar:$app/omni.jar!/defaults/preferences/*.js
    // or jar:$gre/omni.jar!/defaults/preferences/*.js.
-   nsRefPtr<nsZipArchive> appJarReader = mozilla::Omnijar::GetReader(mozilla::Omnijar::APP);
+   RefPtr<nsZipArchive> appJarReader = mozilla::Omnijar::GetReader(mozilla::Omnijar::APP);
    // GetReader(mozilla::Omnijar::APP) returns null when $app == $gre, in which
 diff --git a/python/mozbuild/mozpack/chrome/flags.py b/python/mozbuild/mozpack/chrome/flags.py
 --- a/python/mozbuild/mozpack/chrome/flags.py
@@ -273,7 +273,7 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
 diff --git a/toolkit/content/jar.mn b/toolkit/content/jar.mn
 --- a/toolkit/content/jar.mn
 +++ b/toolkit/content/jar.mn
-@@ -63,29 +63,33 @@ toolkit.jar:
+@@ -64,29 +64,33 @@ toolkit.jar:
     content/global/viewZoomOverlay.js
  *+ content/global/bindings/autocomplete.xml    (widgets/autocomplete.xml)
     content/global/bindings/browser.xml         (widgets/browser.xml)
@@ -2697,7 +2697,7 @@ new file mode 100644
 diff --git a/uriloader/exthandler/moz.build b/uriloader/exthandler/moz.build
 --- a/uriloader/exthandler/moz.build
 +++ b/uriloader/exthandler/moz.build
-@@ -68,17 +68,19 @@ if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'coco
+@@ -72,17 +72,19 @@ elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'ui
  else:
      # These files can't be built in unified mode because they redefine LOG.
      SOURCES += [
@@ -2717,7 +2717,7 @@ diff --git a/uriloader/exthandler/moz.build b/uriloader/exthandler/moz.build
          'android/nsExternalSharingAppService.cpp',
          'android/nsExternalURLHandlerService.cpp',
          'android/nsMIMEInfoAndroid.cpp',
-@@ -121,16 +123,17 @@ include('/ipc/chromium/chromium-config.m
+@@ -125,16 +127,17 @@ include('/ipc/chromium/chromium-config.m
  
  FINAL_LIBRARY = 'xul'
  
@@ -3011,8 +3011,8 @@ diff --git a/uriloader/exthandler/unix/nsMIMEInfoUnix.cpp b/uriloader/exthandler
 -    *_retval = nsGNOMERegistry::HandlerExists(mSchemeOrType.get());
 +    *_retval = nsCommonRegistry::HandlerExists(mSchemeOrType.get());
    } else {
--    nsRefPtr<nsMIMEInfoBase> mimeInfo = nsGNOMERegistry::GetFromType(mSchemeOrType);
-+    nsRefPtr<nsMIMEInfoBase> mimeInfo = nsCommonRegistry::GetFromType(mSchemeOrType);
+-    RefPtr<nsMIMEInfoBase> mimeInfo = nsGNOMERegistry::GetFromType(mSchemeOrType);
++    RefPtr<nsMIMEInfoBase> mimeInfo = nsCommonRegistry::GetFromType(mSchemeOrType);
      if (!mimeInfo) {
        nsAutoCString ext;
        nsresult rv = GetPrimaryExtension(ext);
@@ -3120,7 +3120,7 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
  
  #ifdef MOZ_WIDGET_GTK
      LOG(("Looking in GNOME registry\n"));
-     nsRefPtr<nsMIMEInfoBase> gnomeInfo =
+     RefPtr<nsMIMEInfoBase> gnomeInfo =
 -      nsGNOMERegistry::GetFromExtension(aFileExt);
 +      nsCommonRegistry::GetFromExtension(aFileExt);
      if (gnomeInfo) {
@@ -3140,8 +3140,8 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
  
  #ifdef MOZ_WIDGET_GTK
    if (handler.IsEmpty()) {
--    nsRefPtr<nsMIMEInfoBase> gnomeInfo = nsGNOMERegistry::GetFromType(aMIMEType);
-+    nsRefPtr<nsMIMEInfoBase> gnomeInfo = nsCommonRegistry::GetFromType(aMIMEType);
+-    RefPtr<nsMIMEInfoBase> gnomeInfo = nsGNOMERegistry::GetFromType(aMIMEType);
++    RefPtr<nsMIMEInfoBase> gnomeInfo = nsCommonRegistry::GetFromType(aMIMEType);
      if (gnomeInfo) {
        LOG(("Got MIMEInfo from GNOME registry without extensions; setting them "
             "to %s\n", NS_LossyConvertUTF16toASCII(extensions).get()));
@@ -3153,7 +3153,7 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
 diff --git a/widget/gtk/moz.build b/widget/gtk/moz.build
 --- a/widget/gtk/moz.build
 +++ b/widget/gtk/moz.build
-@@ -81,16 +81,17 @@ else:
+@@ -86,16 +86,17 @@ else:
  include('/ipc/chromium/chromium-config.mozbuild')
  
  FINAL_LIBRARY = 'xul'
@@ -3586,7 +3586,7 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
  #elif defined(MOZ_WIDGET_COCOA)
    SInt32 majorVersion = nsCocoaFeatures::OSXVersionMajor();
    SInt32 minorVersion = nsCocoaFeatures::OSXVersionMinor();
-   nsTextFormatter::ssprintf(osVersion, NS_LITERAL_STRING("%ld.%ld").get(),
+   nsTextFormatter::ssprintf(osVersion, MOZ_UTF16("%ld.%ld"),
                              majorVersion,
                              minorVersion);
 +  desktop = NS_LITERAL_STRING("macosx");

@@ -2,7 +2,7 @@
 # spec file for package MozillaFirefox
 #
 # Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
-#               2006-2015 Wolfgang Rosenauer
+#               2006-2016 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -21,7 +21,7 @@
 %define major 43
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 2015123000
+%define releasedate 2016012300
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -159,7 +159,6 @@ Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
-Patch12:        mozilla-bmo1233434.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -269,7 +268,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

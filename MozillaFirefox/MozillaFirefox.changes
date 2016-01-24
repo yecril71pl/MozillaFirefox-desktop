@@ -1,7 +1,13 @@
 -------------------------------------------------------------------
-Thu Dec 31 08:45:14 UTC 2015 - wr@rosenauer.org
+Thu Dec 31 09:00:33 UTC 2015 - wr@rosenauer.org
 
+- update to Firefox 44.0b4
+  * requires NSPR 4.11
+  * requires NSS 3.21
 - prepare mozilla-kde.patch for Gtk3 builds
+- rebased patches
+- remove obsolete patch
+  * mozilla-bmo1233434.patch
 
 -------------------------------------------------------------------
 Tue Dec 29 20:29:35 UTC 2015 - wr@rosenauer.org

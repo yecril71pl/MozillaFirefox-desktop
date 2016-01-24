@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  efd9bcb9a96668b78749748e76c7982149c1bc40
+# Parent  d9c9ae52f0338a60d1626d9209248341815e597a
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -2908,7 +2908,7 @@ new file mode 100644
 +    if( nsKDEUtils::command( command, &output ) && output.Length() == 3 )
 +        {
 +        nsCString mimetype = output[ 0 ];
-+        nsRefPtr<nsMIMEInfoUnix> mimeInfo = new nsMIMEInfoUnix( mimetype );
++        RefPtr<nsMIMEInfoUnix> mimeInfo = new nsMIMEInfoUnix( mimetype );
 +        NS_ENSURE_TRUE(mimeInfo, nullptr);
 +        nsCString description = output[ 1 ];
 +        mimeInfo->SetDescription(NS_ConvertUTF8toUTF16(description));

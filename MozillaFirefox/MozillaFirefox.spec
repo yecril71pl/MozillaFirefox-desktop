@@ -18,9 +18,9 @@
 
 
 # changed with every update
-%define major 43
-%define mainver %major.99
-%define update_channel beta
+%define major 44
+%define mainver %major.0
+%define update_channel release
 %define releasedate 2016012300
 
 # general build definitions

@@ -1,7 +1,27 @@
 -------------------------------------------------------------------
 Sun Jan 24 09:33:15 UTC 2016 - wr@rosenauer.org
 
-- update to Firefox 44.0b9
+- update to Firefox 44.0
+  * MFSA 2016-01/CVE-2016-1930/CVE-2016-1931 boo#963633
+    Miscellaneous memory safety hazards
+  * MFSA 2016-02/CVE-2016-1933 (bmo#1231761) boo#963634
+    Out of Memory crash when parsing GIF format images
+  * MFSA 2016-03/CVE-2016-1935 (bmo#1220450) boo#963635
+    Buffer overflow in WebGL after out of memory allocation
+  * MFSA 2016-04/CVE-2015-7208/CVE-2016-1939 (bmo#1191423, bmo#1233784) boo#963637
+    Firefox allows for control characters to be set in cookie names
+  * MFSA 2016-06/CVE-2016-1937 (bmo#724353) boo#963641
+    Missing delay following user click events in protocol handler dialog
+  * MFSA 2016-07/CVE-2016-1938 (bmo#1190248) boo#963731
+    Errors in mp_div and mp_exptmod cryptographic functions in NSS
+    (fixed by requiring NSS 3.21)
+  * MFSA 2016-09/CVE-2016-1942/CVE-2016-1943 (bmo#1189082, bmo#1228590)
+    Addressbar spoofing attacks boo#963643
+  * MFSA 2016-10/CVE-2016-1944/CVE-2016-1945/CVE-2016-1946
+    (bmo#1186621, bmo#1214782, bmo#1232096) boo#963644
+    Unsafe memory manipulation found through code inspection
+  * MFSA 2016-11/CVE-2016-1947 (bmo#1237103) boo#963645
+    Application Reputation service disabled in Firefox 43
   * requires NSPR 4.11
   * requires NSS 3.21
 - prepare mozilla-kde.patch for Gtk3 builds

@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 44
-%define mainver %major.0
+%define mainver %major.0.2
 %define update_channel release
-%define releasedate 2016012300
+%define releasedate 2016021000
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -159,6 +159,7 @@ Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
+Patch12:        mozilla-reduce-files-per-UnifiedBindings.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -268,6 +269,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -573,7 +575,7 @@ exit 0
 %{progdir}/dictionaries/
 %if 0%{?suse_version} > 1320
 #%dir %{progdir}/gtk2
-%{progdir}/gtk2/libmozgtk.so
+#%{progdir}/gtk2/libmozgtk.so
 %endif
 %{progdir}/webapprt/
 %{progdir}/gmp-clearkey/

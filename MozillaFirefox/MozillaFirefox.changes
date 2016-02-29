@@ -1,4 +1,24 @@
 -------------------------------------------------------------------
+Fri Feb 26 16:22:52 UTC 2016 - astieger@suse.com
+
+- fix build problems on i586, caused by too large unified compile
+  units - adding mozilla-reduce-files-per-UnifiedBindings.patch
+
+-------------------------------------------------------------------
+Thu Feb 11 07:51:34 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 44.0.2
+  * MFSA 2016-13/CVE-2016-1949 (bmo#1245724, boo#966438)
+    Same-origin-policy violation using Service Workers with plugins
+  * Fix issue which could lead to the removal of stored passwords
+    under certain circumstances (bmo#1242176)
+  * Allows spaces in cookie names (bmo#1244505)
+  * Disable opus/vorbis audio with H.264 (bmo#1245696)
+  * Fix for graphics startup crash (GNU/Linux) (bmo#1222171)
+  * Fix a crash in cache networking (bmo#1244076)
+  * Fix using WebSockets in service worker controlled pages (bmo#1243942)
+
+-------------------------------------------------------------------
 Sun Jan 24 09:33:15 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 44.0

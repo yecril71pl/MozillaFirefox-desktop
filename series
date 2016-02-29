@@ -12,6 +12,7 @@ mozilla-openaes-decl.patch
 #mozilla-bmo1005535.patch
 mozilla-no-stdcxx-check.patch
 mozilla-libproxy.patch
+mozilla-reduce-files-per-UnifiedBindings.patch
 
 # Firefox patches
 firefox-kde.patch

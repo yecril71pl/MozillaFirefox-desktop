@@ -1,7 +1,7 @@
 # HG changeset patch
 # Parent 1cd1e78dfe63c1a7bcfc0707697bb99bcfea19c4
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent  015730e17931512895a5ad4d5130eff4258cf03e
+# Parent  44c668a2ae429a5c0b8ad3a8a32738453c75af74
 Install IDL files to includedir instead of /usr/share/idl
 
 diff --git a/config/baseconfig.mk b/config/baseconfig.mk
@@ -17,9 +17,9 @@ diff --git a/config/baseconfig.mk b/config/baseconfig.mk
 +idldir = $(includedir)
  installdir = $(libdir)/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)
  sdkdir = $(libdir)/$(MOZ_APP_NAME)-devel-$(MOZ_APP_VERSION)
- ifndef TOP_DIST
- TOP_DIST = dist
- endif
- ifneq (,$(filter /%,$(TOP_DIST)))
- DIST = $(TOP_DIST)
+ ifeq (.,$(DEPTH))
+ DIST = dist
  else
+ DIST = $(DEPTH)/dist
+ endif
+ 

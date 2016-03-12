@@ -1,4 +1,22 @@
 -------------------------------------------------------------------
+Sun Mar  6 19:52:13 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 45.0
+  * requires NSPR 4.12 / NSS 3.21.1
+  * Instant browser tab sharing through Hello
+  * Synced Tabs button in button bar
+  * Tabs synced via Firefox Accounts from other devices are now shown
+    in dropdown area of Awesome Bar when searching
+  * Introduce a new preference (network.dns.blockDotOnion) to allow
+    blocking .onion at the DNS level
+  * Tab Groups (Panorama) feature removed
+
+-------------------------------------------------------------------
+Sat Mar  5 15:27:00 UTC 2016 - olaf@aepfle.de
+
+- Remove B_CNT from symbols.zip filename to reduce build-compare noise
+
+-------------------------------------------------------------------
 Fri Feb 26 16:22:52 UTC 2016 - astieger@suse.com
 
 - fix build problems on i586, caused by too large unified compile

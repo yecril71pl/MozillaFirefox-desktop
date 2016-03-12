@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 44
-%define mainver %major.0.2
+%define major 45
+%define mainver %major.0
 %define update_channel release
-%define releasedate 2016021000
+%define releasedate 2016030500
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -77,8 +77,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.11
-BuildRequires:  mozilla-nss-devel >= 3.21
+BuildRequires:  mozilla-nspr-devel >= 4.12
+BuildRequires:  mozilla-nss-devel >= 3.21.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -524,7 +524,7 @@ FIN
 %fdupes %{buildroot}%{_datadir}
 # create breakpad debugsymbols
 %if %crashreporter
-SYMBOLS_NAME="firefox-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
+SYMBOLS_NAME="firefox-%{version}-` echo '%{release}' | sed 's@\.[^\.]\+$@@' `.%{_arch}-%{suse_version}-symbols"
 make buildsymbols \
   SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
   SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
@@ -562,15 +562,15 @@ exit 0
 %dir %{progdir}/browser/extensions/
 %{progdir}/browser/components/
 %{progdir}/browser/defaults
+%{progdir}/browser/features/
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
-%{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
+%{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{progdir}/browser/blocklist.xml
 %{progdir}/browser/chrome.manifest
 %{progdir}/browser/omni.ja
 %dir %{progdir}/distribution/
 %{progdir}/distribution/extensions/
-%{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
 %if 0%{?suse_version} > 1320
@@ -589,7 +589,6 @@ exit 0
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %{progdir}/webapprt-stub
-%{progdir}/chrome.manifest
 %if %crashreporter
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini

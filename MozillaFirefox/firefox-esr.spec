@@ -1,8 +1,8 @@
 #
 # spec file for package firefox-esr
 #
-# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
-#               2006-2015 Wolfgang Rosenauer
+# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
+#               2006-2016 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 38
-%define mainver %major.5.0
+%define mainver %major.7.0
 %define update_channel esr38
-%define releasedate 2015121000
+%define releasedate 2016030700
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -75,7 +75,9 @@ BuildRequires:  libidl-devel
 BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
+%if 0%{?suse_version} > 1140
 BuildRequires:  makeinfo
+%endif
 BuildRequires:  mozilla-nspr-devel >= 4.10.10
 BuildRequires:  mozilla-nss-devel >= 3.19.2.1
 BuildRequires:  nss-shared-helper-devel
@@ -84,6 +86,7 @@ BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
 BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
+BuildRequires:  xz
 BuildRequires:  yasm
 BuildRequires:  zip
 BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)

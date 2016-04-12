@@ -91,6 +91,12 @@ BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 BuildRequires:  pkgconfig(libpulse)
+%if 0%{?firefox_use_gtk3}
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
+BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
+%endif
 # libavcodec is already used if available for H.264 but
 # explicitely loaded by FF. For proper H.264 support the
 # openSUSE delivered version is not sufficient but currently
@@ -160,6 +166,7 @@ Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
 Patch12:        mozilla-reduce-files-per-UnifiedBindings.patch
+Patch13:        mozilla-gtk3_20.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -270,6 +277,9 @@ cd $RPM_BUILD_DIR/mozilla
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%if 0%{?firefox_use_gtk3}
+%patch13 -p1
+%endif
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -322,8 +332,8 @@ ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
-%if 0%{?suse_version} > 1320
-#ac_add_options --enable-default-toolkit=cairo-gtk3
+%if 0%{?firefox_use_gtk3}
+ac_add_options --enable-default-toolkit=cairo-gtk3
 %endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
@@ -573,9 +583,9 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
-%if 0%{?suse_version} > 1320
-#%dir %{progdir}/gtk2
-#%{progdir}/gtk2/libmozgtk.so
+%if 0%{?firefox_use_gtk3}
+%dir %{progdir}/gtk2
+%{progdir}/gtk2/libmozgtk.so
 %endif
 %{progdir}/webapprt/
 %{progdir}/gmp-clearkey/

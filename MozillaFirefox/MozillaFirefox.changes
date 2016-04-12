@@ -1,4 +1,17 @@
 -------------------------------------------------------------------
+Tue Apr 12 19:11:30 UTC 2016 - badshah400@gmail.com
+
+- Compile against gtk3 depending on whether the macro
+  %firefox_use_gtk3 is defined or not (e.g., at the prjconf
+  level); macro is undefined by default and so gtk2 is used as the
+  default toolkit.
+- Add BuildRequires for additional packages needed when building
+  against gtk3: pkgconfig(glib-2.0), pkgconfig(gobject-2.0),
+  pkgconfig(gtk+-3.0) >= 3.4.0, pkgconfig(gtk+-unix-print-3.0).
+- Add firefox-gtk3_20.patch to fix appearance with gtk3 >= 3.20;
+  patch taken from Fedora (bmo#1230955).
+
+-------------------------------------------------------------------
 Mon Apr 11 22:49:24 UTC 2016 - astieger@suse.com
 
 - Mozilla Firefox 45.0.2:

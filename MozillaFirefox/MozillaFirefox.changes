@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 21 12:00:28 UTC 2016 - badshah400@gmail.com
+
+- Update mozilla-gtk3_20.patch to fix scrollbar appearance under
+  gtk >= 3.20 (patch synced to Fedora's version).
+
+-------------------------------------------------------------------
 Tue Apr 12 19:11:30 UTC 2016 - badshah400@gmail.com
 
 - Compile against gtk3 depending on whether the macro
@@ -133,6 +139,16 @@ Thu Feb 11 07:51:34 UTC 2016 - wr@rosenauer.org
   * Fix for graphics startup crash (GNU/Linux) (bmo#1222171)
   * Fix a crash in cache networking (bmo#1244076)
   * Fix using WebSockets in service worker controlled pages (bmo#1243942)
+
+-------------------------------------------------------------------
+Sat Jan 30 08:28:17 UTC 2016 - dmueller@suse.com
+
+- build fixes for arm/aarch64:
+  * disable webrtc for arm/aarch64
+  * switch away from openGL-ES backend to default for arm/aarch64
+   since it almost never builds
+  * reenable neon
+- reenable webrtc for powerpc as it seems to build
 
 -------------------------------------------------------------------
 Sun Jan 24 09:33:15 UTC 2016 - wr@rosenauer.org

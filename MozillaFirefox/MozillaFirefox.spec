@@ -368,16 +368,14 @@ ac_add_options --enable-libproxy
 %if ! %crashreporter
 ac_add_options --disable-crashreporter
 %endif
-# Disable neon for arm as it does not build correctly
 %ifarch %arm
-ac_add_options --disable-neon
+ac_add_options --disable-elf-hack
+ac_add_options --with-fpu=vfpv3-d16
+ac_add_options --with-float-abi=hard
+ac_add_options --with-arch=armv7-a
 %endif
-%ifnarch %ix86 x86_64
+%ifarch %arm aarch64 s390x
 ac_add_options --disable-webrtc
-%endif
-# try to use OpenGL-ES on ARM
-%ifarch %arm aarch64
-ac_add_options --with-gl-provider=EGL
 %endif
 EOF
 make -f client.mk build

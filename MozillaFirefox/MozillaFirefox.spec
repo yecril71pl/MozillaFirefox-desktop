@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 43
-%define mainver %major.99
-%define update_channel beta
-%define releasedate 2016012300
+%define major 46
+%define mainver %major.0
+%define update_channel release
+%define releasedate 2016042500
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -77,8 +77,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.11
-BuildRequires:  mozilla-nss-devel >= 3.21
+BuildRequires:  mozilla-nspr-devel >= 4.12
+BuildRequires:  mozilla-nss-devel >= 3.22.3
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -91,6 +91,12 @@ BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 BuildRequires:  pkgconfig(libpulse)
+%if 0%{?firefox_use_gtk3}
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
+BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
+%endif
 # libavcodec is already used if available for H.264 but
 # explicitely loaded by FF. For proper H.264 support the
 # openSUSE delivered version is not sufficient but currently
@@ -148,6 +154,7 @@ Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
+Source17:       l10n_changesets.txt
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
 Patch2:         mozilla-shared-nss-db.patch
@@ -159,6 +166,9 @@ Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-libproxy.patch
+Patch12:        mozilla-reduce-files-per-UnifiedBindings.patch
+Patch13:        mozilla-gtk3_20.patch
+Patch14:        mozilla-check_return.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -268,6 +278,11 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%if 0%{?firefox_use_gtk3}
+%patch13 -p1
+%endif
+%patch14 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -320,8 +335,10 @@ ac_add_options --sysconfdir=%{_sysconfdir}
 ac_add_options --mandir=%{_mandir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
-%if 0%{?suse_version} > 1320
-#ac_add_options --enable-default-toolkit=cairo-gtk3
+%if 0%{?firefox_use_gtk3}
+ac_add_options --enable-default-toolkit=cairo-gtk3
+%else
+ac_add_options --enable-default-toolkit=cairo-gtk2
 %endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
@@ -356,16 +373,14 @@ ac_add_options --enable-libproxy
 %if ! %crashreporter
 ac_add_options --disable-crashreporter
 %endif
-# Disable neon for arm as it does not build correctly
 %ifarch %arm
-ac_add_options --disable-neon
+ac_add_options --disable-elf-hack
+ac_add_options --with-fpu=vfpv3-d16
+ac_add_options --with-float-abi=hard
+ac_add_options --with-arch=armv7-a
 %endif
-%ifnarch %ix86 x86_64
+%ifarch %arm aarch64 s390x
 ac_add_options --disable-webrtc
-%endif
-# try to use OpenGL-ES on ARM
-%ifarch %arm aarch64
-ac_add_options --with-gl-provider=EGL
 %endif
 EOF
 make -f client.mk build
@@ -522,7 +537,7 @@ FIN
 %fdupes %{buildroot}%{_datadir}
 # create breakpad debugsymbols
 %if %crashreporter
-SYMBOLS_NAME="firefox-%{version}-%{release}.%{_arch}-%{suse_version}-symbols"
+SYMBOLS_NAME="firefox-%{version}-` echo '%{release}' | sed 's@\.[^\.]\+$@@' `.%{_arch}-%{suse_version}-symbols"
 make buildsymbols \
   SYMBOL_INDEX_NAME="$SYMBOLS_NAME.txt" \
   SYMBOL_FULL_ARCHIVE_BASENAME="$SYMBOLS_NAME-full" \
@@ -560,19 +575,19 @@ exit 0
 %dir %{progdir}/browser/extensions/
 %{progdir}/browser/components/
 %{progdir}/browser/defaults
+%{progdir}/browser/features/
 %{progdir}/browser/icons/
 %{progdir}/browser/chrome/icons
-%{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}
+%{progdir}/browser/extensions/{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
 %{progdir}/browser/blocklist.xml
 %{progdir}/browser/chrome.manifest
 %{progdir}/browser/omni.ja
 %dir %{progdir}/distribution/
 %{progdir}/distribution/extensions/
-%{progdir}/components/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
-%if 0%{?suse_version} > 1320
-#%dir %{progdir}/gtk2
+%if 0%{?firefox_use_gtk3}
+%dir %{progdir}/gtk2
 %{progdir}/gtk2/libmozgtk.so
 %endif
 %{progdir}/webapprt/
@@ -587,7 +602,6 @@ exit 0
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %{progdir}/webapprt-stub
-%{progdir}/chrome.manifest
 %if %crashreporter
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini

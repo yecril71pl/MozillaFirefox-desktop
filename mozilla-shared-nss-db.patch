@@ -7,7 +7,7 @@ References:
 diff --git a/configure.in b/configure.in
 --- a/configure.in
 +++ b/configure.in
-@@ -8309,16 +8309,31 @@ if test "$MOZ_ENABLE_SKIA"; then
+@@ -8310,16 +8310,31 @@ if test "$MOZ_ENABLE_SKIA"; then
      AC_DEFINE(USE_SKIA_GPU)
      AC_SUBST(MOZ_ENABLE_SKIA_GPU)
    fi
@@ -42,7 +42,7 @@ diff --git a/configure.in b/configure.in
 diff --git a/security/manager/ssl/moz.build b/security/manager/ssl/moz.build
 --- a/security/manager/ssl/moz.build
 +++ b/security/manager/ssl/moz.build
-@@ -156,16 +156,19 @@ FAIL_ON_WARNINGS = True
+@@ -160,16 +160,19 @@ UNIFIED_SOURCES += [
  FINAL_LIBRARY = 'xul'
  
  LOCAL_INCLUDES += [
@@ -54,8 +54,8 @@ diff --git a/security/manager/ssl/moz.build b/security/manager/ssl/moz.build
 +CXXFLAGS += sorted(CONFIG['NSSHELPER_CFLAGS'])
 +OS_LIBS += sorted(CONFIG['NSSHELPER_LIBS'])
 +
- GENERATED_INCLUDES += [
-     '/dist/public/nss',
+ LOCAL_INCLUDES += [
+     '!/dist/public/nss',
  ]
  
  if CONFIG['NSS_DISABLE_DBM']:
@@ -83,38 +83,38 @@ diff --git a/security/manager/ssl/nsNSSComponent.cpp b/security/manager/ssl/nsNS
  
  #include "ExtendedValidation.h"
  #include "NSSCertDBTrustDomain.h"
- #include "mozilla/Telemetry.h"
- #include "nsAppDirectoryServiceDefs.h"
- #include "nsCertVerificationThread.h"
- #include "nsAppDirectoryServiceDefs.h"
-@@ -1015,17 +1022,31 @@ nsNSSComponent::InitializeNSS()
-     return NS_ERROR_NOT_AVAILABLE;
+ #include "SharedSSLState.h"
+ #include "mozilla/Preferences.h"
+ #include "mozilla/PublicSSL.h"
+ #include "mozilla/Services.h"
+@@ -1007,17 +1014,31 @@ nsNSSComponent::InitializeNSS()
+       return rv;
+     }
    }
- 
-   SECStatus init_rv = SECFailure;
-   bool nocertdb = Preferences::GetBool("security.nocertdb", false);
+   MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("inSafeMode: %u\n", inSafeMode));
  
    if (!nocertdb && !profileStr.IsEmpty()) {
      // First try to initialize the NSS DB in read/write mode.
+     // Only load PKCS11 modules if we're not in safe mode.
 +#ifdef MOZ_ENABLE_NSSHELPER
 +    if (PR_GetEnv("MOZ_XRE_NO_NSSHELPER")) {
-+      init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++      init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false, !inSafeMode);
 +    } else {
 +      uint32_t flags = NSS_INIT_NOROOTINIT | NSS_INIT_OPTIMIZESPACE;
 +      init_rv = ::nsshelp_open_db ("Firefox", profileStr.get(), flags);
 +
 +      if (init_rv != SECSuccess) {
 +        MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("can not init NSS using nsshelp_open_db in %s\n", profileStr.get()));
-+        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
++        init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false, !inSafeMode);
 +      }
 +    }
 +#else
-     init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false);
+     init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), false, !inSafeMode);
 +#endif
      // If that fails, attempt read-only mode.
      if (init_rv != SECSuccess) {
        MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("could not init NSS r/w in %s\n", profileStr.get()));
-       init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), true);
+       init_rv = ::mozilla::psm::InitializeNSS(profileStr.get(), true, !inSafeMode);
      }
      if (init_rv != SECSuccess) {
        MOZ_LOG(gPIPNSSLog, LogLevel::Debug, ("could not init in r/o either\n"));

@@ -1374,7 +1374,7 @@ new file mode 100644
 +    return NS_OK;
 +}
 +
-+NS_IMPL_ISUPPORTS(nsKDEShellService, nsIShellService)
++NS_IMPL_ISUPPORTS(nsKDEShellService, nsIGNOMEShellService, nsIShellService)
 +
 +NS_IMETHODIMP
 +nsKDEShellService::IsDefaultBrowser(bool aStartupCheck,
@@ -1551,7 +1551,7 @@ diff --git a/browser/components/shell/nsKDEShellService.h b/browser/components/s
 new file mode 100644
 --- /dev/null
 +++ b/browser/components/shell/nsKDEShellService.h
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,30 @@
 +/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -1560,16 +1560,17 @@ new file mode 100644
 +#ifndef nskdeshellservice_h____
 +#define nskdeshellservice_h____
 +
-+#include "nsIShellService.h"
++#include "nsIGNOMEShellService.h"
 +#include "nsStringAPI.h"
 +#include "mozilla/Attributes.h"
 +
-+class nsKDEShellService final : public nsIShellService
++class nsKDEShellService final : public nsIGNOMEShellService
 +{
 +public:
 +  nsKDEShellService() : mCheckedThisSession(false) { }
 +
 +  NS_DECL_ISUPPORTS
++  NS_DECL_NSIGNOMESHELLSERVICE
 +  NS_DECL_NSISHELLSERVICE
 +
 +  nsresult Init();
@@ -1622,7 +1623,7 @@ new file mode 100644
 +#ifndef nsunixshellservice_h____
 +#define nsunixshellservice_h____
 +
-+#include "nsIShellService.h"
++#include "nsIGNOMEShellService.h"
 +
 +NS_METHOD
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult);

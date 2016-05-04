@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue May  3 15:47:18 UTC 2016 - normand@linux.vnet.ibm.com
+
+- add mozilla-jit_branch64.patch to avoid PowerPC build failure
+  (from bmo#1266366)
+
+-------------------------------------------------------------------
 Wed Apr 27 08:39:28 UTC 2016 - badshah400@gmail.com
 
 - Update mozilla-gtk3_20.patch for Firefox 46.0 (sync to latest
@@ -18,27 +24,29 @@ Wed Apr 27 06:09:30 UTC 2016 - wr@rosenauer.org
   * Gtk3 builds not supported at the moment
   security fixes:
   * MFSA 2016-39/CVE-2016-2804/CVE-2016-2806/CVE-2016-2807
+    (boo#977373, boo#977375, boo#977376)
     Miscellaneous memory safety hazards
-  * MFSA 2016-40/CVE-2016-2809 (bmo#1212939)
+  * MFSA 2016-40/CVE-2016-2809 (bmo#1212939, boo#977377)
     Privilege escalation through file deletion by Maintenance Service updater
     (Windows only)
-  * MFSA 2016-41/CVE-2016-2810 (bmo#1229681)
+  * MFSA 2016-41/CVE-2016-2810 (bmo#1229681, boo#977378)
     Content provider permission bypass allows malicious application
     to access data (Android only)
-  * MFSA 2016-42/CVE-2016-2811/CVE-2016-2812 (bmo#1252330, bmo#1261776)
+  * MFSA 2016-42/CVE-2016-2811/CVE-2016-2812
+    (bmo#1252330, bmo#1261776, boo#977379)
     Use-after-free and buffer overflow in Service Workers
-  * MFSA 2016-43/CVE-2016-2813 (bmo#1197901, bmo#2714650)
+  * MFSA 2016-43/CVE-2016-2813 (bmo#1197901, bmo#2714650, boo#977380)
     Disclosure of user actions through JavaScript with motion and
     orientation sensors (only affects mobile variants)
-  * MFSA 2016-44/CVE-2016-2814 (bmo#1254721)
+  * MFSA 2016-44/CVE-2016-2814 (bmo#1254721, boo#977381)
     Buffer overflow in libstagefright with CENC offsets
-  * MFSA 2016-45/CVE-2016-2816 (bmo#1223743)
+  * MFSA 2016-45/CVE-2016-2816 (bmo#1223743, boo#977382)
     CSP not applied to pages sent with multipart/x-mixed-replace
-  * MFSA 2016-46/CVE-2016-2817 (bmo#1227462)
+  * MFSA 2016-46/CVE-2016-2817 (bmo#1227462, boo#977384)
     Elevation of privilege with chrome.tabs.update API in web extensions
-  * MFSA 2016-47/CVE-2016-2808 (bmo#1246061)
+  * MFSA 2016-47/CVE-2016-2808 (bmo#1246061, boo#977386)
     Write to invalid HashMap entry through JavaScript.watch()
-  * MFSA 2016-48/CVE-2016-2820 (bmo#870870)
+  * MFSA 2016-48/CVE-2016-2820 (bmo#870870, boo#977388)
     Firefox Health Reports could accept events from untrusted domains
 
 -------------------------------------------------------------------

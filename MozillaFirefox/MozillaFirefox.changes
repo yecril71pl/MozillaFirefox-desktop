@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Wed May  4 07:23:47 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 38.8.0 (boo#977559)
+  * MFSA 2016-29/CVE-2016-1967 (bmo#1246956)
+    Same-origin policy violation using performance.getEntries and
+    history navigation with session restore
+  * MFSA 2016-39/CVE-2016-2805/CVE-2016-2807
+    Miscellaneous memory safety hazards
+  * MFSA 2016-44/CVE-2016-2814 (bmo#1254721, boo#977381)
+    Buffer overflow in libstagefright with CENC offsets
+  * MFSA 2016-47/CVE-2016-2808 (bmo#1246061, boo#977386)
+    Write to invalid HashMap entry through JavaScript.watch()
+
+-------------------------------------------------------------------
 Tue Mar  8 06:58:55 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 38.7.0 (boo#969894)

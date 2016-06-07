@@ -1,7 +1,242 @@
 -------------------------------------------------------------------
+Wed May  4 10:27:43 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 46.0.1
+  Fixed:
+  * Search plugin issue for various locales
+  * Add-on signing certificate expiration
+  * Service worker update issue
+  * Build issue when jit is disabled
+  * Limit Sync registration updates
+- removed now obsolete mozilla-jit_branch64.patch
+
+-------------------------------------------------------------------
+Tue May  3 15:47:18 UTC 2016 - normand@linux.vnet.ibm.com
+
+- add mozilla-jit_branch64.patch to avoid PowerPC build failure
+  (from bmo#1266366)
+
+-------------------------------------------------------------------
+Wed Apr 27 08:39:28 UTC 2016 - badshah400@gmail.com
+
+- Update mozilla-gtk3_20.patch for Firefox 46.0 (sync to latest
+  version from Fedora).
+
+-------------------------------------------------------------------
+Wed Apr 27 06:09:30 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 46.0 (boo#977333)
+  * Improved security of the JavaScript Just In Time (JIT) Compiler
+  * WebRTC fixes to improve performance and stability
+  * Added support for document.elementsFromPoint
+  * Added HKDF support for Web Crypto API
+  * requires NSPR 4.12 and NSS 3.22.3
+  * added patch to fix unchecked return value
+    mozilla-check_return.patch
+  * Gtk3 builds not supported at the moment
+  security fixes:
+  * MFSA 2016-39/CVE-2016-2804/CVE-2016-2806/CVE-2016-2807
+    (boo#977373, boo#977375, boo#977376)
+    Miscellaneous memory safety hazards
+  * MFSA 2016-40/CVE-2016-2809 (bmo#1212939, boo#977377)
+    Privilege escalation through file deletion by Maintenance Service updater
+    (Windows only)
+  * MFSA 2016-41/CVE-2016-2810 (bmo#1229681, boo#977378)
+    Content provider permission bypass allows malicious application
+    to access data (Android only)
+  * MFSA 2016-42/CVE-2016-2811/CVE-2016-2812
+    (bmo#1252330, bmo#1261776, boo#977379)
+    Use-after-free and buffer overflow in Service Workers
+  * MFSA 2016-43/CVE-2016-2813 (bmo#1197901, bmo#2714650, boo#977380)
+    Disclosure of user actions through JavaScript with motion and
+    orientation sensors (only affects mobile variants)
+  * MFSA 2016-44/CVE-2016-2814 (bmo#1254721, boo#977381)
+    Buffer overflow in libstagefright with CENC offsets
+  * MFSA 2016-45/CVE-2016-2816 (bmo#1223743, boo#977382)
+    CSP not applied to pages sent with multipart/x-mixed-replace
+  * MFSA 2016-46/CVE-2016-2817 (bmo#1227462, boo#977384)
+    Elevation of privilege with chrome.tabs.update API in web extensions
+  * MFSA 2016-47/CVE-2016-2808 (bmo#1246061, boo#977386)
+    Write to invalid HashMap entry through JavaScript.watch()
+  * MFSA 2016-48/CVE-2016-2820 (bmo#870870, boo#977388)
+    Firefox Health Reports could accept events from untrusted domains
+
+-------------------------------------------------------------------
+Thu Apr 21 12:00:28 UTC 2016 - badshah400@gmail.com
+
+- Update mozilla-gtk3_20.patch to fix scrollbar appearance under
+  gtk >= 3.20 (patch synced to Fedora's version).
+
+-------------------------------------------------------------------
+Tue Apr 12 19:11:30 UTC 2016 - badshah400@gmail.com
+
+- Compile against gtk3 depending on whether the macro
+  %firefox_use_gtk3 is defined or not (e.g., at the prjconf
+  level); macro is undefined by default and so gtk2 is used as the
+  default toolkit.
+- Add BuildRequires for additional packages needed when building
+  against gtk3: pkgconfig(glib-2.0), pkgconfig(gobject-2.0),
+  pkgconfig(gtk+-3.0) >= 3.4.0, pkgconfig(gtk+-unix-print-3.0).
+- Add firefox-gtk3_20.patch to fix appearance with gtk3 >= 3.20;
+  patch taken from Fedora (bmo#1230955).
+
+-------------------------------------------------------------------
+Mon Apr 11 22:49:24 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 45.0.2:
+  * Fix an issue impacting the cookie header when third-party
+    cookies are blocked (bmo#1257861)
+  * Fix a web compatibility regression impacting the srcset
+    attribute of the image tag (bmo#1259482)
+  * Fix a crash impacting the video playback with Media Source
+    Extension (bmo#1258562)
+  * Fix a regression impacting some specific uploads (bmo#1255735)
+  * Fix a regression with the copy and paste with some old versions
+    of some Gecko applications like Thunderbird (bmo#1254980)
+
+-------------------------------------------------------------------
+Fri Mar 18 08:52:58 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 45.0.1:
+  * Fix a regression causing search engine settings to be lost in
+    some context (bmo#1254694)
+  * Bring back non-standard jar: URIs to fix a regression in IBM
+    iNotes (bmo#1255139)
+  * XSLTProcessor.importStylesheet was failing when <import> was
+    used (bmo#1249572)
+  * Fix an issue which could cause the list of search provider to
+    be empty (bmo#1255605)
+  * Fix a regression when using the location bar (bmo#1254503)
+  * Fix some loading issues when Accept third-party cookies: was
+    set to Never (bmo#1254856)
+  * Disabled Graphite font shaping library
+
+-------------------------------------------------------------------
+Sun Mar  6 19:52:13 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 45.0 (boo#969894)
+  * requires NSPR 4.12 / NSS 3.21.1
+  * Instant browser tab sharing through Hello
+  * Synced Tabs button in button bar
+  * Tabs synced via Firefox Accounts from other devices are now shown
+    in dropdown area of Awesome Bar when searching
+  * Introduce a new preference (network.dns.blockDotOnion) to allow
+    blocking .onion at the DNS level
+  * Tab Groups (Panorama) feature removed
+  * MFSA 2016-16/CVE-2016-1952/CVE-2016-1953
+    Miscellaneous memory safety hazards
+  * MFSA 2016-17/CVE-2016-1954 (bmo#1243178)
+    Local file overwriting and potential privilege escalation through
+    CSP reports
+  * MFSA 2016-18/CVE-2016-1955 (bmo#1208946)
+    CSP reports fail to strip location information for embedded iframe pages
+  * MFSA 2016-19/CVE-2016-1956 (bmo#1199923)
+    Linux video memory DOS with Intel drivers
+  * MFSA 2016-20/CVE-2016-1957 (bmo#1227052)
+    Memory leak in libstagefright when deleting an array during MP4
+    processing
+  * MFSA 2016-21/CVE-2016-1958 (bmo#1228754)
+    Displayed page address can be overridden
+  * MFSA 2016-22/CVE-2016-1959 (bmo#1234949)
+    Service Worker Manager out-of-bounds read in Service Worker Manager
+  * MFSA 2016-23/CVE-2016-1960/ZDI-CAN-3545 (bmo#1246014)
+    Use-after-free in HTML5 string parser
+  * MFSA 2016-24/CVE-2016-1961/ZDI-CAN-3574 (bmo#1249377)
+    Use-after-free in SetBody
+  * MFSA 2016-25/CVE-2016-1962 (bmo#1240760)
+    Use-after-free when using multiple WebRTC data channels
+  * MFSA 2016-26/CVE-2016-1963 (bmo#1238440)
+    Memory corruption when modifying a file being read by FileReader
+  * MFSA 2016-27/CVE-2016-1964 (bmo#1243335)
+    Use-after-free during XML transformations
+  * MFSA 2016-28/CVE-2016-1965 (bmo#1245264)
+    Addressbar spoofing though history navigation and Location protocol
+    property
+  * MFSA 2016-29/CVE-2016-1967 (bmo#1246956)
+    Same-origin policy violation using perfomance.getEntries and
+    history navigation with session restore
+  * MFSA 2016-30/CVE-2016-1968 (bmo#1246742)
+    Buffer overflow in Brotli decompression
+  * MFSA 2016-31/CVE-2016-1966 (bmo#1246054)
+    Memory corruption with malicious NPAPI plugin
+  * MFSA 2016-32/CVE-2016-1970/CVE-2016-1971/CVE-2016-1975/
+    CVE-2016-1976/CVE-2016-1972
+    WebRTC and LibVPX vulnerabilities found through code inspection
+  * MFSA 2016-33/CVE-2016-1973 (bmo#1219339)
+    Use-after-free in GetStaticInstance in WebRTC
+  * MFSA 2016-34/CVE-2016-1974 (bmo#1228103)
+    Out-of-bounds read in HTML parser following a failed allocation
+  * MFSA 2016-35/CVE-2016-1950 (bmo#1245528)
+    Buffer overflow during ASN.1 decoding in NSS
+    (fixed by requiring 3.21.1)
+  * MFSA 2016-36/CVE-2016-1979 (bmo#1185033)
+    Use-after-free during processing of DER encoded keys in NSS
+    (fixed by requiring 3.21.1)
+  * MFSA 2016-37/CVE-2016-1977/CVE-2016-2790/CVE-2016-2791/
+    CVE-2016-2792/CVE-2016-2793/CVE-2016-2794/CVE-2016-2795/
+    CVE-2016-2796/CVE-2016-2797/CVE-2016-2798/CVE-2016-2799/
+    CVE-2016-2800/CVE-2016-2801/CVE-2016-2802
+    Font vulnerabilities in the Graphite 2 library
+
+-------------------------------------------------------------------
+Sat Mar  5 15:27:00 UTC 2016 - olaf@aepfle.de
+
+- Remove B_CNT from symbols.zip filename to reduce build-compare noise
+
+-------------------------------------------------------------------
+Fri Feb 26 16:22:52 UTC 2016 - astieger@suse.com
+
+- fix build problems on i586, caused by too large unified compile
+  units - adding mozilla-reduce-files-per-UnifiedBindings.patch
+
+-------------------------------------------------------------------
+Thu Feb 11 07:51:34 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 44.0.2
+  * MFSA 2016-13/CVE-2016-1949 (bmo#1245724, boo#966438)
+    Same-origin-policy violation using Service Workers with plugins
+  * Fix issue which could lead to the removal of stored passwords
+    under certain circumstances (bmo#1242176)
+  * Allows spaces in cookie names (bmo#1244505)
+  * Disable opus/vorbis audio with H.264 (bmo#1245696)
+  * Fix for graphics startup crash (GNU/Linux) (bmo#1222171)
+  * Fix a crash in cache networking (bmo#1244076)
+  * Fix using WebSockets in service worker controlled pages (bmo#1243942)
+
+-------------------------------------------------------------------
+Sat Jan 30 08:28:17 UTC 2016 - dmueller@suse.com
+
+- build fixes for arm/aarch64:
+  * disable webrtc for arm/aarch64
+  * switch away from openGL-ES backend to default for arm/aarch64
+   since it almost never builds
+  * reenable neon
+- reenable webrtc for powerpc as it seems to build
+
+-------------------------------------------------------------------
 Sun Jan 24 09:33:15 UTC 2016 - wr@rosenauer.org
 
-- update to Firefox 44.0b9
+- update to Firefox 44.0
+  * MFSA 2016-01/CVE-2016-1930/CVE-2016-1931 boo#963633
+    Miscellaneous memory safety hazards
+  * MFSA 2016-02/CVE-2016-1933 (bmo#1231761) boo#963634
+    Out of Memory crash when parsing GIF format images
+  * MFSA 2016-03/CVE-2016-1935 (bmo#1220450) boo#963635
+    Buffer overflow in WebGL after out of memory allocation
+  * MFSA 2016-04/CVE-2015-7208/CVE-2016-1939 (bmo#1191423, bmo#1233784) boo#963637
+    Firefox allows for control characters to be set in cookie names
+  * MFSA 2016-06/CVE-2016-1937 (bmo#724353) boo#963641
+    Missing delay following user click events in protocol handler dialog
+  * MFSA 2016-07/CVE-2016-1938 (bmo#1190248) boo#963731
+    Errors in mp_div and mp_exptmod cryptographic functions in NSS
+    (fixed by requiring NSS 3.21)
+  * MFSA 2016-09/CVE-2016-1942/CVE-2016-1943 (bmo#1189082, bmo#1228590)
+    Addressbar spoofing attacks boo#963643
+  * MFSA 2016-10/CVE-2016-1944/CVE-2016-1945/CVE-2016-1946
+    (bmo#1186621, bmo#1214782, bmo#1232096) boo#963644
+    Unsafe memory manipulation found through code inspection
+  * MFSA 2016-11/CVE-2016-1947 (bmo#1237103) boo#963645
+    Application Reputation service disabled in Firefox 43
   * requires NSPR 4.11
   * requires NSS 3.21
 - prepare mozilla-kde.patch for Gtk3 builds

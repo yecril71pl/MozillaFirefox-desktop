@@ -1,9 +1,14 @@
 #!/bin/bash
 
-CHANNEL="beta"
+# TODO
+# http://ftp.mozilla.org/pub/firefox/candidates/46.0-candidates/build5/linux-x86_64/en-US/firefox-46.0.json
+# "moz_source_stamp": "078baf501b55eaa47f3b189fda4dd28dae1fa257"
+# http://ftp.mozilla.org/pub/firefox/candidates/46.0-candidates/build5/l10n_changesets.txt
+
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_44_0b9_RELEASE"
-VERSION="43.99"
+RELEASE_TAG="FIREFOX_46_0_1_RELEASE"
+VERSION="46.0.1"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -46,9 +51,11 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
     ja-JP-mac|en-US)
       ;;
     *)
-      echo "fetching $locale ..."
+      echo "reading changeset information for $locale"
+      _changeset=$(grep ^$locale l10n_changesets.txt | awk '{ print $2; }')
+      echo "fetching $locale changeset $_changeset ..."
       hg clone http://hg.mozilla.org/releases/l10n/mozilla-$CHANNEL/$locale l10n/$locale
-      [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $RELEASE_TAG
+      [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $_changeset
       ;;
   esac
 done

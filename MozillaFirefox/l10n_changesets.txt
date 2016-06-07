@@ -46,8 +46,8 @@ hy-AM 3d7a9324fb25
 id cb8f841d30d2
 is 46c99105eb3b
 it 6063a6d94e13
-ja 590a31fbf396
-ja-JP-mac 260664b702c5
+ja 5ff86cadfe9a
+ja-JP-mac ab760b3dcdd1
 kk 5a7bd05bf942
 km 339790840ac1
 kn b23d8fbcf41a

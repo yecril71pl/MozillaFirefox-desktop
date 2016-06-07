@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 46
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 2016042500
+%define releasedate 2016050300
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -169,7 +169,6 @@ Patch11:        mozilla-libproxy.patch
 Patch12:        mozilla-reduce-files-per-UnifiedBindings.patch
 Patch13:        mozilla-gtk3_20.patch
 Patch14:        mozilla-check_return.patch
-Patch15:        mozilla-jit_branch64.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -284,7 +283,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %endif
 %patch14 -p1
-%patch15 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

@@ -14,7 +14,6 @@ mozilla-libproxy.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-gtk3_20.patch
 mozilla-check_return.patch
-mozilla-jit_branch64.patch
 
 # Firefox patches
 firefox-kde.patch

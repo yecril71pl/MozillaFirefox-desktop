@@ -18,10 +18,13 @@
 
 
 # changed with every update
-%define major 46
-%define mainver %major.0.1
+%define major 47
+%define mainver %major.0
 %define update_channel release
-%define releasedate 2016050300
+%define releasedate 20160606000000
+
+# PIE, full relro (x86_64 for now)
+%define build_hardened 1
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -41,12 +44,6 @@
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
-%if 0%{?suse_version} > 1310
-%define gstreamer_ver 1.0
-%define gstreamer 1
-%else
-%define gstreamer_ver 0.10
-%endif
 # Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
@@ -78,7 +75,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.12
-BuildRequires:  mozilla-nss-devel >= 3.22.3
+BuildRequires:  mozilla-nss-devel >= 3.23
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -87,9 +84,6 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-BuildRequires:  pkgconfig(gstreamer-%gstreamer_ver)
-BuildRequires:  pkgconfig(gstreamer-app-%gstreamer_ver)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-%gstreamer_ver)
 BuildRequires:  pkgconfig(libpulse)
 %if 0%{?firefox_use_gtk3}
 BuildRequires:  pkgconfig(glib-2.0)
@@ -97,26 +91,11 @@ BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 %endif
-# libavcodec is already used if available for H.264 but
-# explicitely loaded by FF. For proper H.264 support the
-# openSUSE delivered version is not sufficient but currently
-# prevents even the use of the GStreamer method
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1234157
-# to get H.264 working correctly libavcodec from packman
-# is required. As of today the following recommends will
-# pull in libavcodec52 from packman since it's the only
-# package providing libavcodec but it's not loaded from
-# Firefox as the minimal version is 53
+# libavcodec is required for H.264 support but the
+# openSUSE version is currently not able to play H.264
+# therefore the Packman version is required
+# minimum version of libavcodec is 53
 #Recommends:     libavcodec
-%if 0%{?gstreamer} == 1
-Requires:       libgstreamer-1_0-0
-Recommends:     gstreamer-fluendo-mp3
-Recommends:     gstreamer-plugins-libav
-%else
-Requires:       libgstreamer-0_10-0
-Recommends:     gstreamer-0_10-fluendo-mp3
-Recommends:     gstreamer-0_10-plugins-ffmpeg
-%endif
 Version:        %{mainver}
 Release:        0
 %if "%{name}" == "MozillaFirefox"
@@ -162,13 +141,13 @@ Patch3:         mozilla-kde.patch
 Patch4:         mozilla-preferences.patch
 Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
-Patch7:         mozilla-repo.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
-Patch11:        mozilla-libproxy.patch
-Patch12:        mozilla-reduce-files-per-UnifiedBindings.patch
-Patch13:        mozilla-gtk3_20.patch
-Patch14:        mozilla-check_return.patch
+Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
+Patch12:        mozilla-gtk3_20.patch
+Patch13:        mozilla-check_return.patch
+Patch14:        mozilla-gcc6.patch
+Patch15:        mozilla-exclude-nametablecpp.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -274,15 +253,15 @@ cd $RPM_BUILD_DIR/mozilla
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 %if 0%{?firefox_use_gtk3}
-%patch13 -p1
+%patch12 -p1
 %endif
+%patch13 -p1
 %patch14 -p1
+%patch15 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -301,7 +280,7 @@ if test "$kdehelperversion" != %{kde_helper_version}; then
   exit 1
 fi
 source %{SOURCE5}
-export MOZ_SOURCE_STAMP=$REV
+export MOZ_SOURCE_CHANGESET=$REV
 export SOURCE_REPO=$REPO
 export source_repo=$REPO
 export MOZ_SOURCE_REPO=$REPO
@@ -317,6 +296,11 @@ export CFLAGS="${CFLAGS/-g / }"
 %ifarch %arm %ix86
 # Limit RAM usage during link
 export LDFLAGS="${LDFLAGS} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads"
+%endif
+%if 0%{?build_hardened}
+%ifarch x86_64
+export LDFLAGS="${LDFLAGS} -Wl,-z,relro,-z,now"
+%endif
 %endif
 %ifarch ppc64 ppc64le
 export CFLAGS="$CFLAGS -mminimal-toc"
@@ -340,13 +324,16 @@ ac_add_options --enable-default-toolkit=cairo-gtk3
 %else
 ac_add_options --enable-default-toolkit=cairo-gtk2
 %endif
+%if 0%{?build_hardened}
+ac_add_options --enable-pie
+%endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230
 ac_add_options --disable-optimize
 %endif
 %endif
-%ifnarch ppc ppc64 ppc64le aarch64
-ac_add_options --enable-elf-hack
+%ifarch ppc ppc64 ppc64le aarch64 %arm
+ac_add_options --disable-elf-hack
 %endif
 ac_add_options --with-system-nspr
 ac_add_options --with-system-nss
@@ -356,16 +343,12 @@ ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 #ac_add_options --with-system-jpeg    # libjpeg-turbo is used internally
 #ac_add_options --with-system-png     # doesn't work because of missing APNG support
 ac_add_options --with-system-zlib
-ac_add_options --disable-installer
 ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
-%if 0%{?gstreamer} == 1
-ac_add_options --enable-gstreamer=1.0
-%endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif
@@ -374,7 +357,6 @@ ac_add_options --enable-libproxy
 ac_add_options --disable-crashreporter
 %endif
 %ifarch %arm
-ac_add_options --disable-elf-hack
 ac_add_options --with-fpu=vfpv3-d16
 ac_add_options --with-float-abi=hard
 ac_add_options --with-arch=armv7-a

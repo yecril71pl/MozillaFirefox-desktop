@@ -1,4 +1,39 @@
 -------------------------------------------------------------------
+Sun Jun 12 20:09:41 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 45.2.0esr
+  * MFSA 2016-49/CVE-2016-2815/CVE-2016-2818
+    (boo#983638)
+    (bmo#1241896, bmo#1242798, bmo#1243466, bmo#1245743,
+     bmo#1264300, bmo#1271037, bmo#1234147, bmo#1256493,
+     bmo#1256739, bmo#1256968, bmo#1261230, bmo#1261752,
+     bmo#1263384, bmo#1264575, bmo#1265577, bmo#1267130,
+     bmo#1269729, bmo#1273202, bmo#1273701)
+    Miscellaneous memory safety hazards (rv:47.0 / rv:45.2)
+  * MFSA 2016-50/CVE-2016-2819 (boo#983655) (bmo#1270381)
+    Buffer overflow parsing HTML5 fragments
+  * MFSA 2016-51/CVE-2016-2821 (bsc#983653) (bmo#1271460)
+    Use-after-free deleting tables from a contenteditable document
+  * MFSA 2016-52/CVE-2016-2822 (boo#983652) (bmo#1273129)
+    Addressbar spoofing though the SELECT element
+  * MFSA 2016-53/CVE-2016-2824 (boo#983651) (bmo#1248580)
+    Out-of-bounds write with WebGL shader
+  * MFSA 2016-56/CVE-2016-2828 (boo#983646) (bmo#1223810)
+    Use-after-free when textures are used in WebGL operations
+    after recycle pool destruction
+  * MFSA 2016-58/CVE-2016-2831 (boo#983643) (bmo#1261933)
+    Entering fullscreen and persistent pointerlock without user
+    permission
+  security fixes in 45.1
+  * MFSA 2016-39/CVE-2016-2804/CVE-2016-2806/CVE-2016-2807
+    (boo#977373, boo#977375, boo#977376)
+    Miscellaneous memory safety hazards
+  * MFSA 2016-44/CVE-2016-2814 (bmo#1254721, boo#977381)
+    Buffer overflow in libstagefright with CENC offsets
+  * MFSA 2016-47/CVE-2016-2808 (bmo#1246061, boo#977386)
+    Write to invalid HashMap entry through JavaScript.watch()
+
+-------------------------------------------------------------------
 Thu Apr 21 12:00:28 UTC 2016 - badshah400@gmail.com
 
 - Update mozilla-gtk3_20.patch to fix scrollbar appearance under

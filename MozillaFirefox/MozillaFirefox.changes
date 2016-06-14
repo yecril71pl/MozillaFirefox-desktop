@@ -1,4 +1,20 @@
 -------------------------------------------------------------------
+Tue Jun 14 08:35:03 UTC 2016 - badshah400@gmail.com
+
+- Update mozilla-gtk3_20.patch to latest version from Fedora.
+
+-------------------------------------------------------------------
+Mon Jun 13 20:28:01 UTC 2016 - agraf@suse.com
+
+- Fix running on 48bit va aarch64 (bsc#984126)
+  * add patch mozilla-aarch64-48bit-va.patch
+
+-------------------------------------------------------------------
+Mon Jun 13 15:27:13 UTC 2016 - wr@rosenauer.org
+
+- fix XUL dialog button order under KDE session (boo#984403)
+
+-------------------------------------------------------------------
 Tue Jun  7 19:47:25 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 47.0 (boo#983549)

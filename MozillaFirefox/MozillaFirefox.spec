@@ -95,7 +95,7 @@ BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 # openSUSE version is currently not able to play H.264
 # therefore the Packman version is required
 # minimum version of libavcodec is 53
-#Recommends:     libavcodec
+Recommends:     libavcodec-full >= 0.10.16
 Version:        %{mainver}
 Release:        0
 %if "%{name}" == "MozillaFirefox"
@@ -148,6 +148,7 @@ Patch12:        mozilla-gtk3_20.patch
 Patch13:        mozilla-check_return.patch
 Patch14:        mozilla-gcc6.patch
 Patch15:        mozilla-exclude-nametablecpp.patch
+Patch16:        mozilla-aarch64-48bit-va.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -262,6 +263,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

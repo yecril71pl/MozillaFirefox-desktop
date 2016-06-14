@@ -13,6 +13,7 @@ mozilla-gtk3_20.patch
 mozilla-check_return.patch
 mozilla-gcc6.patch
 mozilla-exclude-nametablecpp.patch
+mozilla-aarch64-48bit-va.patch
 
 # Firefox patches
 firefox-kde.patch

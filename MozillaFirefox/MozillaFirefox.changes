@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun 15 07:52:18 UTC 2016 - wr@rosenauer.org
+
+- mozilla-binutils-visibility.patch to fix build issues with
+  gcc/binutils combination used in Leap 42.2
+
+-------------------------------------------------------------------
 Tue Jun 14 08:35:03 UTC 2016 - badshah400@gmail.com
 
 - Update mozilla-gtk3_20.patch to latest version from Fedora.

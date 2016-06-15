@@ -149,6 +149,7 @@ Patch13:        mozilla-check_return.patch
 Patch14:        mozilla-gcc6.patch
 Patch15:        mozilla-exclude-nametablecpp.patch
 Patch16:        mozilla-aarch64-48bit-va.patch
+Patch17:        mozilla-binutils-visibility.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -264,6 +265,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

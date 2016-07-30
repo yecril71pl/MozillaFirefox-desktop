@@ -1,8 +1,32 @@
 -------------------------------------------------------------------
+Fri Jul 29 01:26:13 UTC 2016 - badshah400@gmail.com
+
+- Update description and screenshots in appdata.xml file.
+
+-------------------------------------------------------------------
+Sat Jul 23 20:13:08 UTC 2016 - antoine.belvire@laposte.net
+
+- Fix Firefox crash on startup on i586 (boo#986541):
+  * Add -fno-delete-null-pointer-checks and
+    -fno-inline-small-functions to CFLAGS
+
+-------------------------------------------------------------------
+Tue Jul 19 20:12:11 UTC 2016 - mailaender@opensuse.org
+
+- Update the appdata.xml file (replace Windows XP screenshot)
+
+-------------------------------------------------------------------
+Wed Jun 29 09:25:41 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 47.0.1:
+  * Selenium WebDriver may cause Firefox to crash at startup
+    (bmo#1280854)
+
+-------------------------------------------------------------------
 Wed Jun 15 07:52:18 UTC 2016 - wr@rosenauer.org
 
 - mozilla-binutils-visibility.patch to fix build issues with
-  gcc/binutils combination used in Leap 42.2
+  gcc/binutils combination used in Leap 42.2 (boo#984637)
 
 -------------------------------------------------------------------
 Tue Jun 14 08:35:03 UTC 2016 - badshah400@gmail.com

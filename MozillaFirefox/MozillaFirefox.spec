@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 47
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 20160606000000
+%define releasedate 20160628000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -294,6 +294,10 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export MOZ_GOOGLE_API_KEY=%{_google_api_key}
 export CFLAGS="%{optflags} -fno-strict-aliasing"
+# boo#986541: add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
+%if 0%{?suse_version} > 1320
+export CFLAGS="$CFLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
+%endif
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
 %endif

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # TODO
-# http://ftp.mozilla.org/pub/firefox/candidates/46.0-candidates/build5/linux-x86_64/en-US/firefox-46.0.json
-# "moz_source_stamp": "078baf501b55eaa47f3b189fda4dd28dae1fa257"
-# http://ftp.mozilla.org/pub/firefox/candidates/46.0-candidates/build5/l10n_changesets.txt
+# http://ftp.mozilla.org/pub/firefox/candidates/48.0-candidates/build2/linux-x86_64/en-US/firefox-48.0.json
+# "moz_source_stamp": "c1de04f39fa956cfce83f6065b0e709369215ed5"
+# http://ftp.mozilla.org/pub/firefox/candidates/48.0-candidates/build2/l10n_changesets.txt
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_47_0_1_RELEASE"
-VERSION="47.0.1"
+RELEASE_TAG="c1de04f39fa956cfce83f6065b0e709369215ed5"
+VERSION="48.0"
 
 # mozilla
 if [ -d mozilla ]; then

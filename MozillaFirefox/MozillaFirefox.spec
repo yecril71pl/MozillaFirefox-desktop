@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 47
-%define mainver %major.0.1
+%define major 48
+%define mainver %major.0
 %define update_channel release
-%define releasedate 20160628000000
+%define releasedate 20160730000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -75,7 +75,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.12
-BuildRequires:  mozilla-nss-devel >= 3.23
+BuildRequires:  mozilla-nss-devel >= 3.24
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -146,7 +146,6 @@ Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
 Patch12:        mozilla-gtk3_20.patch
 Patch13:        mozilla-check_return.patch
-Patch14:        mozilla-gcc6.patch
 Patch15:        mozilla-exclude-nametablecpp.patch
 Patch16:        mozilla-aarch64-48bit-va.patch
 Patch17:        mozilla-binutils-visibility.patch
@@ -262,7 +261,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %endif
 %patch13 -p1
-%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
@@ -322,10 +320,6 @@ mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../obj
 . \$topsrcdir/browser/config/mozconfig
 ac_add_options --prefix=%{_prefix}
-ac_add_options --libdir=%{_libdir}
-ac_add_options --sysconfdir=%{_sysconfdir}
-ac_add_options --mandir=%{_mandir}
-ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
 %if 0%{?firefox_use_gtk3}
 ac_add_options --enable-default-toolkit=cairo-gtk3
@@ -580,7 +574,6 @@ exit 0
 %dir %{progdir}/gtk2
 %{progdir}/gtk2/libmozgtk.so
 %endif
-%{progdir}/webapprt/
 %{progdir}/gmp-clearkey/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox
@@ -588,10 +581,10 @@ exit 0
 %{progdir}/application.ini
 %{progdir}/dependentlibs.list
 %{progdir}/*.so
+%{progdir}/icudt56l.dat
 %{progdir}/omni.ja
 %{progdir}/platform.ini
 %{progdir}/plugin-container
-%{progdir}/webapprt-stub
 %if %crashreporter
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini

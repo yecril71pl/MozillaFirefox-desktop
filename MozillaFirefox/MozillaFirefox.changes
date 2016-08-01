@@ -1,4 +1,17 @@
 -------------------------------------------------------------------
+Mon Aug  1 12:37:05 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 48.0 (boo#)
+  * requires NSS 3.24
+  * Process separation (e10s) is enabled for some of you
+  * Add-ons that have not been verified and signed by Mozilla will not load
+  * WebRTC embetterments
+  * The media parser has been redeveloped using the Rust programming
+    language
+  * better Canvas performance with speedy Skia support
+- removed obsolete mozilla-gcc6.patch
+
+-------------------------------------------------------------------
 Fri Jul 29 01:26:13 UTC 2016 - badshah400@gmail.com
 
 - Update description and screenshots in appdata.xml file.

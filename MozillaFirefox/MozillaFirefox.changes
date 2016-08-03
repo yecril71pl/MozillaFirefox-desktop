@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Mon Aug  1 12:37:05 UTC 2016 - wr@rosenauer.org
 
-- update to Firefox 48.0 (boo#)
+- update to Firefox 48.0 (boo#991809)
   * requires NSS 3.24
   * Process separation (e10s) is enabled for some of you
   * Add-ons that have not been verified and signed by Mozilla will not load
@@ -9,6 +9,57 @@ Mon Aug  1 12:37:05 UTC 2016 - wr@rosenauer.org
   * The media parser has been redeveloped using the Rust programming
     language
   * better Canvas performance with speedy Skia support
+  security fixes:
+  * MFSA 2016-62/CVE-2016-2835/CVE-2016-2836
+    Miscellaneous memory safety hazards
+  * MFSA 2016-63/CVE-2016-2830 (bmo#1255270)
+    Favicon network connection can persist when page is closed
+  * MFSA 2016-64/CVE-2016-2838 (bmo#1279814)
+    Buffer overflow rendering SVG with bidirectional content
+  * MFSA 2016-65/CVE-2016-2839 (bmo#1275339)
+    Cairo rendering crash due to memory allocation issue with FFmpeg 0.10
+  * MFSA 2016-66/CVE-2016-5251 (bmo#1255570)
+    Location bar spoofing via data URLs with malformed/invalid mediatypes
+  * MFSA 2016-67/CVE-2016-5252 (bmo#1268854)
+    Stack underflow during 2D graphics rendering
+  * MFSA 2016-68/CVE-2016-0718 (bmo#1236923)
+    Out-of-bounds read during XML parsing in Expat library
+  * MFSA 2016-69/CVE-2016-5253 (bmo#1246944)
+    Arbitrary file manipulation by local user through Mozilla updater
+    and callback application path parameter (Windows-only)
+  * MFSA 2016-70/CVE-2016-5254 (bmo#1266963)
+    Use-after-free when using alt key and toplevel menus
+  * MFSA 2016-71/CVE-2016-5255 (bmo#1212356)
+    Crash in incremental garbage collection in JavaScript
+  * MFSA 2016-72/CVE-2016-5258 (bmo#1279146)
+    Use-after-free in DTLS during WebRTC session shutdown
+  * MFSA 2016-73/CVE-2016-5259 (bmo#1282992)
+    Use-after-free in service workers with nested sync events
+  * MFSA 2016-74/CVE-2016-5260 (bmo#1280294)
+    Form input type change from password to text can store plain
+    text password in session restore file
+  * MFSA 2016-75/CVE-2016-5261 (bmo#1287266)
+    Integer overflow in WebSockets during data buffering
+  * MFSA 2016-76/CVE-2016-5262 (bmo#1277475)
+    Scripts on marquee tag can execute in sandboxed iframes
+  * MFSA 2016-77/CVE-2016-2837 (bmo#1274637)
+    Buffer overflow in ClearKey Content Decryption Module (CDM)
+    during video playback
+  * MFSA 2016-78/CVE-2016-5263 (bmo#1276897)
+    Type confusion in display transformation
+  * MFSA 2016-79/CVE-2016-5264 (bmo#1286183)
+    Use-after-free when applying SVG effects
+  * MFSA 2016-80/CVE-2016-5265 (bmo#1278013)
+    Same-origin policy violation using local HTML file and saved shortcut file
+  * MFSA 2016-81/CVE-2016-5266 (bmo#1226977)
+    Information disclosure and local file manipulation through drag and drop
+  * MFSA 2016-82/CVE-2016-5267 (bmo#1284372)
+    Addressbar spoofing with right-to-left characters on Firefox for Android
+    (Android only)
+  * MFSA 2016-83/CVE-2016-5268 (bmo#1253673)
+    Spoofing attack through text injection into internal error pages
+  * MFSA 2016-84/CVE-2016-5250 (bmo#1254688)
+    Information disclosure through Resource Timing API during page navigation
 - removed obsolete mozilla-gcc6.patch
 
 -------------------------------------------------------------------

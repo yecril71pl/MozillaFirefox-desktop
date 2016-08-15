@@ -149,6 +149,7 @@ Patch13:        mozilla-check_return.patch
 Patch15:        mozilla-exclude-nametablecpp.patch
 Patch16:        mozilla-aarch64-48bit-va.patch
 Patch17:        mozilla-binutils-visibility.patch
+Patch18:        mozilla-old_configure-bmo1282843.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -264,6 +265,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -320,6 +322,8 @@ mk_add_options MOZ_MAKE_FLAGS=%{?jobs:-j%jobs}
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../obj
 . \$topsrcdir/browser/config/mozconfig
 ac_add_options --prefix=%{_prefix}
+ac_add_options --libdir=%{_libdir}
+ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
 %if 0%{?firefox_use_gtk3}
 ac_add_options --enable-default-toolkit=cairo-gtk3

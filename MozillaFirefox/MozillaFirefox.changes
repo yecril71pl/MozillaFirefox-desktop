@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Aug 15 11:24:00 UTC 2016 - wr@rosenauer.org
+
+- added upstream patch so system plugins/extensions are correctly
+  loaded again on x86-64 (bmo#1282843)
+  (mozilla-old_configure-bmo1282843.patch)
+
+-------------------------------------------------------------------
 Mon Aug  1 12:37:05 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 48.0 (boo#991809)

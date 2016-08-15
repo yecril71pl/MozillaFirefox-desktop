@@ -14,6 +14,7 @@ mozilla-check_return.patch
 mozilla-exclude-nametablecpp.patch
 mozilla-aarch64-48bit-va.patch
 mozilla-binutils-visibility.patch
+mozilla-old_configure-bmo1282843.patch
 
 # Firefox patches
 firefox-kde.patch

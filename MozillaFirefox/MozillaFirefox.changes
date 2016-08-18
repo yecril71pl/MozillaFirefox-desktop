@@ -6,6 +6,18 @@ Mon Aug 15 11:24:00 UTC 2016 - wr@rosenauer.org
   (mozilla-old_configure-bmo1282843.patch)
 
 -------------------------------------------------------------------
+Fri Aug  5 13:47:12 UTC 2016 - pcerny@suse.com
+
+- Fix for possible buffer overrun (bsc#990856)
+  CVE-2016-6354 (bmo#1292534)
+  [mozilla-flex_buffer_overrun.patch]
+
+-------------------------------------------------------------------
+Wed Aug  3 03:38:47 UTC 2016 - badshah400@gmail.com
+
+- Update mozilla-gtk3_20.patch to latest version from Fedora.
+
+-------------------------------------------------------------------
 Mon Aug  1 12:37:05 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 48.0 (boo#991809)

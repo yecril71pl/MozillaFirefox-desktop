@@ -1,7 +1,7 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2016 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #               2006-2016 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -154,6 +154,9 @@ Patch18:        mozilla-old_configure-bmo1282843.patch
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
 Patch103:       firefox-branded-icons.patch
+# hotfix
+Patch150:       mozilla-flex_buffer_overrun.patch
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
@@ -270,6 +273,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch150 -p1
 
 %build
 # no need to add build time to binaries

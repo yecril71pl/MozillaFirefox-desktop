@@ -20,3 +20,4 @@ mozilla-old_configure-bmo1282843.patch
 firefox-kde.patch
 firefox-no-default-ualocale.patch
 firefox-branded-icons.patch
+mozilla-flex_buffer_overrun.patch

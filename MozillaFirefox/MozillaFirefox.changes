@@ -1,4 +1,18 @@
 -------------------------------------------------------------------
+Sat Aug 20 10:58:26 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 48.0.1:
+  * Fix an audio regression impacting some major websites
+    (bmo#1295296)
+  * Fix a top crash in the JavaScript engine (bmo#1290469)
+  * Fix a startup crash issue caused by Websense (bmo#1291738)
+  * Fix a different behavior with e10s / non-e10s on <select> and
+    mouse events (bmo#1291078)
+  * Fix a top crash caused by plugin issues (bmo#1264530)
+  * Fix a shutdown issue (bmo#1276920)
+  * Fix a crash in WebRTC
+
+-------------------------------------------------------------------
 Mon Aug 15 11:24:00 UTC 2016 - wr@rosenauer.org
 
 - added upstream patch so system plugins/extensions are correctly

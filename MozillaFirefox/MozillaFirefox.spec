@@ -1,7 +1,7 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2016 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
 #               2006-2016 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 48
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 20160730000000
+%define releasedate 20160818000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1

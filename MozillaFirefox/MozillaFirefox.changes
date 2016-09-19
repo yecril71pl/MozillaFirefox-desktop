@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Aug 30 20:25:38 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 48.0.2:
+  * Mitigate a startup crash issue caused on Windows (bmo#1291738)
+
+-------------------------------------------------------------------
 Sat Aug 20 10:58:26 UTC 2016 - astieger@suse.com
 
 - Mozilla Firefox 48.0.1:

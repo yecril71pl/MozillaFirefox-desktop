@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 48
-%define mainver %major.0.2
+%define major 49
+%define mainver %major.0
 %define update_channel release
-%define releasedate 20160824000000
+%define releasedate 20160919000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -75,7 +75,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.12
-BuildRequires:  mozilla-nss-devel >= 3.24
+BuildRequires:  mozilla-nss-devel >= 3.25
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -146,10 +146,8 @@ Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
 Patch12:        mozilla-gtk3_20.patch
 Patch13:        mozilla-check_return.patch
-Patch15:        mozilla-exclude-nametablecpp.patch
-Patch16:        mozilla-aarch64-48bit-va.patch
+Patch14:        mozilla-skia-overflow.patch
 Patch17:        mozilla-binutils-visibility.patch
-Patch18:        mozilla-old_configure-bmo1282843.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -265,10 +263,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch12 -p1
 %endif
 %patch13 -p1
-%patch15 -p1
-%patch16 -p1
+%patch14444 -p1
 %patch17 -p1
-%patch18 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

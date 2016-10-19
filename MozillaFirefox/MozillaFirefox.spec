@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 49
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 20160919000000
+%define releasedate 20160923000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -144,7 +144,6 @@ Patch6:         mozilla-ntlm-full-path.patch
 Patch8:         mozilla-openaes-decl.patch
 Patch10:        mozilla-no-stdcxx-check.patch
 Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
-Patch12:        mozilla-gtk3_20.patch
 Patch13:        mozilla-check_return.patch
 Patch14:        mozilla-skia-overflow.patch
 Patch17:        mozilla-binutils-visibility.patch
@@ -259,11 +258,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch10 -p1
 %patch11 -p1
-%if 0%{?firefox_use_gtk3}
-%patch12 -p1
-%endif
 %patch13 -p1
-%patch14444 -p1
+%patch14 -p1
 %patch17 -p1
 # Firefox
 %patch101 -p1

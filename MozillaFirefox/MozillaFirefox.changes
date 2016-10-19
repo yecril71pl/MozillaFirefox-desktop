@@ -1,4 +1,16 @@
 -------------------------------------------------------------------
+Wed Oct 12 20:42:28 UTC 2016 - badshah400@gmail.com
+
+- Drop mozilla-gtk3_20.patch; obsoleted by Firefox version 49.0
+  and fixes have been incorporated by upstream.
+
+-------------------------------------------------------------------
+Fri Sep 23 20:36:39 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 49.0.1:
+  * Mitigate a startup crash issue caused by Websense - bmo#1304783
+
+-------------------------------------------------------------------
 Tue Sep 20 07:09:52 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 49.0 (boo#999701)

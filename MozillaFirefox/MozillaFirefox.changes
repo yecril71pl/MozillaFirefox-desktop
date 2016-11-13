@@ -1,4 +1,21 @@
 -------------------------------------------------------------------
+Mon Oct 24 09:41:17 UTC 2016 - astieger@suse.com
+
+- Mozilla Firefox 49.0.2:
+  * CVE-2016-5287: Crash in nsTArray_base (bsc#1006475)
+  * CVE-2016-5288: Web content can read cache entries (bsc#1006476)
+  * Asynchronous rendering of the Flash plugins is now enabled by
+    default
+  * Change D3D9 default fallback preference to prevent graphical
+    artifacts
+  * Network issue prevents some users from seeing the Firefox UI on
+    startup
+  * Web compatibility issue with file uploads
+  * Web compatibility issue with Array.prototype.values
+  * Diagnostic information on timing for tab switching
+  * Fix a Canvas filters graphics issue affecting HTML5 apps
+
+-------------------------------------------------------------------
 Wed Oct 12 20:42:28 UTC 2016 - badshah400@gmail.com
 
 - Drop mozilla-gtk3_20.patch; obsoleted by Firefox version 49.0

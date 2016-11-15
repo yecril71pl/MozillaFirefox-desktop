@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 49
-%define mainver %major.0.2
+%define major 50
+%define mainver %major.0
 %define update_channel release
-%define releasedate 20161020000000
+%define releasedate 20161113000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -54,10 +54,10 @@
 %define branding 1
 %endif
 %define localize 1
-%ifarch aarch64 ppc ppc64 ppc64le s390 s390x ia64 %arm
-%define crashreporter 0
-%else
+%ifarch %ix86 x86_64
 %define crashreporter 1
+%else
+%define crashreporter 0
 %endif
 
 Name:           %{pkgname}
@@ -75,7 +75,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.12
-BuildRequires:  mozilla-nss-devel >= 3.25
+BuildRequires:  mozilla-nss-devel >= 3.26.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -203,6 +203,7 @@ of %{appname}.
 Summary:        Extra translations for %{appname}
 Group:          System/Localization
 Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;uz;vi;zu)
+Provides:       locale(%{name}:ach;af;an;as;ast;az;be;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -334,7 +335,7 @@ ac_add_options --enable-pie
 ac_add_options --disable-optimize
 %endif
 %endif
-%ifarch ppc ppc64 ppc64le aarch64 %arm
+%ifarch ppc ppc64 ppc64le %arm
 ac_add_options --disable-elf-hack
 %endif
 ac_add_options --with-system-nspr
@@ -363,7 +364,7 @@ ac_add_options --with-fpu=vfpv3-d16
 ac_add_options --with-float-abi=hard
 ac_add_options --with-arch=armv7-a
 %endif
-%ifarch %arm aarch64 s390x
+%ifarch %arm s390x
 ac_add_options --disable-webrtc
 %endif
 EOF
@@ -583,6 +584,7 @@ exit 0
 %{progdir}/*.so
 %{progdir}/icudt56l.dat
 %{progdir}/omni.ja
+%{progdir}/fonts/
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %if %crashreporter

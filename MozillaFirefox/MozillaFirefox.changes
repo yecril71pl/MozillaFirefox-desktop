@@ -1,4 +1,85 @@
 -------------------------------------------------------------------
+Mon Nov 14 21:07:03 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 50.0 (boo#1009026)
+  * requires NSS 3.26.2
+  new features
+  * Updates to keyboard shortcuts
+    Set a preference to have Ctrl+Tab cycle through tabs in recently
+    used order
+    View a page in Reader Mode by using Ctrl+Alt+R
+  * Added option to Find in page that allows users to limit search to
+    whole words only
+  * Added download protection for a large number of executable file
+    types on Windows, Mac and Linux
+  * Fixed rendering of dashed and dotted borders with rounded corners
+    (border-radius)
+  * Added a built-in Emoji set for operating systems without native
+    Emoji fonts (Windows 8.0 and lower and Linux)
+  * Blocked versions of libavcodec older than 54.35.1
+  * additional locale
+  security fixes:
+  * MFSA 2016-89
+    CVE-2016-5296: Heap-buffer-overflow WRITE in rasterize_edges_1
+                   (bmo#1292443)
+    CVE-2016-5292: URL parsing causes crash (bmo#1288482)
+    CVE-2016-5293: Write to arbitrary file with updater and moz
+                   maintenance service using updater.log hardlink
+		   (Windows only) (bmo#1246945)
+    CVE-2016-5294: Arbitrary target directory for result files of
+                   update process (Windows only) (bmo#1246972)
+    CVE-2016-5297: Incorrect argument length checking in Javascript
+                   (bmo#1303678)
+    CVE-2016-9064: Addons update must verify IDs match between
+                   current and new versions (bmo#1303418)
+    CVE-2016-9065: Firefox for Android location bar spoofing usingfullscreen
+                   (Android only) (bmo#1306696)
+    CVE-2016-9066: Integer overflow leading to a buffer overflow in
+                   nsScriptLoadHandler (bmo#1299686)
+    CVE-2016-9067: heap-use-after-free in nsINode::ReplaceOrInsertBefore
+                   (bmo#1301777, bmo#1308922 (CVE-2016-9069))
+    CVE-2016-9068: heap-use-after-free in nsRefreshDriver (bmo#1302973)
+    CVE-2016-9072: 64-bit NPAPI sandbox isn't enabled on fresh profile
+                   (bmo#1300083) (Windows only)
+    CVE-2016-9075: WebExtensions can access the mozAddonManager API
+                   and use it to gain elevated privileges (bmo#1295324)
+    CVE-2016-9077: Canvas filters allow feDisplacementMaps to be applied
+                   to cross-origin images, allowing timing attacks on them
+		   (bmo#1298552)
+    CVE-2016-5291: Same-origin policy violation using local HTML file
+                    and saved shortcut file (bmo#1292159)
+    CVE-2016-5295: Mozilla Maintenance Service: Ability to read
+                   arbitrary files as SYSTEM (Windows only) (bmo#1247239)
+    CVE-2016-5298: SSL indicator can mislead the user about the real
+                   URL visited (bmo#1227538) (Android only)
+    CVE-2016-5299: Firefox AuthToken in broadcast protected with
+                   signature-level permission can be accessed by an
+		   application installed beforehand that defines the
+		   same permissions (bmo#1245791) (Android only)
+    CVE-2016-9061: API Key (glocation) in broadcast protected with
+                   signature-level permission can be accessed by an
+		   application installed beforehand that defines the
+		   same permissions (Android only) (bmo#1245795)
+    CVE-2016-9062: Private browsing browser traces (android) in
+                   browser.db and wal file (Android only) (bmo#1294438)
+    CVE-2016-9070: Sidebar bookmark can have reference to chrome window
+                   (bmo#1281071)
+    CVE-2016-9073: windows.create schema doesn't specify "format": "relativeUrl"
+                   (bmo#1289273)
+    CVE-2016-9074: Insufficient timing side-channel resistance in
+                   divSpoiler (bmo#1293334) (fixed via NSS 3.26.1)
+    CVE-2016-9076: select dropdown menu can be used for URL bar
+                   spoofing on e10s (bmo#1276976)
+    CVE-2016-9063: Possible integer overflow to fix inside XML_Parse
+                   in expat (bmo#1274777)
+    CVE-2016-9071: Probe browser history via HSTS/301 redirect + CSP
+                   (bmo#1285003)
+    CVE-2016-5289: Memory safety bugs fixed in Firefox 50
+    CVE-2016-5290: Memory safety bugs fixed in Firefox 50 and Firefox ESR 45.5
+- make aarch64 build more similar to x86_64 build (remove conditionals
+  that don't seem to be necessary anymore)
+
+-------------------------------------------------------------------
 Mon Oct 24 09:41:17 UTC 2016 - astieger@suse.com
 
 - Mozilla Firefox 49.0.2:

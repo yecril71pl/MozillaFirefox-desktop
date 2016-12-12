@@ -1,4 +1,28 @@
 -------------------------------------------------------------------
+Mon Dec 12 21:18:41 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 50.1.0 (boo#)
+
+-------------------------------------------------------------------
+Fri Dec  9 17:57:22 UTC 2016 - cgrobertson@novell.com
+
+- added patch mozilla-aarch64-startup-crash.patch (bsc#1011922)
+
+-------------------------------------------------------------------
+Thu Dec  1 02:49:45 UTC 2016 - wr@rosenauer.org
+
+- update to Firefox 50.0.2
+  * Firefox crashes with 3rd party Chinese IME when using IME text
+    (50.0.1)
+  security fixes (in 50.0.1): (boo#1012807)
+  * MFSA 2016-91
+    CVE-2016-9078: data: URL can inherit wrong origin after an
+                   HTTP redirect (bmo#1317641)
+  security fixes (in 50.0.2) (boo#1012964)
+  * MFSA 2016-92
+    CVE-2016-9079: Use-after-free in SVG Animation (bmo#1321066)
+
+-------------------------------------------------------------------
 Mon Nov 14 21:07:03 UTC 2016 - wr@rosenauer.org
 
 - update to Firefox 50.0 (boo#1009026)

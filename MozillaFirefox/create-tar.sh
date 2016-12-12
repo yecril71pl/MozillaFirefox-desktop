@@ -7,8 +7,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="dc617d65c9f0cdbbe4351cc1e5c288b05f25f8f7"
-VERSION="50.0"
+RELEASE_TAG="8612c3320053b796678921f8f23358e3e9df997e"
+VERSION="50.1.0"
 
 # mozilla
 if [ -d mozilla ]; then

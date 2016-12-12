@@ -12,6 +12,7 @@ mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-check_return.patch
 mozilla-skia-overflow.patch
 mozilla-binutils-visibility.patch
+mozilla-aarch64-startup-crash.patch
 
 # Firefox patches
 firefox-kde.patch

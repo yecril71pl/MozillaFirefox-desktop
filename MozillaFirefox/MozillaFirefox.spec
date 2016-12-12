@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 50
-%define mainver %major.0
+%define mainver %major.1.0
 %define update_channel release
-%define releasedate 20161113000000
+%define releasedate 20161212000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -153,6 +153,7 @@ Patch102:       firefox-no-default-ualocale.patch
 Patch103:       firefox-branded-icons.patch
 # hotfix
 Patch150:       mozilla-flex_buffer_overrun.patch
+Patch200:       mozilla-aarch64-startup-crash.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
@@ -202,7 +203,6 @@ of %{appname}.
 %package translations-other
 Summary:        Extra translations for %{appname}
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;ak;as;ast;be;bg;bn_BD;bn_IN;br;bs;csb;cy;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gu_IN;he;hi_IN;hr;hy_AM;id;is;kk;km;kn;ku;lg;lij;lt;lv;mai;mk;ml;mr;nn_NO;nso;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;ta_LK;te;th;tr;uk;uz;vi;zu)
 Provides:       locale(%{name}:ach;af;an;as;ast;az;be;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
@@ -267,6 +267,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch102 -p1
 %patch103 -p1
 %patch150 -p1
+%patch200 -p1
 
 %build
 # no need to add build time to binaries

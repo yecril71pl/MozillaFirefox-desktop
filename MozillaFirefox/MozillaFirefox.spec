@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 50
-%define mainver %major.1.0
-%define update_channel release
-%define releasedate 20161212000000
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 20170117000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -74,8 +74,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.12
-BuildRequires:  mozilla-nss-devel >= 3.26.2
+BuildRequires:  mozilla-nspr-devel >= 4.13.1
+BuildRequires:  mozilla-nss-devel >= 3.28.1
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -152,7 +152,6 @@ Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
 Patch103:       firefox-branded-icons.patch
 # hotfix
-Patch150:       mozilla-flex_buffer_overrun.patch
 Patch200:       mozilla-aarch64-startup-crash.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -266,7 +265,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch150 -p1
 %patch200 -p1
 
 %build

@@ -1,7 +1,37 @@
 -------------------------------------------------------------------
+Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 51.0b14 (boo#)
+  * requires NSPR >= 4.13.1, NSS >= 3.28.1
+- removed obsolete patches
+  * mozilla-flex_buffer_overrun.patch
+
+-------------------------------------------------------------------
 Mon Dec 12 21:18:41 UTC 2016 - wr@rosenauer.org
 
-- update to Firefox 50.1.0 (boo#)
+- update to Firefox 50.1.0 (boo#1015422)
+  * MFSA 2016-94
+    CVE-2016-9894: Buffer overflow in SkiaGL (bmo#1306628)
+    CVE-2016-9899: Use-after-free while manipulating DOM events and
+                   audio elements (bmo#1317409)
+    CVE-2016-9895: CSP bypass using marquee tag (bmo#1312272)
+    CVE-2016-9896: Use-after-free with WebVR (bmo#1315543)
+    CVE-2016-9897: Memory corruption in libGLES (bmo#1301381)
+    CVE-2016-9898: Use-after-free in Editor while manipulating
+                   DOM subtrees (bmo#1314442)
+    CVE-2016-9900: Restricted external resources can be loaded by
+                   SVG images through data URLs (bmo#1319122)
+    CVE-2016-9904: Cross-origin information leak in shared atoms
+                   (bmo#1317936)
+    CVE-2016-9901: Data from Pocket server improperly sanitized
+                   before execution (bmo#1320057)
+    CVE-2016-9902: Pocket extension does not validate the origin
+                   of events (bmo#1320039)
+    CVE-2016-9903: XSS injection vulnerability in add-ons SDK
+                   (bmo#1315435)
+    CVE-2016-9080: Memory safety bugs fixed in Firefox 50.1
+    CVE-2016-9893: Memory safety bugs fixed in Firefox 50.1 and
+                   Firefox ESR 45.6
 
 -------------------------------------------------------------------
 Fri Dec  9 17:57:22 UTC 2016 - cgrobertson@novell.com

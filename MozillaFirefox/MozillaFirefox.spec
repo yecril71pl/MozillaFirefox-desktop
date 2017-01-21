@@ -1,8 +1,8 @@
 #
 # spec file for package MozillaFirefox
 #
-# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
-#               2006-2016 Wolfgang Rosenauer
+# Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
+#               2006-2017 Wolfgang Rosenauer
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -35,6 +35,9 @@
 %define progname firefox-dev
 %define pkgname  firefox-dev-edition
 %define appname  Firefox Developer Edition
+%endif
+%if 0%{?suse_version} > 1315
+%define firefox_use_gtk3 1
 %endif
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}

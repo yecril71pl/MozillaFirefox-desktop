@@ -1,8 +1,19 @@
 -------------------------------------------------------------------
 Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 51.0b14 (boo#)
+- update to Firefox 51.0b14
   * requires NSPR >= 4.13.1, NSS >= 3.28.1
+  * Added support for FLAC (Free Lossless Audio Codec) playback
+  * Added support for WebGL 2
+  * Added Georgian (ka) and Kabyle (kab) locales
+  * Support saving passwords for forms without 'submit' events
+  * Improved video performance for users without GPU acceleration
+  * Zoom indicator is shown in the URL bar if the zoom level is not
+    at default level
+  * View passwords from the prompt before saving them
+  * Remove Belarusian (be) locale
+  * Use Skia for content rendering (Linux)
+- switch Firefox to Gtk3 for Tumbleweed and Leap >= 43
 - removed obsolete patches
   * mozilla-flex_buffer_overrun.patch
 

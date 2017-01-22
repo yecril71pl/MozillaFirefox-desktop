@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 51.0b14
+- update to Firefox 51.0 (boo#)
   * requires NSPR >= 4.13.1, NSS >= 3.28.1
   * Added support for FLAC (Free Lossless Audio Codec) playback
   * Added support for WebGL 2

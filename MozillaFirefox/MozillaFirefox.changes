@@ -16,6 +16,8 @@ Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
 - switch Firefox to Gtk3 for Tumbleweed and Leap >= 43
 - removed obsolete patches
   * mozilla-flex_buffer_overrun.patch
+- updated RPM locale support tag
+- improve recognition of LANGUAGE env variable (boo#1017174)
 
 -------------------------------------------------------------------
 Mon Dec 12 21:18:41 UTC 2016 - wr@rosenauer.org

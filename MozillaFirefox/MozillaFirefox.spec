@@ -36,7 +36,7 @@
 %define pkgname  firefox-dev-edition
 %define appname  Firefox Developer Edition
 %endif
-%if 0%{?suse_version} > 1315
+%if 0%{?suse_version} > 1320
 %define firefox_use_gtk3 1
 %endif
 %define progdir %{_prefix}/%_lib/%{progname}
@@ -205,7 +205,7 @@ of %{appname}.
 %package translations-other
 Summary:        Extra translations for %{appname}
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;an;as;ast;az;be;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
+Provides:       locale(%{name}:ach;af;an;as;ast;az;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;ka;kab;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 
@@ -398,9 +398,9 @@ install -m 644 %{SOURCE9} %{buildroot}%{progdir}/browser/defaults/preferences/fi
 %if %localize
 rm -f %{_tmppath}/translations.*
 touch %{_tmppath}/translations.{common,other}
-for locale in $(awk '{ print $1; }' ../mozilla/browser/locales/shipped-locales); do
+for locale in $(awk '{ print $1; }' %{SOURCE17}); do
   case $locale in
-   ja-JP-mac|en-US)
+   ja-JP-mac|en-US|'')
 	;;
    *)
    	pushd $RPM_BUILD_DIR/compare-locales

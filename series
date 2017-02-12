@@ -9,12 +9,7 @@ mozilla-idldir.patch
 mozilla-openaes-decl.patch
 mozilla-no-stdcxx-check.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
-mozilla-check_return.patch
-mozilla-skia-overflow.patch
-mozilla-binutils-visibility.patch
 mozilla-aarch64-startup-crash.patch
-mozilla-skia-ppc-endianess.patch
-mozilla-disable-skia-be.patch
 
 # Firefox patches
 firefox-kde.patch

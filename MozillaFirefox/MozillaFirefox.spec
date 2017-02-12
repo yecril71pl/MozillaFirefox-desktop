@@ -144,26 +144,20 @@ Patch3:         mozilla-kde.patch
 Patch4:         mozilla-preferences.patch
 Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
-Patch8:         mozilla-openaes-decl.patch
-Patch10:        mozilla-no-stdcxx-check.patch
-Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
-Patch13:        mozilla-check_return.patch
-Patch14:        mozilla-skia-overflow.patch
-Patch17:        mozilla-binutils-visibility.patch
-Patch18:        mozilla-skia-ppc-endianess.patch
-Patch19:        mozilla-disable-skia-be.patch
+Patch7:         mozilla-openaes-decl.patch
+Patch8:         mozilla-no-stdcxx-check.patch
+Patch9:         mozilla-reduce-files-per-UnifiedBindings.patch
+Patch10:        mozilla-aarch64-startup-crash.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
 Patch103:       firefox-branded-icons.patch
-# hotfix
-Patch200:       mozilla-aarch64-startup-crash.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires(post):   coreutils shared-mime-info desktop-file-utils
 Requires(postun): shared-mime-info desktop-file-utils
 %if %branding
-Requires:       %{name}-branding > 39.0
+Requires:       %{name}-branding > 44.0
 %endif
 Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
 Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
@@ -260,19 +254,14 @@ cd $RPM_BUILD_DIR/mozilla
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch13 -p1
-%patch14 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch200 -p1
 
 %build
 # no need to add build time to binaries
@@ -564,7 +553,6 @@ exit 0
 %dir %{progdir}/browser/
 %dir %{progdir}/browser/chrome/
 %dir %{progdir}/browser/extensions/
-%{progdir}/browser/components/
 %{progdir}/browser/defaults
 %{progdir}/browser/features/
 %{progdir}/browser/icons/
@@ -586,9 +574,10 @@ exit 0
 %{progdir}/firefox
 %{progdir}/firefox-bin
 %{progdir}/application.ini
+%{progdir}/chrome.manifest
 %{progdir}/dependentlibs.list
+%{progdir}/icudt58l.dat
 %{progdir}/*.so
-%{progdir}/icudt56l.dat
 %{progdir}/omni.ja
 %{progdir}/fonts/
 %{progdir}/platform.ini
@@ -597,6 +586,7 @@ exit 0
 %{progdir}/crashreporter
 %{progdir}/crashreporter.ini
 %{progdir}/Throbber-small.gif
+%{progdir}/minidump-analyzer
 %{progdir}/browser/crashreporter-override.ini
 %endif
 %{_datadir}/applications/%{desktop_file_name}.desktop

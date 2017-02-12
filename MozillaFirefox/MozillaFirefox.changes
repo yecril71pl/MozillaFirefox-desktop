@@ -1,4 +1,25 @@
 -------------------------------------------------------------------
+Sun Feb 12 08:16:24 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.0b5
+  * requires NSS >= 3.28.2
+  * Pages containing insecure password fields now display a warning
+    directly within username and password fields.
+  * Windows 8 touch screen support for multiprocess Firefox
+  * Send and open a tab from one device to another with Sync
+  * Removed NPAPI support for plugins other than Flash. Silverlight,
+    Java, Acrobat and the like are no longer supported.
+  * Removed Battery Status API to reduce fingerprinting of users by
+    trackers
+- removed obsolete patches
+  * mozilla-binutils-visibility.patch
+  * mozilla-check_return.patch
+  * mozilla-disable-skia-be.patch
+  * mozilla-skia-overflow.patch
+  * mozilla-skia-ppc-endianess.patch
+- rebased patches
+
+-------------------------------------------------------------------
 Fri Jan 27 20:25:59 UTC 2017 - astieger@suse.com
 
 - Mozilla Firefox 51.0.1:

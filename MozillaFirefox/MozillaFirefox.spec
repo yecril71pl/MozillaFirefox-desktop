@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 51
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
-%define releasedate 20170119000000
+%define releasedate 20170126000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -150,6 +150,8 @@ Patch11:        mozilla-reduce-files-per-UnifiedBindings.patch
 Patch13:        mozilla-check_return.patch
 Patch14:        mozilla-skia-overflow.patch
 Patch17:        mozilla-binutils-visibility.patch
+Patch18:        mozilla-skia-ppc-endianess.patch
+Patch19:        mozilla-disable-skia-be.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -264,6 +266,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch13 -p1
 %patch14 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

@@ -1,7 +1,14 @@
 -------------------------------------------------------------------
+Fri Jan 27 20:25:59 UTC 2017 - astieger@suse.com
+
+- Mozilla Firefox 51.0.1:
+  - Multiprocess incompatibility did not correctly register with
+    some add-ons (bmo#1333423)
+
+-------------------------------------------------------------------
 Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 51.0 (boo#)
+- update to Firefox 51.0
   * requires NSPR >= 4.13.1, NSS >= 3.28.1
   * Added support for FLAC (Free Lossless Audio Codec) playback
   * Added support for WebGL 2
@@ -13,11 +20,65 @@ Fri Jan 20 13:57:56 UTC 2017 - wr@rosenauer.org
   * View passwords from the prompt before saving them
   * Remove Belarusian (be) locale
   * Use Skia for content rendering (Linux)
-- switch Firefox to Gtk3 for Tumbleweed and Leap >= 43
+  * MFSA 2017-01
+    CVE-2017-5375: Excessive JIT code allocation allows bypass of
+                   ASLR and DEP (bmo#1325200, boo#1021814)
+    CVE-2017-5376: Use-after-free in XSL (bmo#1311687, boo#1021817)
+    CVE-2017-5377: Memory corruption with transforms to create
+                   gradients in Skia (bmo#1306883, boo#1021826)
+    CVE-2017-5378: Pointer and frame data leakage of Javascript objects
+                   (bmo#1312001, bmo#1330769, boo#1021818)
+    CVE-2017-5379: Use-after-free in Web Animations
+                   (bmo#1309198,boo#1021827)
+    CVE-2017-5380: Potential use-after-free during DOM manipulations
+                   (bmo#1322107, boo#1021819)
+    CVE-2017-5390: Insecure communication methods in Developer Tools
+                   JSON viewer (bmo#1297361, boo#1021820)
+    CVE-2017-5389: WebExtensions can install additional add-ons via
+                   modified host requests (bmo#1308688, boo#1021828)
+    CVE-2017-5396: Use-after-free with Media Decoder
+                   (bmo#1329403, boo#1021821)
+    CVE-2017-5381: Certificate Viewer exporting can be used to navigate
+                   and save to arbitrary filesystem locations
+		   (bmo#1017616, boo#1021830)
+    CVE-2017-5382: Feed preview can expose privileged content errors
+                   and exceptions (bmo#1295322, boo#1021831)
+    CVE-2017-5383: Location bar spoofing with unicode characters
+                   (bmo#1323338, bmo#1324716, boo#1021822)
+    CVE-2017-5384: Information disclosure via Proxy Auto-Config (PAC)
+                   (bmo#1255474, boo#1021832)
+    CVE-2017-5385: Data sent in multipart channels ignores referrer-policy
+                   response headers (bmo#1295945, boo#1021833)
+    CVE-2017-5386: WebExtensions can use data: protocol to affect other
+                   extensions (bmo#1319070, boo#1021823)
+    CVE-2017-5394: Android location bar spoofing using fullscreen and
+                   JavaScript events (bmo#1222798)
+    CVE-2017-5391: Content about: pages can load privileged about: pages
+                   (bmo#1309310, boo#1021835)
+    CVE-2017-5392: Weak references using multiple threads on weak proxy
+                   objects lead to unsafe memory usage (bmo#1293709)
+		   (Android only)
+    CVE-2017-5393: Remove addons.mozilla.org CDN from whitelist for
+                   mozAddonManager (bmo#1309282, boo#1021837)
+    CVE-2017-5395: Android location bar spoofing during scrolling
+                   (bmo#1293463) (Android only)
+    CVE-2017-5387: Disclosure of local file existence through TRACK
+                   tag error messages (bmo#1295023, boo#1021839)
+    CVE-2017-5388: WebRTC can be used to generate a large amount of
+                   UDP traffic for DDOS attacks
+		   (bmo#1281482, boo#1021840)
+    CVE-2017-5374: Memory safety bugs fixed in Firefox 51 (boo#1021841)
+    CVE-2017-5373: Memory safety bugs fixed in Firefox 51 and
+                   Firefox ESR 45.7 (boo#1021824)
+- switch Firefox to Gtk3 for Tumbleweed
 - removed obsolete patches
   * mozilla-flex_buffer_overrun.patch
 - updated RPM locale support tag
 - improve recognition of LANGUAGE env variable (boo#1017174)
+- add upstream patch to fix PPC64LE (bmo#1319389)
+  (mozilla-skia-ppc-endianess.patch)
+- fix build without skia (big endian archs) (bmo#1319374)
+  (mozilla-disable-skia-be.patch)
 
 -------------------------------------------------------------------
 Mon Dec 12 21:18:41 UTC 2016 - wr@rosenauer.org

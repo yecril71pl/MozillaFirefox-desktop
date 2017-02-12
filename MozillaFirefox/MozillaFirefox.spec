@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 51
-%define mainver %major.0.1
-%define update_channel release
-%define releasedate 20170126000000
+%define mainver %major.99
+%define update_channel beta
+%define releasedate 20170111000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -78,7 +78,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.13.1
-BuildRequires:  mozilla-nss-devel >= 3.28.1
+BuildRequires:  mozilla-nss-devel >= 3.28.2
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel

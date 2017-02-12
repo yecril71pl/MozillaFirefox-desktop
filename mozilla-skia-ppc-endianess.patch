@@ -1,0 +1,45 @@
+
+# HG changeset patch
+# User Mike Hommey <mh+mozilla@glandium.org>
+# Date 1479812942 -32400
+# Node ID a6d015fd1add5e16cf37f5868cd2734bafb709b4
+# Parent  319e03b9e8a22a8fba3756cb1afc8b9e7a6724c8
+Bug 1319389 - Generically set SK_CPU_[BL]ENDIAN based on __BYTE_ORDER__ when available. r?jrmuizel
+
+
+diff --git a/gfx/skia/skia/include/core/SkPreConfig.h b/gfx/skia/skia/include/core/SkPreConfig.h
+--- a/gfx/skia/skia/include/core/SkPreConfig.h
++++ b/gfx/skia/skia/include/core/SkPreConfig.h
+@@ -67,25 +67,29 @@
+ 
+ #if !defined(SK_WARN_UNUSED_RESULT)
+     #define SK_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
+ #endif
+ 
+ //////////////////////////////////////////////////////////////////////
+ 
+ #if !defined(SK_CPU_BENDIAN) && !defined(SK_CPU_LENDIAN)
+-    #if defined(__sparc) || defined(__sparc__) || \
++    #if defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
++        #define SK_CPU_BENDIAN
++    #elif defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
++        #define SK_CPU_LENDIAN
++    #elif defined(__sparc) || defined(__sparc__) || \
+       defined(_POWER) || defined(__powerpc__) || \
+       defined(__ppc__) || defined(__hppa) || \
+       defined(__PPC__) || defined(__PPC64__) || \
+       defined(_MIPSEB) || defined(__ARMEB__) || \
+       defined(__s390__) || \
+       (defined(__sh__) && defined(__BIG_ENDIAN__)) || \
+       (defined(__ia64) && defined(__BIG_ENDIAN__))
+-         #define SK_CPU_BENDIAN
++        #define SK_CPU_BENDIAN
+     #else
+         #define SK_CPU_LENDIAN
+     #endif
+ #endif
+ 
+ //////////////////////////////////////////////////////////////////////
+ 
+ #if defined(__i386) || defined(_M_IX86) ||  defined(__x86_64__) || defined(_M_X64)
+

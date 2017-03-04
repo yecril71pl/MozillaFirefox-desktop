@@ -1,11 +1,11 @@
 # HG changeset patch
-# Parent  e4b8399bc2706a7b5331407b232bc8845aea7f2e
+# Parent  1c4e33861cfcffe5a189802cf97957b0701260db
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
 --- /dev/null
 +++ b/browser/base/content/browser-kde.xul
-@@ -0,0 +1,1133 @@
+@@ -0,0 +1,1134 @@
 +#filter substitution
 +<?xml version="1.0"?>
 +# -*- Mode: HTML -*-
@@ -154,6 +154,7 @@ new file mode 100644
 +           id="PopupAutoComplete"
 +           noautofocus="true"
 +           hidden="true"
++           overflowpadding="4"
 +           norolluponanchor="true" />
 +
 +    <!-- for search with one-off buttons -->

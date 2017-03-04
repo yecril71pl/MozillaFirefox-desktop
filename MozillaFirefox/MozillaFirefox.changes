@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Sun Feb 12 08:16:24 UTC 2017 - wr@rosenauer.org
+Sat Feb 25 15:19:15 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 52.0b5
+- update to Firefox 52.0b9
   * requires NSS >= 3.28.2
   * Pages containing insecure password fields now display a warning
     directly within username and password fields.
@@ -18,6 +18,7 @@ Sun Feb 12 08:16:24 UTC 2017 - wr@rosenauer.org
   * mozilla-skia-overflow.patch
   * mozilla-skia-ppc-endianess.patch
 - rebased patches
+- enable rust usage for Tumbleweed
 
 -------------------------------------------------------------------
 Fri Jan 27 20:25:59 UTC 2017 - astieger@suse.com

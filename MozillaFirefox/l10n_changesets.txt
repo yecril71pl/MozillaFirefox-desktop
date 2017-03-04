@@ -5,7 +5,7 @@ ar 0edb7b32133a
 as ee642d74fde9
 ast 80b866a98b5a
 az 07778ef756d4
-bg 1d8a8f804040
+bg 3e1affaac949
 bn-BD 6182802acd04
 bn-IN 0775fc62a38e
 br 88938f2eb7e2
@@ -29,7 +29,7 @@ et 5ce460a1227b
 eu 55202a38f74c
 fa de4daf555606
 ff 98974e0270a8
-fi f8b1401c07d3
+fi 903b0416494a
 fr 7e9efb5f39b1
 fy-NL 551f14553b31
 ga-IE 94a750872504
@@ -46,8 +46,8 @@ hy-AM ee9609100a98
 id 584289a98164
 is 0de2039f0ead
 it ac8abee179d4
-ja 341947354a69
-ja-JP-mac 1c99dfb48618
+ja c596f800130a
+ja-JP-mac e3b94e022b7d
 ka fd11643d032b
 kab 89a29ca718ef
 kk bbde07088662

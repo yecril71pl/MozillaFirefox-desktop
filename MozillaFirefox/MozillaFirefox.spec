@@ -21,10 +21,16 @@
 %define major 51
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 20170111000000
+%define releasedate 20170224000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
+
+%if 0%{?suse_version} > 1320
+%define firefox_use_gtk3 1
+%define firefox_use_rust 1
+%endif
+
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -35,9 +41,6 @@
 %define progname firefox-dev
 %define pkgname  firefox-dev-edition
 %define appname  Firefox Developer Edition
-%endif
-%if 0%{?suse_version} > 1320
-%define firefox_use_gtk3 1
 %endif
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
@@ -93,6 +96,10 @@ BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
+%endif
+%if 0%{?firefox_use_rust}
+BuildRequires:  cargo
+BuildRequires:  rust >= 1.10
 %endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
@@ -317,6 +324,9 @@ ac_add_options --prefix=%{_prefix}
 ac_add_options --libdir=%{_libdir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
+%if 0%{?firefox_use_rust}
+ac_add_options --enable-rust
+%endif
 %if 0%{?firefox_use_gtk3}
 ac_add_options --enable-default-toolkit=cairo-gtk3
 %else

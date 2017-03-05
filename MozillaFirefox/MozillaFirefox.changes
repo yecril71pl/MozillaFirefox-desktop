@@ -1,8 +1,8 @@
 -------------------------------------------------------------------
-Sat Feb 25 15:19:15 UTC 2017 - wr@rosenauer.org
+Sat Mar  4 16:57:45 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 52.0b9
-  * requires NSS >= 3.28.2
+- update to Firefox 52.0
+  * requires NSS >= 3.28.3
   * Pages containing insecure password fields now display a warning
     directly within username and password fields.
   * Windows 8 touch screen support for multiprocess Firefox

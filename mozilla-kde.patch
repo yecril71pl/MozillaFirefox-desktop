@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  0e88a32ef7263e76f6970bab17458130d1f3677f
+# Parent  5c8ae59424f5318bf7a387257771bf95d3893063
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -2200,6 +2200,117 @@ new file mode 100644
 +#    PrefWindow II  (???)
 +#    PrefWindow I   (June 4, 1999)
 +#
+diff --git a/toolkit/mozapps/downloads/nsHelperAppDlg.js b/toolkit/mozapps/downloads/nsHelperAppDlg.js
+--- a/toolkit/mozapps/downloads/nsHelperAppDlg.js
++++ b/toolkit/mozapps/downloads/nsHelperAppDlg.js
+@@ -627,17 +627,17 @@ nsUnknownContentTypeDialog.prototype = {
+       else
+         typeString = mimeInfo.MIMEType;
+     }
+     // When the length is unknown, contentLength would be -1
+     if (this.mLauncher.contentLength >= 0) {
+       let [size, unit] = DownloadUtils.
+                          convertByteUnits(this.mLauncher.contentLength);
+       type.value = this.dialogElement("strings")
+-                       .getFormattedString("orderedFileSizeWithType", 
++                       .getFormattedString("orderedFileSizeWithType",
+                                            [typeString, size, unit]);
+     }
+     else {
+       type.value = typeString;
+     }
+   },
+ 
+   // Returns true if opening the default application makes sense.
+@@ -801,17 +801,17 @@ nsUnknownContentTypeDialog.prototype = {
+       switch (this.dialogElement("openHandler").selectedIndex) {
+       case 0:
+         // No app need be specified in this case.
+         ok = true;
+         break;
+       case 1:
+         // only enable the OK button if we have a default app to use or if
+         // the user chose an app....
+-        ok = this.chosenApp || /\S/.test(this.dialogElement("otherHandler").getAttribute("path")); 
++        ok = this.chosenApp || /\S/.test(this.dialogElement("otherHandler").getAttribute("path"));
+         break;
+       }
+     }
+ 
+     // Enable Ok button if ok to press.
+     this.mDialog.document.documentElement.getButton("accept").disabled = !ok;
+   },
+ 
+@@ -1068,30 +1068,56 @@ nsUnknownContentTypeDialog.prototype = {
+           params.handlerApp.executable &&
+           params.handlerApp.executable.isFile()) {
+         // Remember the file they chose to run.
+         this.chosenApp = params.handlerApp;
+       }
+     }
+     else {
+ #if MOZ_WIDGET_GTK == 3
+-      var nsIApplicationChooser = Components.interfaces.nsIApplicationChooser;
+-      var appChooser = Components.classes["@mozilla.org/applicationchooser;1"]
+-                                 .createInstance(nsIApplicationChooser);
+-      appChooser.init(this.mDialog, this.dialogElement("strings").getString("chooseAppFilePickerTitle"));
+-      var contentTypeDialogObj = this;
+-      let appChooserCallback = function appChooserCallback_done(aResult) {
+-        if (aResult) {
+-           contentTypeDialogObj.chosenApp = aResult.QueryInterface(Components.interfaces.nsILocalHandlerApp);
++      // handle the KDE case which is implemented in the filepicker
++      // therefore falling back to Gtk2 like behaviour if KDE is running
++      // FIXME this should be better handled in the nsIApplicationChooser interface
++      var env = Components.classes["@mozilla.org/process/environment;1"]
++                          .getService(Components.interfaces.nsIEnvironment);
++      if (env.get('KDE_FULL_SESSION') == "true")
++      {
++        var nsIFilePicker = Components.interfaces.nsIFilePicker;
++        var fp = Components.classes["@mozilla.org/filepicker;1"]
++                           .createInstance(nsIFilePicker);
++        fp.init(this.mDialog,
++                this.dialogElement("strings").getString("chooseAppFilePickerTitle"),
++                nsIFilePicker.modeOpen);
++
++        fp.appendFilters(nsIFilePicker.filterApps);
++
++        if (fp.show() == nsIFilePicker.returnOK && fp.file) {
++          // Remember the file they chose to run.
++          var localHandlerApp =
++            Components.classes["@mozilla.org/uriloader/local-handler-app;1"].
++                       createInstance(Components.interfaces.nsILocalHandlerApp);
++          localHandlerApp.executable = fp.file;
++          this.chosenApp = localHandlerApp;
+         }
+-        contentTypeDialogObj.finishChooseApp();
+-      };
+-      appChooser.open(this.mLauncher.MIMEInfo.MIMEType, appChooserCallback);
+-      // The finishChooseApp is called from appChooserCallback
+-      return;
++      } else {
++        var nsIApplicationChooser = Components.interfaces.nsIApplicationChooser;
++        var appChooser = Components.classes["@mozilla.org/applicationchooser;1"]
++                                   .createInstance(nsIApplicationChooser);
++        appChooser.init(this.mDialog, this.dialogElement("strings").getString("chooseAppFilePickerTitle"));
++        var contentTypeDialogObj = this;
++        let appChooserCallback = function appChooserCallback_done(aResult) {
++          if (aResult) {
++             contentTypeDialogObj.chosenApp = aResult.QueryInterface(Components.interfaces.nsILocalHandlerApp);
++          }
++          contentTypeDialogObj.finishChooseApp();
++        };
++        appChooser.open(this.mLauncher.MIMEInfo.MIMEType, appChooserCallback);
++        // The finishChooseApp is called from appChooserCallback
++        return;
++      }
+ #else
+       var nsIFilePicker = Components.interfaces.nsIFilePicker;
+       var fp = Components.classes["@mozilla.org/filepicker;1"]
+                          .createInstance(nsIFilePicker);
+       fp.init(this.mDialog,
+               this.dialogElement("strings").getString("chooseAppFilePickerTitle"),
+               nsIFilePicker.modeOpen);
+ 
 diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 --- a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
 +++ b/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp
@@ -3696,7 +3807,7 @@ diff --git a/xpcom/components/moz.build b/xpcom/components/moz.build
 diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
 --- a/xpcom/io/nsLocalFileUnix.cpp
 +++ b/xpcom/io/nsLocalFileUnix.cpp
-@@ -45,16 +45,17 @@
+@@ -46,16 +46,17 @@
  #include "prproces.h"
  #include "nsIDirectoryEnumerator.h"
  #include "nsISimpleEnumerator.h"
@@ -3714,7 +3825,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  #include "prmem.h"
  #include "plbase64.h"
  
-@@ -1947,42 +1948,52 @@ nsLocalFile::SetPersistentDescriptor(con
+@@ -1948,42 +1949,52 @@ nsLocalFile::SetPersistentDescriptor(con
    return InitWithNativePath(aPersistentDescriptor);
  #endif
  }
@@ -3773,7 +3884,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
      return rv;
    }
    return NS_ERROR_FAILURE;
-@@ -1990,16 +2001,22 @@ nsLocalFile::Reveal()
+@@ -1991,16 +2002,22 @@ nsLocalFile::Reveal()
    return NS_ERROR_FAILURE;
  #endif
  }

@@ -353,6 +353,7 @@ ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 ac_add_options --with-system-zlib
 ac_add_options --disable-updater
 ac_add_options --disable-tests
+ac_add_options --enable-alsa
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar

@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Mar 17 15:43:29 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.0.1 (boo#1029822)
+  MFSA 2017-08
+  CVE-2017-5428: integer overflow in createImageBitmap() (bmo#1348168)
+
+-------------------------------------------------------------------
 Thu Mar  9 12:30:14 UTC 2017 - wr@rosenauer.org
 
 - reenable ALSA support which was removed by default upstream

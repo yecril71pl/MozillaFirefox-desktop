@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 51
+%define major 52
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 20170224000000
+%define releasedate 20170317000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -30,7 +30,6 @@
 %define firefox_use_gtk3 1
 %define firefox_use_rust 1
 %endif
-
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
@@ -81,7 +80,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.13.1
-BuildRequires:  mozilla-nss-devel >= 3.28.2
+BuildRequires:  mozilla-nss-devel >= 3.29.3
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -100,6 +99,7 @@ BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 %if 0%{?firefox_use_rust}
 BuildRequires:  cargo
 BuildRequires:  rust >= 1.10
+BuildRequires:  rust-std
 %endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
@@ -113,7 +113,6 @@ Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 %endif
 Provides:       web_browser
-Provides:       browser(npapi)
 %if "%{update_channel}" != "aurora"
 Provides:       appdata()
 Provides:       appdata(firefox.appdata.xml)
@@ -353,6 +352,7 @@ ac_add_options --with-l10n-base=$RPM_BUILD_DIR/l10n
 ac_add_options --with-system-zlib
 ac_add_options --disable-updater
 ac_add_options --disable-tests
+ac_add_options --enable-alsa
 ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar

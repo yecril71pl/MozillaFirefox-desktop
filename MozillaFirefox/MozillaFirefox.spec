@@ -28,11 +28,9 @@
 
 %if 0%{?suse_version} > 1320
 %define firefox_use_gtk3 1
-%define firefox_use_rust 1
-%endif
-# Firefox is not prepared for ppc64le rust
-%ifarch ppc64le
+%ifarch %ix86 x86_64
 %define firefox_use_rust 0
+%endif
 %endif
 
 # general build definitions

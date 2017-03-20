@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Mon Mar 20 15:35:57 UTC 2017 - wr@rosenauer.org
 
-- disable rust usage for PPC64LE
+- disable rust usage for everything but x86(-64)
 
 -------------------------------------------------------------------
 Fri Mar 17 15:43:29 UTC 2017 - wr@rosenauer.org

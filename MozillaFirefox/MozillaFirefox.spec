@@ -30,6 +30,10 @@
 %define firefox_use_gtk3 1
 %define firefox_use_rust 1
 %endif
+# Firefox is not prepared for ppc64le rust
+%ifarch ppc64le
+%define firefox_use_rust 0
+%endif
 
 # general build definitions
 %if "%{update_channel}" != "aurora"

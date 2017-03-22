@@ -92,6 +92,7 @@ BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libffi)
 %if 0%{?firefox_use_gtk3}
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)

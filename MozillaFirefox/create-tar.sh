@@ -5,9 +5,9 @@
 # "moz_source_stamp": "c1de04f39fa956cfce83f6065b0e709369215ed5"
 # http://ftp.mozilla.org/pub/firefox/candidates/48.0-candidates/build2/l10n_changesets.txt
 
-CHANNEL="release"
+CHANNEL="esr52"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="2f2b4a119565e9b5691187ee5fbe91881c90b249"
+RELEASE_TAG="FIREFOX_52_0_1esr_RELEASE"
 VERSION="52.0.1"
 
 # mozilla

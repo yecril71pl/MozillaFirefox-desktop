@@ -1,5 +1,5 @@
 #
-# spec file for package MozillaFirefox
+# spec file for package firefox-esr
 #
 # Copyright (c) 2017 SUSE LINUX GmbH, Nuernberg, Germany.
 #               2006-2017 Wolfgang Rosenauer
@@ -29,14 +29,14 @@
 %if 0%{?suse_version} > 1320
 %define firefox_use_gtk3 1
 %ifarch %ix86 x86_64
-%define firefox_use_rust 0
+%define firefox_use_rust 1
 %endif
 %endif
 
 # general build definitions
 %if "%{update_channel}" != "aurora"
 %define progname firefox
-%define pkgname  MozillaFirefox
+%define pkgname  firefox-esr
 %define appname  Firefox
 %else
 %define progname firefox-dev
@@ -112,8 +112,8 @@ Recommends:     libavcodec-full >= 0.10.16
 Version:        %{mainver}
 Release:        0
 %if "%{name}" == "MozillaFirefox"
-Provides:       firefox = %{mainver}
-Provides:       firefox = %{version}-%{release}
+Provides:       firefox-esr = %{mainver}
+Provides:       firefox-esr = %{version}-%{release}
 %endif
 Provides:       web_browser
 Provides:       browser(npapi)
@@ -125,6 +125,7 @@ Provides:       appdata(firefox.appdata.xml)
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
 Provides:       mozilla-kde4-version = %{kde_helper_version}
+Conflicts:      firefox
 Summary:        Mozilla %{appname} Web Browser
 License:        MPL-2.0
 Group:          Productivity/Networking/Web/Browsers
@@ -145,7 +146,7 @@ Source12:       mozilla-get-app-id
 Source13:       spellcheck.js
 Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
-Source16:       MozillaFirefox.changes
+Source16:       firefox-esr.changes
 Source17:       l10n_changesets.txt
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
@@ -225,7 +226,7 @@ of %{appname}.
 Summary:        Upstream branding for %{appname}
 Group:          Productivity/Networking/Web/Browsers
 Provides:       %{name}-branding = %{version}
-Conflicts:      otherproviders(%{name}-branding)
+Conflicts:      otherproviders(MozillaFirefox-branding)
 Supplements:    packageand(%{name}:branding-upstream)
 #BRAND: Provide three files -
 #BRAND: /usr/lib/firefox/browserconfig.properties that contains the
@@ -275,7 +276,7 @@ cd $RPM_BUILD_DIR/mozilla
 
 %build
 # no need to add build time to binaries
-modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/MozillaFirefox.changes")"
+modified="$(sed -n '/^----/n;s/ - .*$//;p;q' "%{_sourcedir}/firefox-esr.changes")"
 DATE="\"$(date -d "${modified}" "+%%b %%e %%Y")\""
 TIME="\"$(date -d "${modified}" "+%%R")\""
 find . -regex ".*\.c\|.*\.cpp\|.*\.h" -exec sed -i "s/__DATE__/${DATE}/g;s/__TIME__/${TIME}/g" {} +

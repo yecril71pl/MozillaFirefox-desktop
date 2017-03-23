@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  1ec12b7509b6dcb0d2c1b77a8f93f81c4381008b
+# Parent  9821fbf1130a9e53e258127655f6d011c7312cce
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
@@ -1561,7 +1561,7 @@ new file mode 100644
 +NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsGNOMEShellService, Init)
 +NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsKDEShellService, Init)
 +
-+NS_METHOD
++NS_IMETHODIMP
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult)
 +{
 +    if( nsKDEUtils::kdeSupport())
@@ -1584,7 +1584,7 @@ new file mode 100644
 +
 +#include "nsIGNOMEShellService.h"
 +
-+NS_METHOD
++NS_IMETHODIMP
 +nsUnixShellServiceConstructor(nsISupports *aOuter, REFNSIID aIID, void **aResult);
 +
 +#endif // nsunixshellservice_h____

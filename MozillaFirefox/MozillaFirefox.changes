@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
-Mon Mar 20 15:48:56 UTC 2017 - wr@rosenauer.org
+Thu Mar 23 13:48:41 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 53.0b4
+- update to Firefox 53.0b5
   * requires NSS 3.29.3
   * Lightweight themes are now applied in private browsing windows
   * Reader Mode now displays estimated reading time for the page

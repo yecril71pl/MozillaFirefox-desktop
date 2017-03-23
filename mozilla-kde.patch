@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  420c86af3acf187f3f0e4d2fd061eb6221bb654c
+# Parent  f8957db53f2d7122b59ce5ddb2a2c7bff8bf1862
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -326,7 +326,7 @@ diff --git a/toolkit/content/widgets/dialog-kde.xml b/toolkit/content/widgets/di
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/content/widgets/dialog-kde.xml
-@@ -0,0 +1,457 @@
+@@ -0,0 +1,455 @@
 +<?xml version="1.0"?>
 +<!-- This Source Code Form is subject to the terms of the Mozilla Public
 +   - License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -471,8 +471,8 @@ new file mode 100644
 +      <method name="centerWindowOnScreen">
 +        <body>
 +        <![CDATA[
-+          var xOffset = screen.availWidth/2 - window.outerWidth/2;
-+          var yOffset = screen.availHeight/2 - window.outerHeight/2;
++          var xOffset = screen.availWidth / 2 - window.outerWidth / 2;
++          var yOffset = screen.availHeight / 2 - window.outerHeight / 2;
 +
 +          xOffset = xOffset > 0 ? xOffset : 0;
 +          yOffset = yOffset > 0 ? yOffset : 0;
@@ -486,10 +486,10 @@ new file mode 100644
 +        this._configureButtons(this.buttons);
 +
 +        // listen for when window is closed via native close buttons
-+        window.addEventListener("close", this._closeHandler, false);
++        window.addEventListener("close", this._closeHandler);
 +
 +        // for things that we need to initialize after onload fires
-+        window.addEventListener("load", this.postLoadInit, false);
++        window.addEventListener("load", this.postLoadInit);
 +
 +        window.moveToAlertPosition = this.moveToAlertPosition;
 +        window.centerWindowOnScreen = this.centerWindowOnScreen;
@@ -524,9 +524,8 @@ new file mode 100644
 +                    // so return focus to the tab itself
 +                    initialFocusedElt.focus();
 +                  }
-+                }
-+                else if (!/Mac/.test(navigator.platform) &&
-+                         focusedElt.hasAttribute("dlgtype") && focusedElt != defaultButton) {
++                } else if (!/Mac/.test(navigator.platform) &&
++                           focusedElt.hasAttribute("dlgtype") && focusedElt != defaultButton) {
 +                  defaultButton.focus();
 +                }
 +              }
@@ -590,13 +589,13 @@ new file mode 100644
 +            // don't override custom labels with pre-defined labels on explicit buttons
 +            if (!button.hasAttribute("label")) {
 +              // dialog attributes override the default labels in dialog.properties
-+              if (this.hasAttribute("buttonlabel"+dlgtype)) {
-+                button.setAttribute("label", this.getAttribute("buttonlabel"+dlgtype));
-+                if (this.hasAttribute("buttonaccesskey"+dlgtype))
-+                  button.setAttribute("accesskey", this.getAttribute("buttonaccesskey"+dlgtype));
++              if (this.hasAttribute("buttonlabel" + dlgtype)) {
++                button.setAttribute("label", this.getAttribute("buttonlabel" + dlgtype));
++                if (this.hasAttribute("buttonaccesskey" + dlgtype))
++                  button.setAttribute("accesskey", this.getAttribute("buttonaccesskey" + dlgtype));
 +              } else if (dlgtype != "extra1" && dlgtype != "extra2") {
-+                button.setAttribute("label", this.mStrBundle.GetStringFromName("button-"+dlgtype));
-+                var accessKey = this.mStrBundle.GetStringFromName("accesskey-"+dlgtype);
++                button.setAttribute("label", this.mStrBundle.GetStringFromName("button-" + dlgtype));
++                var accessKey = this.mStrBundle.GetStringFromName("accesskey-" + dlgtype);
 +                if (accessKey)
 +                  button.setAttribute("accesskey", accessKey);
 +              }
@@ -604,8 +603,8 @@ new file mode 100644
 +            // allow specifying alternate icons in the dialog header
 +            if (!button.hasAttribute("icon")) {
 +              // if there's an icon specified, use that
-+              if (this.hasAttribute("buttonicon"+dlgtype))
-+                button.setAttribute("icon", this.getAttribute("buttonicon"+dlgtype));
++              if (this.hasAttribute("buttonicon" + dlgtype))
++                button.setAttribute("icon", this.getAttribute("buttonicon" + dlgtype));
 +              // otherwise set defaults
 +              else
 +                switch (dlgtype) {
@@ -649,7 +648,7 @@ new file mode 100644
 +            if (/Win/.test(navigator.platform)) {
 +              var spacer = document.getAnonymousElementByAttribute(this, "anonid", "spacer");
 +              spacer.removeAttribute("hidden");
-+              spacer.setAttribute("flex", shown["extra2"]?"1":"0");
++              spacer.setAttribute("flex", shown["extra2"] ? "1" : "0");
 +            }
 +          }
 +        ]]>
@@ -669,11 +668,10 @@ new file mode 100644
 +          if (newDefaultButton) {
 +            this.setAttribute("defaultButton", aNewDefault);
 +            newDefaultButton.setAttribute("default", "true");
-+          }
-+          else {
++          } else {
 +            this.setAttribute("defaultButton", "none");
 +            if (aNewDefault != "none")
-+              dump("invalid new default button: " +  aNewDefault + ", assuming: none\n");
++              dump("invalid new default button: " + aNewDefault + ", assuming: none\n");
 +          }
 +        ]]>
 +        </body>
@@ -718,13 +716,13 @@ new file mode 100644
 +        <body>
 +        <![CDATA[
 +          var event = document.createEvent("Events");
-+          event.initEvent("dialog"+aDlgType, true, true);
++          event.initEvent("dialog" + aDlgType, true, true);
 +
 +          // handle dom event handlers
 +          var noCancel = this.dispatchEvent(event);
 +
 +          // handle any xml attribute event handlers
-+          var handler = this.getAttribute("ondialog"+aDlgType);
++          var handler = this.getAttribute("ondialog" + aDlgType);
 +          if (handler != "") {
 +            var fn = new Function("event", handler);
 +            var returned = fn(event);
@@ -788,7 +786,7 @@ diff --git a/toolkit/content/widgets/preferences-kde.xml b/toolkit/content/widge
 new file mode 100644
 --- /dev/null
 +++ b/toolkit/content/widgets/preferences-kde.xml
-@@ -0,0 +1,1411 @@
+@@ -0,0 +1,1391 @@
 +<?xml version="1.0"?>
 +
 +<!DOCTYPE bindings [
@@ -865,8 +863,7 @@ new file mode 100644
 +            var event = document.createEvent("Events");
 +            event.initEvent("change", true, true);
 +            aPreference.dispatchEvent(event);
-+          }
-+          catch (e) {
++          } catch (e) {
 +            Components.utils.reportError(e);
 +          }
 +        ]]>
@@ -945,8 +942,7 @@ new file mode 100644
 +
 +          // Don't use the value setter here, we don't want updateElements to be prematurely fired.
 +          this._value = preference ? preference.value : this.valueFromPreferences;
-+        }
-+        else
++        } else
 +          this._value = this.valueFromPreferences;
 +        this.preferences._constructAfterChildren();
 +      ]]>
@@ -972,7 +968,7 @@ new file mode 100644
 +
 +          this.preferences.rootBranchInternal
 +              .removeObserver(this.name, this.preferences);
-+          this.setAttribute('name', val);
++          this.setAttribute("name", val);
 +          this.preferences.rootBranchInternal
 +              .addObserver(val, this.preferences, false);
 +
@@ -1147,8 +1143,7 @@ new file mode 100644
 +            default:
 +              this._reportUnknownType();
 +            }
-+          }
-+          catch (e) { }
++          } catch (e) { }
 +          return null;
 +        ]]>
 +        </getter>
@@ -1196,8 +1191,7 @@ new file mode 100644
 +              lf.persistentDescriptor = val;
 +              if (!lf.exists())
 +                lf.initWithPath(val);
-+            }
-+            else
++            } else
 +              lf = val.QueryInterface(Components.interfaces.nsILocalFile);
 +            this.preferences.rootBranch
 +                .setComplexValue(this.name, Components.interfaces.nsILocalFile, lf);
@@ -1228,11 +1222,10 @@ new file mode 100644
 +            try {
 +              var event = document.createEvent("Events");
 +              event.initEvent("syncfrompreference", true, true);
-+              var f = new Function ("event",
-+                                    aElement.getAttribute("onsyncfrompreference"));
++              var f = new Function("event",
++                                   aElement.getAttribute("onsyncfrompreference"));
 +              rv = f.call(aElement, event);
-+            }
-+            catch (e) {
++            } catch (e) {
 +              Components.utils.reportError(e);
 +            }
 +          }
@@ -1267,8 +1260,7 @@ new file mode 100644
 +            // of the input event handler.
 +            if (aElement.value !== val)
 +              setValue(aElement, "value", val);
-+          }
-+          else
++          } else
 +            setValue(aElement, "value", val);
 +        ]]>
 +        </body>
@@ -1283,13 +1275,12 @@ new file mode 100644
 +            try {
 +              var event = document.createEvent("Events");
 +              event.initEvent("synctopreference", true, true);
-+              var f = new Function ("event",
-+                                    aElement.getAttribute("onsynctopreference"));
++              var f = new Function("event",
++                                   aElement.getAttribute("onsynctopreference"));
 +              var rv = f.call(aElement, event);
 +              if (rv !== undefined)
 +                return rv;
-+            }
-+            catch (e) {
++            } catch (e) {
 +              Components.utils.reportError(e);
 +            }
 +          }
@@ -1435,7 +1426,7 @@ new file mode 100644
 +              acceptButton.disabled = true;
 +            } else {
 +              // morph the Cancel button into the Close button
-+              cancelButton.setAttribute ("icon", "close");
++              cancelButton.setAttribute("icon", "close");
 +              cancelButton.label = docElt.getAttribute("closebuttonlabel");
 +              cancelButton.accesskey = docElt.getAttribute("closebuttonaccesskey");
 +            }
@@ -1456,8 +1447,7 @@ new file mode 100644
 +        if ("arguments" in window && window.arguments[0] && document.getElementById(window.arguments[0]) && document.getElementById(window.arguments[0]).nodeName == "prefpane") {
 +          paneToLoad = document.getElementById(window.arguments[0]);
 +          this.lastSelected = paneToLoad.id;
-+        }
-+        else if (lastPane)
++        } else if (lastPane)
 +          paneToLoad = lastPane;
 +        else
 +          paneToLoad = panes[0];
@@ -1554,14 +1544,12 @@ new file mode 100644
 +
 +          this._selector.selectedItem = document.getAnonymousElementByAttribute(this, "pane", aPaneElement.id);
 +          if (!aPaneElement.loaded) {
-+            let OverlayLoadObserver = function(aPane)
-+            {
++            let OverlayLoadObserver = function(aPane) {
 +              this._pane = aPane;
 +            }
 +            OverlayLoadObserver.prototype = {
 +              _outer: this,
-+              observe: function (aSubject, aTopic, aData)
-+              {
++              observe(aSubject, aTopic, aData) {
 +                this._pane.loaded = true;
 +                this._outer._fireEvent("paneload", this._pane);
 +                this._outer._selectPane(this._pane);
@@ -1570,8 +1558,7 @@ new file mode 100644
 +
 +            var obs = new OverlayLoadObserver(aPaneElement);
 +            document.loadOverlay(aPaneElement.src, obs);
-+          }
-+          else
++          } else
 +            this._selectPane(aPaneElement);
 +        ]]>
 +        </body>
@@ -1588,14 +1575,13 @@ new file mode 100644
 +            event.initEvent(aEventName, true, true);
 +            var cancel = !aTarget.dispatchEvent(event);
 +            if (aTarget.hasAttribute("on" + aEventName)) {
-+              var fn = new Function ("event", aTarget.getAttribute("on" + aEventName));
++              var fn = new Function("event", aTarget.getAttribute("on" + aEventName));
 +              var rv = fn.call(aTarget, event);
 +              if (rv == false)
 +                cancel = true;
 +            }
 +            return !cancel;
-+          }
-+          catch (e) {
++          } catch (e) {
 +            Components.utils.reportError(e);
 +          }
 +          return false;
@@ -1649,8 +1635,7 @@ new file mode 100644
 +                if (this._shouldAnimate && oldPane.id != aPaneElement.id) {
 +                  aPaneElement.style.opacity = 0.0;
 +                  this.animate(oldPane, aPaneElement);
-+                }
-+                else if (!this._shouldAnimate && prefpanes.length > 1) {
++                } else if (!this._shouldAnimate && prefpanes.length > 1) {
 +                  var targetHeight = parseInt(window.getComputedStyle(this._paneDeckContainer, "").height);
 +                  var verticalPadding = parseInt(window.getComputedStyle(aPaneElement, "").paddingTop);
 +                  verticalPadding += parseInt(window.getComputedStyle(aPaneElement, "").paddingBottom);
@@ -1687,8 +1672,7 @@ new file mode 100644
 +          var animate = /Mac/.test(navigator.platform);
 +          try {
 +            animate = psvc.getBoolPref("browser.preferences.animateFadeIn");
-+          }
-+          catch (e) { }
++          } catch (e) { }
 +          return animate;
 +        ]]>
 +        </getter>
@@ -1741,8 +1725,7 @@ new file mode 100644
 +            if (increment != 0) {
 +              window.innerHeight += increment;
 +              this._currentHeight += increment;
-+            }
-+            else {
++            } else {
 +              aTimer.cancel();
 +              this._setUpFadeTimer();
 +            }
@@ -1837,8 +1820,7 @@ new file mode 100644
 +            if ("initWithParams" in win)
 +              win.initWithParams(aParams);
 +            win.focus();
-+          }
-+          else {
++          } else {
 +            var features = "resizable,dialog=no,centerscreen" + (aFeatures != "" ? ("," + aFeatures) : "");
 +            var parentWindow = (this.instantApply || !window.opener || window.opener.closed) ? window : window.opener;
 +            win = parentWindow.openDialog(aURL, "_blank", features, aParams);
@@ -1859,15 +1841,12 @@ new file mode 100644
 +                    .getService(Components.interfaces.nsIScriptSecurityManager);
 +        if (this.type == "child" && window.opener &&
 +            secMan.isSystemPrincipal(window.opener.document.nodePrincipal)) {
-+          let psvc = Components.classes["@mozilla.org/preferences-service;1"]
-+                               .getService(Components.interfaces.nsIPrefBranch);
 +          var pdocEl = window.opener.document.documentElement;
 +          if (pdocEl.instantApply) {
 +            let panes = this.preferencePanes;
 +            for (let i = 0; i < panes.length; ++i)
 +              panes[i].writePreferences(true);
-+          }
-+          else {
++          } else {
 +            // Clone all the preferences elements from the child document and
 +            // insert them into the pane collection of the parent.
 +            var pdoc = window.opener.document;
@@ -1910,8 +1889,7 @@ new file mode 100644
 +              }
 +            }
 +          }
-+        }
-+        else {
++        } else {
 +          let panes = this.preferencePanes;
 +          for (var i = 0; i < panes.length; ++i)
 +            panes[i].writePreferences(false);
@@ -2049,7 +2027,8 @@ new file mode 100644
 +          while (temp && temp.nodeType == Node.ELEMENT_NODE &&
 +                 !temp.hasAttribute("preference"))
 +            temp = temp.parentNode;
-+          return temp.nodeType == Node.ELEMENT_NODE ? temp : aStartElement;
++          return temp && temp.nodeType == Node.ELEMENT_NODE ?
++                 temp : aStartElement;
 +        ]]>
 +        </body>
 +      </method>
@@ -2162,8 +2141,7 @@ new file mode 100644
 +          try {
 +            var preference = this.preferenceForElement(elements[i]);
 +            preference.setElementValue(elements[i]);
-+          }
-+          catch (e) {
++          } catch (e) {
 +            dump("*** No preference found for " + elements[i].getAttribute("preference") + "\n");
 +          }
 +        }

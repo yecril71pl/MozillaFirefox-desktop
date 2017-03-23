@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Sat Mar 18 10:12:59 UTC 2017 - wr@rosenauer.org
+Mon Mar 20 15:48:56 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 53.0b4
   * requires NSS 3.29.3
@@ -16,6 +16,14 @@ Sat Mar 18 10:12:59 UTC 2017 - wr@rosenauer.org
   * Permission notifications have a cleaner design and cannot be
     easily missed
 - removed browser(npapi) provides as these plugins are deprecated
+- switch used compiler to gcc5 (FF requires gcc >= 4.9 now) for
+  Leap 42
+- Gtk2 is not longer an option; switched to Gtk3
+
+-------------------------------------------------------------------
+Mon Mar 20 15:35:57 UTC 2017 - wr@rosenauer.org
+
+- disable rust usage for everything but x86(-64)
 
 -------------------------------------------------------------------
 Fri Mar 17 15:43:29 UTC 2017 - wr@rosenauer.org

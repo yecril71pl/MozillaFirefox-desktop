@@ -27,8 +27,9 @@
 %define build_hardened 1
 
 %if 0%{?suse_version} > 1320
-%define firefox_use_gtk3 1
+%ifarch %ix86 x86_64
 %define firefox_use_rust 1
+%endif
 %endif
 
 # general build definitions
@@ -70,7 +71,11 @@ BuildRequires:  Mesa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
 BuildRequires:  fdupes
+%if 0%{?suse_version} <= 1320
+BuildRequires:  gcc5-c++
+%else
 BuildRequires:  gcc-c++
+%endif
 BuildRequires:  libXcomposite-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgnomeui-devel
@@ -90,12 +95,10 @@ BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 BuildRequires:  pkgconfig(libpulse)
-%if 0%{?firefox_use_gtk3}
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
-%endif
 %if 0%{?firefox_use_rust}
 BuildRequires:  cargo
 BuildRequires:  rust >= 1.10
@@ -262,7 +265,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
+#%patch9 -p1
 %patch10 -p1
 # Firefox
 %patch101 -p1
@@ -291,6 +294,9 @@ export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export MOZ_GOOGLE_API_KEY=%{_google_api_key}
+%if 0%{?suse_version} <= 1320
+export CC=gcc-5
+%endif
 export CFLAGS="%{optflags} -fno-strict-aliasing"
 # boo#986541: add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
 %if 0%{?suse_version} > 1320
@@ -324,13 +330,10 @@ ac_add_options --libdir=%{_libdir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
 %if 0%{?firefox_use_rust}
-ac_add_options --enable-rust
-%endif
-%if 0%{?firefox_use_gtk3}
-ac_add_options --enable-default-toolkit=cairo-gtk3
 %else
-ac_add_options --enable-default-toolkit=cairo-gtk2
+ac_add_options --disable-rust
 %endif
+ac_add_options --enable-default-toolkit=cairo-gtk3
 %if 0%{?build_hardened}
 ac_add_options --enable-pie
 %endif
@@ -575,10 +578,8 @@ exit 0
 %{progdir}/distribution/extensions/
 %{progdir}/defaults/
 %{progdir}/dictionaries/
-%if 0%{?firefox_use_gtk3}
 %dir %{progdir}/gtk2
 %{progdir}/gtk2/libmozgtk.so
-%endif
 %{progdir}/gmp-clearkey/
 %attr(755,root,root) %{progdir}/%{progname}.sh
 %{progdir}/firefox

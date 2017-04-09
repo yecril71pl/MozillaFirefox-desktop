@@ -1239,7 +1239,7 @@ diff --git a/browser/components/preferences/in-content/main.js b/browser/compone
 +    var env = Components.classes["@mozilla.org/process/environment;1"]
 +        .getService(Components.interfaces.nsIEnvironment);
 +    var kde_session = 0;
-+    if (env.get('KDE_FULL_SESSION') == "true")
++    if (env.get('KDE_FULL_SESSION') == "true") {
 +        kde_session = 1;
 +    }
  

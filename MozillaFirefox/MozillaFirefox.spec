@@ -21,7 +21,7 @@
 %define major 52
 %define mainver %major.99
 %define update_channel beta
-%define releasedate 20170322000000
+%define releasedate 20170404000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -85,7 +85,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.13.1
-BuildRequires:  mozilla-nss-devel >= 3.29.3
+BuildRequires:  mozilla-nss-devel >= 3.29.5
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -95,6 +95,7 @@ BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
 BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0

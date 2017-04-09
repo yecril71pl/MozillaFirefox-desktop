@@ -102,6 +102,9 @@ fi
 # disable Gnome crash dialog (doesn't make sense anyway)
 export GNOME_DISABLE_CRASH_DIALOG=1
 
+# enable xinput2 (boo#1032003)
+export MOZ_USE_XINPUT2=1
+
 moz_debug=0
 script_args=""
 pass_arg_count=0

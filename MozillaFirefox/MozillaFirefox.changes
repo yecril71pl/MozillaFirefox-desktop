@@ -1,5 +1,12 @@
 -------------------------------------------------------------------
-Wed Mar 22 07:32:45 UTC 2017 - wr@rosenauer.org
+Wed Apr 12 21:43:16 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.1.0esr
+- requires NSS 3.28.4
+- rebased patches
+
+-------------------------------------------------------------------
+Mon Apr  3 06:28:34 UTC 2017 - wr@rosenauer.org
 
 - switch package to use ESR52 branch
   * enables plugin support by default
@@ -7,6 +14,16 @@ Wed Mar 22 07:32:45 UTC 2017 - wr@rosenauer.org
   * push notifications are disabled by default
   * WebAssembly (wasm) is disabled
   * Less use of multiprocess architecture Electrolysis (e10s)
+
++-------------------------------------------------------------------
+Mon Apr  3 06:16:26 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.0.2
+  * Use Nirmala UI as fallback font for additional Indic languages (bmo#1342787)
+  * Fix loading tab icons on session restore (bmo#1338009)
+  * Fix a crash on startup on Linux (bmo#1345413)
+  * Fix new installs erroneously not prompting to change the default
+    browser setting (bmo#1343938)
 
 -------------------------------------------------------------------
 Mon Mar 20 15:35:57 UTC 2017 - wr@rosenauer.org

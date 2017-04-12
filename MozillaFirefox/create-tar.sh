@@ -7,8 +7,8 @@
 
 CHANNEL="esr52"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_52_0_1esr_RELEASE"
-VERSION="52.0.1"
+RELEASE_TAG="7beb59bc3482523ad6811fd3984949204d763810"
+VERSION="52.1.0"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -54,7 +54,7 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
       echo "reading changeset information for $locale"
       _changeset=$(grep ^$locale l10n_changesets.txt | awk '{ print $2; }')
       echo "fetching $locale changeset $_changeset ..."
-      hg clone http://hg.mozilla.org/releases/l10n/mozilla-$CHANNEL/$locale l10n/$locale
+      hg clone http://hg.mozilla.org/releases/l10n/mozilla-release/$locale l10n/$locale
       [ "$RELEASE_TAG" == "default" ] || hg -R l10n/$locale up -C -r $_changeset
       ;;
   esac

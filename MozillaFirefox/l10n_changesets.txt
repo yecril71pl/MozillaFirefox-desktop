@@ -31,7 +31,7 @@ fa d5f8a48f15d2
 ff fd37d118280c
 fi db0a67c30074
 fr 54307652740e
-fy-NL c4757daf69d7
+fy-NL 085a47bc877c
 ga-IE 8d20d03ac938
 gd fc9ab54d84a9
 gl 849e4e3a3fc9
@@ -46,8 +46,8 @@ hy-AM d467bd690878
 id f390b2688780
 is 9ee7f7c99512
 it ed1aa37dd8c7
-ja 3ef479bfde1a
-ja-JP-mac 80958cf82100
+ja ed7c7ca5cbd2
+ja-JP-mac c95055d36190
 ka 3b036c9e61a6
 kab 364adce77c72
 kk 08696f7c8a1a

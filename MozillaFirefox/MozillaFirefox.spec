@@ -18,10 +18,10 @@
 
 
 # changed with every update
-%define major 52
-%define mainver %major.99
-%define update_channel beta
-%define releasedate 20170404000000
+%define major 53
+%define mainver %major.0
+%define update_channel release
+%define releasedate 20170414000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1

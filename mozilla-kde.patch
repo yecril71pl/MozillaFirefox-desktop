@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  2b1505c8ca6fc80da9cf517b029a93c452cb9876
+# Parent  165988e6140a05143193f8828701e7888d6f9770
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -187,8 +187,8 @@ diff --git a/python/mozbuild/mozpack/chrome/manifest.py b/python/mozbuild/mozpac
 diff --git a/toolkit/components/downloads/moz.build b/toolkit/components/downloads/moz.build
 --- a/toolkit/components/downloads/moz.build
 +++ b/toolkit/components/downloads/moz.build
-@@ -49,16 +49,17 @@ if CONFIG['OS_ARCH'] == 'WINNT':
-         'nsDownloadScanner.cpp',
+@@ -57,16 +57,17 @@ if not CONFIG['MOZ_SUITE']:
+         'nsDownloadManagerUI.manifest',
      ]
  
  FINAL_LIBRARY = 'xul'
@@ -229,7 +229,7 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
  #include "FennecJNIWrappers.h"
  #endif
  
-@@ -2724,16 +2728,25 @@ nsDownload::SetState(DownloadState aStat
+@@ -2723,16 +2727,25 @@ nsDownload::SetState(DownloadState aStat
        nsCOMPtr<nsIPrefBranch> pref(do_GetService(NS_PREFSERVICE_CONTRACTID));
  
        // Master pref to control this function.
@@ -255,7 +255,7 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
          int64_t goat = PR_Now() - mStartTime;
          showTaskbarAlert = goat > alertIntervalUSec;
  
-@@ -2765,16 +2778,17 @@ nsDownload::SetState(DownloadState aStat
+@@ -2764,16 +2777,17 @@ nsDownload::SetState(DownloadState aStat
                    message, !removeWhenDone,
                    mPrivate ? NS_LITERAL_STRING("private") : NS_LITERAL_STRING("non-private"),
                    mDownloadManager, EmptyString(), NS_LITERAL_STRING("auto"),
@@ -276,10 +276,10 @@ diff --git a/toolkit/components/downloads/nsDownloadManager.cpp b/toolkit/compon
 diff --git a/toolkit/content/jar.mn b/toolkit/content/jar.mn
 --- a/toolkit/content/jar.mn
 +++ b/toolkit/content/jar.mn
-@@ -73,29 +73,33 @@ toolkit.jar:
+@@ -71,29 +71,33 @@ toolkit.jar:
+    content/global/bindings/button.xml          (widgets/button.xml)
+    content/global/bindings/checkbox.xml        (widgets/checkbox.xml)
     content/global/bindings/colorpicker.xml     (widgets/colorpicker.xml)
-    content/global/bindings/datekeeper.js       (widgets/datekeeper.js)
-    content/global/bindings/datepicker.js       (widgets/datepicker.js)
     content/global/bindings/datetimepicker.xml  (widgets/datetimepicker.xml)
     content/global/bindings/datetimepopup.xml   (widgets/datetimepopup.xml)
     content/global/bindings/datetimebox.xml     (widgets/datetimebox.xml)
@@ -310,6 +310,18 @@ diff --git a/toolkit/content/jar.mn b/toolkit/content/jar.mn
     content/global/bindings/scale.xml           (widgets/scale.xml)
     content/global/bindings/scrollbar.xml       (widgets/scrollbar.xml)
     content/global/bindings/scrollbox.xml       (widgets/scrollbox.xml)
+@@ -113,9 +117,9 @@ toolkit.jar:
+    content/global/bindings/videocontrols.css   (widgets/videocontrols.css)
+ *  content/global/bindings/wizard.xml          (widgets/wizard.xml)
+ #ifdef XP_MACOSX
+    content/global/macWindowMenu.js
+ #endif
+    content/global/svg/svgBindings.xml          (/layout/svg/resources/content/svgBindings.xml)
+    content/global/gmp-sources/eme-adobe.json   (gmp-sources/eme-adobe.json)
+    content/global/gmp-sources/openh264.json    (gmp-sources/openh264.json)
+-   content/global/gmp-sources/widevinecdm.json (gmp-sources/widevinecdm.json)
+\ No newline at end of file
++   content/global/gmp-sources/widevinecdm.json (gmp-sources/widevinecdm.json)
 diff --git a/toolkit/content/widgets/dialog-kde.xml b/toolkit/content/widgets/dialog-kde.xml
 new file mode 100644
 --- /dev/null
@@ -2374,8 +2386,8 @@ diff --git a/toolkit/system/unixproxy/nsUnixSystemProxySettings.cpp b/toolkit/sy
 diff --git a/toolkit/xre/moz.build b/toolkit/xre/moz.build
 --- a/toolkit/xre/moz.build
 +++ b/toolkit/xre/moz.build
-@@ -53,17 +53,19 @@ elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'co
-         '../components/printingui/mac',
+@@ -40,17 +40,19 @@ elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'co
+         'updaterfileutils_osx.mm',
      ]
  elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'uikit':
      UNIFIED_SOURCES += [
@@ -3756,7 +3768,7 @@ diff --git a/xpcom/components/ManifestParser.cpp b/xpcom/components/ManifestPars
 diff --git a/xpcom/components/moz.build b/xpcom/components/moz.build
 --- a/xpcom/components/moz.build
 +++ b/xpcom/components/moz.build
-@@ -43,12 +43,13 @@ FINAL_LIBRARY = 'xul'
+@@ -44,12 +44,13 @@ FINAL_LIBRARY = 'xul'
  LOCAL_INCLUDES += [
      '!..',
      '../base',
@@ -3791,7 +3803,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  #include "prmem.h"
  #include "plbase64.h"
  
-@@ -1949,42 +1950,52 @@ nsLocalFile::SetPersistentDescriptor(con
+@@ -1948,42 +1949,52 @@ nsLocalFile::SetPersistentDescriptor(con
    return InitWithNativePath(aPersistentDescriptor);
  #endif
  }
@@ -3850,7 +3862,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
      return rv;
    }
    return NS_ERROR_FAILURE;
-@@ -1992,16 +2003,22 @@ nsLocalFile::Reveal()
+@@ -1991,16 +2002,22 @@ nsLocalFile::Reveal()
    return NS_ERROR_FAILURE;
  #endif
  }

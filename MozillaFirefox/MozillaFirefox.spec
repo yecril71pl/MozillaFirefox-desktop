@@ -21,6 +21,7 @@
 %define major 53
 %define mainver %major.0
 %define update_channel release
+%define branding 1
 %define releasedate 20170414000000
 
 # PIE, full relro (x86_64 for now)
@@ -33,15 +34,9 @@
 %endif
 
 # general build definitions
-%if "%{update_channel}" != "aurora"
 %define progname firefox
 %define pkgname  MozillaFirefox
 %define appname  Firefox
-%else
-%define progname firefox-dev
-%define pkgname  firefox-dev-edition
-%define appname  Firefox Developer Edition
-%endif
 %define progdir %{_prefix}/%_lib/%{progname}
 %define gnome_dir     %{_prefix}
 %define desktop_file_name %{progname}
@@ -54,11 +49,6 @@
 # Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
 # please get your own set of keys.
 %define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
-%if %update_channel == "aurora"
-%define branding 0
-%else
-%define branding 1
-%endif
 %define localize 1
 %ifarch %ix86 x86_64
 %define crashreporter 1
@@ -117,10 +107,8 @@ Provides:       firefox = %{mainver}
 Provides:       firefox = %{version}-%{release}
 %endif
 Provides:       web_browser
-%if "%{update_channel}" != "aurora"
 Provides:       appdata()
 Provides:       appdata(firefox.appdata.xml)
-%endif
 # this is needed to match this package with the kde4 helper package without the main package
 # having a hard requirement on the kde4 package
 %define kde_helper_version 6
@@ -147,11 +135,11 @@ Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
 Source17:       l10n_changesets.txt
+Source18:       mozilla-api-key
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
 Patch2:         mozilla-shared-nss-db.patch
 Patch3:         mozilla-kde.patch
-Patch4:         mozilla-preferences.patch
 Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
 Patch7:         mozilla-openaes-decl.patch
@@ -179,6 +167,7 @@ Obsoletes:      tracker-miner-firefox < 0.15
 %if 0%{?suse_version} < 1220
 Obsoletes:      libproxy1-pacrunner-mozjs <= 0.4.7
 %endif
+##BuildArch:      i686 x86_64 aarch64 ppc64le
 
 %description
 Mozilla Firefox is a standalone web browser, designed for standards
@@ -261,12 +250,13 @@ cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-#%patch9 -p1
+%ifarch %ix86
+%patch9 -p1
+%endif
 %patch10 -p1
 # Firefox
 %patch101 -p1
@@ -361,6 +351,7 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
+ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 %if %branding
 ac_add_options --enable-official-branding
 %endif
@@ -465,10 +456,8 @@ s:%%ICON:%{progname}:g" \
 mkdir -p %{buildroot}%{_datadir}/mime/packages
 cp %{SOURCE8} %{buildroot}%{_datadir}/mime/packages/%{progname}.xml
 # appdata
-%if "%{update_channel}" != "aurora"
 mkdir -p %{buildroot}%{_datadir}/appdata
 cp %{SOURCE15} %{buildroot}%{_datadir}/appdata/%{desktop_file_name}.appdata.xml
-%endif
 # install man-page
 mkdir -p %{buildroot}%{_mandir}/man1/
 cp %{SOURCE11} %{buildroot}%{_mandir}/man1/%{progname}.1
@@ -613,9 +602,7 @@ exit 0
 %{gnome_dir}/share/icons/hicolor/
 %{_bindir}/%{progname}
 %doc %{_mandir}/man1/%{progname}.1.gz
-%if "%{update_channel}" != "aurora"
 %{_datadir}/appdata/
-%endif
 
 %files devel
 %defattr(-,root,root)

@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  5f1979729aa3c6bc50f7097202991e73be677e5e
+# Parent  aff14a54f25dc3146ba7a64408ceb9f486a832db
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -3347,7 +3347,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
  
    mFilters.AppendElement(filter);
    mFilterNames.AppendElement(name);
-@@ -371,16 +375,32 @@ nsFilePicker::Show(int16_t *aReturn)
+@@ -371,16 +375,34 @@ nsFilePicker::Show(int16_t *aReturn)
  
  NS_IMETHODIMP
  nsFilePicker::Open(nsIFilePickerShownCallback *aCallback)
@@ -3361,6 +3361,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
 +    int16_t result;
 +    mCallback = aCallback;
 +    mRunning = true;
++    NS_ADDREF_THIS();
 +    kdeFileDialog(&result);
 +    if (mCallback) {
 +      mCallback->Done(result);
@@ -3369,6 +3370,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
 +      mResult = result;
 +    }
 +    mRunning = false;
++    NS_RELEASE_THIS();
 +    return NS_OK;
 +  }
 +
@@ -3380,7 +3382,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
  
    GtkFileChooserAction action = GetGtkFileChooserAction(mMode);
  
-@@ -603,8 +623,235 @@ nsFilePicker::Done(GtkWidget* file_choos
+@@ -603,8 +625,235 @@ nsFilePicker::Done(GtkWidget* file_choos
    if (mCallback) {
      mCallback->Done(result);
      mCallback = nullptr;

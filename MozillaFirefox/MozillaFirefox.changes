@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sun Apr 23 13:05:31 UTC 2017 - wr@rosenauer.org
+
+- switch to Mozilla's geolocation service (boo#1026989)
+- removed mozilla-preferences.patch obsoleted by overriding via
+  firefox.js
+
+-------------------------------------------------------------------
 Mon Apr 17 12:52:10 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 53.0

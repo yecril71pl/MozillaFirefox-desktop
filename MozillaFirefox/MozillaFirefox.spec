@@ -92,7 +92,7 @@ BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 %if 0%{?firefox_use_rust}
 BuildRequires:  cargo
-BuildRequires:  rust >= 1.10
+BuildRequires:  rust >= 1.13
 BuildRequires:  rust-std
 %endif
 # libavcodec is required for H.264 support but the

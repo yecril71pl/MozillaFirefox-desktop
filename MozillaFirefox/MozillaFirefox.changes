@@ -1,9 +1,11 @@
 -------------------------------------------------------------------
-Sun Apr 23 13:05:31 UTC 2017 - wr@rosenauer.org
+Wed Apr 26 12:37:38 UTC 2017 - wr@rosenauer.org
 
 - switch to Mozilla's geolocation service (boo#1026989)
 - removed mozilla-preferences.patch obsoleted by overriding via
   firefox.js
+- fixed KDE integration to avoid crash caused by filepicker
+  (boo#1015998)
 
 -------------------------------------------------------------------
 Mon Apr 17 12:52:10 UTC 2017 - wr@rosenauer.org

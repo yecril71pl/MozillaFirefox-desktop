@@ -147,6 +147,7 @@ Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
 Source17:       l10n_changesets.txt
+Source18:       mozilla-api-key
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
 Patch2:         mozilla-shared-nss-db.patch
@@ -361,6 +362,7 @@ ac_add_options --disable-debug
 ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
+ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 %if %branding
 ac_add_options --enable-official-branding
 %endif

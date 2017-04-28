@@ -29,7 +29,7 @@
 %if 0%{?suse_version} > 1320
 %define firefox_use_gtk3 1
 %ifarch %ix86 x86_64
-%define firefox_use_rust 1
+%define firefox_use_rust 0
 %endif
 %endif
 
@@ -91,8 +91,8 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkgconfig(libpulse)
 %if 0%{?firefox_use_gtk3}
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)

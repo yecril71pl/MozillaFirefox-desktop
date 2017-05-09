@@ -152,7 +152,6 @@ Source18:       mozilla-api-key
 Patch1:         mozilla-nongnome-proxies.patch
 Patch2:         mozilla-shared-nss-db.patch
 Patch3:         mozilla-kde.patch
-Patch4:         mozilla-preferences.patch
 Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
 Patch7:         mozilla-openaes-decl.patch
@@ -262,7 +261,6 @@ cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1

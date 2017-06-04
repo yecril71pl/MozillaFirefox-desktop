@@ -74,9 +74,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.13.1
-BuildRequires:  mozilla-nss-devel >= 3.29.5
-BuildRequires:  nss-shared-helper-devel
+BuildRequires:  mozilla-nspr-devel >= 4.14
+BuildRequires:  mozilla-nss-devel >= 3.30.2
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
@@ -92,7 +91,7 @@ BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 %if 0%{?firefox_use_rust}
 BuildRequires:  cargo
-BuildRequires:  rust >= 1.10
+BuildRequires:  rust >= 1.15.1
 BuildRequires:  rust-std
 %endif
 # libavcodec is required for H.264 support but the
@@ -138,7 +137,6 @@ Source17:       l10n_changesets.txt
 Source18:       mozilla-api-key
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
-Patch2:         mozilla-shared-nss-db.patch
 Patch3:         mozilla-kde.patch
 Patch5:         mozilla-language.patch
 Patch6:         mozilla-ntlm-full-path.patch
@@ -248,7 +246,6 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch5 -p1
 %patch6 -p1

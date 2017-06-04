@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sun Jun  4 07:57:41 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 54.0b13
+- requires NSPR 4.14 and NSS 3.30.2
+- requires rust 1.15.1
+- removed mozilla-shared-nss-db.patch as it seems to be a rather
+  unused feature
+
+-------------------------------------------------------------------
 Thu Jun  1 04:25:05 UTC 2017 - kah0922@gmail.com
 
 - remove -fno-inline-small-functions and explicitely optimize with

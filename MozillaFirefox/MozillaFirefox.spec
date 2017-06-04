@@ -295,9 +295,9 @@ export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
 export MOZ_GOOGLE_API_KEY=%{_google_api_key}
 export CFLAGS="%{optflags} -fno-strict-aliasing"
-# boo#986541: add -fno-delete-null-pointer-checks and -fno-inline-small-functions for gcc6
+# boo#986541: add -fno-delete-null-pointer-checks for gcc6
 %if 0%{?suse_version} > 1320
-export CFLAGS="$CFLAGS -fno-delete-null-pointer-checks -fno-inline-small-functions"
+export CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
 %endif
 %ifarch %arm
 export CFLAGS="${CFLAGS/-g / }"
@@ -336,6 +336,10 @@ ac_add_options --enable-default-toolkit=cairo-gtk2
 %endif
 %if 0%{?build_hardened}
 ac_add_options --enable-pie
+%endif
+# gcc7 (boo#104105)
+%if 0%{?suse_version} > 1320
+ac_add_options --enable-optimize="-g -O2"
 %endif
 %ifarch %ix86 %arm
 %if 0%{?suse_version} > 1230

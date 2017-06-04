@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue May 23 14:00:40 UTC 2017 - wr@rosenauer.org
+
+- remove -fno-inline-small-functions and explicitely optimize with
+  -O2 for openSUSE > 13.2/Leap 42 to work with gcc7 (boo#1040105)
+
+-------------------------------------------------------------------
 Mon May  8 08:28:17 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.1.1

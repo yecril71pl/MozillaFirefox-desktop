@@ -7,8 +7,8 @@
 
 CHANNEL="beta"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_53_0b10_RELEASE"
-VERSION="52.99"
+RELEASE_TAG="FIREFOX_54_0b13_RELEASE"
+VERSION="53.99"
 
 # mozilla
 if [ -d mozilla ]; then

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Jun  1 04:25:05 UTC 2017 - kah0922@gmail.com
+
+- remove -fno-inline-small-functions and explicitely optimize with
+  -O2 for openSUSE > 13.2/Leap 42 to work with gcc7 (boo#1040105)
+
+-------------------------------------------------------------------
 Wed Apr 26 12:37:38 UTC 2017 - wr@rosenauer.org
 
 - switch to Mozilla's geolocation service (boo#1026989)

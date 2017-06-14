@@ -1,4 +1,59 @@
 -------------------------------------------------------------------
+Wed Jun 14 07:08:29 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.2esr (boo#1043960)
+  MFSA 2017-16
+  * CVE-2017-5472 (bmo#1365602)
+    Use-after-free using destroyed node when regenerating trees
+  * CVE-2017-7749 (bmo#1355039)
+    Use-after-free during docshell reloading
+  * CVE-2017-7750 (bmo#1356558)
+    Use-after-free with track elements
+  * CVE-2017-7751 (bmo#1363396)
+    Use-after-free with content viewer listeners
+  * CVE-2017-7752 (bmo#1359547)
+    Use-after-free with IME input
+  * CVE-2017-7754 (bmo#1357090)
+    Out-of-bounds read in WebGL with ImageInfo object
+  * CVE-2017-7755 (bmo#1361326)
+    Privilege escalation through Firefox Installer with same
+    directory DLL files (Windows only)
+  * CVE-2017-7756 (bmo#1366595)
+    Use-after-free and use-after-scope logging XHR header errors
+  * CVE-2017-7757 (bmo#1356824)
+    Use-after-free in IndexedDB
+  * CVE-2017-7778, CVE-2017-7778, CVE-2017-7771, CVE-2017-7772,
+    CVE-2017-7773, CVE-2017-7774, CVE-2017-7775, CVE-2017-7776,
+    CVE-2017-7777
+    Vulnerabilities in the Graphite 2 library
+  * CVE-2017-7758 (bmo#1368490)
+    Out-of-bounds read in Opus encoder
+  * CVE-2017-7760 (bmo#1348645)
+    File manipulation and privilege escalation via callback parameter
+    in Mozilla Windows Updater and Maintenance Service (Windows only)
+  * CVE-2017-7761 (bmo#1215648)
+    File deletion and privilege escalation through Mozilla Maintenance
+    Service helper.exe application (Windows only)
+  * CVE-2017-7764 (bmo#1364283)
+    Domain spoofing with combination of Canadian Syllabics and other
+    unicode blocks
+  * CVE-2017-7765 (bmo#1273265)
+    Mark of the Web bypass when saving executable files (Windows only)
+  * CVE-2017-7766 (bmo#1342742)
+    File execution and privilege escalation through updater.ini,
+    Mozilla Windows Updater, and Mozilla Maintenance Service
+    (Windows only)
+  * CVE-2017-7767 (bmo#1336964)
+    Privilege escalation and arbitrary file overwrites through Mozilla
+    Windows Updater and Mozilla Maintenance Service (Windows only)
+  * CVE-2017-7768 (bmo#1336979)
+    32 byte arbitrary file read through Mozilla Maintenance Service
+    (Windows only)
+  * CVE-2017-5470
+    Memory safety bugs fixed in Firefox 54 and Firefox ESR 52.2
+- requires NSS 3.28.5
+
+-------------------------------------------------------------------
 Tue May 23 14:00:40 UTC 2017 - wr@rosenauer.org
 
 - remove -fno-inline-small-functions and explicitely optimize with

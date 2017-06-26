@@ -16,21 +16,21 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
 # changed with every update
-%define major 53
-%define mainver %major.99
-%define update_channel beta
+%define major 54
+%define mainver %major.0
+%define update_channel release
 %define branding 1
-%define releasedate 20170602000000
+%define releasedate 20170612000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
 
-%if 0%{?suse_version} > 1320
-%ifarch %ix86 x86_64
-%define firefox_use_rust 1
-%endif
+# Firefox only supports i686
+%ifarch %ix86
+ExclusiveArch: i586 i686
+BuildArch:     i686
+%{expand:%%global optflags %(echo "%optflags"|sed -e s/i586/i686/) -march=i686 -mtune=generic}
 %endif
 
 # general build definitions
@@ -89,11 +89,9 @@ BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
-%if 0%{?firefox_use_rust}
 BuildRequires:  cargo
 BuildRequires:  rust >= 1.15.1
 BuildRequires:  rust-std
-%endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
 # therefore the Packman version is required
@@ -317,10 +315,6 @@ ac_add_options --prefix=%{_prefix}
 ac_add_options --libdir=%{_libdir}
 ac_add_options --includedir=%{_includedir}
 ac_add_options --enable-release
-%if 0%{?firefox_use_rust}
-%else
-ac_add_options --disable-rust
-%endif
 ac_add_options --enable-default-toolkit=cairo-gtk3
 %if 0%{?build_hardened}
 ac_add_options --enable-pie

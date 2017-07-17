@@ -18,10 +18,10 @@
 
 # changed with every update
 %define major 54
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
 %define branding 1
-%define releasedate 20170612000000
+%define releasedate 20170629000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -576,6 +576,7 @@ exit 0
 %{progdir}/*.so
 %{progdir}/omni.ja
 %{progdir}/fonts/
+%{progdir}/pingsender
 %{progdir}/platform.ini
 %{progdir}/plugin-container
 %if %crashreporter

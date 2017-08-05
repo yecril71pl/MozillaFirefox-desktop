@@ -74,8 +74,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.14
-BuildRequires:  mozilla-nss-devel >= 3.30.2
+BuildRequires:  mozilla-nspr-devel >= 4.15
+BuildRequires:  mozilla-nss-devel >= 3.31
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip

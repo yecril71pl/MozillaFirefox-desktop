@@ -1,4 +1,43 @@
 -------------------------------------------------------------------
+Sat Aug  5 13:22:16 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 55.0b13
+  * Browsing sessions with a high number of tabs are now restored
+    in an instant
+  * Sidebar (bookmarks, history, synced tabs) can now be moved to
+    the right edge of the window
+  * Fine-tune your browser performance from the Preferences/Options page.
+  * Make screenshots of webpages, and save them locally or upload
+    them to the cloud. This feature will undergo A/B testing and
+    will not be visible for some users.
+  * Added Belarusian (be) locale
+  * Simplify print jobs from within print preview
+  * Use virtual reality devices with the web with the introduction
+    of WebVR
+  * Search suggestions are now enabled by default for users who
+    haven't explicitly opted-out
+  * Search with any installed search engine directly from the
+    location bar
+  * IMPORTANT: Breaking profile changes - do not downgrade Firefox
+    and use a profile that has been opened with Firefox 55+.
+  * The Adobe Flash plugin is now click-to-activate by default and
+    only allowed on http:// and https:// URL schemes. This change
+    will be rolled out progressively and so will not be visible to
+    all users immediately. For more information see the Firefox
+    plugin roadmap
+  * Modernized application update UI to be less intrusive and more
+    aligned with the rest of the browser. Only users who have not
+    restarted their browser 8 days after downloading an update or
+    users who opted out of automatic updates will see this change.
+  * Insecure sites can no longer access the Geolocation APIs to get
+    access to your physical location
+  * requires NSPR 4.15 and NSS 3.31
+- updated mozilla-kde.patch:
+  * removed "downloadfinished" alert as Firefox reimplemented the
+    whole thing (TODO: check if there is another function we should
+    hook in)
+
+-------------------------------------------------------------------
 Tue Jul  4 20:08:47 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 54.0.1

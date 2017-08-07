@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  36e478aec136484b59a9fda90f63fa7ddc962018
+# Parent  9ccba8e6b5fad738ce924ff40b4c5aa6f4bc12dd
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
@@ -1419,9 +1419,9 @@ diff --git a/browser/components/preferences/in-content/main.js b/browser/compone
      let defaultPerformancePref =
        document.getElementById("browser.preferences.defaultPerformanceSettings.enabled");
      defaultPerformancePref.addEventListener("change", () => {
-       this.updatePerformanceSettingsBox();
+       this.updatePerformanceSettingsBox({duringChangeEvent: true});
      });
-@@ -779,16 +786,27 @@ var gMainPane = {
+@@ -780,16 +787,27 @@ var gMainPane = {
        let alwaysCheckPref = document.getElementById("browser.shell.checkDefaultBrowser");
        alwaysCheckPref.value = true;
  

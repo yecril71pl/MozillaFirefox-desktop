@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Sat Aug  5 13:22:16 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 55.0b13
+- update to Firefox 55.0
   * Browsing sessions with a high number of tabs are now restored
     in an instant
   * Sidebar (bookmarks, history, synced tabs) can now be moved to

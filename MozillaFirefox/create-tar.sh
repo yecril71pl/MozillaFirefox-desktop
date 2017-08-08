@@ -7,8 +7,8 @@
 
 CHANNEL="esr52"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_52_2_0esr_RELEASE"
-VERSION="52.2"
+RELEASE_TAG="FIREFOX_52_3_0esr_RELEASE"
+VERSION="52.3.0"
 
 # mozilla
 if [ -d mozilla ]; then
@@ -40,8 +40,16 @@ hg -R . parent --template="{node|short}\n" >> ../source-stamp.txt
 echo -n "REPO=" >> ../source-stamp.txt
 hg showconfig paths.default 2>/dev/null | head -n1 | sed -e "s/^ssh:/http:/" >> ../source-stamp.txt
 popd
+
+# use parallel compression, if available
+compression='-J'
+pixz -h > /dev/null 2>&1
+if (($? != 127)); then
+  compression='-Ipixz'
+fi
+
 echo "creating archive..."
-tar cJf firefox-$VERSION-source.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
+tar $compression -cf firefox-$VERSION-source.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg --exclude=CVS mozilla
 
 # l10n
 echo "fetching locales..."
@@ -60,10 +68,10 @@ for locale in $(awk '{ print $1; }' mozilla/browser/locales/shipped-locales); do
   esac
 done
 echo "creating l10n archive..."
-tar cJf l10n-$VERSION.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg l10n
+tar $compression -cf l10n-$VERSION.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg l10n
 
 # compare-locales
 echo "creating compare-locales"
 hg clone http://hg.mozilla.org/build/compare-locales
-tar cJf compare-locales.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg compare-locales
+tar $compression -cf compare-locales.tar.xz --exclude=.hgtags --exclude=.hgignore --exclude=.hg compare-locales
 

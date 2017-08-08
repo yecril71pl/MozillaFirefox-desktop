@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 52
-%define mainver %major.2
+%define mainver %major.3.0
 %define update_channel esr52
-%define releasedate 20170612000000
+%define releasedate 20170807000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1

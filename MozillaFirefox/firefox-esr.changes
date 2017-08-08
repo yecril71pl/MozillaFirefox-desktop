@@ -1,4 +1,49 @@
 -------------------------------------------------------------------
+Tue Aug  8 18:13:34 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.3esr (boo#1052829)
+  MFSA 2017-19
+  * CVE-2017-7798 (bmo#1371586, bmo#1372112)
+    XUL injection in the style editor in devtools
+  * CVE-2017-7800 (bmo#1374047)
+    Use-after-free in WebSockets during disconnection
+  * CVE-2017-7801 (bmo#1371259)
+    Use-after-free with marquee during window resizing
+  * CVE-2017-7784 (bmo#1376087)
+    Use-after-free with image observers
+  * CVE-2017-7802 (bmo#1378147)
+    Use-after-free resizing image elements
+  * CVE-2017-7785 (bmo#1356985)
+    Buffer overflow manipulating ARIA attributes in DOM
+  * CVE-2017-7786 (bmo#1365189)
+    Buffer overflow while painting non-displayable SVG
+  * CVE-2017-7753 (bmo#1353312)
+    Out-of-bounds read with cached style data and pseudo-elements#
+  * CVE-2017-7787 (bmo#1322896)
+    Same-origin policy bypass with iframes through page reloads
+  * CVE-2017-7807 (bmo#1376459)
+    Domain hijacking through AppCache fallback
+  * CVE-2017-7792 (bmo#1368652)
+    Buffer overflow viewing certificates with an extremely long OID
+  * CVE-2017-7804 (bmo#1372849)
+    Memory protection bypass through WindowsDllDetourPatcher
+  * CVE-2017-7791 (bmo#1365875)
+    Spoofing following page navigation with data: protocol and modal alerts
+  * CVE-2017-7782 (bmo#1344034)
+    WindowsDllDetourPatcher allocates memory without DEP protections
+  * CVE-2017-7803 (bmo#1377426)
+    CSP containing 'sandbox' improperly applied
+  * CVE-2017-7779
+    Memory safety bugs fixed in Firefox 55 and Firefox ESR 52.3
+
+-------------------------------------------------------------------
+Wed Jul  5 07:26:32 UTC 2017 - astieger@suse.com
+
+- Mozilla Firefox 52.2.1esr:
+  * Printing text does not work on Windows when Direct2D is
+    disabled (bmo#1318845)
+
+-------------------------------------------------------------------
 Wed Jun 14 07:08:29 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.2esr (boo#1043960)

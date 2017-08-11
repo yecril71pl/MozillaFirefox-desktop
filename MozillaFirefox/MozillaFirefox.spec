@@ -158,6 +158,7 @@ Patch7:         mozilla-openaes-decl.patch
 Patch8:         mozilla-no-stdcxx-check.patch
 Patch9:         mozilla-reduce-files-per-UnifiedBindings.patch
 Patch10:        mozilla-aarch64-startup-crash.patch
+Patch11:        mozilla-ucontext.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -267,6 +268,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

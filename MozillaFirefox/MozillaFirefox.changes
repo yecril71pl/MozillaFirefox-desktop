@@ -1,7 +1,16 @@
 -------------------------------------------------------------------
+Fri Aug 11 08:32:30 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 55.0.1
+  * Fix a regression the tab restoration process (bmo#1388160)
+  * Fix a problem causing What's new pages not to be displayed (bmo#1386224)
+  * Fix a rendering issue with some PKCS#11 libraries (bmo#1388370)
+  * Disable the predictor prefetch (bmo#1388160)
+
+-------------------------------------------------------------------
 Sat Aug  5 13:22:16 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 55.0
+- update to Firefox 55.0 (boo#1052829)
   * Browsing sessions with a high number of tabs are now restored
     in an instant
   * Sidebar (bookmarks, history, synced tabs) can now be moved to
@@ -32,6 +41,65 @@ Sat Aug  5 13:22:16 UTC 2017 - wr@rosenauer.org
   * Insecure sites can no longer access the Geolocation APIs to get
     access to your physical location
   * requires NSPR 4.15 and NSS 3.31
+  MFSA 2017-18
+  * CVE-2017-7798 (bmo#1371586, bmo#1372112)
+    XUL injection in the style editor in devtools
+  * CVE-2017-7800 (bmo#1374047)
+    Use-after-free in WebSockets during disconnection
+  * CVE-2017-7801 (bmo#1371259)
+    Use-after-free with marquee during window resizing
+  * CVE-2017-7809 (bmo#1380284)
+    Use-after-free while deleting attached editor DOM node
+  * CVE-2017-7784 (bmo#1376087)
+    Use-after-free with image observers
+  * CVE-2017-7802 (bmo#1378147)
+    Use-after-free resizing image elements
+  * CVE-2017-7785 (bmo#1356985)
+    Buffer overflow manipulating ARIA attributes in DOM
+  * CVE-2017-7786 (bmo#1365189)
+    Buffer overflow while painting non-displayable SVG
+  * CVE-2017-7806 (bmo#1378113)
+    Use-after-free in layer manager with SVG
+  * CVE-2017-7753 (bmo#1353312)
+    Out-of-bounds read with cached style data and pseudo-elements#
+  * CVE-2017-7787 (bmo#1322896)
+    Same-origin policy bypass with iframes through page reloads
+  * CVE-2017-7807 (bmo#1376459)
+    Domain hijacking through AppCache fallback
+  * CVE-2017-7792 (bmo#1368652)
+    Buffer overflow viewing certificates with an extremely long OID
+  * CVE-2017-7804 (bmo#1372849)
+    Memory protection bypass through WindowsDllDetourPatcher
+  * CVE-2017-7791 (bmo#1365875)
+    Spoofing following page navigation with data: protocol and modal alerts
+  * CVE-2017-7808 (bmo#1367531)
+    CSP information leak with frame-ancestors containing paths
+  * CVE-2017-7782 (bmo#1344034)
+    WindowsDllDetourPatcher allocates memory without DEP protections
+  * CVE-2017-7781 (bmo#1352039)
+    Elliptic curve point addition error when using mixed Jacobian-affine coordinates
+  * CVE-2017-7794 (bmo#1374281)
+    Linux file truncation via sandbox broker
+  * CVE-2017-7803 (bmo#1377426)
+    CSP containing 'sandbox' improperly applied
+  * CVE-2017-7799 (bmo#1372509)
+    Self-XSS XUL injection in about:webrtc
+  * CVE-2017-7783 (bmo#1360842)
+    DOS attack through long username in URL
+  * CVE-2017-7788 (bmo#1073952)
+    Sandboxed about:srcdoc iframes do not inherit CSP directives
+  * CVE-2017-7789 (bmo#1074642)
+    Failure to enable HSTS when two STS headers are sent for a connection
+  * CVE-2017-7790 (bmo#1350460) (Windows-only)
+    Windows crash reporter reads extra memory for some non-null-terminated registry values
+  * CVE-2017-7796 (bmo#1234401) (Windows-only)
+    Windows updater can delete any file named update.log
+  * CVE-2017-7797 (bmo#1334776)
+    Response header name interning leaks across origins
+  * CVE-2017-7780
+    Memory safety bugs fixed in Firefox 55
+  * CVE-2017-7779
+    Memory safety bugs fixed in Firefox 55 and Firefox ESR 52.3
 - updated mozilla-kde.patch:
   * removed "downloadfinished" alert as Firefox reimplemented the
     whole thing (TODO: check if there is another function we should

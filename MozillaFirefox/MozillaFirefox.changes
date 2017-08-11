@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Aug  9 09:47:39 UTC 2017 - schwab@suse.de
+
+- mozilla-ucontext.patch: use ucontext_t instead of struct ucontext
+
+-------------------------------------------------------------------
 Tue Aug  8 18:13:34 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.3esr (boo#1052829)

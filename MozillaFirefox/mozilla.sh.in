@@ -103,7 +103,8 @@ fi
 export GNOME_DISABLE_CRASH_DIALOG=1
 
 # enable xinput2 (boo#1032003)
-export MOZ_USE_XINPUT2=1
+# breaks too many things right now (boo#1053959)
+#export MOZ_USE_XINPUT2=1
 
 moz_debug=0
 script_args=""

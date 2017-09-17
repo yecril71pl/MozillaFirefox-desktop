@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Mon Sep  4 18:27:44 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 55.0.3
+  * Fix an issue with addons when using a path containing non-ascii
+    characters (bmo#1389160)
+  * Fix file uploads to some websites, including YouTube (bmo#1383518)
+- fix Google API key build integration
+- add mozilla-ucontext.patch to fix Tumbleweed build
+- do not enable XINPUT2 for now (boo#1053959)
+
+-------------------------------------------------------------------
 Fri Aug 11 08:32:30 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 55.0.1

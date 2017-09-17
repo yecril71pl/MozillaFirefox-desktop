@@ -71,7 +71,7 @@ or 11e8e75808ae
 pa-IN f01bcb8c13a2
 pl d76f3ba7ebd5
 pt-BR 7cf0629777d1
-pt-PT 0b540f6980f5
+pt-PT a762c23994b3
 rm f16da0c1a769
 ro 6538d74548a9
 ru 4feb4e4200f5

@@ -18,10 +18,10 @@
 
 # changed with every update
 %define major 55
-%define mainver %major.0.1
+%define mainver %major.0.3
 %define update_channel release
 %define branding 1
-%define releasedate 20170810000000
+%define releasedate 20170824000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -45,10 +45,6 @@ BuildArch:     i686
 %define __find_requires sh %{SOURCE4}
 %global provfind sh -c "grep -v '.so' | %__find_provides"
 %global __find_provides %provfind
-# Set up Google API keys, see http://www.chromium.org/developers/how-tos/api-keys
-# Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
-# please get your own set of keys.
-%define _google_api_key AIzaSyD1hTe85_a14kr1Ks8T3Ce75rvbR1_Dx7Q
 %define localize 1
 %ifarch %ix86 x86_64
 %define crashreporter 1
@@ -132,7 +128,11 @@ Source14:       create-tar.sh
 Source15:       firefox-appdata.xml
 Source16:       MozillaFirefox.changes
 Source17:       l10n_changesets.txt
+# Set up API keys, see http://www.chromium.org/developers/how-tos/api-keys
+# Note: these are for the openSUSE Firefox builds ONLY. For your own distribution,
+# please get your own set of keys.
 Source18:       mozilla-api-key
+Source19:       google-api-key
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
 Patch3:         mozilla-kde.patch
@@ -142,6 +142,7 @@ Patch7:         mozilla-openaes-decl.patch
 Patch8:         mozilla-no-stdcxx-check.patch
 Patch9:         mozilla-reduce-files-per-UnifiedBindings.patch
 Patch10:        mozilla-aarch64-startup-crash.patch
+Patch11:        mozilla-ucontext.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -253,6 +254,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch9 -p1
 %endif
 %patch10 -p1
+%patch11 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -279,7 +281,6 @@ export MOZ_BUILD_DATE=%{releasedate}
 export MOZILLA_OFFICIAL=1
 export BUILD_OFFICIAL=1
 export MOZ_TELEMETRY_REPORTING=1
-export MOZ_GOOGLE_API_KEY=%{_google_api_key}
 %if 0%{?suse_version} <= 1320
 export CC=gcc-5
 %endif
@@ -347,6 +348,7 @@ ac_add_options --enable-startup-notification
 #ac_add_options --enable-chrome-format=jar
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
+ac_add_options --with-google-api-keyfile=%{SOURCE19}
 %if %branding
 ac_add_options --enable-official-branding
 %endif

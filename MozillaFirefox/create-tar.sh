@@ -7,8 +7,8 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_55_0_1_RELEASE"  # 55.0.1 build2
-VERSION="55.0.1"
+RELEASE_TAG="FIREFOX_55_0_3_RELEASE"  # 55.0.3 build2
+VERSION="55.0.3"
 
 # mozilla
 if [ -d mozilla ]; then

@@ -18,10 +18,10 @@
 
 # changed with every update
 %define major 55
-%define mainver %major.0.3
-%define update_channel release
+%define mainver %major.99
+%define update_channel beta
 %define branding 1
-%define releasedate 20170824000000
+%define releasedate 20170914000000
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -70,8 +70,8 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.15
-BuildRequires:  mozilla-nss-devel >= 3.31
+BuildRequires:  mozilla-nspr-devel >= 4.16
+BuildRequires:  mozilla-nss-devel >= 3.32.1
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip

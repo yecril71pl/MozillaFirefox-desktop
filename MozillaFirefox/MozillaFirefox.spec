@@ -88,6 +88,7 @@ BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 BuildRequires:  cargo
 BuildRequires:  rust >= 1.15.1
 BuildRequires:  rust-std
+#BuildRequires:  llvm-clang-devel >= 3.9.0
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
 # therefore the Packman version is required
@@ -349,6 +350,7 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 ac_add_options --with-google-api-keyfile=%{SOURCE19}
+ac_add_options --disable-stylo
 %if %branding
 ac_add_options --enable-official-branding
 %endif
@@ -574,7 +576,7 @@ exit 0
 %{progdir}/application.ini
 %{progdir}/chrome.manifest
 %{progdir}/dependentlibs.list
-%{progdir}/icudt58l.dat
+%{progdir}/icudt59l.dat
 %{progdir}/*.so
 %{progdir}/omni.ja
 %{progdir}/fonts/

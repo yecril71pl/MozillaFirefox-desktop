@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sun Sep 17 08:07:43 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 56.0b12
+  * Find Options/Preferences more quickly with new search function
+  * Media is no longer auto-played when opened in a background tab
+  * Enable CSS Grid Layout View
+- requires NSPR 4.16 and NSS 3.32.1
+
+-------------------------------------------------------------------
 Mon Sep  4 18:27:44 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 55.0.3

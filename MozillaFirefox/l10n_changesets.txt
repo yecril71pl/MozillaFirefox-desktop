@@ -47,8 +47,8 @@ hy-AM 3543e3c61d51
 id 80d249bfce07
 is df02eb864aba
 it 54ebd710b0b9
-ja 34cddaa3f554
-ja-JP-mac 1cca7e5654d2
+ja 0f3bea597ba3
+ja-JP-mac 7f49be227f5d
 ka ee6c8ed935e1
 kab f53aac551d7a
 kk 07823d99b937

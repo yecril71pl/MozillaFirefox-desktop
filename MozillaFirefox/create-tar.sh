@@ -5,10 +5,10 @@
 # "moz_source_stamp": "c1de04f39fa956cfce83f6065b0e709369215ed5"
 # http://ftp.mozilla.org/pub/firefox/candidates/48.0-candidates/build2/l10n_changesets.txt
 
-CHANNEL="beta"
+CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_56_0b12_RELEASE"  # 55.0.3 build2
-VERSION="55.99"
+RELEASE_TAG="2bb9e6526ce959abb5416e69226d4dac88851eda"  # 56 build1
+VERSION="56.0"
 
 # mozilla
 if [ -d mozilla ]; then

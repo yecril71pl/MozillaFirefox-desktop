@@ -7,7 +7,7 @@
 
 CHANNEL="release"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="2bb9e6526ce959abb5416e69226d4dac88851eda"  # 56 build1
+RELEASE_TAG="8fbf05f4b92125e081984f5e39b559b83e5cc729"  # 56 build6
 VERSION="56.0"
 
 # mozilla

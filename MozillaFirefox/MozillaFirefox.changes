@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Sun Oct  1 18:25:16 UTC 2017 - stefan.bruens@rwth-aachen.de
+
+- Correct plugin directory for aarch64 (boo#1061207). The wrapper
+  script was not detecting aarch64 as a 64 bit architecture, thus
+  used /usr/lib/browser-plugins/.
+
+-------------------------------------------------------------------
 Sat Sep 30 20:10:50 UTC 2017 - zaitor@opensuse.org
 
 - Drop libgnomeui-devel, and replace it with pkgconfig(gconf-2.0),

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Oct  2 19:57:40 UTC 2017 - wr@rosenauer.org
+
+- enable stylo for TW (requires LLVM >= 3.9)
+
+-------------------------------------------------------------------
 Sun Oct  1 18:25:16 UTC 2017 - stefan.bruens@rwth-aachen.de
 
 - Correct plugin directory for aarch64 (boo#1061207). The wrapper

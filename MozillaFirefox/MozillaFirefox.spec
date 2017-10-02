@@ -16,20 +16,21 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 # changed with every update
-%define major 55
+%define major 56
 %define mainver %major.99
 %define update_channel beta
 %define branding 1
-%define releasedate 20170914000000
+%define releasedate 20170926190823
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
 
 # Firefox only supports i686
 %ifarch %ix86
-ExclusiveArch: i586 i686
-BuildArch:     i686
+ExclusiveArch:  i586 i686
+BuildArch:      i686
 %{expand:%%global optflags %(echo "%optflags"|sed -e s/i586/i686/) -march=i686 -mtune=generic}
 %endif
 
@@ -54,6 +55,7 @@ BuildArch:     i686
 
 Name:           %{pkgname}
 BuildRequires:  Mesa-devel
+BuildRequires:  alsa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
 BuildRequires:  fdupes
@@ -62,9 +64,9 @@ BuildRequires:  gcc5-c++
 %else
 BuildRequires:  gcc-c++
 %endif
+BuildRequires:  cargo
 BuildRequires:  libXcomposite-devel
 BuildRequires:  libcurl-devel
-BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
 BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
@@ -73,22 +75,27 @@ BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.16
 BuildRequires:  mozilla-nss-devel >= 3.32.1
 BuildRequires:  python-devel
+BuildRequires:  rust >= 1.15.1
+BuildRequires:  rust-std
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip
 BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
-BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(libffi)
-BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  pkgconfig(gconf-2.0)
+BuildRequires:  pkgconfig(gdk-x11-2.0)
+BuildRequires:  pkgconfig(glib-2.0) >= 2.22
 BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(gtk+-2.0) >= 2.18.0
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
+BuildRequires:  pkgconfig(gtk+-unix-print-2.0)
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
-BuildRequires:  cargo
-BuildRequires:  rust >= 1.15.1
-BuildRequires:  rust-std
-#BuildRequires:  llvm-clang-devel >= 3.9.0
+BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkgconfig(libpulse)
+%if 0%{?suse_version} > 1320
+BuildRequires:  llvm-clang-devel >= 3.9.0
+%endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
 # therefore the Packman version is required
@@ -350,7 +357,9 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 ac_add_options --with-google-api-keyfile=%{SOURCE19}
+%if 0%{?suse_version} > 1320
 ac_add_options --disable-stylo
+%endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif

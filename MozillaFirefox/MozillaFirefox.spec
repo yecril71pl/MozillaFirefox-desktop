@@ -93,7 +93,9 @@ BuildRequires:  pkgconfig(gtk+-unix-print-2.0)
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libpulse)
-#BuildRequires:  llvm-clang-devel >= 3.9.0
+%if 0%{?suse_version} > 1320
+BuildRequires:  llvm-clang-devel >= 3.9.0
+%endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
 # therefore the Packman version is required
@@ -355,7 +357,9 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 ac_add_options --with-google-api-keyfile=%{SOURCE19}
+%if 0%{?suse_version} > 1320
 ac_add_options --disable-stylo
+%endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif

@@ -1,11 +1,81 @@
 -------------------------------------------------------------------
-Sun Sep 17 08:07:43 UTC 2017 - wr@rosenauer.org
+Mon Oct  2 19:57:40 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 56.0b12
+- enable stylo for TW (requires LLVM >= 3.9)
+
+-------------------------------------------------------------------
+Sun Oct  1 18:25:16 UTC 2017 - stefan.bruens@rwth-aachen.de
+
+- Correct plugin directory for aarch64 (boo#1061207). The wrapper
+  script was not detecting aarch64 as a 64 bit architecture, thus
+  used /usr/lib/browser-plugins/.
+
+-------------------------------------------------------------------
+Sat Sep 30 20:10:50 UTC 2017 - zaitor@opensuse.org
+
+- Drop libgnomeui-devel, and replace it with pkgconfig(gconf-2.0),
+  pkgconfig(gtk+-2.0), pkgconfig(gtk+-unix-print-2.0),
+  pkgconfig(glib-2.0), pkgconfig(gobject-2.0) and
+  pkgconfig(gdk-x11-2.0) BuildRequires, align with what configure
+  looks for.
+
+-------------------------------------------------------------------
+Thu Sep 28 08:28:29 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 56.0 (boo#1060445)
+  * Firefox Screenshots
   * Find Options/Preferences more quickly with new search function
   * Media is no longer auto-played when opened in a background tab
   * Enable CSS Grid Layout View
+  MFSA 2017-21
+  * CVE-2017-7793 (bmo#1371889)
+    Use-after-free with Fetch API
+  * CVE-2017-7817 (bmo#1356596) (Android-only)
+    Firefox for Android address bar spoofing through fullscreen mode
+  * CVE-2017-7818 (bmo#1363723)
+    Use-after-free during ARIA array manipulation
+  * CVE-2017-7819 (bmo#1380292)
+    Use-after-free while resizing images in design mode
+  * CVE-2017-7824 (bmo#1398381)
+    Buffer overflow when drawing and validating elements with ANGLE
+  * CVE-2017-7805 (bmo#1377618) (fixed via NSS requirement)
+    Use-after-free in TLS 1.2 generating handshake hashes
+  * CVE-2017-7812 (bmo#1379842)
+    Drag and drop of malicious page content to the tab bar can open locally stored files
+  * CVE-2017-7814 (bmo#1376036)
+    Blob and data URLs bypass phishing and malware protection warnings
+  * CVE-2017-7813 (bmo#1383951)
+    Integer truncation in the JavaScript parser
+  * CVE-2017-7825 (bmo#1393624, bmo#1390980) (OSX-only)
+    OS X fonts render some Tibetan and Arabic unicode characters as spaces
+  * CVE-2017-7815 (bmo#1368981)
+    Spoofing attack with modal dialogs on non-e10s installations
+  * CVE-2017-7816 (bmo#1380597)
+    WebExtensions can load about: URLs in extension UI
+  * CVE-2017-7821 (bmo#1346515)
+    WebExtensions can download and open non-executable files without user interaction
+  * CVE-2017-7823 (bmo#1396320)
+    CSP sandbox directive did not create a unique origin
+  * CVE-2017-7822 (bmo#1368859)
+    WebCrypto allows AES-GCM with 0-length IV
+  * CVE-2017-7820 (bmo#1378207)
+    Xray wrapper bypass with new tab and web console
+  * CVE-2017-7811
+    Memory safety bugs fixed in Firefox 56
+  * CVE-2017-7810
+    Memory safety bugs fixed in Firefox 56 and Firefox ESR 52.4
 - requires NSPR 4.16 and NSS 3.32.1
+- rebased patches
+
+-------------------------------------------------------------------
+Thu Sep 28 07:53:13 UTC 2017 - dimstar@opensuse.org
+
+- Add alsa-devel BuildRequires: we care for ALSA support to be
+  built and thus need to ensure we get the dependencies in place.
+  In the past, alsa-devel was pulled in by accident: we
+  buildrequire libgnome-devel. This required esound-devel and that
+  in turn pulled in alsa-devel for us. libgnome is being fixed to
+  no longer require esound-devel.
 
 -------------------------------------------------------------------
 Mon Sep  4 18:27:44 UTC 2017 - wr@rosenauer.org

@@ -1,7 +1,16 @@
 -------------------------------------------------------------------
-Mon Oct  2 19:57:40 UTC 2017 - wr@rosenauer.org
+Tue Oct 10 11:47:49 UTC 2017 - wr@rosenauer.org
 
+- update to Firefox 56.0.1
+  * Block D3D11 when using Intel drivers on Windows 7 systems with
+    partial AVX support (bmo#1403353)
+  -> just to sync the version number
 - enable stylo for TW (requires LLVM >= 3.9)
+- queue KDE filepicker requests to avoid non-opening file dialogs
+  happening in certain situations (contributed by Ignaz Forster)
+- the placeholder dot in KDE file dialog in case of empty filenames
+  was removed, apparently not required (anymore)
+  (contributed by Ignaz Forster)
 
 -------------------------------------------------------------------
 Sun Oct  1 18:25:16 UTC 2017 - stefan.bruens@rwth-aachen.de

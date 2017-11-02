@@ -19,10 +19,10 @@
 
 # changed with every update
 %define major 56
-%define mainver %major.0.1
+%define mainver %major.0.2
 %define update_channel release
 %define branding 1
-%define releasedate 20171002220106
+%define releasedate 20171024165158
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -357,7 +357,7 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 ac_add_options --with-google-api-keyfile=%{SOURCE19}
-%if 0%{?suse_version} > 1320
+%if 0%{?suse_version} <= 1320
 ac_add_options --disable-stylo
 %endif
 %if %branding

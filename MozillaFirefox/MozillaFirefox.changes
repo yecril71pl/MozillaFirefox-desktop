@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sat Oct 28 06:30:37 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 56.0.2
+  * Disable Form Autofill completely on user request (bmo#1404531)
+  * Fix for video-related crashes on Windows 7 (bmo#1409141)
+  * Correct detection for 64-bit GSSAPI authentication (bmo#1409275)
+  * Fix for shutdown crash (bmo#1404105)
+
+-------------------------------------------------------------------
 Tue Oct 10 11:47:49 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 56.0.1

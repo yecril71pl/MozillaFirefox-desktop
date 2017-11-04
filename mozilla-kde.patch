@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  a930d4c1c3fba77f61071becdc51e3232e0b72ca
+# Parent  c5bcac47a3f81790e9c2724d9d17ea5a7f20e735
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -9,10 +9,10 @@ Bug: https://bugzilla.mozilla.org/show_bug.cgi?id=140751
 diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
 --- a/modules/libpref/Preferences.cpp
 +++ b/modules/libpref/Preferences.cpp
-@@ -33,16 +33,17 @@
+@@ -37,16 +37,17 @@
  #include "nsIZipReader.h"
  #include "nsPrefBranch.h"
- #include "nsXPIDLString.h"
+ #include "nsString.h"
  #include "nsCRT.h"
  #include "nsCOMArray.h"
  #include "nsXPCOMCID.h"
@@ -27,7 +27,7 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
  #include "prefread.h"
  #include "prefapi_private_data.h"
  
-@@ -1435,16 +1436,34 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
+@@ -1413,16 +1414,34 @@ pref_LoadPrefsInDir(nsIFile* aDir, char 
  
  static nsresult pref_LoadPrefsInDirList(const char *listId)
  {
@@ -62,7 +62,7 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
      return NS_OK;
  
    bool hasMore;
-@@ -1460,17 +1479,17 @@ static nsresult pref_LoadPrefsInDirList(
+@@ -1438,17 +1457,17 @@ static nsresult pref_LoadPrefsInDirList(
  
      nsAutoCString leaf;
      path->GetNativeLeafName(leaf);
@@ -79,9 +79,9 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
  
  static nsresult pref_ReadPrefFromJar(nsZipArchive* jarReader, const char *name)
  {
-   nsZipItemPtr<char> manifest(jarReader, name, true);
-   NS_ENSURE_TRUE(manifest.Buffer(), NS_ERROR_NOT_AVAILABLE);
-@@ -1566,24 +1585,36 @@ pref_InitInitialObjects()
+   nsCString manifest;
+   MOZ_TRY_VAR(manifest, URLPreloader::ReadZip(jarReader, nsDependentCString(name)));
+@@ -1544,24 +1563,36 @@ pref_InitInitialObjects()
    /* these pref file names should not be used: we process them after all other application pref files for backwards compatibility */
    static const char* specialFiles[] = {
  #if defined(XP_MACOSX)
@@ -121,7 +121,7 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
 diff --git a/modules/libpref/moz.build b/modules/libpref/moz.build
 --- a/modules/libpref/moz.build
 +++ b/modules/libpref/moz.build
-@@ -33,16 +33,20 @@ EXPORTS.mozilla += [
+@@ -31,16 +31,20 @@ EXPORTS.mozilla += [
  UNIFIED_SOURCES += [
      'nsPrefBranch.cpp',
      'nsPrefsFactory.cpp',
@@ -166,8 +166,7 @@ diff --git a/python/mozbuild/mozpack/chrome/flags.py b/python/mozbuild/mozpack/c
 diff --git a/python/mozbuild/mozpack/chrome/manifest.py b/python/mozbuild/mozpack/chrome/manifest.py
 --- a/python/mozbuild/mozpack/chrome/manifest.py
 +++ b/python/mozbuild/mozpack/chrome/manifest.py
-@@ -33,16 +33,17 @@ class ManifestEntry(object):
-         'application',
+@@ -34,16 +34,17 @@ class ManifestEntry(object):
          'platformversion',
          'os',
          'osversion',
@@ -175,7 +174,8 @@ diff --git a/python/mozbuild/mozpack/chrome/manifest.py b/python/mozbuild/mozpac
          'xpcnativewrappers',
          'tablet',
          'process',
-+        'desktop',
+         'contentaccessible',
++	'desktop',
      ]
  
      def __init__(self, base, *flags):
@@ -3126,10 +3126,10 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
  #include "nsString.h"
  #include "nsReadableUtils.h"
  #include "nsUnicharUtils.h"
- #include "nsXPIDLString.h"
  #include "nsIURL.h"
  #include "nsIFileStreams.h"
-@@ -1143,26 +1143,26 @@ nsresult nsOSHelperAppService::OSProtoco
+ #include "nsILineInputStream.h"
+@@ -1142,26 +1142,26 @@ nsresult nsOSHelperAppService::OSProtoco
      ContentAction::Action::defaultActionForScheme(QString(aProtocolScheme) + ':');
  
    if (action.isValid())
@@ -3158,7 +3158,7 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
  
  nsresult nsOSHelperAppService::GetFileTokenForPath(const char16_t * platformAppPath, nsIFile ** aFile)
  {
-@@ -1249,17 +1249,17 @@ nsOSHelperAppService::GetFromExtension(c
+@@ -1248,17 +1248,17 @@ nsOSHelperAppService::GetFromExtension(c
                                           mime_types_description,
                                           true);
  
@@ -3177,7 +3177,7 @@ diff --git a/uriloader/exthandler/unix/nsOSHelperAppService.cpp b/uriloader/exth
  
      rv = LookUpTypeAndDescription(NS_ConvertUTF8toUTF16(aFileExt),
                                    majorType,
-@@ -1370,17 +1370,17 @@ nsOSHelperAppService::GetFromType(const 
+@@ -1369,17 +1369,17 @@ nsOSHelperAppService::GetFromType(const 
    nsAutoString extensions, mime_types_description;
    LookUpExtensionsAndDescription(majorType,
                                   minorType,
@@ -3306,7 +3306,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
 +    return NS_OK;
 +  }
 +
-   nsXPIDLCString title;
+   nsCString title;
    title.Adopt(ToNewUTF8String(mTitle));
  
    GtkWindow *parent_widget =
@@ -3727,7 +3727,7 @@ diff --git a/xpcom/components/moz.build b/xpcom/components/moz.build
 diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
 --- a/xpcom/io/nsLocalFileUnix.cpp
 +++ b/xpcom/io/nsLocalFileUnix.cpp
-@@ -46,16 +46,17 @@
+@@ -45,16 +45,17 @@
  #include "prproces.h"
  #include "nsIDirectoryEnumerator.h"
  #include "nsISimpleEnumerator.h"
@@ -3745,7 +3745,7 @@ diff --git a/xpcom/io/nsLocalFileUnix.cpp b/xpcom/io/nsLocalFileUnix.cpp
  #include "prmem.h"
  #include "plbase64.h"
  
-@@ -1941,59 +1942,74 @@ nsLocalFile::SetPersistentDescriptor(con
+@@ -1938,59 +1939,74 @@ nsLocalFile::SetPersistentDescriptor(con
    return InitWithNativePath(aPersistentDescriptor);
  #endif
  }

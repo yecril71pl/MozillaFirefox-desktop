@@ -1,8 +1,9 @@
 -------------------------------------------------------------------
 Sat Nov  4 19:24:17 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 57.0b13
+- update to Firefox 57.0b14
 - requires NSPR 4.17, NSS 3.33 and rustc 1.19
+- rebased patches
 
 -------------------------------------------------------------------
 Sat Oct 28 06:30:37 UTC 2017 - wr@rosenauer.org

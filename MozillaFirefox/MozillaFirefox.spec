@@ -22,7 +22,7 @@
 %define mainver %major.99
 %define update_channel beta
 %define branding 1
-%define releasedate 20171030163911
+%define releasedate 20171102181127
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -254,7 +254,7 @@ symbols meant for upload to Mozilla's crash collector database.
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
 %patch3 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -262,7 +262,7 @@ cd $RPM_BUILD_DIR/mozilla
 %patch9 -p1
 %endif
 %patch10 -p1
-%patch11 -p1
+#%patch11 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

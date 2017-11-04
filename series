@@ -1,14 +1,14 @@
 # xulrunner/gecko patches
 mozilla-nongnome-proxies.patch
 mozilla-kde.patch
-mozilla-language.patch
+#mozilla-language.patch
 mozilla-ntlm-full-path.patch
 mozilla-idldir.patch
 mozilla-openaes-decl.patch
 mozilla-no-stdcxx-check.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-aarch64-startup-crash.patch
-mozilla-ucontext.patch
+#mozilla-ucontext.patch
 
 # Firefox patches
 firefox-kde.patch

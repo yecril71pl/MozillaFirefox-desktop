@@ -72,10 +72,10 @@ BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
-BuildRequires:  mozilla-nspr-devel >= 4.16
-BuildRequires:  mozilla-nss-devel >= 3.32.1
+BuildRequires:  mozilla-nspr-devel >= 4.17
+BuildRequires:  mozilla-nss-devel >= 3.33
 BuildRequires:  python-devel
-BuildRequires:  rust >= 1.15.1
+BuildRequires:  rust >= 1.19
 BuildRequires:  rust-std
 BuildRequires:  startup-notification-devel
 BuildRequires:  unzip

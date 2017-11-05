@@ -13,11 +13,15 @@ home/abuild/rpmbuild/BUILD/obj/dom/bindings/UnifiedBindings16.cpp
 [ 1636s] c++: internal compiler error: Killed (program cc1plus)
 [ 1636s] Please submit a full bug report,
 
-Index: mozilla/python/mozbuild/mozbuild/backend/common.py
-===================================================================
---- mozilla.orig/python/mozbuild/mozbuild/backend/common.py	2016-02-26 17:19:30.331667693 +0100
-+++ mozilla/python/mozbuild/mozbuild/backend/common.py	2016-02-26 17:19:39.792569676 +0100
-@@ -333,7 +333,7 @@ class CommonBackend(BuildBackend):
+diff --git a/python/mozbuild/mozbuild/backend/common.py b/python/mozbuild/mozbuild/backend/common.py
+--- a/python/mozbuild/mozbuild/backend/common.py
++++ b/python/mozbuild/mozbuild/backend/common.py
+@@ -386,17 +386,17 @@ class CommonBackend(BuildBackend):
+         )
+         self._handle_generated_sources(manager.expected_build_output_files())
+         # Bindings are compiled in unified mode to speed up compilation and
+         # to reduce linker memory size. Note that test bindings are separated
+         # from regular ones so tests bindings aren't shipped.
          unified_source_mapping = list(group_unified_files(webidls.all_regular_cpp_basenames(),
                                                            unified_prefix='UnifiedBindings',
                                                            unified_suffix='cpp',
@@ -26,3 +30,8 @@ Index: mozilla/python/mozbuild/mozbuild/backend/common.py
          self._write_unified_files(unified_source_mapping, bindings_dir,
                                    poison_windows_h=True)
          self._handle_webidl_build(bindings_dir, unified_source_mapping,
+                                   webidls,
+                                   manager.expected_build_output_files(),
+                                   manager.GLOBAL_DEFINE_FILES)
+ 
+     def _write_unified_file(self, unified_file, source_filenames,

@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  c5bcac47a3f81790e9c2724d9d17ea5a7f20e735
+# Parent  87a32e5d11e9d652e331a5f852bb951069b20c4a
 Description: Add KDE integration to Firefox (toolkit parts)
 Author: Wolfgang Rosenauer <wolfgang@rosenauer.org>
 Author: Lubos Lunak <lunak@suse.com>
@@ -568,7 +568,7 @@ new file mode 100644
 +            if (/Win/.test(navigator.platform)) {
 +              var spacer = document.getAnonymousElementByAttribute(this, "anonid", "spacer");
 +              spacer.removeAttribute("hidden");
-+              spacer.setAttribute("flex", shown["extra2"] ? "1" : "0");
++              spacer.setAttribute("flex", shown.extra2 ? "1" : "0");
 +            }
 +          }
 +        ]]>
@@ -803,7 +803,7 @@ new file mode 100644
 +      </field>
 +      <field name="rootBranchInternal">
 +        Components.classes["@mozilla.org/preferences-service;1"]
-+                  .getService(Components.interfaces.nsIPrefBranchInternal);
++                  .getService(Components.interfaces.nsIPrefBranch);
 +      </field>
 +      <property name="type" readonly="true">
 +        <getter>
@@ -1083,7 +1083,7 @@ new file mode 100644
 +              return fontEnumerator.getStandardFamilyName(family);
 +            case "file":
 +              var f = this._branch
-+                          .getComplexValue(this.name, Components.interfaces.nsILocalFile);
++                          .getComplexValue(this.name, Components.interfaces.nsIFile);
 +              return f;
 +            default:
 +              this._reportUnknownType();
@@ -1128,14 +1128,14 @@ new file mode 100644
 +            var lf;
 +            if (typeof(val) == "string") {
 +              lf = Components.classes["@mozilla.org/file/local;1"]
-+                             .createInstance(Components.interfaces.nsILocalFile);
++                             .createInstance(Components.interfaces.nsIFile);
 +              lf.persistentDescriptor = val;
 +              if (!lf.exists())
 +                lf.initWithPath(val);
 +            } else
-+              lf = val.QueryInterface(Components.interfaces.nsILocalFile);
++              lf = val.QueryInterface(Components.interfaces.nsIFile);
 +            this.preferences.rootBranch
-+                .setComplexValue(this.name, Components.interfaces.nsILocalFile, lf);
++                .setComplexValue(this.name, Components.interfaces.nsIFile, lf);
 +            break;
 +          default:
 +            this._reportUnknownType();

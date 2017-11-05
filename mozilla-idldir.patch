@@ -1,7 +1,7 @@
 # HG changeset patch
 # Parent 1cd1e78dfe63c1a7bcfc0707697bb99bcfea19c4
 # User Wolfgang Rosenauer <wr@rosenauer.org>
-# Parent  b0fb5e009b6af361b8781a923daa65170a2fdedb
+# Parent  a3ba03360353036e15ec6d275c14d82d783c53f5
 Install IDL files to includedir instead of /usr/share/idl
 
 diff --git a/config/baseconfig.mk b/config/baseconfig.mk

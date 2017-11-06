@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  2de38c90f96ae846bb664f9a02ddfbcd5f662357
+# Parent  9f19902f8bcde21fa63172a85818fb11714878d8
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
@@ -1421,7 +1421,7 @@ diff --git a/browser/components/shell/nsKDEShellService.cpp b/browser/components
 new file mode 100644
 --- /dev/null
 +++ b/browser/components/shell/nsKDEShellService.cpp
-@@ -0,0 +1,203 @@
+@@ -0,0 +1,204 @@
 +/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/* This Source Code Form is subject to the terms of the Mozilla Public
 + * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -1510,7 +1510,8 @@ new file mode 100644
 +
 +NS_IMETHODIMP
 +nsKDEShellService::SetDesktopBackground(nsIDOMElement* aElement,
-+                                          PRInt32 aPosition)
++                                        int32_t aPosition,
++                                        const nsACString& aImageName)
 +{
 +    return NS_ERROR_NOT_IMPLEMENTED;
 +}

@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 52
-%define mainver %major.3.0
+%define mainver %major.4.0
 %define update_channel esr52
-%define releasedate 20170807000000
+%define releasedate 20170921064520
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -82,7 +82,7 @@ BuildRequires:  libnotify-devel
 BuildRequires:  libproxy-devel
 BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.13.1
-BuildRequires:  mozilla-nss-devel >= 3.28.5
+BuildRequires:  mozilla-nss-devel >= 3.28.6
 BuildRequires:  nss-shared-helper-devel
 BuildRequires:  python-devel
 BuildRequires:  startup-notification-devel
@@ -159,6 +159,8 @@ Patch7:         mozilla-openaes-decl.patch
 Patch8:         mozilla-no-stdcxx-check.patch
 Patch9:         mozilla-reduce-files-per-UnifiedBindings.patch
 Patch10:        mozilla-aarch64-startup-crash.patch
+Patch11:        mozilla-ucontext.patch
+Patch12:        mozilla-bmo1005640.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -268,6 +270,8 @@ cd $RPM_BUILD_DIR/mozilla
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

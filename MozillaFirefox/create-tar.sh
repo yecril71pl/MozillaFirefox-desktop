@@ -7,8 +7,8 @@
 
 CHANNEL="esr52"
 BRANCH="releases/mozilla-$CHANNEL"
-RELEASE_TAG="FIREFOX_52_3_0esr_RELEASE"
-VERSION="52.3.0"
+RELEASE_TAG="FIREFOX_52_4_0esr_RELEASE"
+VERSION="52.4.0"
 
 # mozilla
 if [ -d mozilla ]; then

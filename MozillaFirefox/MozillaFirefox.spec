@@ -95,6 +95,9 @@ BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libpulse)
 %if 0%{?suse_version} > 1320
 BuildRequires:  llvm-clang-devel >= 3.9.0
+%else
+# this covers the workaround to compile on Leap 42 in OBS
+BuildRequires:  clang4-devel
 %endif
 # libavcodec is required for H.264 support but the
 # openSUSE version is currently not able to play H.264
@@ -143,14 +146,13 @@ Source18:       mozilla-api-key
 Source19:       google-api-key
 # Gecko/Toolkit
 Patch1:         mozilla-nongnome-proxies.patch
-Patch3:         mozilla-kde.patch
-Patch5:         mozilla-language.patch
-Patch6:         mozilla-ntlm-full-path.patch
-Patch7:         mozilla-openaes-decl.patch
-Patch8:         mozilla-no-stdcxx-check.patch
-Patch9:         mozilla-reduce-files-per-UnifiedBindings.patch
-Patch10:        mozilla-aarch64-startup-crash.patch
-Patch11:        mozilla-ucontext.patch
+Patch2:         mozilla-kde.patch
+Patch3:         mozilla-ntlm-full-path.patch
+Patch4:         mozilla-openaes-decl.patch
+Patch5:         mozilla-no-stdcxx-check.patch
+Patch6:         mozilla-reduce-files-per-UnifiedBindings.patch
+Patch7:         mozilla-aarch64-startup-crash.patch
+Patch8:         mozilla-bindgen-systemlibs.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -253,16 +255,15 @@ symbols meant for upload to Mozilla's crash collector database.
 %endif
 cd $RPM_BUILD_DIR/mozilla
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
-#%patch5 -p1
+%patch4 -p1
+%patch5 -p1
+%ifarch %ix86
 %patch6 -p1
+%endif
 %patch7 -p1
 %patch8 -p1
-%ifarch %ix86
-%patch9 -p1
-%endif
-%patch10 -p1
-#%patch11 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1
@@ -357,9 +358,6 @@ ac_add_options --enable-startup-notification
 ac_add_options --enable-update-channel=%{update_channel}
 ac_add_options --with-mozilla-api-keyfile=%{SOURCE18}
 ac_add_options --with-google-api-keyfile=%{SOURCE19}
-%if 0%{?suse_version} <= 1320
-ac_add_options --disable-stylo
-%endif
 %if %branding
 ac_add_options --enable-official-branding
 %endif

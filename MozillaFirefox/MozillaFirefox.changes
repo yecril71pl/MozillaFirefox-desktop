@@ -1,9 +1,22 @@
 -------------------------------------------------------------------
-Sat Nov  4 19:24:17 UTC 2017 - wr@rosenauer.org
+Thu Nov  9 15:01:30 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 57.0b14
+  * Firefox Quantum
+  * Photon UI
+  * AMD VP9 hardware video decoder support
+  * Added support for Date/Time input
+  * stricter security sandbox blocking filesystem reading and
+    writing on Linux systems
+  * middle mouse paste in the content area no longer navigates to
+    URLs by default on Unix systems
 - requires NSPR 4.17, NSS 3.33 and rustc 1.19
 - rebased patches
+- added mozilla-bindgen-systemlibs.patch to allow stylo build
+  with system libs (bmo#1341234)
+- removed mozilla-language.patch since the whole locale code
+  changed in Firefox and is relying on ICU now
+- removed obsolete mozilla-ucontext.patch
 
 -------------------------------------------------------------------
 Sat Oct 28 06:30:37 UTC 2017 - wr@rosenauer.org

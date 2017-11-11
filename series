@@ -10,6 +10,7 @@ mozilla-no-stdcxx-check.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-aarch64-startup-crash.patch
 mozilla-ucontext.patch
+mozilla-bmo1005640.patch
 
 # Firefox patches
 firefox-kde.patch

@@ -1,0 +1,208 @@
+
+# HG changeset patch
+# User Zibi Braniecki <gandalf@mozilla.com>
+# Date 1492502585 25200
+# Node ID 4e489e84adfd63b84c8ee55a8ea4cc05984cfdd8
+# Parent  b04931b8cbcb2620b4760ccafd66a9b1190acca4
+Bug 1005640 - Flush StringBundle cache when app-locales change. r=valentin
+
+StringBundle caches bundles, so when language chain changes we should
+flush the cache to enable new strings to be loaded.
+This also affects localized prefs like intl.accept_languages.
+
+Then in HttpHandler we have to mark the value as dirty so that next
+time it's called it actually recalculates using flushed string bundle
+with the new locale.
+
+MozReview-Commit-ID: DKWEDUli4yH
+
+diff --git a/intl/strres/nsStringBundle.cpp b/intl/strres/nsStringBundle.cpp
+--- a/intl/strres/nsStringBundle.cpp
++++ b/intl/strres/nsStringBundle.cpp
+@@ -524,16 +524,17 @@ nsresult
+ nsStringBundleService::Init()
+ {
+   nsCOMPtr<nsIObserverService> os = mozilla::services::GetObserverService();
+   if (os) {
+     os->AddObserver(this, "memory-pressure", true);
+     os->AddObserver(this, "profile-do-change", true);
+     os->AddObserver(this, "chrome-flush-caches", true);
+     os->AddObserver(this, "xpcom-category-entry-added", true);
++    os->AddObserver(this, "intl:app-locales-changed", true);
+   }
+ 
+   // instantiate the override service, if there is any.
+   // at some point we probably want to make this a category, and
+   // support multiple overrides
+   mOverrideStrings = do_GetService(NS_STRINGBUNDLETEXTOVERRIDE_CONTRACTID);
+ 
+   return NS_OK;
+@@ -541,17 +542,18 @@ nsStringBundleService::Init()
+ 
+ NS_IMETHODIMP
+ nsStringBundleService::Observe(nsISupports* aSubject,
+                                const char* aTopic,
+                                const char16_t* aSomeData)
+ {
+   if (strcmp("memory-pressure", aTopic) == 0 ||
+       strcmp("profile-do-change", aTopic) == 0 ||
+-      strcmp("chrome-flush-caches", aTopic) == 0)
++      strcmp("chrome-flush-caches", aTopic) == 0 ||
++      strcmp("intl:app-locales-changed", aTopic) == 0)
+   {
+     flushBundleCache();
+   }
+   else if (strcmp("xpcom-category-entry-added", aTopic) == 0 &&
+            NS_LITERAL_STRING("xpcom-autoregistration").Equals(aSomeData))
+   {
+     mOverrideStrings = do_GetService(NS_STRINGBUNDLETEXTOVERRIDE_CONTRACTID);
+   }
+diff --git a/netwerk/protocol/http/nsHttpHandler.cpp b/netwerk/protocol/http/nsHttpHandler.cpp
+--- a/netwerk/protocol/http/nsHttpHandler.cpp
++++ b/netwerk/protocol/http/nsHttpHandler.cpp
+@@ -197,16 +197,17 @@ nsHttpHandler::nsHttpHandler()
+     , mEnforceAssocReq(false)
+     , mLastUniqueID(NowInSeconds())
+     , mSessionStartTime(0)
+     , mLegacyAppName("Mozilla")
+     , mLegacyAppVersion("5.0")
+     , mProduct("Gecko")
+     , mCompatFirefoxEnabled(false)
+     , mUserAgentIsDirty(true)
++    , mAcceptLanguagesIsDirty(true)
+     , mPromptTempRedirect(true)
+     , mEnablePersistentHttpsCaching(false)
+     , mDoNotTrackEnabled(false)
+     , mSafeHintEnabled(false)
+     , mParentalControlEnabled(false)
+     , mHandlerActive(false)
+     , mTelemetryEnabled(false)
+     , mAllowExperiments(true)
+@@ -460,18 +461,23 @@ nsHttpHandler::AddStandardRequestHeaders
+     // service worker expects to see it.  The other "default" headers are
+     // hidden from service worker interception.
+     rv = request->SetHeader(nsHttp::Accept, mAccept,
+                             false, nsHttpHeaderArray::eVarietyRequestOverride);
+     if (NS_FAILED(rv)) return rv;
+ 
+     // Add the "Accept-Language" header.  This header is also exposed to the
+     // service worker.
++    if (mAcceptLanguagesIsDirty) {
++        rv = SetAcceptLanguages();
++        MOZ_ASSERT(NS_SUCCEEDED(rv));
++    }
++
++    // Add the "Accept-Language" header
+     if (!mAcceptLanguages.IsEmpty()) {
+-        // Add the "Accept-Language" header
+         rv = request->SetHeader(nsHttp::Accept_Language, mAcceptLanguages,
+                                 false,
+                                 nsHttpHeaderArray::eVarietyRequestOverride);
+         if (NS_FAILED(rv)) return rv;
+     }
+ 
+     // Add the "Accept-Encoding" header
+     if (isSecure) {
+@@ -1472,26 +1478,20 @@ nsHttpHandler::PrefsChanged(nsIPrefBranc
+             mMaxHttpResponseHeaderSize = val;
+         }
+     }
+     //
+     // INTL options
+     //
+ 
+     if (PREF_CHANGED(INTL_ACCEPT_LANGUAGES)) {
+-        nsCOMPtr<nsIPrefLocalizedString> pls;
+-        prefs->GetComplexValue(INTL_ACCEPT_LANGUAGES,
+-                                NS_GET_IID(nsIPrefLocalizedString),
+-                                getter_AddRefs(pls));
+-        if (pls) {
+-            nsXPIDLString uval;
+-            pls->ToString(getter_Copies(uval));
+-            if (uval)
+-                SetAcceptLanguages(NS_ConvertUTF16toUTF8(uval).get());
+-        }
++        // We don't want to set the new accept languages here since
++        // this pref is a complex type and it may be racy with flushing
++        // string resources.
++        mAcceptLanguagesIsDirty = true;
+     }
+ 
+     //
+     // Tracking options
+     //
+ 
+     if (PREF_CHANGED(DONOTTRACK_HEADER_ENABLED)) {
+         cVar = false;
+@@ -1858,22 +1858,28 @@ PrepareAcceptLanguages(const char *i_Acc
+ 
+     o_AcceptLanguages.Assign((const char *) q_Accept);
+     delete [] q_Accept;
+ 
+     return NS_OK;
+ }
+ 
+ nsresult
+-nsHttpHandler::SetAcceptLanguages(const char *aAcceptLanguages)
++nsHttpHandler::SetAcceptLanguages()
+ {
++    mAcceptLanguagesIsDirty = false;
++
++    const nsAdoptingCString& acceptLanguages =
++        Preferences::GetLocalizedCString(INTL_ACCEPT_LANGUAGES);
++
+     nsAutoCString buf;
+-    nsresult rv = PrepareAcceptLanguages(aAcceptLanguages, buf);
+-    if (NS_SUCCEEDED(rv))
++    nsresult rv = PrepareAcceptLanguages(acceptLanguages.get(), buf);
++    if (NS_SUCCEEDED(rv)) {
+         mAcceptLanguages.Assign(buf);
++    }
+     return rv;
+ }
+ 
+ nsresult
+ nsHttpHandler::SetAccept(const char *aAccept)
+ {
+     mAccept = aAccept;
+     return NS_OK;
+diff --git a/netwerk/protocol/http/nsHttpHandler.h b/netwerk/protocol/http/nsHttpHandler.h
+--- a/netwerk/protocol/http/nsHttpHandler.h
++++ b/netwerk/protocol/http/nsHttpHandler.h
+@@ -385,17 +385,17 @@ private:
+     //
+     // Useragent/prefs helper methods
+     //
+     void     BuildUserAgent();
+     void     InitUserAgentComponents();
+     void     PrefsChanged(nsIPrefBranch *prefs, const char *pref);
+ 
+     nsresult SetAccept(const char *);
+-    nsresult SetAcceptLanguages(const char *);
++    nsresult SetAcceptLanguages();
+     nsresult SetAcceptEncodings(const char *, bool mIsSecure);
+ 
+     nsresult InitConnectionMgr();
+ 
+     void     NotifyObservers(nsIHttpChannel *chan, const char *event);
+ 
+     static void TimerCallback(nsITimer * aTimer, void * aClosure);
+ private:
+@@ -488,16 +488,17 @@ private:
+     nsCString      mCompatFirefox;
+     bool           mCompatFirefoxEnabled;
+     nsXPIDLCString mCompatDevice;
+     nsCString      mDeviceModelId;
+ 
+     nsCString      mUserAgent;
+     nsXPIDLCString mUserAgentOverride;
+     bool           mUserAgentIsDirty; // true if mUserAgent should be rebuilt
++    bool           mAcceptLanguagesIsDirty;
+ 
+ 
+     bool           mPromptTempRedirect;
+ 
+     // Persistent HTTPS caching flag
+     bool           mEnablePersistentHttpsCaching;
+ 
+     // For broadcasting tracking preference

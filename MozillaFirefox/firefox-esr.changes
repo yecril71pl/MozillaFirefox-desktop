@@ -1,4 +1,36 @@
 -------------------------------------------------------------------
+Fri Sep 29 08:56:27 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.4esr (boo#1060445)
+  * requires NSS >= 3.28.6
+  MFSA 2017-22
+  * CVE-2017-7793 (bmo#1371889)
+    Use-after-free with Fetch API
+  * CVE-2017-7818 (bmo#1363723)
+    Use-after-free during ARIA array manipulation
+  * CVE-2017-7819 (bmo#1380292)
+    Use-after-free while resizing images in design mode
+  * CVE-2017-7824 (bmo#1398381)
+    Buffer overflow when drawing and validating elements with ANGLE
+  * CVE-2017-7805 (bmo#1377618) (fixed via NSS requirement)
+    Use-after-free in TLS 1.2 generating handshake hashes
+  * CVE-2017-7814 (bmo#1376036)
+    Blob and data URLs bypass phishing and malware protection warnings
+  * CVE-2017-7825 (bmo#1393624, bmo#1390980) (OSX-only)
+    OS X fonts render some Tibetan and Arabic unicode characters as spaces
+  * CVE-2017-7823 (bmo#1396320)
+    CSP sandbox directive did not create a unique origin
+  * CVE-2017-7810
+    Memory safety bugs fixed in Firefox 56 and Firefox ESR 52.4
+- fixed language accept header to use correct locale
+  (mozilla-bmo1005640.patch, boo#1029917)
+
+-------------------------------------------------------------------
+Wed Aug  9 09:47:39 UTC 2017 - schwab@suse.de
+
+- mozilla-ucontext.patch: use ucontext_t instead of struct ucontext
+
+-------------------------------------------------------------------
 Tue Aug  8 18:13:34 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.3esr (boo#1052829)

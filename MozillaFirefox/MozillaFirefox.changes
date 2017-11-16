@@ -1,15 +1,52 @@
 -------------------------------------------------------------------
-Thu Nov  9 15:01:30 UTC 2017 - wr@rosenauer.org
+Wed Nov 15 06:46:06 UTC 2017 - wr@rosenauer.org
 
-- update to Firefox 57.0b14
+- update to Firefox 57.0 (boo#1068101)
   * Firefox Quantum
   * Photon UI
+  * Unified address and search bar
   * AMD VP9 hardware video decoder support
   * Added support for Date/Time input
   * stricter security sandbox blocking filesystem reading and
     writing on Linux systems
   * middle mouse paste in the content area no longer navigates to
     URLs by default on Unix systems
+  MFSA 2017-24
+  * CVE-2017-7828 (bmo#1406750. bmo#1412252)
+    Use-after-free of PressShell while restyling layout
+  * CVE-2017-7830 (bmo#1408990)
+    Cross-origin URL information leak through Resource Timing API
+  * CVE-2017-7831 (bmo#1392026)
+    Information disclosure of exposed properties on JavaScript proxy
+    objects
+  * CVE-2017-7832 (bmo#1408782)
+    Domain spoofing through use of dotless 'i' character followed
+    by accent markers
+  * CVE-2017-7833 (bmo#1370497)
+    Domain spoofing with Arabic and Indic vowel marker characters
+  * CVE-2017-7834 (bmo#1358009)
+    data: URLs opened in new tabs bypass CSP protections
+  * CVE-2017-7835 (bmo#1402363)
+    Mixed content blocking incorrectly applies with redirects
+  * CVE-2017-7836 (bmo#1401339)
+    Pingsender dynamically loads libcurl on Linux and OS X
+  * CVE-2017-7837 (bmo#1325923)
+    SVG loaded as <img> can use meta tags to set cookies
+  * CVE-2017-7838 (bmo#1399540)
+    Failure of individual decoding of labels in international domain
+    names triggers punycode display of entire IDN
+  * CVE-2017-7839 (bmo#1402896)
+    Control characters before javascript: URLs defeats self-XSS
+    prevention mechanism
+  * CVE-2017-7840 (bmo#1366420)
+    Exported bookmarks do not strip script elements from user-supplied
+    tags
+  * CVE-2017-7842 (bmo#1397064)
+    Referrer Policy is not always respected for <link> elements
+  * CVE-2017-7827
+    Memory safety bugs fixed in Firefox 57
+  * CVE-2017-7826
+    Memory safety bugs fixed in Firefox 57 and Firefox ESR 52.5
 - requires NSPR 4.17, NSS 3.33 and rustc 1.19
 - rebased patches
 - added mozilla-bindgen-systemlibs.patch to allow stylo build

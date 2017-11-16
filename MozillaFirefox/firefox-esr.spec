@@ -19,9 +19,9 @@
 
 # changed with every update
 %define major 52
-%define mainver %major.4.0
+%define mainver %major.5.0
 %define update_channel esr52
-%define releasedate 20170921064520
+%define releasedate 20171107091003
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -69,13 +69,13 @@
 
 Name:           %{pkgname}
 BuildRequires:  Mesa-devel
+BuildRequires:  alsa-devel
 BuildRequires:  autoconf213
 BuildRequires:  dbus-1-glib-devel
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
 BuildRequires:  libXcomposite-devel
 BuildRequires:  libcurl-devel
-BuildRequires:  libgnomeui-devel
 BuildRequires:  libidl-devel
 BuildRequires:  libiw-devel
 BuildRequires:  libnotify-devel
@@ -91,11 +91,15 @@ BuildRequires:  update-desktop-files
 BuildRequires:  xorg-x11-libXt-devel
 BuildRequires:  yasm
 BuildRequires:  zip
+BuildRequires:  pkgconfig(gconf-2.0)
+BuildRequires:  pkgconfig(gdk-x11-2.0)
+BuildRequires:  pkgconfig(glib-2.0) >= 2.22
+BuildRequires:  pkgconfig(gobject-2.0)
+BuildRequires:  pkgconfig(gtk+-2.0) >= 2.18.0
+BuildRequires:  pkgconfig(gtk+-unix-print-2.0)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libpulse)
 %if 0%{?firefox_use_gtk3}
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gobject-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.4.0
 BuildRequires:  pkgconfig(gtk+-unix-print-3.0)
 %endif

@@ -1,4 +1,32 @@
 -------------------------------------------------------------------
+Tue Nov 14 21:22:11 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 52.5.0esr (boo#1068101)
+  MFSA 2017-25
+  * CVE-2017-7828 (bmo#1406750. bmo#1412252)
+    Use-after-free of PressShell while restyling layout
+  * CVE-2017-7830 (bmo#1408990)
+    Cross-origin URL information leak through Resource Timing API
+  * CVE-2017-7826
+    Memory safety bugs fixed in Firefox 57 and Firefox ESR 52.5
+
+-------------------------------------------------------------------
+Sun Oct  1 18:25:16 UTC 2017 - stefan.bruens@rwth-aachen.de
+
+- Correct plugin directory for aarch64 (boo#1061207). The wrapper
+  script was not detecting aarch64 as a 64 bit architecture, thus
+  used /usr/lib/browser-plugins/.
+
+-------------------------------------------------------------------
+Sat Sep 30 20:10:50 UTC 2017 - zaitor@opensuse.org
+
+- Drop libgnomeui-devel, and replace it with pkgconfig(gconf-2.0),
+  pkgconfig(gtk+-2.0), pkgconfig(gtk+-unix-print-2.0),
+  pkgconfig(glib-2.0), pkgconfig(gobject-2.0) and
+  pkgconfig(gdk-x11-2.0) BuildRequires, align with what configure
+  looks for.
+
+-------------------------------------------------------------------
 Fri Sep 29 08:56:27 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.4esr (boo#1060445)
@@ -24,6 +52,16 @@ Fri Sep 29 08:56:27 UTC 2017 - wr@rosenauer.org
     Memory safety bugs fixed in Firefox 56 and Firefox ESR 52.4
 - fixed language accept header to use correct locale
   (mozilla-bmo1005640.patch, boo#1029917)
+
+-------------------------------------------------------------------
+Thu Sep 28 07:53:13 UTC 2017 - dimstar@opensuse.org
+
+- Add alsa-devel BuildRequires: we care for ALSA support to be
+  built and thus need to ensure we get the dependencies in place.
+  In the past, alsa-devel was pulled in by accident: we
+  buildrequire libgnome-devel. This required esound-devel and that
+  in turn pulled in alsa-devel for us. libgnome is being fixed to
+  no longer require esound-devel.
 
 -------------------------------------------------------------------
 Wed Aug  9 09:47:39 UTC 2017 - schwab@suse.de
@@ -244,7 +282,7 @@ Mon Apr  3 06:28:34 UTC 2017 - wr@rosenauer.org
   * WebAssembly (wasm) is disabled
   * Less use of multiprocess architecture Electrolysis (e10s)
 
-+-------------------------------------------------------------------
+-------------------------------------------------------------------
 Mon Apr  3 06:16:26 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 52.0.2

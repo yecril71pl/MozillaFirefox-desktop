@@ -19,10 +19,10 @@
 
 # changed with every update
 %define major 57
-%define mainver %major.0
+%define mainver %major.0.1
 %define update_channel release
 %define branding 1
-%define releasedate 20171109183137
+%define releasedate 20171128222554
 
 # PIE, full relro (x86_64 for now)
 %define build_hardened 1
@@ -75,6 +75,7 @@ BuildRequires:  makeinfo
 BuildRequires:  mozilla-nspr-devel >= 4.17
 BuildRequires:  mozilla-nss-devel >= 3.33
 BuildRequires:  python-devel
+BuildRequires:  python2-xml
 BuildRequires:  rust >= 1.19
 BuildRequires:  rust-std
 BuildRequires:  startup-notification-devel
@@ -153,6 +154,8 @@ Patch5:         mozilla-no-stdcxx-check.patch
 Patch6:         mozilla-reduce-files-per-UnifiedBindings.patch
 Patch7:         mozilla-aarch64-startup-crash.patch
 Patch8:         mozilla-bindgen-systemlibs.patch
+Patch9:         mozilla-bmo1360278.patch
+Patch10:        mozilla-bmo1399611-csd.patch
 # Firefox/browser
 Patch101:       firefox-kde.patch
 Patch102:       firefox-no-default-ualocale.patch
@@ -164,8 +167,8 @@ Requires(postun): shared-mime-info desktop-file-utils
 %if %branding
 Requires:       %{name}-branding > 44.0
 %endif
-Requires:       mozilla-nspr >= %(rpm -q --queryformat '%{VERSION}' mozilla-nspr)
-Requires:       mozilla-nss >= %(rpm -q --queryformat '%{VERSION}' mozilla-nss)
+Requires:       mozilla-nspr >= %(rpm -q --queryformat '%%{VERSION}' mozilla-nspr)
+Requires:       mozilla-nss >= %(rpm -q --queryformat '%%{VERSION}' mozilla-nss)
 Recommends:     libcanberra0
 Recommends:     libpulse0
 # addon leads to startup crash (bnc#908892)
@@ -264,6 +267,8 @@ cd $RPM_BUILD_DIR/mozilla
 %endif
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 # Firefox
 %patch101 -p1
 %patch102 -p1

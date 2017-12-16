@@ -8,6 +8,8 @@ mozilla-no-stdcxx-check.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-aarch64-startup-crash.patch
 mozilla-bindgen-systemlibs.patch
+mozilla-bmo1360278.patch
+mozilla-bmo1399611-csd.patch
 
 # Firefox patches
 firefox-kde.patch

@@ -1,4 +1,47 @@
 -------------------------------------------------------------------
+Fri Dec  8 15:52:17 UTC 2017 - dimstar@opensuse.org
+
+- Explicitly buildrequires python2-xml: The build system relies on
+  it. We wrongly relied on other packages pulling it in for us.
+
+-------------------------------------------------------------------
+Thu Dec  7 11:12:31 UTC 2017 - dimstar@opensuse.org
+
+- Escape the usage of %{VERSION} when calling out to rpm.
+  RPM 4.14 has %{VERSION} defined as 'the main packages version'.
+
+-------------------------------------------------------------------
+Wed Nov 29 23:45:03 UTC 2017 - wr@rosenauer.org
+
+- update to Firefox 57.0.1
+  * CVE-2017-7843: Web worker in Private Browsing mode can write
+    IndexedDB data (bsc#1072034, bmo#1410106)
+  * CVE-2017-7844: Visited history information leak through SVG
+    image (bsc#1072036, bmo#1420001)
+  * Fix a video color distortion issue on YouTube and other video
+    sites with some AMD devices (bmo#1417442)
+  * Fix an issue with prefs.js when the profile path has non-ascii
+    characters (bmo#1420427)
+
+-------------------------------------------------------------------
+Tue Nov 21 09:00:48 UTC 2017 - christophe@krop.fr
+
+- Add mozilla-bmo1360278.patch
+  Starting with Firefox 57, the context menu appears on key press.
+  This patch creates a config entry to restore the
+  old behaviour. Without the patch, the mouse gesture extensions
+  require 2 clicks to work (bmo#1360278).
+  The new config entry is named ui.context_menus.after_mouseup
+  (default : false).
+
+-------------------------------------------------------------------
+Sat Nov 18 08:35:21 UTC 2017 - wr@rosenauer.org
+
+- Allow experimental CSD for Gtk3 (bmo#1399611) if available and enabled
+  widget.allow-client-side-decoration=true
+  (mozilla-bmo1399611-csd.patch)
+
+-------------------------------------------------------------------
 Wed Nov 15 06:46:06 UTC 2017 - wr@rosenauer.org
 
 - update to Firefox 57.0 (boo#1068101)

@@ -3300,7 +3300,7 @@ diff --git a/widget/gtk/nsFilePicker.cpp b/widget/gtk/nsFilePicker.cpp
 +        queuedPicker->mResult = result;
 +      }
 +      queuedPicker->mRunning = false;
-+      NS_RELEASE_THIS();
++      NS_RELEASE(queuedPicker);
 +      return G_SOURCE_REMOVE;
 +    }, this);
 +

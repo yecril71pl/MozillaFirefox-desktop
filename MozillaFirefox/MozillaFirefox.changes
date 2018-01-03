@@ -1,4 +1,20 @@
 -------------------------------------------------------------------
+Wed Jan  3 08:29:38 UTC 2018 - wr@rosenauer.org
+
+- fixed regression introduced Oct 10th which made Firefox crash
+  when cancelling the KDE file dialog (boo#1069962)
+
+-------------------------------------------------------------------
+Fri Dec 29 19:52:34 UTC 2017 - astieger@suse.com
+
+- Mozilla Firefox 57.0.3:
+  * Fix a crash reporting issue that inadvertently sends background
+    tab crash reports to Mozilla without user opt-in (bmo#1427111,
+    bsc#1074235)
+- Includes changes from 57.0.2:
+  * fixes for platforms other than GNU/Linux
+
+-------------------------------------------------------------------
 Fri Dec  8 15:52:17 UTC 2017 - dimstar@opensuse.org
 
 - Explicitly buildrequires python2-xml: The build system relies on

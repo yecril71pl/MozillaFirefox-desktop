@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Jan  4 12:23:41 UTC 2018 - wr@rosenauer.org
+
+- update to Firefox 57.0.4
+  MFSA 2018-1: Speculative execution side-channel attack ("Spectre")
+  (boo#1074723)
+
+-------------------------------------------------------------------
 Wed Jan  3 08:29:38 UTC 2018 - wr@rosenauer.org
 
 - fixed regression introduced Oct 10th which made Firefox crash

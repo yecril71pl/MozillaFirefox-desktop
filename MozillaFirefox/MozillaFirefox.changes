@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jan  9 18:48:02 UTC 2018 - wr@rosenauer.org
+
+- fixed build with latest rust (mozilla-rust-1.23.patch)
+
+-------------------------------------------------------------------
 Thu Jan  4 12:23:41 UTC 2018 - wr@rosenauer.org
 
 - update to Firefox 57.0.4

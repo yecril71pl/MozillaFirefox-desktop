@@ -207,7 +207,7 @@ of %{appname}.
 %package translations-other
 Summary:        Extra translations for %{appname}
 Group:          System/Localization
-Provides:       locale(%{name}:ach;af;an;as;ast;az;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;ka;kab;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
+Provides:       locale(%{name}:ach;af;an;as;ast;az;bg;bn_BD;bn_IN;br;bs;cak;cy;dsb;en_ZA;eo;es_MX;et;eu;fa;ff;fy_NL;ga_IE;gd;gl;gn;gu_IN;he;hi_IN;hr;hsb;hy_AM;id;is;ka;kab;kk;km;kn;lij;lt;lv;mai;mk;ml;mr;ms;ne-NP;nn_NO;or;pa_IN;rm;ro;si;sk;sl;son;sq;sr;ta;te;th;tr;uk;uz;vi;xh)
 Requires:       %{name} = %{version}
 Obsoletes:      %{name}-translations < %{version}-%{release}
 

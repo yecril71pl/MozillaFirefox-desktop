@@ -373,7 +373,7 @@ ac_add_options --with-arch=armv7-a
 ac_add_options --disable-webrtc
 %endif
 EOF
-make -f client.mk build
+./mach build
 
 %install
 cd $RPM_BUILD_DIR/obj

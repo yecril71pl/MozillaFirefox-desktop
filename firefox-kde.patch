@@ -1,5 +1,5 @@
 # HG changeset patch
-# Parent  671a03875b1bfe82edbebfde64654ea3ffc98e34
+# Parent  89cbe8c49d05965b87815143d1944ab6964f12c7
 
 diff --git a/browser/base/content/browser-kde.xul b/browser/base/content/browser-kde.xul
 new file mode 100644
@@ -1468,7 +1468,7 @@ new file mode 100644
 +        return NS_ERROR_FAILURE;
 +
 +    str->SetData( NS_LITERAL_CSTRING( "ISDEFAULTBROWSER" ));
-+    command->AppendElement( str, false );
++    command->AppendElement( str );
 +
 +    if( nsKDEUtils::command( command ))
 +        *aIsDefaultBrowser = true;
@@ -1489,10 +1489,10 @@ new file mode 100644
 +        return NS_ERROR_FAILURE;
 +
 +    cmdstr->SetData( NS_LITERAL_CSTRING( "SETDEFAULTBROWSER" ));
-+    command->AppendElement( cmdstr, false );
++    command->AppendElement( cmdstr );
 +
 +    paramstr->SetData( aClaimAllTypes ? NS_LITERAL_CSTRING( "ALLTYPES" ) : NS_LITERAL_CSTRING( "NORMAL" ));
-+    command->AppendElement( paramstr, false );
++    command->AppendElement( paramstr );
 +
 +    return nsKDEUtils::command( command ) ? NS_OK : NS_ERROR_FAILURE;
 +}
@@ -1542,7 +1542,7 @@ new file mode 100644
 +    else
 +        return NS_ERROR_NOT_IMPLEMENTED;
 +
-+    command->AppendElement( str, false );
++    command->AppendElement( str );
 +    return nsKDEUtils::command( command ) ? NS_OK : NS_ERROR_FAILURE;
 +}
 +
@@ -1560,14 +1560,14 @@ new file mode 100644
 +        return NS_ERROR_FAILURE;
 +
 +    cmdstr->SetData( NS_LITERAL_CSTRING( "RUN" ));
-+    command->AppendElement( cmdstr, false );
++    command->AppendElement( cmdstr );
 +    nsAutoCString app;
 +    nsresult rv = aApplication->GetNativePath( app );
 +    NS_ENSURE_SUCCESS( rv, rv );
 +    appstr->SetData( app );
-+    command->AppendElement( appstr, false );
++    command->AppendElement( appstr );
 +    uristr->SetData( aURI );
-+    command->AppendElement( uristr, false );
++    command->AppendElement( uristr );
 +    return nsKDEUtils::command( command ) ? NS_OK : NS_ERROR_FAILURE;
 +}
 +
@@ -1585,7 +1585,7 @@ new file mode 100644
 +        return NS_ERROR_FAILURE;
 +
 +    str->SetData( NS_LITERAL_CSTRING( "GETDEFAULTFEEDREADER" ));
-+    command->AppendElement( str, false );
++    command->AppendElement( str );
 +
 +    nsCOMPtr<nsIArray> output;
 +    if( !nsKDEUtils::command( command, getter_AddRefs( output ) ) )

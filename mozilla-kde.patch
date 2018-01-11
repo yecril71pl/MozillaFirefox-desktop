@@ -72,7 +72,7 @@ diff --git a/modules/libpref/Preferences.cpp b/modules/libpref/Preferences.cpp
  
      // Do we care if a file provided by this process fails to load?
 -    pref_LoadPrefsInDir(path, nullptr, 0);
-+    pref_LoadPrefsInDir(path, specialFiles, nullptr, 0);
++    pref_LoadPrefsInDir(path, specialFiles, ArrayLength(specialFiles));
    }
  
    return NS_OK;
@@ -2549,7 +2549,7 @@ new file mode 100644
 +        if ( !rstr ) return false;
 +
 +        rstr->SetData( out[i] );
-+        result->AppendElement( rstr, false );
++        result->AppendElement( rstr );
 +        }
 +
 +    NS_ADDREF( *output = result);

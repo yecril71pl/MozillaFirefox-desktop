@@ -9,6 +9,7 @@ Wed Jan 10 21:39:09 UTC 2018 - wr@rosenauer.org
   mozilla-bmo1360278.patch
   mozilla-bmo1399611-csd.patch
   mozilla-rust-1.23.patch
+- rebased patches
 
 -------------------------------------------------------------------
 Tue Jan  9 18:48:02 UTC 2018 - wr@rosenauer.org

@@ -7,6 +7,7 @@ mozilla-openaes-decl.patch
 mozilla-no-stdcxx-check.patch
 mozilla-reduce-files-per-UnifiedBindings.patch
 mozilla-aarch64-startup-crash.patch
+mozilla-enable-csd.patch
 
 # Firefox patches
 firefox-kde.patch

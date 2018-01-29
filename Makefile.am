@@ -9,3 +9,6 @@ pkglibexec_SCRIPTS = MozillaFirefox/firefox.sh
 bin_PROGRAMS = firefox
 app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml
+
+firefox:
+	ln '-st.' '$(pkglibexecdir)/firefox.sh'

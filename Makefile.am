@@ -5,7 +5,7 @@ mimepackdir = $(datadir)/mime/packages
 
 pkgpref_DATA = MozillaFirefox/spellcheck.js
 pkgbrowpref_DATA = MozillaFirefox/kde.js MozillaFirefox/firefox.js
-pkglib_SCRIPTS = MozillaFirefox/firefox.sh
+pkglibexec_SCRIPTS = MozillaFirefox/firefox.sh
 bin_PROGRAMS = firefox
 app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml

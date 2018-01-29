@@ -11,4 +11,4 @@ app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml
 
 firefox:
-	ln '-st.' '$(pkglibexecdir)/firefox.sh'
+	ln '-sT' '$(pkglibexecdir)/firefox.sh' '$(@)'

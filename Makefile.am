@@ -10,5 +10,5 @@ bin_PROGRAMS = firefox
 app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml
 
-firefox:
+firefox$(EXEEXT):
 	ln '-sT' '$(pkglibexecdir)/firefox.sh' '$(@)'

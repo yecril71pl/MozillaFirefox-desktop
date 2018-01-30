@@ -10,5 +10,8 @@ bin_SCRIPTS = firefox
 app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml
 
-firefox: Makefile
+firefox: 
 	ln '-sT' '$(pkglibexecdir)/firefox.sh' '$(@)'
+
+firefox.xml: MozillaFirefox/firefox-mimeinfo.xml
+	cp '-T' '$(?)' '$(@)'

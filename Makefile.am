@@ -6,10 +6,10 @@ mimepackdir = $(datadir)/mime/packages
 pkgpref_DATA = MozillaFirefox/spellcheck.js
 pkgbrowpref_DATA = MozillaFirefox/kde.js MozillaFirefox/firefox.js
 pkglibexec_SCRIPTS = MozillaFirefox/firefox.sh
-bin_PROGRAMS = firefox
+bin_SCRIPTS = firefox
 app_DATA = MozillaFirefox/MozillaFirefox.desktop
 mimepack_DATA = MozillaFirefox/firefox.xml
 firefox_SOURCES = Makefile
 
-firefox$(EXEEXT): Makefile
+firefox: Makefile
 	ln '-sT' '$(pkglibexecdir)/firefox.sh' '$(@)'
